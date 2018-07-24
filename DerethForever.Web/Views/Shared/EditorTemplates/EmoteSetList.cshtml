@@ -52,6 +52,7 @@
                     @Html.TextBoxFor(m => m[i].Probability, new { @class = "form-control" })
                 </div>
             </div>
+
             @if (EmoteSet.IsPropertyVisible("Style", Model[i].EmoteCategory))
             {
                 <div class="row row-spacer">
@@ -60,6 +61,18 @@
                     </div>
                     <div class="col-md-3">
                         @Html.TextBoxFor(m => m[i].Style, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("Quest", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].Quest)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].Quest, new { @class = "form-control" })
                     </div>
                 </div>
             }

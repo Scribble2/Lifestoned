@@ -88,6 +88,7 @@ namespace DerethForever.Web.Models.Shared
         /// </summary>
         [JsonProperty("quest")]
         [Display(Name = "Quest")]
+        [EmoteCategory(new EmoteCategory[] { EmoteCategory.QuestFailure, EmoteCategory.QuestSuccess })]
         public string Quest { get; set; }
 
         /// <summary>
