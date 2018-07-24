@@ -1,0 +1,111 @@
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal well">
+        <h4>Weenie Search</h4>
+        <hr />
+
+        @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                @Html.DisplayFor(m => m.ErrorMessage)
+            </div>
+        }
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Criteria_PartialName">Name</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Criteria.PartialName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Criteria.PartialName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Criteria_WeenieClassId">Weenie Id</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Criteria.WeenieClassId, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Criteria.WeenieClassId, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Criteria_ItemType">Item Type</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Criteria.ItemType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Criteria.ItemType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Criteria_WeenieType">Weenie Type</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Criteria.WeenieType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Criteria.WeenieType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+    <hr/>
+
+    if (Model.ShowResults)
+    {
+        if (Model.Results != null)
+        { 
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Weenie Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Item Type</th>
+                        <th>Weenie Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Results.Count == 0)
+                    {
+                        <tr><td colspan="8" align="center">No results.</td></tr>
+                    }
+                    @{
+                        foreach (var weenie in Model.Results)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("[select]", "Edit", "Weenie",  new { id = weenie.WeenieClassId }, new { })
+                                    @weenie.WeenieClassId.ToString()
+                                </td>
+                                <td>
+                                    @weenie.Name
+                                </td>
+                                <td>
+                                    @weenie.Description
+                                </td>
+                                <td>
+                                    @weenie.ItemType
+                                </td>
+                                <td>
+                                    @weenie.WeenieType
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info">
+               Your search yielded no results.
+            </div>
+        }
+    }
+}

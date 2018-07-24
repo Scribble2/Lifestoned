@@ -1,0 +1,560 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5616F46B-1046-416A-BE63-A193CE10F80E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DerethForever.Web</RootNamespace>
+    <AssemblyName>DerethForever.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp.Newtonsoft.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.Newtonsoft.Json.1.1.0\lib\portable45-net45+win8+wp8+wpa81\RestSharp.Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.identitymodel.services" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiContentProvider.cs" />
+    <Compile Include="AuthProviderHost.cs" />
+    <Compile Include="ContentProviderHost.cs" />
+    <Compile Include="Controllers\DiscordController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ModelViewerController.cs" />
+    <Compile Include="Controllers\RecipeController.cs" />
+    <Compile Include="Controllers\WorldReleaseController.cs" />
+    <Compile Include="Controllers\ResourceController.cs" />
+    <Compile Include="Controllers\ServerController.cs" />
+    <Compile Include="CustomErrorHandler.cs" />
+    <Compile Include="DerethForeverAuthProvider.cs" />
+    <Compile Include="IAuthProvider.cs" />
+    <Compile Include="IContentProvider.cs" />
+    <Compile Include="IManagedWorldProvider.cs" />
+    <Compile Include="ISandboxContentProvider.cs" />
+    <Compile Include="LoginResult.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SessionAuthenticationConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ContentController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WeenieController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="JwtCookieManager.cs" />
+    <Compile Include="ManagedWorldProvider.cs" />
+    <Compile Include="Models\Account\AccountListModel.cs" />
+    <Compile Include="Models\Account\ApiAccountModel.cs" />
+    <Compile Include="Models\Account\LoginModel.cs" />
+    <Compile Include="Models\Account\ManagedServerModel.cs" />
+    <Compile Include="Models\Account\RegisterModel.cs" />
+    <Compile Include="Models\Account\SubscriptionModel.cs" />
+    <Compile Include="Models\Account\SubListModel.cs" />
+    <Compile Include="Models\CachePwn\ArmorValues.cs" />
+    <Compile Include="Models\CachePwn\Attribute.cs" />
+    <Compile Include="Models\CachePwn\AttributeSet.cs" />
+    <Compile Include="Models\CachePwn\Body.cs" />
+    <Compile Include="Models\CachePwn\BodyPart.cs" />
+    <Compile Include="Models\CachePwn\BodyPartListing.cs" />
+    <Compile Include="Models\CachePwn\Book.cs" />
+    <Compile Include="Models\CachePwn\BoolStat.cs" />
+    <Compile Include="Models\CachePwn\CreateItem.cs" />
+    <Compile Include="Models\CachePwn\DidStat.cs" />
+    <Compile Include="Models\CachePwn\Emote.cs" />
+    <Compile Include="Models\CachePwn\EmoteAction.cs" />
+    <Compile Include="Models\CachePwn\EmoteCategoryListing.cs" />
+    <Compile Include="Models\CachePwn\EmoteListing.cs" />
+    <Compile Include="Models\CachePwn\FloatStat.cs" />
+    <Compile Include="Models\CachePwn\Frame.cs" />
+    <Compile Include="Models\CachePwn\GeneratorTable.cs" />
+    <Compile Include="Models\CachePwn\Int64Stat.cs" />
+    <Compile Include="Models\CachePwn\IntStat.cs" />
+    <Compile Include="Models\CachePwn\Page.cs" />
+    <Compile Include="Models\CachePwn\Position.cs" />
+    <Compile Include="Models\CachePwn\Vital.cs" />
+    <Compile Include="Models\CachePwn\XYZ.cs" />
+    <Compile Include="Models\CachePwn\PositionListing.cs" />
+    <Compile Include="Models\CachePwn\Quaternion.cs" />
+    <Compile Include="Models\CachePwn\Skill.cs" />
+    <Compile Include="Models\CachePwn\SkillListing.cs" />
+    <Compile Include="Models\CachePwn\SpellbookEntry.cs" />
+    <Compile Include="Models\CachePwn\SpellCastingStats.cs" />
+    <Compile Include="Models\CachePwn\StringStat.cs" />
+    <Compile Include="Models\CachePwn\Zones.cs" />
+    <Compile Include="Models\Content\Content.cs" />
+    <Compile Include="Models\Content\ContentLandblock.cs" />
+    <Compile Include="Models\Content\ContentLink.cs" />
+    <Compile Include="Models\Content\ContentResource.cs" />
+    <Compile Include="Models\Content\ContentType.cs" />
+    <Compile Include="Models\Content\ContentWeenie.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\Discord\WeenieAcceptanceEvent.cs" />
+    <Compile Include="Models\Discord\Author.cs" />
+    <Compile Include="Models\Discord\Embed.cs" />
+    <Compile Include="Models\Discord\Field.cs" />
+    <Compile Include="Models\Discord\Footer.cs" />
+    <Compile Include="Models\Discord\IDiscordMessage.cs" />
+    <Compile Include="Models\Discord\Image.cs" />
+    <Compile Include="Models\Discord\Message.cs" />
+    <Compile Include="Models\Discord\WorldReleaseEvent.cs" />
+    <Compile Include="Models\Discord\WeenieSubmissionEvent.cs" />
+    <Compile Include="Models\EnumHelper.cs" />
+    <Compile Include="Models\Enums\AbilityId.cs" />
+    <Compile Include="Models\Enums\AccessLevel.cs" />
+    <Compile Include="Models\Enums\WieldRequirements.cs" />
+    <Compile Include="Models\Enums\ArmorType.cs" />
+    <Compile Include="Models\Enums\BodyPartType.cs" />
+    <Compile Include="Models\Enums\AttackType.cs" />
+    <Compile Include="Models\Enums\CombatStyle.cs" />
+    <Compile Include="Models\Enums\DamageType.cs" />
+    <Compile Include="Models\Enums\Destination.cs" />
+    <Compile Include="Models\Enums\EmoteCategory.cs" />
+    <Compile Include="Models\Enums\EmoteType.cs" />
+    <Compile Include="Models\Enums\HeritageGroup.cs" />
+    <Compile Include="Models\Enums\Material.cs" />
+    <Compile Include="Models\Enums\MotionCommand.cs" />
+    <Compile Include="Models\Enums\Clothing Priority.cs" />
+    <Compile Include="Models\Enums\PaletteTemplate.cs" />
+    <Compile Include="Models\Enums\PhysicsScriptType.cs" />
+    <Compile Include="Models\Enums\EnumExtensions.cs" />
+    <Compile Include="Models\Enums\RecipeResult.cs" />
+    <Compile Include="Models\Enums\RecipeType.cs" />
+    <Compile Include="Models\CachePwn\CachePwnWeenie.cs" />
+    <Compile Include="Models\Enums\RegenerationLocation.cs" />
+    <Compile Include="Models\Enums\Usable.cs" />
+    <Compile Include="Models\Enums\RegenerationType.cs" />
+    <Compile Include="Models\Enums\TreasureClass.cs" />
+    <Compile Include="Models\Enums\CreatureType.cs" />
+    <Compile Include="Models\Enums\EquipMask.cs" />
+    <Compile Include="Models\Enums\UiEffects.cs" />
+    <Compile Include="Models\Enums\ValidLocations.cs" />
+    <Compile Include="Models\Enums\WealthRating.cs" />
+    <Compile Include="Models\PreComp\Angles.cs" />
+    <Compile Include="Models\PreComp\ArmorValues.cs" />
+    <Compile Include="Models\PreComp\Attribute.cs" />
+    <Compile Include="Models\PreComp\AttributeSet.cs" />
+    <Compile Include="Models\PreComp\BodyPart.cs" />
+    <Compile Include="Models\PreComp\CreateItem.cs" />
+    <Compile Include="Models\PreComp\Emote.cs" />
+    <Compile Include="Models\PreComp\EmoteAction.cs" />
+    <Compile Include="Models\PreComp\Extra1.cs" />
+    <Compile Include="Models\PreComp\ExtraItem2.cs" />
+    <Compile Include="Models\PreComp\ExtraItem3.cs" />
+    <Compile Include="Models\PreComp\Generator.cs" />
+    <Compile Include="Models\PreComp\Item.cs" />
+    <Compile Include="Models\PreComp\Origin.cs" />
+    <Compile Include="Models\PreComp\PrecompWeenie.cs" />
+    <Compile Include="Models\PreComp\Position.cs" />
+    <Compile Include="Models\PreComp\Zones.cs" />
+    <Compile Include="Models\Recipe\IndexModel.cs" />
+    <Compile Include="Models\Recipe\Recipe.cs" />
+    <Compile Include="Models\Recipe\SearchRecipesCriteria.cs" />
+    <Compile Include="Models\WorldRelease\IndexModel.cs" />
+    <Compile Include="Models\WorldRelease\ReleaseType.cs" />
+    <Compile Include="Models\WorldRelease\Version.cs" />
+    <Compile Include="Models\WorldRelease\WorldRelease.cs" />
+    <Compile Include="Models\Shared\AbilitySet.cs" />
+    <Compile Include="Models\Shared\Angles.cs" />
+    <Compile Include="Models\Shared\BodyPart.cs" />
+    <Compile Include="Models\Shared\BodyPartSelectionData.cs" />
+    <Compile Include="Models\Shared\Contract.cs" />
+    <Compile Include="Models\Shared\CreationProfile.cs" />
+    <Compile Include="Models\Shared\Emote.cs" />
+    <Compile Include="Models\Shared\EmoteCategoryAttribute.cs" />
+    <Compile Include="Models\Shared\EmoteSet.cs" />
+    <Compile Include="Models\Shared\EmoteTypeAttribute.cs" />
+    <Compile Include="Models\Shared\Frame.cs" />
+    <Compile Include="Models\Shared\GeneratorTable.cs" />
+    <Compile Include="Models\Shared\IconEffects.cs" />
+    <Compile Include="Models\Enums\SkillId.cs" />
+    <Compile Include="Models\Enums\SkillStatus.cs" />
+    <Compile Include="Models\Enums\SpellId.cs" />
+    <Compile Include="Models\Enums\IconEffectType.cs" />
+    <Compile Include="Models\Shared\Ability.cs" />
+    <Compile Include="Models\Shared\Animation.cs" />
+    <Compile Include="Models\Shared\BookPage.cs" />
+    <Compile Include="Models\Shared\BoolProperty.cs" />
+    <Compile Include="Models\Shared\DataIdProperty.cs" />
+    <Compile Include="Models\Shared\DoubleProperty.cs" />
+    <Compile Include="Models\Shared\InstanceIdProperty.cs" />
+    <Compile Include="Models\Shared\Int64Property.cs" />
+    <Compile Include="Models\Shared\IntProperty.cs" />
+    <Compile Include="Models\Shared\Origin.cs" />
+    <Compile Include="Models\Shared\Palette.cs" />
+    <Compile Include="Models\Shared\Position.cs" />
+    <Compile Include="Models\Shared\Skill.cs" />
+    <Compile Include="Models\Shared\Spell.cs" />
+    <Compile Include="Models\Shared\StringProperty.cs" />
+    <Compile Include="Models\Shared\Texture.cs" />
+    <Compile Include="Models\Enums\BoolPropertyId.cs" />
+    <Compile Include="Models\Enums\DidPropertyId.cs" />
+    <Compile Include="Models\Enums\DoublePropertyId.cs" />
+    <Compile Include="Models\Enums\IidPropertyId.cs" />
+    <Compile Include="Models\Shared\TypedArmorRatings.cs" />
+    <Compile Include="Models\Shared\VitalSet.cs" />
+    <Compile Include="Models\Weenie\ChangeDiscussionEntry.cs" />
+    <Compile Include="Models\Weenie\ChangelogEntry.cs" />
+    <Compile Include="Models\Weenie\DownloadChangeModel.cs" />
+    <Compile Include="Models\Weenie\IndexModel.cs" />
+    <Compile Include="Models\Enums\Int64PropertyId.cs" />
+    <Compile Include="Models\Enums\IntPropertyId.cs" />
+    <Compile Include="Models\Enums\ItemType.cs" />
+    <Compile Include="Models\Enums\PositionType.cs" />
+    <Compile Include="Models\Enums\PropertyType.cs" />
+    <Compile Include="Models\Shared\IconBackgrounds.cs" />
+    <Compile Include="Models\Weenie\SandboxModel.cs" />
+    <Compile Include="Models\Weenie\SearchWeenieProperty.cs" />
+    <Compile Include="Models\Weenie\SearchWeeniesCriteria.cs" />
+    <Compile Include="Models\Enums\StringPropertyId.cs" />
+    <Compile Include="Models\Weenie\Weenie.cs" />
+    <Compile Include="Models\Weenie\WeenieChange.cs" />
+    <Compile Include="Models\Weenie\WeenieCommands.cs" />
+    <Compile Include="Models\Weenie\WeenieSearchResult.cs" />
+    <Compile Include="Models\Enums\WeenieType.cs" />
+    <Compile Include="NonSuckyJsonSerializer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SandboxContentProvider.cs" />
+    <Compile Include="SandboxContentProviderHost.cs" />
+    <Compile Include="SimpleMessage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Selectize\css\selectize.bootstrap2.css" />
+    <Content Include="Content\Selectize\css\selectize.bootstrap3.css" />
+    <Content Include="Content\Selectize\css\selectize.css" />
+    <Content Include="Content\Selectize\css\selectize.default.css" />
+    <Content Include="Content\Selectize\css\selectize.legacy.css" />
+    <Content Include="Content\Selectize\js\selectize.js" />
+    <Content Include="Content\Selectize\js\selectize.min.js" />
+    <Content Include="Content\Selectize\js\standalone\selectize.js" />
+    <Content Include="Content\Selectize\js\standalone\selectize.min.js" />
+    <Content Include="images\android-chrome-192x192.png" />
+    <Content Include="images\android-chrome-256x256.png" />
+    <Content Include="images\apple-touch-icon.png" />
+    <Content Include="images\browserconfig.xml" />
+    <Content Include="images\discord.png" />
+    <Content Include="images\favicon-16x16.png" />
+    <Content Include="images\favicon-32x32.png" />
+    <Content Include="images\favicon.ico" />
+    <Content Include="images\gitlab.png" />
+    <Content Include="images\lifestone-xl.png" />
+    <Content Include="images\lifestone_16x16.png" />
+    <Content Include="images\lifestone_192x192.png" />
+    <Content Include="images\lifestone_32x32.png" />
+    <Content Include="images\lifestone_full_380x380.png" />
+    <Content Include="images\mstile-150x150.png" />
+    <Content Include="images\safari-pinned-tab.svg" />
+    <Content Include="images\youtube_social_icon_red.png" />
+    <Content Include="Styles\bootstrap-theme.css" />
+    <Content Include="Styles\bootstrap-theme.min.css" />
+    <Content Include="Styles\bootstrap.css" />
+    <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Styles\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Styles\bootstrap.min.css.map" />
+    <Content Include="Styles\bootstrap.css.map" />
+    <Content Include="Styles\bootstrap-theme.min.css.map" />
+    <Content Include="Styles\bootstrap-theme.css.map" />
+    <Content Include="images\manifest.json" />
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Selectize\less\selectize.less" />
+    <Content Include="Content\Selectize\less\selectize.legacy.less" />
+    <Content Include="Content\Selectize\less\selectize.default.less" />
+    <Content Include="Content\Selectize\less\selectize.bootstrap3.less" />
+    <Content Include="Content\Selectize\less\selectize.bootstrap2.less" />
+    <Content Include="Content\Selectize\less\plugins\remove_button.less" />
+    <Content Include="Content\Selectize\less\plugins\optgroup_columns.less" />
+    <Content Include="Content\Selectize\less\plugins\dropdown_header.less" />
+    <Content Include="Content\Selectize\less\plugins\drag_drop.less" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.2.1.js" />
+    <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Content\Index.cshtml" />
+    <Content Include="Views\Content\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Server\Index.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Weenie\Index.cshtml" />
+    <Content Include="Views\Weenie\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PositionList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\BoolPropertyList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\InstanceIdPropertyList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DataIdPropertyList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DoublePropertyList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Int64PropertyList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\IntPropertyList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\StringPropertyList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AbilityList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SpellList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\BookPages.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SkillList.cshtml" />
+    <Content Include="Views\Shared\_Favicons.cshtml" />
+    <Content Include="Views\Recipe\Index.cshtml" />
+    <Content Include="Views\Recipe\Edit.cshtml" />
+    <Content Include="Views\Shared\WeenieFinder.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmoteSetList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmoteList.cshtml" />
+    <Content Include="Views\Weenie\Upload.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\VitalList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CreateList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UiEffects.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\FlagsEnum.cshtml" />
+    <Content Include="Views\Shared\ServerSelector.cshtml" />
+    <Content Include="Views\Content\New.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <None Include="Settings.StyleCop" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\BodyPartList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Ability.cshtml" />
+    <Content Include="Views\Weenie\New.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Vital.cshtml" />
+    <Content Include="Views\Weenie\Sandbox.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\InfoMessages.cshtml" />
+    <Content Include="Views\Account\Accounts.cshtml" />
+    <Content Include="Views\Account\Subs.cshtml" />
+    <Content Include="Views\Weenie\Delete.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ManagedWorlds.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\WeenieChangeList.cshtml" />
+    <Content Include="Views\Weenie\SelectManagedWorld.cshtml" />
+    <Content Include="Views\Weenie\LogIntoManagedWorld.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Changelog.cshtml" />
+    <Content Include="Views\Weenie\Submissions.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SubmissionList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GeneratorTable.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\FlagsEnumMultiSelect.cshtml" />
+    <Content Include="Views\Weenie\Recent.cshtml" />
+    <Content Include="Views\WorldRelease\Index.cshtml" />
+    <Content Include="Views\Server\CutWorldRelease.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\ModelViewer\" />
+    <Folder Include="Views\Resource\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(ProjectDir)config.json" (
+  if exist "$(TargetDir)\\..\\..\\DerethForever\\bin\\$(Platform)\\$(Configuration)\\config.json" (
+    copy "$(TargetDir)\\..\\..\\DerethForever\\bin\\$(Platform)\\$(Configuration)\\config.json" $(ProjectDir)
+  )
+)</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets" Condition="Exists('..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

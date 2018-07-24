@@ -1,0 +1,44 @@
+@model List<DerethForever.Web.Models.Shared.BookPage>
+
+<h3>Book Pages</h3>
+<input type="hidden" id="PageCount" value="@Model.Count()" />
+
+<div class="row row-spacer">
+    <div class="col-md-2"><strong>Page #</strong></div>
+    <div class="col-md-2"><strong>Author Name</strong></div>
+    <div class="col-md-2"><strong>Author Account</strong></div>
+    <div class="col-md-2"><strong>Author Id</strong></div>
+    <div class="col-md-2"><strong>Ignore Author</strong></div>
+</div>
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    <div class="row row-spacer">
+        <div class="col-md-2">
+            @Html.HiddenFor(m => m[i].Deleted)
+            @Html.TextBoxFor(m => m[i].Page, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBoxFor(m => m[i].AuthorName, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBoxFor(m => m[i].AuthorAccount, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBoxFor(m => m[i].AuthorId, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            @Html.CheckBoxFor(m => m[i].IgnoreAuthor)
+        </div>
+        <div class="col-md-2">
+            <input type="button" class="btn btn-xs btn-danger" name="removePage" id="removePage" value="Remove" />
+        </div>
+    </div>
+    <div class="row row-spacer">
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m[i].PageText, new { cols = 110, rows = 3, @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+}

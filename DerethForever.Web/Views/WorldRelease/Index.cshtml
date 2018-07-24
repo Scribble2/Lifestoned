@@ -1,0 +1,70 @@
+@model DerethForever.Web.Models.WorldRelease.IndexModel
+
+@{
+    ViewBag.Title = "Release Index";
+}
+
+<h2>Last Releases</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Results[0].ReleaseDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Results[0].PreviousRelease)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Results[0].FileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Results[0].Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Results[0].FileSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Results[0].Hash)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model.Results != null && Model.Results.Count > 0)
+    {
+        foreach (var item in Model.Results.Where(x => x.FileExists).ToList())
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PreviousRelease)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileSize)
+                </td>
+                <td class="hashExpand">
+                    <a title="(@item.Hash)">@(item.Hash.Substring(0, 8) + "...")</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Download", "Get", "WorldRelease", new { fileName = item.FileName }, null)
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="6">
+                No releases found. Please check the path in your Web.config file, cut a world release through the Server Admin page, or place a release in the correct folder.
+            </td>
+        </tr>
+    }
+
+</table>

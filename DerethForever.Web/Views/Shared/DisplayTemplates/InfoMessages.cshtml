@@ -1,0 +1,56 @@
+@model DerethForever.Web.Models.BaseModel
+
+@if (Model?.ErrorMessages?.Count > 0)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @for (int i = 0; i < Model.ErrorMessages.Count; i++)
+            {
+                <li>@Html.DisplayFor(m => m.ErrorMessages[i])</li>
+            }
+        </ul>
+        @if (Model.Exception != null)
+        {
+            <pre>@Html.DisplayFor(m => m.Exception)</pre>
+        }
+    </div>
+}
+
+@if (Model?.InfoMessages?.Count > 0)
+{
+    <div class="alert alert-info">
+        <ul>
+            @for (int i = 0; i < Model.InfoMessages.Count; i++)
+            {
+                <li>@Html.DisplayFor(m => m.InfoMessages[i])</li>
+            }
+        </ul>
+    </div>
+    <hr />
+}
+
+@if (Model?.SuccessMessages?.Count > 0)
+{
+    <div class="alert alert-success">
+        <ul>
+            @for (int i = 0; i < Model.SuccessMessages.Count; i++)
+            {
+                <li>@Html.DisplayFor(m => m.SuccessMessages[i])</li>
+            }
+        </ul>
+    </div>
+    <hr />
+}
+
+@if (Model?.WarningMessages?.Count > 0)
+{
+    <div class="alert alert-warning">
+        <ul>
+            @for (int i = 0; i < Model.WarningMessages.Count; i++)
+            {
+                <li>@Html.DisplayFor(m => m.WarningMessages[i])</li>
+            }
+        </ul>
+    </div>
+    <hr />
+}

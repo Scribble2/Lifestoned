@@ -1,0 +1,20 @@
+@model List<DerethForever.Web.Models.Weenie.ChangelogEntry>
+
+@for (int i = 0; i < (Model?.Count ?? 0); i++)
+{
+    @Html.HiddenFor(m => m[i].Created)
+    @Html.HiddenFor(m => m[i].Author)
+    @Html.HiddenFor(m => m[i].Comment)
+    <div class="row row-spacer">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    @Html.Raw(Html.Encode(Model[i].Author + " on " + Model[i].Created.ToString("g")))
+                </div>
+                <div class="panel-body">
+                    @Html.Raw(Html.Encode(Model[i].Comment))
+                </div>
+            </div>
+        </div>
+    </div>
+}

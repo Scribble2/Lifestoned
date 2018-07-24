@@ -1,0 +1,28 @@
+@model List<DerethForever.Web.Models.Account.ManagedServerModel>
+
+<div class="row row-spacer">
+    <div class="col-md-2"></div>
+    <div class="col-md-3">@Html.Label("Name")</div>
+    <div class="col-md-3">@Html.Label("Address")</div>
+    <div class="col-md-3"></div>
+</div>
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    <div class="row row-spacer">
+        <div class="col-md-2">
+            @Html.HiddenFor(m => m[i].ManagedServerGuid)
+            @Html.HiddenFor(m => m[i].AccountGuid)
+            @Html.HiddenFor(m => m[i].Deleted)
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(m => m[i].ServerName, new { @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(m => m[i].Address, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-xs btn-danger" name="removeWorld" ><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+    </div>
+}

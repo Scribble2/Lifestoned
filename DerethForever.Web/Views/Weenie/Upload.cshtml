@@ -1,0 +1,81 @@
+
+@{
+    ViewBag.Title = "Upload GDLE Json";
+}
+
+<div class="form-horizontal" >
+    <h2>
+        Upload JSON File
+    </h2>
+    <hr />
+
+    <p>
+        Using this page you can upload a <a href="#" data-toggle="tooltip" title="Intended to import/modify originally generated content from the GDLE emulator, not for use importing or modifying copyright protected content.">GDLE json file</a> of 1 object.  After uploading it, you will be taken to the
+    Weenie Editing page where you can make changes to it before saving it into Dereth Forever.  After uploading it
+    to Dereth Forever, you can download it from the Weenie Search page.
+
+    At the current time, the following properties are not yet implemented in Dereth Forever and will therefore be lost
+    upon export.  We recommend you restore this data into the JSON before importing into GDLE.
+    <ul>
+        <li>The Targeting data ("bpsd") of body parts is losing some floating point precision.</li>
+        <li>Create List's "try to bond" property is flipping from "0" or "1" to "false" or "true".</li>
+    </ul>
+
+</p>
+    <br/>
+
+    <div class="well">
+        <input type="file" name="UploadFile" id="txtUploadFile" />
+        <br/>
+        <input type="button" value="Upload" id="btnUpload" class="btn btn-primary" />
+    </div>
+</div>
+
+@section scripts {
+    <script language="javascript">
+        $('#btnUpload').on('click', function (e) {
+            var uploader = $('#txtUploadFile');
+            var files = uploader[0].files;
+            // console.log("files.length: " + files.length);
+
+            if (uploader.length > 0) {
+                // console.log("window.FormData: " + window.FormData);
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var x = 0; x < files.length; x++) {
+                        // console.log("adding file " + x);
+                        // console.log("file" + x + ".length: " + files[x].size);
+                        data.append("file" + x, files[x]);
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("UploadEx", "Weenie")',
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function(result) {
+                            console.log('result: ' + result);
+                            console.log('result.id: ' + result.id);
+
+                            if (result.id > 0)
+                                window.location.href = '@(Url.Action("EditImported", "Weenie"))';
+                        },
+                        error: function (xhr, status, p3, p4){
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            console.log(err);
+                        }
+                    });
+                } else {
+                    alert("This browser doesn't support HTML5 file uploads!");
+                }
+            }
+        });
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}

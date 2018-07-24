@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifestoned - @ViewBag.Title</title>
+    @Styles.Render("~/Styles/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Html.Partial("_Favicons")
+</head>
+
+@{
+    string ctrl = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+}
+
+<body data-spy="scroll" data-target=".navbar">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Lifestoned", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li class="@(@ctrl == "Server" ? "active" : "")">@Html.ActionLink("Server Admin", "Index", "Server")</li>
+                        <li class="@(@ctrl == "Account" ? "active" : "")">@Html.ActionLink("Accounts", "Accounts", "Account")</li>
+                    }
+                    <!-- <li class="disabled @(@ctrl == "Content" ? "active" : "")">@Html.ActionLink("Content", "Index", "Content")</li> -->
+                    <li class="@(@ctrl == "WorldRelease" ? "active" : "")">@Html.ActionLink("World Releases", "Index", "WorldRelease")</li>
+                    <li class="@(@ctrl == "Weenie" ? "active" : "") dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Weenies<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Search", "Index", "Weenie")</li>
+                            <li>@Html.ActionLink("Upload JSON Data", "Upload", "Weenie")</li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>@Html.ActionLink("My Sandbox", "Sandbox", "Weenie")</li>
+                            }
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Developer"))
+                            {
+                                <li>@Html.ActionLink("Submissions", "Submissions", "Weenie")</li>
+                            }
+                            <li>@Html.ActionLink("Recent Changes", "Recent", "Weenie")</li>
+                            <li>@Html.ActionLink("New", "New", "Weenie")</li>
+                        </ul>
+                    </li>
+                    <!-- <li class="disabled @(@ctrl == "Recipes" ? "active" : "")">@Html.ActionLink("Recipes", "Index", "Recipe")</li> -->
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>
+                &copy; @DateTime.Now.Year - Lifestoned &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="https://discord.gg/ArdbxEm" title="Join us on Discord"><img src="~/images/discord.png" height="35dp" /></a>
+            </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

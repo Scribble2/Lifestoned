@@ -1,0 +1,35 @@
+@using DerethForever.Web.Models.Enums
+@model List<DerethForever.Web.Models.Shared.Skill>
+
+<h3>Skills</h3>
+
+<div class="row row-spacer">
+    <div class="col-md-2"><strong>Skill</strong></div>
+    <div class="col-md-2"><strong>Status</strong></div>
+    <div class="col-md-1"><strong data-toggle="tooltip" title="Base Value as reported by the API.  Only changes upon reloading the page.">Base</strong></div>
+    <div class="col-md-2"><strong>Ranks</strong></div>
+    <div class="col-md-4"></div>
+</div>
+
+
+@for (int i = 0; i < (Model?.Count ?? 0); i++)
+{
+    <div class="row row-spacer">
+        <div class="col-md-2">
+            @Html.HiddenFor(m => m[i].Deleted)
+            @Html.HiddenFor(m => m[i].Status)
+            @Html.HiddenFor(m => m[i].SkillId)
+            @Html.HiddenFor(m => m[i].ExperienceSpent)
+            @Html.DisplayFor(m => m[i].SkillName)
+        </div>
+        <div class="col-md-2">
+            @Html.EnumDropDownListFor(m => m[i].Status_Binder, new { @class = "form-control" })
+        </div>
+        <div class="col-md-1">@Html.DisplayFor(m => m[i].BaseValue)</div>
+        <div class="col-md-2">@Html.TextBoxFor(m => m[i].Ranks, new { @class = "form-control" })</div>
+        <div class="col-md-2">
+            <input type="button" class="btn btn-xs btn-danger" name="removeSkill" value="Remove" />
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+}

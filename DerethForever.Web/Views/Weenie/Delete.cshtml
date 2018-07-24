@@ -1,0 +1,40 @@
+@using DerethForever.Web.Controllers;
+@using DerethForever.Web.Models.Weenie;
+@model Weenie
+
+@{
+    ViewBag.Title = "Delete " + Model.Name;
+}
+
+<br />
+
+<h4>Confirm deletion of @(Html.Raw(Model.Name)), @(Html.Raw(Model.WeenieClassId))?</h4>
+
+<br />
+
+@Html.DisplayFor(m => m, "InfoMessages")
+
+@using (Html.BeginForm("Delete", "Weenie", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.WeenieClassId)
+    @Html.HiddenFor(m => m.DataObjectId)
+    @Html.HiddenFor(m => m.MvcAction)
+
+    <button class="btn btn-danger" id="btnDelete">Delete</button>
+    <button class="btn btn-warning" id="btnCancel">Cancel</button>
+}
+
+@section scripts {
+    <script language="javascript">
+        $("#btnDelete").on("click", function () {
+            $("#MvcAction").val(@((int)WeenieCommands.Delete));
+            $("form").submit();
+        });
+
+        $("#btnCancel").on("click", function () {
+            $("#MvcAction").val(@((int)WeenieCommands.Cancel));
+            $("form").submit();
+        });
+    </script>
+}

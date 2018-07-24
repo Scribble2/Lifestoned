@@ -1,0 +1,38 @@
+@model DerethForever.Web.Models.Account.AccountListModel
+
+@{
+    ViewBag.Title = "Account Listing";
+}
+
+<br />
+
+
+@Html.DisplayForModel("InfoMessages")
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+    <thead>
+    <tr>
+        <th>Account Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        @if (Model.Accounts.Count == 0)
+        {
+            <tr><td colspan="4" align="center">No results.</td></tr>
+        }
+
+        @for (int i = 0; i < Model.Accounts.Count; i++)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => m.Accounts[i].AccountGuid)</td>
+                <td>@Html.DisplayFor(m => m.Accounts[i].Name)</td>
+                <td>@Html.DisplayFor(m => m.Accounts[i].Email)</td>
+                <td>@Html.ActionLink("View Subscriptions", "Subs", new { id = Model.Accounts[i].AccountGuid })</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

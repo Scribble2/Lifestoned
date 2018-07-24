@@ -1,0 +1,253 @@
+@using DerethForever.Web.Controllers;
+@using DerethForever.Web.Models.Recipe;
+@model Recipe
+
+@{
+    ViewBag.Title = "Edit Recipe";
+}
+
+<br />
+
+@using (Html.BeginForm("Edit", "Recipe", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.RecipeGuid)
+
+    <div class="form-horizontal">
+        <h2>
+            Edit Recipe
+        </h2>
+        <hr />
+        <div class="container">
+            
+            <div class="well">
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.RecipeType)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EnumDropDownListFor(m => m.RecipeType_Binder, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.SourceWcid)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.SourceWcid, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.TargetWcid)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.TargetWcid, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.SkillId)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EnumDropDownListFor(m => m.Skill_Binder, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.SkillDifficulty)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.SkillDifficulty, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.SuccessMessage)
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.SuccessMessage, new { @class = "form-control wide" })
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.FailMessage)
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.FailMessage, new { @class = "form-control wide" })
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.AlternateMessage)
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.AlternateMessage, new { @class = "form-control wide" })
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.ResultFlags)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(m => m.ResultFlags_Binder, "FlagsEnum")
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.HealingAttribute)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.HealingAttribute, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.SuccessItem1Wcid)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.SuccessItem1Wcid, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.SuccessItem1Quantity)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.SuccessItem1Quantity, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.SuccessItem2Wcid)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.SuccessItem2Wcid, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.SuccessItem2Quantity)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.SuccessItem2Quantity, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.FailureItem1Wcid)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.FailureItem1Wcid, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.FailureItem1Quantity)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.FailureItem1Quantity, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.FailureItem2Wcid)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.FailureItem2Wcid, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.FailureItem2Quantity)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.FailureItem2Quantity, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.ModifiedBy)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.HiddenFor(m => m.ModifiedBy)
+                        @Html.DisplayFor(m => m.ModifiedBy)
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row row-spacer">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.LastModified)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.HiddenFor(m => m.LastModified)
+                        @Html.DisplayFor(m => m.LastModified)
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script language="javascript">
+    </script>
+}

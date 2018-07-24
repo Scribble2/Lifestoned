@@ -1,0 +1,24 @@
+
+
+@{
+    ViewBag.Title = "Cut World Release";
+}
+
+<h1>Cut World Release</h1>
+
+<br />
+If this is a partial release, you probably won't even have time to read this.  If it's a full release, it will take a few seconds or more.
+
+
+@using (Html.BeginForm("CutWorldReleaseEx", "Server", FormMethod.Post, htmlAttributes: new { @name = "cut" }))
+{
+    @Html.Hidden("type", Request.QueryString["type"])
+}
+
+@section scripts {
+    <script language="javascript">
+        window.onload = function() {
+            document.forms['cut'].submit();
+        }
+    </script>
+}

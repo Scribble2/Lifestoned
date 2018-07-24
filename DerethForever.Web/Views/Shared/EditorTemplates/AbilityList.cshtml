@@ -1,0 +1,29 @@
+@model DerethForever.Web.Models.Shared.AbilitySet
+
+<h3>Attributes</h3>
+
+<div id="abilitiesContainer">
+    <div class="row row-spacer">
+        <div class="col-md-2"><strong>Ability</strong></div>
+        <div class="col-md-1"><strong>Base</strong></div>
+        <div class="col-md-2"><strong>Ranks</strong></div>
+    </div>
+    <div class="row row-spacer">
+        @Html.EditorFor(m => m.Strength, "Ability")
+    </div>
+    <div class="row row-spacer">
+        @Html.EditorFor(m => m.Endurance, "Ability")
+    </div>
+    <div class="row row-spacer">
+        @Html.EditorFor(m => m.Coordination, "Ability")
+    </div>
+    <div class="row row-spacer">
+        @Html.EditorFor(m => m.Quickness, "Ability")
+    </div>
+    <div class="row row-spacer">
+        @Html.EditorFor(m => m.Focus, "Ability")
+    </div>
+    <div class="row row-spacer">
+        @Html.EditorFor(m => m.Self, "Ability")
+    </div>
+</div>

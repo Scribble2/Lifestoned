@@ -1,0 +1,94 @@
+@model DerethForever.Web.Models.Account.ApiAccountModel
+
+@{
+    ViewBag.Title = "My Account";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>My Account</h2>
+        <hr />
+
+        @Html.DisplayFor(m => m, "InfoMessages")
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.AccountAction)
+        @Html.HiddenFor(m => m.AccountGuid)
+        @Html.HiddenFor(m => m.Name)
+
+        <div class="well">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control disabled", disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="row row-spacer">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-2">
+                    <h4>@Html.Label("Managed Servers")</h4>
+                </div>
+            </div>
+
+            @Html.EditorFor(m => m.ManagedWorlds, "ManagedWorlds")
+
+            <div class="row row-spacer">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-1">
+                    <input type="button" class="btn btn-primary" id="addManagedWorld" value="Add Managed Server" formaction="Edit" formnovalidate="formnovalidate" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section scripts {
+    <script language="javascript">
+        $("#addManagedWorld").on("click", function () {
+            $("#AccountAction").val("AddManagedWorld");
+            $("form").submit();
+        });
+
+        $("button[name='removeWorld']").on("click", function () {
+            parentDiv = $(this).parent().parent();
+            var deleteInput = parentDiv.find("[id$=Deleted]");
+            deleteInput.val("True");
+            parentDiv.addClass("hidden");
+        });
+    </script>
+}

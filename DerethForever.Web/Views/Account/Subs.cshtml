@@ -1,0 +1,67 @@
+@using DerethForever.Web.Models.Enums
+@model DerethForever.Web.Models.Account.SubListModel
+
+
+@{
+    ViewBag.Title = "Subscription Listing";
+}
+
+<br />
+
+<h4>Subscriptions for @Html.Label(Model?.AccountName ?? "(missing)")</h4>
+
+<br/>
+
+@Html.DisplayForModel("InfoMessages")
+
+@using (Html.BeginForm("Subs", "Account", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.AccountGuid)
+    @Html.HiddenFor(m => m.AccountName)
+
+    @Html.AntiForgeryToken()
+
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead>
+        <tr>
+            <th>Subscription Id</th>
+            <th>Name</th>
+            <th>Current Level</th>
+            <th>New Level</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (Model.Subscriptions.Count == 0)
+        {
+            <tr><td colspan="4" align="center">No results.</td></tr>
+        }
+
+        @for (int i = 0; i < Model.Subscriptions.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(m => m.Subscriptions[i].AccessLevel)
+                    @Html.HiddenFor(m => m.Subscriptions[i].AccountGuid)
+                    @Html.HiddenFor(m => m.Subscriptions[i].Name)
+                    @Html.HiddenFor(m => m.Subscriptions[i].SubscriptionGuid)
+                    @Html.HiddenFor(m => m.Subscriptions[i].SubscriptionId)
+
+                    @Html.DisplayFor(m => m.Subscriptions[i].SubscriptionGuid)
+                </td>
+                <td>@Html.DisplayFor(m => m.Subscriptions[i].Name)</td>
+                <td>@Html.Raw(Model.Subscriptions[i].AccessLevel_Binder.GetName())</td>
+                <td>@Html.EnumDropDownListFor(m => m.Subscriptions[i].NewAccessLevel, new { @class = "form-control" })</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+
+    <br />
+    <div class="form-group">
+        <div class="col-md-12">
+            @Html.ActionLink("Back to Accounts", "Accounts") &nbsp;&nbsp;&nbsp;
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+}

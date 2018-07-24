@@ -1,0 +1,81 @@
+@model List<DerethForever.Web.Models.Shared.GeneratorTable>
+
+<h3>Generator Table</h3>
+
+@for (int i = 0; i < (Model?.Count ?? 0); i++)
+{
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#spawn@(Html.Raw(i))">@Html.Raw("Show/Hide " + Model[i].WeenieClassId)</a>
+                    <input type="button" class="btn btn-xs btn-danger pull-right" name="removeSpawn" value="Remove" />
+                    @Html.HiddenFor(m => m[i].Deleted)
+                </h4>
+            </div>
+            <div id="spawn@(Html.Raw(i))" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row row-spacer">
+                        <div class="col-md-2 vcenter">@Html.Label("Weenie Class ID")</div>
+                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].WeenieClassId, new { @class = "form-control weenieClassEntry" })</div>
+                        <div class="col-md-2 vcenter">@Html.Label("Probability")</div>
+                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].Probability, new { @class = "form-control" })</div>
+                        <div class="col-md-1 vcenter">@Html.Label("Delay")</div>
+                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].Delay, new { @class = "form-control" })</div>
+                        <div class="col-md-1 vcenter"></div>
+                    </div>
+                    <div class="row row-spacer">
+                        <div class="col-md-2 vcenter">@Html.Label("Initial Create")</div>
+                        <div class="col-md-1 vcenter">@Html.TextBoxFor(m => m[i].InitCreate, new { @class = "form-control" })</div>
+                        <div class="col-md-1 vcenter">@Html.Label("When Create")</div>
+                        <div class="col-md-3 vcenter">@Html.EnumDropDownListFor(m => m[i].WhenCreateEnum, new { @class = "form-control" })</div>
+                        <div class="col-md-1 vcenter">@Html.Label("Where Create")</div>
+                        <div class="col-md-3 vcenter">@Html.EnumDropDownListFor(m => m[i].WhereCreateEnum, new { @class = "form-control" })</div>
+                        <div class="col-md-1 vcenter"></div>
+                    </div>
+                    <div class="row row-spacer">
+                        <div class="col-md-2 vcenter">@Html.Label("Max Number")</div>
+                        <div class="col-md-1 vcenter">@Html.TextBoxFor(m => m[i].MaxNumber, new { @class = "form-control" })</div>
+                        <div class="col-md-1 vcenter"></div>
+                        <div class="col-md-1 vcenter">@Html.Label("Palette")</div>
+                        <div class="col-md-1 vcenter">@Html.TextBoxFor(m => m[i].PaletteId, new { @class = "form-control" })</div>
+                        <div class="col-md-1 vcenter">@Html.Label("Shade")</div>
+                        <div class="col-md-1 vcenter">@Html.TextBoxFor(m => m[i].Shade, new { @class = "form-control" })</div>
+                        <div class="col-md-4 vcenter"></div>
+                    </div>
+                    <div class="row row-spacer">
+                        <div class="col-md-2 vcenter">@Html.Label("Object Cell")</div>
+                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].ObjectCell, new { @class = "form-control" })</div>
+                        <div class="col-md-1 vcenter">@Html.Label("Slot")</div>
+                        <div class="col-md-1 vcenter">@Html.TextBoxFor(m => m[i].Slot, new { @class = "form-control" })</div>
+                        <div class="col-md-1 vcenter">@Html.Label("Stack Size")</div>
+                        <div class="col-md-1 vcenter">@Html.TextBoxFor(m => m[i].StackSize, new { @class = "form-control" })</div>
+                        <div class="col-md-5 vcenter"></div>
+                    </div>
+                    <div class="row row-spacer">
+                        <div class="col-md-2"><strong>Frame</strong></div>
+                        <div class="col-md-1"><strong>X</strong></div>
+                        <div class="col-md-1"><strong>Y</strong></div>
+                        <div class="col-md-1"><strong>Z</strong></div>
+                        <div class="col-md-1"><strong>Q-W</strong></div>
+                        <div class="col-md-1"><strong>Q-X</strong></div>
+                        <div class="col-md-1"><strong>Q-Y</strong></div>
+                        <div class="col-md-1"><strong>Q-Z</strong></div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div class="row row-spacer">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Origin.X, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Origin.Y, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Origin.Z, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Angles.W, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Angles.X, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Angles.Y, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Angles.Z, new { style = "width: 90px;" })</div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,22 @@
+﻿@model object
+
+@{ 
+    bool isEnum = (Model is Enum);
+
+    try
+    {
+        Type u = Nullable.GetUnderlyingType(Model.GetType());
+        isEnum = isEnum || (u != null && u.IsEnum);
+    }
+    catch
+    { }
+}    
+
+@if (isEnum)
+{ 
+    @Html.EnumDropDownListFor(m => m)
+}
+else
+{
+    @Html.TextBoxFor(m => m)
+}

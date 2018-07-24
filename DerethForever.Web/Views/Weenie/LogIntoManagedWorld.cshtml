@@ -1,0 +1,44 @@
+@using DerethForever.Web.Controllers
+@model DerethForever.Web.Models.Weenie.DownloadChangeModel
+
+@{
+    ViewBag.Title = "Log in to Managed Server";
+}
+
+<h2>Log in to Managed Server</h2>
+
+<br />
+
+@using (Html.BeginForm("LogIntoManagedWorld", "Weenie", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.FromUserGuid)
+    @Html.HiddenFor(m => m.WeenieId)
+    @Html.HiddenFor(m => m.TargetServerGuid)
+    @Html.HiddenFor(m => m.PreviewOnly)
+
+    @Html.DisplayFor(m => m, "InfoMessages")
+
+    <div class="well">
+        <div class="row row-spacer">
+            <div class="col-md-2 col-md-offset-2">
+                @Html.Label("Username")
+            </div>
+            <div class="col-md-3">
+                @Html.TextBoxFor(m => m.TargetServerUsername, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row row-spacer">
+            <div class="col-md-2 col-md-offset-2">
+                @Html.Label("Password")
+            </div>
+            <div class="col-md-3">
+                @Html.PasswordFor(m => m.TargetServerPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row row-spacer">
+            <div class="col-md-2 col-md-offset-4">
+                <input type="submit" value="Log In" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

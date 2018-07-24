@@ -1,0 +1,20 @@
+@model DerethForever.Web.Models.Weenie.SandboxModel
+
+@{
+    ViewBag.Title = "Review Sandbox Changes";
+}
+
+<h2>My Sandbox Changes</h2>
+
+<br/>
+
+@if (Model.Changes == null || Model.Changes.Count < 1)
+{
+    <div class="alert alert-info">
+        There are no changes to review.
+    </div>
+}
+else
+{
+    @Html.EditorFor(m => m.Changes, "WeenieChangeList")
+}

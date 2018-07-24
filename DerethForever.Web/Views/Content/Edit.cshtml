@@ -1,0 +1,74 @@
+@model DerethForever.Web.Models.Content.Content
+
+@{
+    ViewBag.Title = "Edit Content";
+    if (!string.IsNullOrWhiteSpace(Model.ContentName))
+    {
+        ViewBag.Title += " " + Model.ContentName;
+    }
+}
+
+<h2>Edit Content</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Content</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContentName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ContentName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ContentName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContentType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ContentType, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ContentType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="row row-spacer">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.ModifiedBy)
+            </div>
+            <div class="col-md-4">
+                @Html.HiddenFor(m => m.ModifiedBy)
+                @Html.DisplayFor(m => m.ModifiedBy)
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+
+        <div class="row row-spacer">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.LastModified)
+            </div>
+            <div class="col-md-4">
+                @Html.HiddenFor(m => m.LastModified)
+                @Html.DisplayFor(m => m.LastModified)
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

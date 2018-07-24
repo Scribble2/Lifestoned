@@ -1,0 +1,28 @@
+@using DerethForever.Web.Controllers
+@model DerethForever.Web.Models.Weenie.DownloadChangeModel
+
+@{
+    ViewBag.Title = "Send Weenie to Managed Server";
+}
+
+<h2>Send Weenie to Managed Server</h2>
+
+<br/>
+
+@if (Model.TargetServerGuid == null)
+{
+    using (Html.BeginForm("SelectDfServer", "Weenie", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.FromUserGuid)
+        @Html.HiddenFor(m => m.WeenieId)
+        @Html.HiddenFor(m => m.PreviewOnly)
+        @Html.DropDownListFor(m => m.TargetServerGuid, BaseController.CurrentUser.ManagedWorldSelectListItems, "Select a Server", new { @class = "form-control" })
+    }
+}
+else 
+{
+    <div class="alert alert-warning">
+        You have reached this page in error.  Please file a bug report.
+    </div>
+}
+

@@ -1,0 +1,65 @@
+@using DerethForever.Web.Models.WorldRelease;
+
+@{
+    ViewBag.Title = "Server Control Panel";
+}
+
+<h1>Server Control Panel</h1>
+
+<div class="well">
+    The server control panel acts as a dashboard for preforming server operations invoked over the API.
+</div>
+
+<h3>Quick Hit List</h3>
+<ul>
+    <li>@Html.ActionLink("Cut a Partial World Release", "CutWorldRelease", "Server", new { type = ReleaseType.Partial }, null)</li>
+    <li>@Html.ActionLink("Cut a Full World Release", "CutWorldRelease", "Server", new { type = ReleaseType.Full }, null)</li>
+    <li>@Html.ActionLink("Reload Cache", "ReloadCache", "Server")</li>
+</ul>
+
+<br/>
+
+<h3>Redeploy World Database</h3>
+<p>
+    This will completely reset your World database using the latest release pack from the a Dereth repository.
+</p>
+
+<br/>
+
+<form action="@Url.Action("Redeploy", "Server")" method="POST">
+    <button type="button" class="btn btn-primary">Redeploy</button>
+</form>
+
+<hr />
+
+<br/>
+
+<h3>Export World Database Changes</h3>
+<p>
+    This will take all changes you have made in your world database, and generate SQL scripts for the Dereth repository.
+    Use this to create the file changes necessary to create a Git commit and pull request.
+</p>
+
+<br/>
+
+<form action="@Url.Action("ExportChanges", "Server")" method="POST">
+    <button type="button" class="btn btn-primary">Export</button>
+</form>
+
+<hr/>
+
+<br/>
+
+<h3>Rebase Scripts</h3>
+<p>
+    This will export all changes in the world database.  Use this in case the structure of the world DB changes in a way
+    that is not backwards compatible.  It is super rare that this would be necessary.
+</p>
+
+<br />
+
+<form action="@Url.Action("Rebase", "Server")" method="POST">
+    <button type="button" class="btn btn-primary">Rebase</button>
+</form>
+
+

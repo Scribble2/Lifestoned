@@ -1,0 +1,6 @@
+@model System.DateTime?
+
+@if (Model != null)
+{
+    <span>@Html.Raw(Model.Value.ToString("G"))</span>
+}

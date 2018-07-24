@@ -1,0 +1,151 @@
+@using DerethForever.Web.Models.Enums
+@using DerethForever.Web.Models.Shared
+
+@model List<EmoteSet>
+
+<h3>Emote Table</h3>
+
+@foreach (EmoteCategory category in Enum.GetValues(typeof(EmoteCategory)))
+{
+    // emotes sets are logically grouped by Category, ordered by Sort Order
+    var emoteSets = Model.Where(es => es.EmoteCategoryId == (uint)category).OrderBy(es => es.SortOrder).ToList();
+
+    if (emoteSets?.Count < 1)
+    {
+        continue;
+    }
+
+    <div class="row row-spacer">
+        <div class="col-md-12">
+            <h4>@Html.Label("Emotes for Category: " + category.GetName())</h4>
+        </div>
+    </div>
+    int panelId = 0;
+    string panelIdString = "";
+    foreach (EmoteSet es in emoteSets)
+    {
+        int i = Model.IndexOf(es);
+
+        <div>
+            <div class="row row-spacer">
+                <div class="col-md-3">
+                    @Html.HiddenFor(m => m[i].EmoteCategoryId)
+                    @Html.HiddenFor(m => m[i].EmoteSetGuid)
+                    @Html.HiddenFor(m => m[i].WeenieClassId)
+                    @Html.HiddenFor(m => m[i].Deleted)
+                    @Html.HiddenFor(m => m[i].Quest)
+                    @Html.LabelFor(m => m[i].SortOrder)
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m[i].SortOrder, new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    <input type="button" class="btn btn-xs btn-danger" name="removeEmoteSet" value="Remove Emote Set" />
+                </div>
+            </div>
+
+            <div class="row row-spacer">
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m[i].Probability)
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m[i].Probability, new { @class = "form-control" })
+                </div>
+            </div>
+            @if (EmoteSet.IsPropertyVisible("Style", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].Style)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].Style, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("SubStyle", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].SubStyle)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].SubStyle, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("ClassId", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].ClassId)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].ClassId, new { @class = "form-control weenieClassEntry" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("MaxHealth", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].MaxHealth)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].MaxHealth, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("MinHealth", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].MinHealth)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].MinHealth, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("VendorType", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].VendorType)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].VendorType, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" href="#@(Html.Raw(es.EmoteSetGuid.ToString()))">@Html.Label("Emotes")</a>
+                </div>
+                <div id="@(Html.Raw(es.EmoteSetGuid.ToString()))" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        @Html.EditorFor(m => m[i].Emotes, "EmoteList")
+
+                        <div class="row row-spacer">
+                            <div class="col-md-3">
+                                @Html.Label("Add new Emote")
+                            </div>
+                            <div class="col-md-3">
+                                @Html.EnumDropDownListFor(m => m[i].NewEmoteType, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-3">
+                                <input type="button" class="btn btn-primary" id="addEmote" name="addEmote" value="Add" formaction="Edit" data-content="@(Model[i].EmoteSetGuid.Value)" formnovalidate="formnovalidate" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

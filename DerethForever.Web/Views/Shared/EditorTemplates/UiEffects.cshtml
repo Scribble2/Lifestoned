@@ -1,0 +1,21 @@
+@using DerethForever.Web.Models.Enums
+@model UiEffects?
+
+@{string name = ViewData.TemplateInfo.HtmlFieldPrefix;}
+
+@Html.Hidden("", (UiEffects?)Model)
+
+@foreach (UiEffects r in Enum.GetValues(typeof(UiEffects)))
+{
+    @Html.CheckBox(((int)r).ToString(), ((Model ?? 0) & r) > 0,
+        new
+        {
+            onchange = "if ($('#" + name + "_" + ((int)r) + "').prop('checked')) " +
+                       "{ $('#" + name + "').val($('#" + name + "').val() | 0x" + ((int)r).ToString("X") + "); } " +
+                       "else " +
+                       "{ $('#" + name + "').val($('#" + name + "').val() & ~0x" + ((int)r).ToString("X") + "); }"
+        })
+
+    @Html.Label(r.GetName())
+    <br />
+}

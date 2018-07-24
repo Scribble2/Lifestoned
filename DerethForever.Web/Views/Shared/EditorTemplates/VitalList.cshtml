@@ -1,0 +1,20 @@
+@model DerethForever.Web.Models.Shared.VitalSet
+
+<h3>Vitals</h3>
+
+<div id="vitalsContainer">
+    <div class="row row-spacer">
+        <div class="col-md-2"><strong>Ability</strong></div>
+        <div class="col-md-1"><strong>Base</strong></div>
+        <div class="col-md-2"><strong>Ranks</strong></div>
+    </div>
+    <div class="row row-spacer">
+        @Html.EditorFor(m => m.Health, "Vital")
+    </div>
+    <div class="row row-spacer">
+        @Html.EditorFor(m => m.Stamina, "Vital")
+    </div>
+    <div class="row row-spacer">
+        @Html.EditorFor(m => m.Mana, "Vital")
+    </div>
+</div>

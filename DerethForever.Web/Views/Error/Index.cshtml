@@ -1,0 +1,14 @@
+@model System.Exception
+
+@{
+    ViewBag.Title = "Error";
+}
+<br/>
+<div class="alert alert-danger">
+   We're having some difficulties with the page you requested. Please try again at another time or contact the server administrator.
+</div>
+
+@if (Model != null)
+{
+    <span style="white-space: pre-line">@Model.ToString()</span>
+}

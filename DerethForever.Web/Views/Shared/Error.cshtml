@@ -1,0 +1,38 @@
+@model System.Web.Mvc.HandleErrorInfo
+@{
+    ViewBag.Title = "Error";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h1>Woopsies!</h1>
+        <div class="col-sm-12 alert alert-danger">
+            <h2>An error occurred while processing your request.</h2>
+            <div>
+                @{
+                    if (User.Identity.IsAuthenticated && User.IsInRole("Envoy"))
+                    {
+                        if (Model != null && Model.Exception != null)
+                        {
+                            <div class="alert alert-danger">
+                                <h5>Please relay the following messages to a system administrator:</h5>
+                                <h3>URL: ~/@string.Format("{0}/{1}", Model.ControllerName, Model.ActionName)</h3>
+                                <h4>Class/Type/Offended Robot: @Model.Exception.GetType().Name</h4>
+                                @if (Request.IsLocal)
+                                {
+                                    <h4>Error Message: @Model.Exception.Message</h4>
+                                    <h4>Error Details:</h4>
+                                    <h5><pre>@Model.Exception.StackTrace</pre></h5>
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <h3>Contact a system administrator.</h3>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

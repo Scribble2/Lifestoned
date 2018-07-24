@@ -1,0 +1,10 @@
+@using DerethForever.Web.Controllers
+
+@using (Html.BeginForm("SelectServer", "Account", FormMethod.Post))
+{
+    @Html.Hidden("href", Request.RawUrl)
+    if (BaseController.CurrentUser != null)
+    {
+        @Html.DropDownList("selectedServer", BaseController.CurrentUser.ManagedWorldSelectListItems, BaseController.CurrentUser.SelectedManagedWorld ?? "Select a World", new { @class = "form-control", style = "margin-top: 8px;", onchange = "this.form.submit();" })
+    }
+}
