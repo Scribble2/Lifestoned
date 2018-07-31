@@ -31,9 +31,6 @@ namespace DerethForever.Web.Models.CachePwn
         [JsonProperty("wcid")]
         public uint WeenieId { get; set; }
 
-        [JsonProperty("weenieType")]
-        public int WeenieTypeId { get; set; }
-
         [JsonProperty("attributes")]
         public AttributeSet Attributes { get; set; }
 
@@ -87,12 +84,6 @@ namespace DerethForever.Web.Models.CachePwn
                 DataObjectId = WeenieId,
                 WeenieClassId = WeenieId
             };
-
-            w.IntProperties.Add(new Shared.IntProperty()
-            {
-                IntPropertyId = (int)IntPropertyId.WeenieType,
-                Value = WeenieTypeId
-            });
 
             IntStats.ForEach(stat =>
             {
@@ -371,9 +362,7 @@ namespace DerethForever.Web.Models.CachePwn
         {
             CachePwnWeenie pwn = new CachePwnWeenie
             {
-                WeenieId = w.WeenieClassId,
-                WeenieTypeId = w.IntProperties.First(i => i.IntPropertyId == (int)IntPropertyId.WeenieType).Value
-                .Value
+                WeenieId = w.WeenieClassId
             };
 
             if (w.IntProperties?.Count > 0)
