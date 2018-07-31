@@ -23,12 +23,6 @@ namespace DerethForever.Web.Models.CachePwn
 {
     public class Page
     {
-        public bool? IgnoreAuthor
-        {
-            get { return ((IgnoreAutor_Binder == null) ? (bool?)null : (IgnoreAutor_Binder.Value == 0 ? true : false)); }
-            set { IgnoreAutor_Binder = (value == null) ? (byte?)null : (value.Value ? (byte)0 : (byte)1); }
-        }
-
         [JsonProperty("authorAccount")]
         public string AuthorAccount { get; set; }
 
@@ -40,6 +34,12 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("ignoreAuthor")]
         public byte? IgnoreAutor_Binder { get; set; }
+
+        public bool? IgnoreAuthor
+        {
+            get { return ((IgnoreAutor_Binder == null) ? (bool?)null : (IgnoreAutor_Binder.Value == 0 ? true : false)); }
+            set { IgnoreAutor_Binder = (value == null) ? (byte?)null : (value.Value ? (byte)0 : (byte)1); }
+        }
 
         [JsonProperty("pageText")]
         public string PageText { get; set; }
