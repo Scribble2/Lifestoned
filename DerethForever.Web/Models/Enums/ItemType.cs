@@ -23,101 +23,103 @@ namespace DerethForever.Web.Models.Enums
 {
     public enum ItemType : uint
     {
-        [Display(Name = "0x00000000 - None")]
+        [Display(Name = "0 - Undefined")]
         None                       = 0x00000000,
 
-        [Display(Name = "0x00000001 - Melee Weapon")]
+        [Display(Name = "1 - Melee Weapon")]
         MeleeWeapon                = 0x00000001,
 
-        [Display(Name = "0x00000002 - Armor")]
+        [Display(Name = "2 - Armor")]
         Armor                      = 0x00000002,
 
-        [Display(Name = "0x00000004 - Clothing")]
+        [Display(Name = "4 - Clothing")]
         Clothing                   = 0x00000004,
 
-        [Display(Name = "0x00000008 - Jewelry")]
+        [Display(Name = "8 - Jewelry")]
         Jewelry                    = 0x00000008,
 
-        [Display(Name = "0x00000010 - Creature")]
+        [Display(Name = "16 - Creature")]
         Creature                   = 0x00000010,
 
-        [Display(Name = "0x00000020 - Food")]
+        [Display(Name = "32 - Food")]
         Food                       = 0x00000020,
 
-        [Display(Name = "0x00000040 - Money")]
+        [Display(Name = "64 - Money")]
         Money                      = 0x00000040,
 
-        [Display(Name = "0x00000080 - Misc")]
+        [Display(Name = "128 - Misc")]
         Misc                       = 0x00000080,
 
-        [Display(Name = "0x00000100 - Missile Weapon")]
+        [Display(Name = "256 - Missile Weapon")]
         MissileWeapon              = 0x00000100,
 
-        [Display(Name = "0x00000200 - Container")]
+        [Display(Name = "512 - Container")]
         Container                  = 0x00000200,
 
-        [Display(Name = "0x00000400 - Useless")]
+        [Display(Name = "1024 - Useless")]
         Useless                    = 0x00000400,
 
-        [Display(Name = "0x00000800 - Gem")]
+        [Display(Name = "2048 - Gem")]
         Gem                        = 0x00000800,
 
-        [Display(Name = "0x00001000 - Spell Components")]
+        [Display(Name = "4096 - Spell Components")]
         SpellComponents            = 0x00001000,
 
-        [Display(Name = "0x00002000 - Writable")]
+        [Display(Name = "8192 - Writable")]
         Writable                   = 0x00002000,
 
-        [Display(Name = "0x00004000 - Key")]
+        [Display(Name = "16384 - Key")]
         Key                        = 0x00004000,
 
-        [Display(Name = "0x00008000 - Caster")]
+        [Display(Name = "32768 - Caster")]
         Caster                     = 0x00008000,
 
-        [Display(Name = "0x00010000 - Portal")]
+        [Display(Name = "65536 - Portal")]
         Portal                     = 0x00010000,
 
-        [Display(Name = "0x00020000 - Lockable")]
+        [Display(Name = "131072 - Lockable")]
         Lockable                   = 0x00020000,
 
-        [Display(Name = "0x00040000 - Promissory Note")]
+        [Display(Name = "262144 - Promissory Note")]
         PromissoryNote             = 0x00040000,
 
-        [Display(Name = "0x00080000 - Mana Stone")]
+        [Display(Name = "524288 - Mana Stone")]
         ManaStone                  = 0x00080000,
 
-        [Display(Name = "0x00100000 - Service")]
+        [Display(Name = "1048576 - Service")]
         Service                    = 0x00100000,
 
-        [Display(Name = "0x00200000 - Magic Wield-able")]
+        [Display(Name = "2097152 - Magic Wield-able")]
         MagicWieldable             = 0x00200000,
 
-        [Display(Name = "0x00400000 - Cooking")]
+        [Display(Name = "4194304 - Cooking")]
         CraftCookingBase           = 0x00400000,
 
-        [Display(Name = "0x00800000 - Alchemy")]
+        [Display(Name = "8388608 - Alchemy")]
         CraftAlchemyBase           = 0x00800000,
 
-        // never occurred in pcaps
-        [Display(Name = "0x02000000 - Fletching")]
-        CraftFletchingBase         = 0x02000000,
+        [Display(Name = "16777216 - Fletching")]
+        CraftFletchingBase = 0x01000000,
 
-        [Display(Name = "0x04000000 - Alchemy Intermediate")]
+        [Display(Name = "33554432 - Cooking Intermediate")]
+        CraftCookingIntermediate         = 0x02000000,
+
+        [Display(Name = "67108864 - Alchemy Intermediate")]
         CraftAlchemyIntermediate   = 0x04000000,
 
-        [Display(Name = "0x08000000 - Fletching Intermediate")]
+        [Display(Name = "134217728 - Fletching Intermediate")]
         CraftFletchingIntermediate = 0x08000000,
 
-        [Display(Name = "0x10000000 - Lifestone")]
+        [Display(Name = "268435456 - Lifestone")]
         LifeStone                  = 0x10000000,
 
-        [Display(Name = "0x20000000 - Tinkering Tool")]
+        [Display(Name = "536870912 - Tinkering Tool")]
         TinkeringTool              = 0x20000000,
 
-        [Display(Name = "0x40000000 - Tinkering Material")]
+        [Display(Name = "1073741824 - Tinkering Material")]
         TinkeringMaterial          = 0x40000000,
 
-        [Display(Name = "0x80000000 - Game-board")]
+        [Display(Name = "-2147483648 - Game-board")]
         Gameboard                  = 0x80000000,
 
         [Display(Name = "0x80000021 - DO NOT USE")]
