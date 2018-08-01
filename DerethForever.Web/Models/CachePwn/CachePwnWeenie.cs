@@ -486,9 +486,11 @@ namespace DerethForever.Web.Models.CachePwn
                     Stamina = Vital.Convert(w.Vitals.Stamina),
                     Mana = Vital.Convert(w.Vitals.Mana)
                 };
+            }
 
-                if (w.Skills?.Count > 0)
-                    pwn.Skills = new List<SkillListing>();
+            if (w.Skills?.Count > 0)
+            { 
+                pwn.Skills = new List<SkillListing>();
 
                 // also applies to skills
                 w.Skills.ForEach(s =>
