@@ -263,3 +263,4 @@ __pycache__/
 #Other Ignores
 /DerethForever.Web/Models/Enums/WeaponSkill.cs
 /DerethForever.Web/Web.config
+/DerethForever.Web/DerethForever.Web.csproj
