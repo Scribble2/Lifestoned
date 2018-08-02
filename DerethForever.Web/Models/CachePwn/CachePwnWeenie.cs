@@ -465,7 +465,7 @@ namespace DerethForever.Web.Models.CachePwn
                         AuthorId = bp.AuthorId,
                         AuthorName = bp.AuthorName,
                         IgnoreAuthor = bp.IgnoreAuthor,
-                        PageText = bp.PageText
+                        PageText = bp.PageText.Replace("\r\n","\n").Replace("\r\n\r\n","\n") // This is looking for both \r\n and \r\n\r\n that happen to show up when an upload is made. If the upload has \n\n it is creating \r\n\r\n so this looks for both and replaces them with \n
                     });
                 });
                 pwn.Book.MaxNumberPages = pwn.Book.Pages.Count; // Thwargle fixed the maxNumPages to count pages woo woo
