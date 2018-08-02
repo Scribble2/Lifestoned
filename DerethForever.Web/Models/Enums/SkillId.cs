@@ -30,10 +30,10 @@ namespace DerethForever.Web.Models.Enums
         Mace,                /* Retired */
 
         [Display(Name = "Melee Defense")]
-        MeleeDefense,
+        MeleeDefense = 0x6,
 
         [Display(Name = "Missile Defense")]
-        MissileDefense,
+        MissileDefense = 0x7,
 
         Sling,               /* Retired */
         Spear,               /* Retired */
@@ -43,121 +43,121 @@ namespace DerethForever.Web.Models.Enums
         UnarmedCombat,       /* Retired */
 
         [Display(Name = "Arcane Lore")]
-        ArcaneLore,
+        ArcaneLore = 0xE,
 
         [Display(Name = "Magic Defense")]
-        MagicDefense,
+        MagicDefense = 0xF,
 
         [Display(Name = "Mana Conversion")]
-        ManaConversion,
+        ManaConversion = 0x10,
 
         Spellcraft,          /* Unimplemented */
 
         [Display(Name = "Item Tinkering")]
-        ItemTinkering,
+        ItemTinkering = 0x12,
 
         [Display(Name = "Assess Person")]
-        AssessPerson,
+        AssessPerson = 0x13,
 
         [Display(Name = "Deception")]
-        Deception,
+        Deception = 0x14,
 
         [Display(Name = "Healing")]
-        Healing,
+        Healing = 0x15,
 
         [Display(Name = "Jump")]
-        Jump,
+        Jump = 0x16,
 
         [Display(Name = "Lockpick")]
-        Lockpick,
+        Lockpick = 0x17,
 
         [Display(Name = "Run")]
-        Run,
+        Run = 0x18,
 
         Awareness,           /* Unimplemented */
         ArmsAndArmorRepair,  /* Unimplemented */
 
         [Display(Name = "Assess Creature")]
-        AssessCreature,
+        AssessCreature = 0x1B,
 
         [Display(Name = "Weapon Tinkering")]
-        WeaponTinkering,
+        WeaponTinkering = 0x1C,
 
         [Display(Name = "Armor Tinkering")]
-        ArmorTinkering,
+        ArmorTinkering = 0x1D,
 
         [Display(Name = "Magic Item Tinkering")]
-        MagicItemTinkering,
+        MagicItemTinkering = 0x1E,
 
         [Display(Name = "Creature Enchantment")]
-        CreatureEnchantment,
+        CreatureEnchantment = 0x1F,
 
         [Display(Name = "Item Enchantment")]
-        ItemEnchantment,
+        ItemEnchantment = 0x20,
 
         [Display(Name = "Life Magic")]
-        LifeMagic,
+        LifeMagic = 0x21,
 
         [Display(Name = "War Magic")]
-        WarMagic,
+        WarMagic = 0x22,
 
         [Display(Name = "Leadership")]
-        Leadership,
+        Leadership = 0x23,
 
         [Display(Name = "Loyalty")]
-        Loyalty,
+        Loyalty = 0x24,
 
         [Display(Name = "Fletching")]
-        Fletching,
+        Fletching = 0x25,
 
         [Display(Name = "Alchemy")]
-        Alchemy,
+        Alchemy = 0x26,
 
         [Display(Name = "Cooking")]
-        Cooking,
+        Cooking = 0x27,
 
         [Display(Name = "Salvaging")]
-        Salvaging,
+        Salvaging = 0x28,
 
         [Display(Name = "Two Handed Combat")]
-        TwoHandedCombat,
+        TwoHandedCombat = 0x29,
 
         Gearcraft,           /* Retired */
 
         [Display(Name = "Void Magic")]
-        VoidMagic,
+        VoidMagic = 0x2B,
 
         [Display(Name = "Heavy Weapons")]
-        HeavyWeapons,
+        HeavyWeapons = 0x2C,
 
         [Display(Name = "Light Weapons")]
-        LightWeapons,
+        LightWeapons = 0x2D,
 
         [Display(Name = "Finesse Weapons")]
-        FinesseWeapons,
+        FinesseWeapons = 0x2E,
 
         [Display(Name = "Missile Weapons")]
-        MissileWeapons,
+        MissileWeapons = 0x2F,
 
         [Display(Name = "Shield")]
-        Shield,
+        Shield = 0x30,
 
         [Display(Name = "Dual Wield")]
-        DualWield,
+        DualWield = 0x31,
 
         [Display(Name = "Recklessness")]
-        Recklessness,
+        Recklessness = 0x32,
 
         [Display(Name = "Sneak Attack")]
-        SneakAttack,
+        SneakAttack = 0x33,
 
         [Display(Name = "Dirty Fighting")]
-        DirtyFighting,
+        DirtyFighting = 0x34,
 
         Challenge,          /* Unimplemented */
 
         [Display(Name = "Summoning")]
-        Summoning
+        Summoning = 0x36
     }
 
     public static class SkillIdExtensions
