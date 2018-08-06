@@ -23,24 +23,44 @@ namespace DerethForever.Web.Models.Enums
 {
     public enum SkillId
     {
-        Axe,                 /* Retired */
-        Bow,                 /* Retired */
-        Crossbow,            /* Retired */
-        Dagger,              /* Retired */
-        Mace,                /* Retired */
+        [Display(Name = "Axe (DO NOT USE)")]
+        Axe = 0x1,                 /* Retired */
 
+        [Display(Name = "Bow (DO NOT USE)")]
+        Bow = 0x2,                 /* Retired */
+
+        [Display(Name = "Crossbow (DO NOT USE)")]
+        Crossbow = 0x3,            /* Retired */
+
+        [Display(Name = "Dagger (DO NOT USE)")]
+        Dagger = 0x4,              /* Retired */
+
+        [Display(Name = "Mace (DO NOT USE)")]
+        Mace = 0x5,                /* Retired */
+        
         [Display(Name = "Melee Defense")]
         MeleeDefense = 0x6,
 
         [Display(Name = "Missile Defense")]
         MissileDefense = 0x7,
 
-        Sling,               /* Retired */
-        Spear,               /* Retired */
-        Staff,               /* Retired */
-        Sword,               /* Retired */
-        ThrownWeapon,        /* Retired */
-        UnarmedCombat,       /* Retired */
+        [Display(Name = "Sling (DO NOT USE)")]
+        Sling = 0x8,               /* Retired */
+
+        [Display(Name = "Spear (DO NOT USE)")]
+        Spear = 0x9,               /* Retired */
+
+        [Display(Name = "Staff (DO NOT USE)")]
+        Staff = 0xA,               /* Retired */
+
+        [Display(Name = "Sword (DO NOT USE)")]
+        Sword = 0xB,               /* Retired */
+
+        [Display(Name = "Thrown Weapon (DO NOT USE)")]
+        ThrownWeapon = 0xC,        /* Retired */
+
+        [Display(Name = "Unarmed Combat (DO NOT USE)")]
+        UnarmedCombat = 0xD,       /* Retired */
 
         [Display(Name = "Arcane Lore")]
         ArcaneLore = 0xE,
@@ -51,7 +71,8 @@ namespace DerethForever.Web.Models.Enums
         [Display(Name = "Mana Conversion")]
         ManaConversion = 0x10,
 
-        Spellcraft,          /* Unimplemented */
+        [Display(Name = "Spellcraft (DO NOT USE)")]
+        Spellcraft = 0x11,          /* Unimplemented */
 
         [Display(Name = "Item Tinkering")]
         ItemTinkering = 0x12,
@@ -74,8 +95,11 @@ namespace DerethForever.Web.Models.Enums
         [Display(Name = "Run")]
         Run = 0x18,
 
-        Awareness,           /* Unimplemented */
-        ArmsAndArmorRepair,  /* Unimplemented */
+        [Display(Name = "Awareness (DO NOT USE)")]
+        Awareness = 0x19,           /* Unimplemented */
+
+        [Display(Name = "Arms and Armor Repair (DO NOT USE)")]
+        ArmsAndArmorRepair = 0x1A,  /* Unimplemented */
 
         [Display(Name = "Assess Creature")]
         AssessCreature = 0x1B,
@@ -122,7 +146,8 @@ namespace DerethForever.Web.Models.Enums
         [Display(Name = "Two Handed Combat")]
         TwoHandedCombat = 0x29,
 
-        Gearcraft,           /* Retired */
+        [Display(Name = "Gear Craft (DO NOT USE)")]
+        Gearcraft = 0x1A,           /* Retired */
 
         [Display(Name = "Void Magic")]
         VoidMagic = 0x2B,
@@ -154,7 +179,8 @@ namespace DerethForever.Web.Models.Enums
         [Display(Name = "Dirty Fighting")]
         DirtyFighting = 0x34,
 
-        Challenge,          /* Unimplemented */
+        [Display(Name = "Challenge (DO NOT USE)")]
+        Challenge = 0x35,          /* Unimplemented */
 
         [Display(Name = "Summoning")]
         Summoning = 0x36
