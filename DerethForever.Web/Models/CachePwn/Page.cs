@@ -35,6 +35,7 @@ namespace DerethForever.Web.Models.CachePwn
         [JsonProperty("ignoreAuthor")]
         public byte? IgnoreAutor_Binder { get; set; }
 
+        [JsonIgnore]
         public bool? IgnoreAuthor
         {
             get { return ((IgnoreAutor_Binder == null) ? (bool?)null : (IgnoreAutor_Binder.Value == 0 ? true : false)); }

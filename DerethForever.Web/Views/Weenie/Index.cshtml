@@ -130,12 +130,12 @@
                                     <div class="dropdown">
                                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-download" title="Download"></span>&nbsp;&nbsp; <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="@Url.Action("DownloadOriginalToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Original, Phat JSON</a></li>
+                                            <li><a href="@Url.Action("DownloadOriginalToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Original, GDLE JSON</a></li>
                                             <li><a href="@Url.Action("DownloadOriginalToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Original, DF JSON</a></li>
                                             <!-- <li><a href="#" title="Send to DF Server, coming soon">Original, Send ...</a></li> -->
                                             @if (weenie.HasSandboxChange)
                                             {
-                                                <li><a href="@Url.Action("DownloadSandboxToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, Phat JSON</a></li>
+                                                <li><a href="@Url.Action("DownloadSandboxToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, GDLE JSON</a></li>
                                                 <li><a href="@Url.Action("DownloadSandboxToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, DF JSON</a></li>
                                                 <!-- <li><a href="#" title="Send to DF Server, coming soon">Sandbox, Send ...</a></li> -->
                                             }

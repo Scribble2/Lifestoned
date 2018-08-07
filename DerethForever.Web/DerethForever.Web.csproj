@@ -471,6 +471,9 @@
     <Content Include="Views\Weenie\Recent.cshtml" />
     <Content Include="Views\WorldRelease\Index.cshtml" />
     <Content Include="Views\Server\CutWorldRelease.cshtml" />
+    <None Include="Web.example.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
