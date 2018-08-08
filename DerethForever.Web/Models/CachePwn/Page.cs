@@ -39,7 +39,7 @@ namespace DerethForever.Web.Models.CachePwn
         public bool? IgnoreAuthor
         {
             get { return ((IgnoreAutor_Binder == null) ? (bool?)null : (IgnoreAutor_Binder.Value == 0 ? true : false)); }
-            set { IgnoreAutor_Binder = (value == null) ? (byte?)null : (value.Value ? (byte)0 : (byte)1); }
+            set { IgnoreAutor_Binder = (value == null) ? (byte?)null : (value.Value ? (byte)1 : (byte)0); }
         }
 
         [JsonProperty("pageText")]
