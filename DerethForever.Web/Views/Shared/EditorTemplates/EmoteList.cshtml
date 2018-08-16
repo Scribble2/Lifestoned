@@ -5,483 +5,464 @@
 
 @for (int i = 0; i < Model.Count; i++)
 {
-    <div>
+<div>
+    <div class="row row-spacer">
+        <div class="col-md-1"></div>
+        <div class=" col-md-3">
+            @{ /* emotes have a wide range of fields that are visible based on type.  only a few are mandatory. */ }
+            @Html.HiddenFor(m => m[i].EmoteGuid)
+            @Html.HiddenFor(m => m[i].EmoteSetGuid)
+            @Html.HiddenFor(m => m[i].EmoteTypeId)
+            @Html.HiddenFor(m => m[i].Deleted)
+            @Html.Label("Type: " + Model[i].EmoteType.GetName())
+        </div>
+        <div class="col-md-8">
+            <input type="button" class="btn btn-xs btn-danger" name="removeEmote" value="Remove" />
+        </div>
+    </div>
+    <div class="row row-spacer">
+        <div class="col-md-1"></div>
+        <div class=" col-md-3">
+            @Html.LabelFor(m => m[i].Delay)
+        </div>
+        <div class=" col-md-3">
+            @Html.TextBoxFor(m => m[i].Delay, new { @class = "form-control" })
+        </div>
+        <div class="col-md-5"></div>
+    </div>
+    <div class="row row-spacer">
+        <div class="col-md-1"></div>
+        <div class=" col-md-3">
+            @Html.LabelFor(m => m[i].Extent)
+        </div>
+        <div class=" col-md-3">
+            @Html.TextBoxFor(m => m[i].Extent, new { @class = "form-control" })
+        </div>
+        <div class="col-md-5"></div>
+    </div>
+    <div class="row row-spacer">
+        <div class="col-md-1"></div>
+        <div class=" col-md-3">
+            @Html.LabelFor(m => m[i].SortOrder)
+        </div>
+        <div class=" col-md-3">
+            @Html.TextBoxFor(m => m[i].SortOrder, new { @class = "form-control" })
+        </div>
+        <div class="col-md-5"></div>
+    </div>
+    @if (Emote.IsPropertyVisible("Message", Model[i].EmoteType))
+    {
         <div class="row row-spacer">
             <div class="col-md-1"></div>
             <div class=" col-md-3">
-                @{ /* emotes have a wide range of fields that are visible based on type.  only a few are mandatory. */ }
-                @Html.HiddenFor(m => m[i].EmoteGuid)
-                @Html.HiddenFor(m => m[i].EmoteSetGuid)
-                @Html.HiddenFor(m => m[i].EmoteTypeId)
-                @Html.HiddenFor(m => m[i].Deleted)
-                @Html.Label("Type: " + Model[i].EmoteType.GetName())
+                @Html.LabelFor(m => m[i].Message)
             </div>
             <div class="col-md-8">
-                <input type="button" class="btn btn-xs btn-danger" name="removeEmote" value="Remove" />
+                @Html.TextAreaFor(m => m[i].Message, new { @class = "form-control wide" })
             </div>
         </div>
-
+    }
+    @if (Emote.IsPropertyVisible("Amount", Model[i].EmoteType))
+    {
         <div class="row row-spacer">
             <div class="col-md-1"></div>
             <div class=" col-md-3">
-                @Html.LabelFor(m => m[i].Delay)
+                @Html.LabelFor(m => m[i].Amount)
             </div>
             <div class=" col-md-3">
-                @Html.TextBoxFor(m => m[i].Delay, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m[i].Amount, new { @class = "form-control" })
             </div>
             <div class="col-md-5"></div>
         </div>
-
+    }
+    @if (Emote.IsPropertyVisible("Amount64", Model[i].EmoteType))
+    {
         <div class="row row-spacer">
             <div class="col-md-1"></div>
             <div class=" col-md-3">
-                @Html.LabelFor(m => m[i].Extent)
+                @Html.LabelFor(m => m[i].Amount64)
             </div>
             <div class=" col-md-3">
-                @Html.TextBoxFor(m => m[i].Extent, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m[i].Amount64, new { @class = "form-control" })
             </div>
             <div class="col-md-5"></div>
         </div>
-
+    }
+    @if (Emote.IsPropertyVisible("Stat", Model[i].EmoteType))
+    {
         <div class="row row-spacer">
             <div class="col-md-1"></div>
             <div class=" col-md-3">
-                @Html.LabelFor(m => m[i].SortOrder)
+                @Html.LabelFor(m => m[i].Stat)
             </div>
             <div class=" col-md-3">
-                @Html.TextBoxFor(m => m[i].SortOrder, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m[i].Stat, new { @class = "form-control" })
             </div>
             <div class="col-md-5"></div>
         </div>
-
-        @if (Emote.IsPropertyVisible("Message", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Message)
-                </div>
-                <div class="col-md-8">
-                    @Html.TextAreaFor(m => m[i].Message, new { @class = "form-control wide" })
-                </div>
+    }
+    @if (Emote.IsPropertyVisible("Percent", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Percent)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Amount", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Amount)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Amount, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].Percent, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Amount64", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Amount64)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Amount64, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("Minimum", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Minimum)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Stat", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Stat)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Stat, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].Minimum, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Percent", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Percent)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Percent, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("Maximum", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Maximum)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Minimum", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Minimum)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Minimum, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].Maximum, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Maximum", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Maximum)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Maximum, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("HeroXp64", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].HeroXp64)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("HeroXp64", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].HeroXp64)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].HeroXp64, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].HeroXp64, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("WealthRating", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].WealthRating)
-                </div>
-                <div class=" col-md-3">
-                    @Html.EnumDropDownListFor(m => m[i].WealthRating, new { @class = "form-control force-inline" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("WealthRating", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].WealthRating)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("TreasureClass", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].TreasureClass)
-                </div>
-                <div class=" col-md-3">
-                    @Html.EnumDropDownListFor(m => m[i].TreasureClass, new { @class = "form-control force-inline" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.EnumDropDownListFor(m => m[i].WealthRating, new { @class = "form-control force-inline" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("TreasureType", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].TreasureType)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].TreasureType, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("TreasureClass", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].TreasureClass)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Motion", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Motion)
-                </div>
-                <div class=" col-md-3">
-                    @Html.EnumDropDownListFor(m => m[i].Motion, new { @class = "form-control force-inline" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.EnumDropDownListFor(m => m[i].TreasureClass, new { @class = "form-control force-inline" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("PositionLandBlockId", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].PositionLandBlockId)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].PositionLandBlockId, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("TreasureType", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].TreasureType)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("PositionX", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].PositionX)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].PositionX, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].TreasureType, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("PositionY", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].PositionY)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].PositionY, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("Motion", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Motion)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("PositionZ", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].PositionZ)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].PositionZ, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.EnumDropDownListFor(m => m[i].Motion, new { @class = "form-control force-inline" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("RotationW", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].RotationW)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].RotationW, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("PositionLandBlockId", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].PositionLandBlockId)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("RotationX", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].RotationX)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].RotationX, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].PositionLandBlockId, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("RotationY", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].RotationY)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].RotationY, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("PositionX", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].PositionX)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("RotationZ", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].RotationZ)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].RotationZ, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].PositionX, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("PhysicsScript", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].PhysicsScript)
-                </div>
-                <div class=" col-md-3">
-                    @Html.EnumDropDownListFor(m => m[i].PhysicsScript, new { @class = "form-control force-inline" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("PositionY", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].PositionY)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Sound", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Sound)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Sound, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].PositionY, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("TestString", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].TestString)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].TestString, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("PositionZ", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].PositionZ)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Minimum64", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Minimum64)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Minimum64, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].PositionZ, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Maximum64", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Maximum64)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Maximum64, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("RotationW", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].RotationW)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("MinimumFloat", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].MinimumFloat)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].MinimumFloat, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].RotationW, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("MaximumFloat", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].MaximumFloat)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].MaximumFloat, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("SpellId", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].SpellId)
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("Display", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Display)
-                </div>
-                <div class=" col-md-3">
-                    @Html.TextBoxFor(m => m[i].Display, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].SpellId, new { @class = "form-control" })
             </div>
-        }
-
-        @if (Emote.IsPropertyVisible("CreationProfile", Model[i].EmoteType))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-2"></div>
-                <div class="col-md-2">@(Html.Label("Weenie"))</div>
-                <div class="col-md-2">@(Html.Label("Destination"))</div>
-                <div class="col-md-1">@(Html.Label("Palette"))</div>
-                <div class="col-md-3">@(Html.Label("Shade"))</div>
-                <div class="col-md-1">@(Html.Label("Quantity"))</div>
-                <div class="col-md-1">@(Html.Label("Bonded"))</div>
-                <div class="col-md-2"></div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("RotationX", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].RotationX)
             </div>
-            <div class="row row-spacer">
-                <div class="col-md-2"></div>
-                <div class="col-md-2">
-                    @Html.HiddenFor(m => m[i].CreationProfile.CreationProfileGuid)
-                    @Html.HiddenFor(m => m[i].CreationProfile.OwnerId)
-                    @Html.TextBoxFor(m => m[i].CreationProfile.WeenieClassId, new {@class = "form-control weenieClassEntry"})
-                </div>
-                <div class="col-md-2">
-                    @Html.EnumDropDownListFor(m => m[i].CreationProfile.Destination_Binder, new {@class = "form-control"})
-                </div>
-                <div class="col-md-1">
-                    @Html.TextBoxFor(m => m[i].CreationProfile.Palette, new {@class = "form-control"})
-                </div>
-                <div class="col-md-3">
-                    @Html.TextBoxFor(m => m[i].CreationProfile.Shade, new {@class = "form-control"})
-                </div>
-                <div class="col-md-1">
-                    @Html.TextBoxFor(m => m[i].CreationProfile.StackSize, new {@class = "form-control"})
-                </div>
-                <div class="col-md-1">
-                    @Html.EditorFor(m => m[i].CreationProfile.TryToBond)
-                </div>
-                <div class="col-md-2"></div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].RotationX, new { @class = "form-control" })
             </div>
-        }
-        <hr />
-    </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("RotationY", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].RotationY)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].RotationY, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("RotationZ", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].RotationZ)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].RotationZ, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("PhysicsScript", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].PhysicsScript)
+            </div>
+            <div class=" col-md-3">
+                @Html.EnumDropDownListFor(m => m[i].PhysicsScript, new { @class = "form-control force-inline" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("Sound", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Sound)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].Sound, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("TestString", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].TestString)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].TestString, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("Minimum64", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Minimum64)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].Minimum64, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("Maximum64", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Maximum64)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].Maximum64, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("MinimumFloat", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].MinimumFloat)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].MinimumFloat, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("MaximumFloat", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].MaximumFloat)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].MaximumFloat, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("Display", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Display)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].Display, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+    }
+    @if (Emote.IsPropertyVisible("CreationProfile", Model[i].EmoteType))
+    {
+        <div class="row row-spacer">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">@(Html.Label("Weenie"))</div>
+            <div class="col-md-2">@(Html.Label("Destination"))</div>
+            <div class="col-md-1">@(Html.Label("Palette"))</div>
+            <div class="col-md-3">@(Html.Label("Shade"))</div>
+            <div class="col-md-1">@(Html.Label("Quantity"))</div>
+            <div class="col-md-1">@(Html.Label("Bonded"))</div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row row-spacer">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                @Html.HiddenFor(m => m[i].CreationProfile.CreationProfileGuid)
+                @Html.HiddenFor(m => m[i].CreationProfile.OwnerId)
+                @Html.TextBoxFor(m => m[i].CreationProfile.WeenieClassId, new { @class = "form-control weenieClassEntry" })
+            </div>
+            <div class="col-md-2">
+                @Html.EnumDropDownListFor(m => m[i].CreationProfile.Destination_Binder, new { @class = "form-control" })
+            </div>
+            <div class="col-md-1">
+                @Html.TextBoxFor(m => m[i].CreationProfile.Palette, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.TextBoxFor(m => m[i].CreationProfile.Shade, new { @class = "form-control" })
+            </div>
+            <div class="col-md-1">
+                @Html.TextBoxFor(m => m[i].CreationProfile.StackSize, new { @class = "form-control" })
+            </div>
+            <div class="col-md-1">
+                @Html.EditorFor(m => m[i].CreationProfile.TryToBond)
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    }
+    <hr />
+</div>
             }
