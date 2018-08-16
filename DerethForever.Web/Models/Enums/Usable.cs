@@ -24,19 +24,19 @@ namespace DerethForever.Web.Models.Enums
     [Flags]
     public enum Usable
     {
-        Undef                                   = 0x00000,
-        No                                      = 0x00001,
-        Self                                    = 0x00002,
-        Wielded                                 = 0x00004,
-        Contained                               = 0x00008,
-        Viewed                                  = 0x00010,
-        Remote                                  = 0x00020,
-        NeverWalk                               = 0x00040,
-        ObjSelf                                 = 0x00080,
+        Undef                                   = 0,
+        No                                      = 1,
+        Self                                    = 2,
+        Wielded                                 = 4,
+        Contained                               = 8,
+        Viewed                                  = 16,
+        Remote                                  = 32,
+        NeverWalk                               = 64,
+        ObjSelf                                 = 128,
 
-        SourceWieldedTargetWielded              = 0x40004,
-        SourceWieldedTargetContained            = 0x80004,
-        SourceWieldedTargetViewed               = 0x100004,
+        SourceWieldedTargetWielded              = 262148,
+        SourceWieldedTargetContained            = 524292,
+        SourceWieldedTargetViewed               = 1048580,
         SourceWieldedTargetRemote               = 2097156,
         SourceWieldedTargetRemoteNeverWalk      = 6291460,
 

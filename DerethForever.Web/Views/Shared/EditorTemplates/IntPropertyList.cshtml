@@ -50,9 +50,6 @@ break;
 case (int)IntPropertyId.CurrentWieldedLocation:
         @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(EquipMask) })
 break;
-case (int)IntPropertyId.ItemUseable:
-        @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(Usable) })
-break;
 case (int)IntPropertyId.DefaultCombatStyle:
         @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(CombatStyle) })
 break;
