@@ -186,15 +186,20 @@ namespace DerethForever.Web.Models.CachePwn
             {
                 w.Positions.Add(new Shared.Position()
                 {
+                    PositionType = position.PositionType
+                });
+
+                w.Positions.Add(new Shared.Position()
+                {
+                    
+                    Landblock = position.Position.LandCellId,
                     X = position.Position.Frame.Position.X,
                     Y = position.Position.Frame.Position.Y,
                     Z = position.Position.Frame.Position.Z,
                     QW = position.Position.Frame.Rotations.W,
                     QX = position.Position.Frame.Rotations.X,
                     QY = position.Position.Frame.Rotations.Y,
-                    QZ = position.Position.Frame.Rotations.Z,
-                    Landblock = position.Position.LandCellId,
-                    PositionType = position.PositionType
+                    QZ = position.Position.Frame.Rotations.Z
                 });
             });
 
@@ -279,14 +284,14 @@ namespace DerethForever.Web.Models.CachePwn
                             Motion = (MotionCommand?) ea.Motion,
                             Percent = ea.Percent,
                             PhysicsScript = (PhysicsScriptType?) ea.PScript,
-                            PositionLandBlockId = null, // no source
-                            PositionX = ea.Frame?.Position.X,
-                            PositionY = ea.Frame?.Position.Y,
-                            PositionZ = ea.Frame?.Position.Z,
-                            RotationW = ea.Frame?.Rotations.W,
-                            RotationX = ea.Frame?.Rotations.X,
-                            RotationY = ea.Frame?.Rotations.Y,
-                            RotationZ = ea.Frame?.Rotations.Z,
+                            PositionLandBlockId = ea.MPosition?.LandCellId,
+                            RotationW = ea.MPosition?.Frame.Rotations.W,
+                            RotationX = ea.MPosition?.Frame.Rotations.X,
+                            RotationY = ea.MPosition?.Frame.Rotations.Y,
+                            RotationZ = ea.MPosition?.Frame.Rotations.Z,
+                            PositionX = ea.MPosition?.Frame.Position.X,
+                            PositionY = ea.MPosition?.Frame.Position.Y,
+                            PositionZ = ea.MPosition?.Frame.Position.Z,
                             Sound = ea.Sound,
                             SpellId = ea.SpellId,
                             Stat = ea.Stat,
@@ -664,31 +669,32 @@ namespace DerethForever.Web.Models.CachePwn
                             TestString = dfEmote.TestString,
                             TreasureClass = dfEmote.TreasureClassId,
                             TreasureType = (int?)dfEmote.TreasureType,
-                            WealthRating = dfEmote.WealthRatingId
+                            WealthRating = dfEmote.WealthRatingId,                          
                         };
+                        
+                        if (dfEmote.PositionLandBlockId != null)
+                        {
+                            ea.MPosition = new Position();
+                        }
 
                         if (dfEmote.PositionX != null)
                         {
-                            ea.Frame = new Frame()
+                            ea.MPosition.Frame = new Frame()
                             {
                                 Position = new XYZ()
                                 {
                                     X = dfEmote.PositionX.Value,
                                     Y = dfEmote.PositionY.Value,
                                     Z = dfEmote.PositionZ.Value
-                                }
-                            };
-                        }
+                                },
 
-                        if (dfEmote.RotationW != null)
-                        {
-                            ea.Frame = ea.Frame ?? new Frame();
-                            ea.Frame.Rotations = new Quaternion()
-                            {
-                                W = dfEmote.RotationW.Value,
-                                X = dfEmote.RotationX.Value,
-                                Y = dfEmote.RotationY.Value,
-                                Z = dfEmote.RotationZ.Value
+                                Rotations = new Quaternion()
+                                {
+                                    W = dfEmote.RotationW.Value,
+                                    X = dfEmote.RotationX.Value,
+                                    Y = dfEmote.RotationY.Value,
+                                    Z = dfEmote.RotationZ.Value
+                                }
                             };
                         }
 

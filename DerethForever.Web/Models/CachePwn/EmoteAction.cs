@@ -89,6 +89,9 @@ namespace DerethForever.Web.Models.CachePwn
         [JsonProperty("sound")]
         public uint? Sound { get; set; }
 
+        [JsonProperty("mPosition")]
+        public Position MPosition { get; set; }
+
         [JsonProperty("frame")]
         public Frame Frame { get; set; }
 
@@ -106,8 +109,5 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("treasure_type")]
         public int? TreasureType { get; set; }
-
-        [JsonProperty("mPosition")]
-        public Position MPosition { get; set; }
     }
 }
