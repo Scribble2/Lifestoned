@@ -148,6 +148,13 @@ namespace DerethForever.Web.Models.Shared
         }
 
         [JsonIgnore]
+        public SkillId? SkillIdBoundValue
+        {
+            get { return (SkillId?)Value; }
+            set { Value = (int?)value; }
+        }
+
+        [JsonIgnore]
         public bool Deleted { get; set; }
     }
 }
