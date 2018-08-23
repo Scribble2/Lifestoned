@@ -19,53 +19,56 @@ TODO for Int Property Editing
         </div>
         <div class="vcenter col-md-4">
             @switch (Model[i].IntPropertyId)
-    {
-        case (int)IntPropertyId.ItemType:
-            @Html.EnumDropDownListFor(m => m[i].ItemTypeBoundValue, new { @class = "form-control" })
-    break;
-case (int)IntPropertyId.WeenieType:
-        @Html.EnumDropDownListFor(m => m[i].WeenieTypeBoundValue, new { @class = "form-control" })
-break;
-case (int)IntPropertyId.CreatureType:
-        @Html.EnumDropDownListFor(m => m[i].CreatureTypeBoundValue, new { @class = "form-control" })
-break;
-case (int)IntPropertyId.ArmorType:
-        @Html.EnumDropDownListFor(m => m[i].ArmorTypeBoundValue, new { @class = "form-control" })
-break;
-case (int)IntPropertyId.PaletteTemplate:
-        @Html.EnumDropDownListFor(m => m[i].PaletteTemplateBoundValue, new { @class = "form-control" })
-break;
-case (int)IntPropertyId.UiEffects:
-        @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(UiEffects) })
-break;
-case (int)IntPropertyId.DamageType:
-        @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(DamageType) })
-break;
-case (int)IntPropertyId.AttackType:
-        @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(AttackType) })
-break;
-case (int)IntPropertyId.ValidLocations:
-        @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(EquipMask) })
-break;
-case (int)IntPropertyId.CurrentWieldedLocation:
-        @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(EquipMask) })
-break;
-case (int)IntPropertyId.DefaultCombatStyle:
-        @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(CombatStyle) })
-break;
-case (int)IntPropertyId.MaterialType:
-        @Html.EnumDropDownListFor(m => m[i].Material_Binder, new { @class = "form-control" })
-break;
-case (int)IntPropertyId.HeritageGroup:
-        @Html.EnumDropDownListFor(m => m[i].HeritageBinder, new { @class = "form-control" })
-break;
-case (int)IntPropertyId.WieldRequirements:
-        @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(WieldRequirements) })
-break;
-default:
-        @Html.TextBoxFor(m => m[i].Value, new { @class = "form-control" })
-break;
-}
+            {
+                case (int)IntPropertyId.ItemType:
+                    @Html.EnumDropDownListFor(m => m[i].ItemTypeBoundValue, new { @class = "form-control" })
+                    break;
+                case (int)IntPropertyId.WeenieType:
+                    @Html.EnumDropDownListFor(m => m[i].WeenieTypeBoundValue, new { @class = "form-control" })
+                    break;
+                case (int)IntPropertyId.CreatureType:
+                    @Html.EnumDropDownListFor(m => m[i].CreatureTypeBoundValue, new { @class = "form-control" })
+                    break;
+                case (int)IntPropertyId.ArmorType:
+                    @Html.EnumDropDownListFor(m => m[i].ArmorTypeBoundValue, new { @class = "form-control" })
+                    break;
+                case (int)IntPropertyId.PaletteTemplate:
+                    @Html.EnumDropDownListFor(m => m[i].PaletteTemplateBoundValue, new { @class = "form-control" })
+                    break;
+                case (int)IntPropertyId.UiEffects:
+                    @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(UiEffects) })
+                    break;
+                case (int)IntPropertyId.DamageType:
+                    @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(DamageType) })
+                    break;
+                case (int)IntPropertyId.WeaponType:
+                    @Html.EnumDropDownListFor(m => m[i].WeaponTypeBoundValue, new { @class = "form-control" })
+                    break;
+                case (int)IntPropertyId.AttackType:
+                    @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(AttackType) })
+                    break;
+                case (int)IntPropertyId.ValidLocations:
+                    @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(EquipMask) })
+                    break;
+                case (int)IntPropertyId.CurrentWieldedLocation:
+                    @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(EquipMask) })
+                    break;
+                case (int)IntPropertyId.DefaultCombatStyle:
+                    @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(CombatStyle) })
+                    break;
+                case (int)IntPropertyId.MaterialType:
+                    @Html.EnumDropDownListFor(m => m[i].Material_Binder, new { @class = "form-control" })
+                    break;
+                case (int)IntPropertyId.HeritageGroup:
+                    @Html.EnumDropDownListFor(m => m[i].HeritageBinder, new { @class = "form-control" })
+                    break;
+                case (int)IntPropertyId.WieldRequirements:
+                    @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(WieldRequirements) })
+                    break;
+                default:
+                    @Html.TextBoxFor(m => m[i].Value, new { @class = "form-control" })
+                    break;
+            }
         </div>
         <div class="vcenter col-md-1">
             <input type="button" class="btn btn-xs btn-danger" name="removeProperty" value="Remove" />

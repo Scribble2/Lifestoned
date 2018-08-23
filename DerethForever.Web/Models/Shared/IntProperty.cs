@@ -141,6 +141,13 @@ namespace DerethForever.Web.Models.Shared
         }
 
         [JsonIgnore]
+        public WeaponType? WeaponTypeBoundValue
+        {
+            get { return (WeaponType?)Value; }
+            set { Value = (int?)value; }
+        }
+
+        [JsonIgnore]
         public bool Deleted { get; set; }
     }
 }
