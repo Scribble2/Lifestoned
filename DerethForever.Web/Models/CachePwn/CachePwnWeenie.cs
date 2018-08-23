@@ -186,6 +186,11 @@ namespace DerethForever.Web.Models.CachePwn
             {
                 w.Positions.Add(new Shared.Position()
                 {
+                    PositionType = position.PositionType
+                });
+
+                w.Positions.Add(new Shared.Position()
+                {
                     X = position.Position.Frame.Position.X,
                     Y = position.Position.Frame.Position.Y,
                     Z = position.Position.Frame.Position.Z,
@@ -193,8 +198,6 @@ namespace DerethForever.Web.Models.CachePwn
                     QX = position.Position.Frame.Rotations.X,
                     QY = position.Position.Frame.Rotations.Y,
                     QZ = position.Position.Frame.Rotations.Z,
-                    Landblock = position.Position.LandCellId,
-                    PositionType = position.PositionType
                 });
             });
 
@@ -276,25 +279,25 @@ namespace DerethForever.Web.Models.CachePwn
                             Minimum = ea.Min,
                             Minimum64 = ea.Minimum64,
                             MinimumFloat = ea.FMin,
-                            Motion = (MotionCommand?) ea.Motion,
+                            Motion = (MotionCommand?)ea.Motion,
                             Percent = ea.Percent,
-                            PhysicsScript = (PhysicsScriptType?) ea.PScript,
-                            PositionLandBlockId = null, // no source
-                            PositionX = ea.Frame?.Position.X,
-                            PositionY = ea.Frame?.Position.Y,
-                            PositionZ = ea.Frame?.Position.Z,
-                            RotationW = ea.Frame?.Rotations.W,
-                            RotationX = ea.Frame?.Rotations.X,
-                            RotationY = ea.Frame?.Rotations.Y,
-                            RotationZ = ea.Frame?.Rotations.Z,
+                            PhysicsScript = (PhysicsScriptType?)ea.PScript,
+                            PositionLandBlockId = ea.MPosition?.LandCellId,
+                            RotationW = ea.MPosition?.Frame.Rotations.W,
+                            RotationX = ea.MPosition?.Frame.Rotations.X,
+                            RotationY = ea.MPosition?.Frame.Rotations.Y,
+                            RotationZ = ea.MPosition?.Frame.Rotations.Z,
+                            PositionX = ea.MPosition?.Frame.Position.X,
+                            PositionY = ea.MPosition?.Frame.Position.Y,
+                            PositionZ = ea.MPosition?.Frame.Position.Z,
                             Sound = ea.Sound,
                             SpellId = ea.SpellId,
                             Stat = ea.Stat,
                             TestString = ea.TestString,
-                            TreasureClass = (TreasureClass?) ea.TreasureClass,
+                            TreasureClass = (TreasureClass?)ea.TreasureClass,
                             TreasureType = (uint?)ea.TreasureType,
                             SortOrder = emoteCounter,
-                            WealthRating = (WealthRating?) ea.WealthRating
+                            WealthRating = (WealthRating?)ea.WealthRating
                         });
                         emoteCounter++;
                     });
@@ -326,9 +329,9 @@ namespace DerethForever.Web.Models.CachePwn
                 var part = new Shared.BodyPart()
                 {
                     BodyHeight = bp.BodyPart.BH,
-                    BodyPartType = (BodyPartType) bp.Key,
+                    BodyPartType = (BodyPartType)bp.Key,
                     Damage = bp.BodyPart.DVal,
-                    DamageType = (DamageType) bp.BodyPart.DType,
+                    DamageType = (DamageType)bp.BodyPart.DType,
                     DamageVariance = bp.BodyPart.DVar
                 };
 
@@ -379,7 +382,7 @@ namespace DerethForever.Web.Models.CachePwn
             if (w.IntProperties?.Count > 0)
                 pwn.IntStats = new List<IntStat>();
 
-            w.IntProperties?.ForEach(ip =>
+            w.IntProperties?.Where(ip => ip.Value != null).ToList().ForEach(ip =>
             {
                 pwn.IntStats.Add(new IntStat()
                 {
@@ -391,7 +394,7 @@ namespace DerethForever.Web.Models.CachePwn
             if (w.Int64Properties?.Count > 0)
                 pwn.Int64Stats = new List<Int64Stat>();
 
-            w.Int64Properties?.ForEach(ip =>
+            w.Int64Properties?.Where(ip => ip.Value != null).ToList().ForEach(ip =>
             {
                 pwn.Int64Stats.Add(new Int64Stat()
                 {
@@ -403,12 +406,12 @@ namespace DerethForever.Web.Models.CachePwn
             if (w.DoubleProperties?.Count > 0)
                 pwn.FloatStats = new List<FloatStat>();
 
-            w.DoubleProperties?.ForEach(dp =>
+            w.DoubleProperties?.Where(dp => dp.Value != null).ToList().ForEach(dp =>
             {
                 pwn.FloatStats.Add(new FloatStat()
                 {
                     Key = dp.DoublePropertyId,
-                    Value = (float) dp.Value.Value
+                    Value = (float)dp.Value.Value
                 });
             });
 
@@ -427,7 +430,7 @@ namespace DerethForever.Web.Models.CachePwn
             if (w.DidProperties?.Count > 0)
                 pwn.DidStats = new List<DidStat>();
 
-            w.DidProperties?.ForEach(dp =>
+            w.DidProperties?.Where(dp => dp.Value != null).ToList().ForEach(dp =>
             {
                 pwn.DidStats.Add(new DidStat()
                 {
@@ -465,7 +468,7 @@ namespace DerethForever.Web.Models.CachePwn
                         AuthorId = bp.AuthorId,
                         AuthorName = bp.AuthorName,
                         IgnoreAuthor = bp.IgnoreAuthor,
-                        PageText = bp.PageText.Replace("\r\n","\n").Replace("\r\n\r\n","\n") // This is looking for both \r\n and \r\n\r\n that happen to show up when an upload is made. If the upload has \n\n it is creating \r\n\r\n so this looks for both and replaces them with \n
+                        PageText = bp.PageText.Replace("\r\n", "\n").Replace("\r\n\r\n", "\n") // This is looking for both \r\n and \r\n\r\n that happen to show up when an upload is made. If the upload has \n\n it is creating \r\n\r\n so this looks for both and replaces them with \n
                     });
                 });
                 pwn.Book.MaxNumberPages = pwn.Book.Pages.Count; // Thwargle fixed the maxNumPages to count pages woo woo
@@ -486,7 +489,7 @@ namespace DerethForever.Web.Models.CachePwn
                     Stamina = Vital.Convert(w.Vitals.Stamina),
                     Mana = Vital.Convert(w.Vitals.Mana)
                 };
-            
+
 
                 if (w.Skills?.Count > 0)
                     pwn.Skills = new List<SkillListing>();
@@ -564,7 +567,7 @@ namespace DerethForever.Web.Models.CachePwn
                     Palette = cl.Palette,
                     Shade = cl.Shade,
                     StackSize = cl.StackSize,
-                    TryToBond = cl.TryToBond != null && (bool)cl.TryToBond ? (byte) 1 : (byte) 0,
+                    TryToBond = cl.TryToBond != null && (bool)cl.TryToBond ? (byte)1 : (byte)0,
                     WeenieClassId = cl.WeenieClassId
                 });
             });
@@ -656,7 +659,7 @@ namespace DerethForever.Web.Models.CachePwn
                             Min = dfEmote.Minimum,
                             Minimum64 = dfEmote.Minimum64,
                             Motion = dfEmote.MotionId,
-                            Percent = (float?) dfEmote.Percent,
+                            Percent = (float?)dfEmote.Percent,
                             PScript = dfEmote.PhysicsScriptId,
                             Sound = dfEmote.Sound,
                             SpellId = dfEmote.SpellId,
@@ -664,31 +667,32 @@ namespace DerethForever.Web.Models.CachePwn
                             TestString = dfEmote.TestString,
                             TreasureClass = dfEmote.TreasureClassId,
                             TreasureType = (int?)dfEmote.TreasureType,
-                            WealthRating = dfEmote.WealthRatingId
+                            WealthRating = dfEmote.WealthRatingId,
                         };
+
+                        if (dfEmote.PositionLandBlockId != null)
+                        {
+                            ea.MPosition = new Position();
+                        }
 
                         if (dfEmote.PositionX != null)
                         {
-                            ea.Frame = new Frame()
+                            ea.MPosition.Frame = new Frame()
                             {
                                 Position = new XYZ()
                                 {
                                     X = dfEmote.PositionX.Value,
                                     Y = dfEmote.PositionY.Value,
                                     Z = dfEmote.PositionZ.Value
-                                }
-                            };
-                        }
+                                },
 
-                        if (dfEmote.RotationW != null)
-                        {
-                            ea.Frame = ea.Frame ?? new Frame();
-                            ea.Frame.Rotations = new Quaternion()
-                            {
-                                W = dfEmote.RotationW.Value,
-                                X = dfEmote.RotationX.Value,
-                                Y = dfEmote.RotationY.Value,
-                                Z = dfEmote.RotationZ.Value
+                                Rotations = new Quaternion()
+                                {
+                                    W = dfEmote.RotationW.Value,
+                                    X = dfEmote.RotationX.Value,
+                                    Y = dfEmote.RotationY.Value,
+                                    Z = dfEmote.RotationZ.Value
+                                }
                             };
                         }
 
@@ -701,7 +705,7 @@ namespace DerethForever.Web.Models.CachePwn
                                 Palette = dfEmote.CreationProfile.Palette,
                                 Shade = dfEmote.CreationProfile.Shade,
                                 StackSize = dfEmote.CreationProfile.StackSize,
-                                TryToBond = dfEmote.CreationProfile.TryToBond != null && (bool)dfEmote.CreationProfile.TryToBond ? (byte) 1 : (byte?) 0,
+                                TryToBond = dfEmote.CreationProfile.TryToBond != null && (bool)dfEmote.CreationProfile.TryToBond ? (byte)1 : (byte?)0,
                                 WeenieClassId = dfEmote.CreationProfile.WeenieClassId
                             };
                         }

@@ -30,6 +30,7 @@ namespace DerethForever.Web.Controllers
     public class ServerController : BaseController
     {
         [HttpGet]
+        [Authorize]
         public ActionResult Index()
         {
             return View("Index");
