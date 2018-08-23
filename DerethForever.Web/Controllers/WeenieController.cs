@@ -66,6 +66,28 @@ namespace DerethForever.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult AllUpdates()
+        {
+            var allUpdates = SandboxContentProviderHost.CurrentProvider.AllUpdates(GetUserToken());
+            var zipFile = new ZipFile();
+            foreach (var update in allUpdates)
+            {
+                // build the CachePwn json for this weenie
+                var weenie = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), update.WeenieClassId);
+                var cachePwn = CachePwnWeenie.ConvertFromWeenie(weenie);
+                var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+                var contents = JsonConvert.SerializeObject(cachePwn, Formatting.None, settings);
+
+                // add json to zip file
+                var filename = weenie.StringProperties.First(p => p.StringPropertyId == (int)StringPropertyId.Name).Value + " (" + update.WeenieClassId + ").json";
+                zipFile.AddFile(filename, contents);
+            }
+            var bytes = zipFile.BuildZip();
+            return File(bytes, "application/zip", "GDLE-Latest-Updates.zip");
+        }
+
+
+        [HttpGet]
         public ActionResult Index()
         {
             IndexModel model = CurrentIndexModel ?? new IndexModel();

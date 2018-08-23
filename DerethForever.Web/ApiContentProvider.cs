@@ -112,6 +112,17 @@ namespace DerethForever.Web
             throw new ApplicationException("Unable to get recent weenie changes from server: " + response.Content, response.ErrorException);
         }
 
+        public List<WeenieSearchResult> AllUpdates(string token)
+        {
+            RestRequest request = BuildRequest("/Weenie/AllUpdates", Method.GET, token);
+            IRestResponse response = _client.Execute(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return JsonConvert.DeserializeObject<List<WeenieSearchResult>>(response.Content);
+
+            throw new ApplicationException("Unable to get recent weenie changes from server: " + response.Content, response.ErrorException);
+        }
+
         public Weenie GetWeenie(string token, uint weenieClassId)
         {
             RestRequest request = BuildRequest($"/Weenie/Get", Method.GET, token);

@@ -384,6 +384,11 @@ namespace DerethForever.Web
             return _backingProvider.RecentChanges(token);
         }
 
+        public List<WeenieSearchResult> AllUpdates(string token)
+        {
+            return _backingProvider.AllUpdates(token);
+        }
+
         public bool CreateWeenie(string token, Weenie weenie)
         {
             return SaveWeenie(token, weenie);

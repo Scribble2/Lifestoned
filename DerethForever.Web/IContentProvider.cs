@@ -40,6 +40,8 @@ namespace DerethForever.Web
 
         List<WeenieSearchResult> RecentChanges(string token);
 
+        List<WeenieSearchResult> AllUpdates(string token);
+
         Weenie GetWeenie(string token, uint weenieClassId);
 
         bool UpdateWeenie(string token, Weenie weenie);
