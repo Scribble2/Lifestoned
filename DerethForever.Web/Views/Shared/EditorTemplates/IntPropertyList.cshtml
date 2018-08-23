@@ -65,6 +65,9 @@ TODO for Int Property Editing
                 case (int)IntPropertyId.WieldSkilltype:
                     @Html.EnumDropDownListFor(m => m[i].SkillIdBoundValue, new { @class = "form-control" })
                     break;
+                case (int)IntPropertyId.SlayerCreatureType:
+                    @Html.EnumDropDownListFor(m => m[i].CreatureTypeBoundValue, new { @class = "form-control" })
+                    break;
                 case (int)IntPropertyId.HeritageGroup:
                     @Html.EnumDropDownListFor(m => m[i].HeritageBinder, new { @class = "form-control" })
                     break;
