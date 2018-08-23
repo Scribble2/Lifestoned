@@ -45,7 +45,8 @@ namespace DerethForever.Web
             SandboxContentProviderHost.CurrentProvider = new SandboxContentProvider(new ApiContentProvider(apiEndpoint), cacheDir);
             ContentProviderHost.CurrentProvider = SandboxContentProviderHost.CurrentProvider;
             ContentProviderHost.ManagedWorldProvider = new ManagedWorldProvider();
-            AuthProviderHost.PrimaryAuthProvider = new DerethForeverAuthProvider(apiEndpoint);
+			//AuthProviderHost.PrimaryAuthProvider = new DerethForeverAuthProvider(apiEndpoint);
+			AuthProviderHost.PrimaryAuthProvider = new DatabaseAuthProvider();
 
             // To handle exceptions
             GlobalFilters.Filters.Add(new CustomErrorHandler.CustomExceptionFilter());
