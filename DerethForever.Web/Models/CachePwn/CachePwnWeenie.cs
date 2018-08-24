@@ -670,6 +670,11 @@ namespace DerethForever.Web.Models.CachePwn
                             WealthRating = dfEmote.WealthRatingId,
                         };
 
+                        if (dfEmote.Message == null)
+                        {
+                            ea.Message = "";
+                        }
+
                         if (dfEmote.PositionLandBlockId != null)
                         {
                             ea.MPosition = new Position();
