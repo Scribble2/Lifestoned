@@ -150,7 +150,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiContentProvider.cs" />
+    <None Include="ApiContentProvider.cs" />
     <Compile Include="App_Start\DapperMappingConfig.cs" />
     <Compile Include="AuthProviderHost.cs" />
     <Compile Include="ContentProviderHost.cs" />
@@ -165,7 +165,7 @@
     <Compile Include="DatabaseAuthProvider.cs" />
     <Compile Include="DatabaseContentProvider.cs" />
     <Compile Include="DatabaseProviderBase.cs" />
-    <Compile Include="DerethForeverAuthProvider.cs" />
+    <None Include="DerethForeverAuthProvider.cs" />
     <Compile Include="IAuthProvider.cs" />
     <Compile Include="IContentProvider.cs" />
     <Compile Include="IManagedWorldProvider.cs" />

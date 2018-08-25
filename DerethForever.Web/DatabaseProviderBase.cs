@@ -9,8 +9,9 @@ namespace DerethForever.Web
 {
     public class DatabaseProviderBase
     {
-        private static DbProviderFactory DbFactory;
-        private static string ConnectionString;
+        protected static DbProviderFactory DbFactory { get; private set; }
+
+        protected static string ConnectionString { get; private set; }
 
         static DatabaseProviderBase()
         {

@@ -14,6 +14,7 @@ namespace DerethForever.Web
     {
         public static void RegisterMapping()
         {
+            SqlMapper.AddTypeMap(typeof(Guid), DbType.Binary);
             SqlMapper.AddTypeHandler(new GuidTypeHandler());
 
             ScanType<AccountModel>();
@@ -24,11 +25,13 @@ namespace DerethForever.Web
         private static void ScanType<T>()
         {
             Type tt = typeof(T);
-            SqlMapper.SetTypeMap(tt, new CustomPropertyTypeMap(tt,
-                (type, column) => type.GetProperties()
-                    .FirstOrDefault(prop => prop.GetCustomAttributes(false)
-                        .OfType<ColumnAttribute>().Any(attr => attr.Name == column))
-                ));
+            SqlMapper.SetTypeMap(
+                tt,
+                new CustomPropertyTypeMap(
+                    tt,
+                    (type, column) => type.GetProperties().FirstOrDefault(
+                        prop => prop.GetCustomAttributes(false).OfType<ColumnAttribute>().Any(
+                            attr => attr.Name == column))));
         }
 
         private class GuidTypeHandler : SqlMapper.TypeHandler<Guid>
@@ -40,6 +43,7 @@ namespace DerethForever.Web
 
             public override void SetValue(IDbDataParameter parameter, Guid value)
             {
+                parameter.DbType = DbType.Binary;
                 parameter.Value = value.ToByteArray();
             }
         }

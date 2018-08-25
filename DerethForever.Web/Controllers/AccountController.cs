@@ -137,7 +137,7 @@ namespace DerethForever.Web.Controllers
             {
                 // id is the account guid.  subscriptions are on the main API, not the auth API
                 var account = AuthProviderHost.PrimaryAuthProvider.GetAccount(GetUserToken(), id);
-                var subs = ContentProviderHost.CurrentProvider.GetSubscriptions(GetUserToken(), id);
+                var subs = AuthProviderHost.PrimaryAuthProvider.GetSubscriptions(GetUserToken(), id);
 
                 model.AccountGuid = id;
                 model.AccountName = account.Name;
@@ -168,7 +168,7 @@ namespace DerethForever.Web.Controllers
                     // attempt to update it
                     try
                     {
-                        if (ContentProviderHost.CurrentProvider.UpdatePermissions(GetUserToken(), sub.SubscriptionGuid.ToString(), (ulong)sub.NewAccessLevel))
+                        if (AuthProviderHost.PrimaryAuthProvider.UpdatePermissions(GetUserToken(), sub.SubscriptionGuid.ToString(), (ulong)sub.NewAccessLevel))
                         {
                             model.SuccessMessages.Add("Subscription " + sub.Name + " updated.");
                             sub.AccessLevel = (ulong)sub.NewAccessLevel;
