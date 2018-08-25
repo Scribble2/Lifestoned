@@ -27,22 +27,23 @@ using Newtonsoft.Json;
 
 namespace DerethForever.Web.Models.Account
 {
+    [Table("managed_world")]
     public class ManagedServerModel
     {
-		[Key]
-		[Column("worldGuid")]
+        [Key]
+        [Column("worldGuid")]
         [JsonProperty("worldGuid")]
         public Guid? ManagedServerGuid { get; set; }
 
-		[Column("accountGuid")]
+        [Column("accountGuid")]
         [JsonProperty("accountGuid")]
         public Guid? AccountGuid { get; set; }
 
-		[Column("serverName")]
+        [Column("serverName")]
         [JsonProperty("serverName")]
         public string ServerName { get; set; }
 
-		[Column("address")]
+        [Column("address")]
         [JsonProperty("address")]
         public string Address { get; set; }
 

@@ -28,23 +28,23 @@ using Newtonsoft.Json;
 
 namespace DerethForever.Web.Models.Account
 {
-	[Table("subscription")]
+    [Table("subscription")]
     public class SubscriptionModel
     {
-		[Column("accountGuid")]
+        [Column("accountGuid")]
         [JsonProperty("accountGuid")]
         public Guid AccountGuid { get; set; }
-        
-		[Key]
-		[Column("subscriptionId")]
+
+        [Key]
+        [Column("subscriptionId")]
         [JsonProperty("subscriptionId")]
         public uint SubscriptionId { get; set; }
 
-		[Column("subscriptionGuid")]
+        [Column("subscriptionGuid")]
         [JsonProperty("subscriptionGuid")]
         public Guid SubscriptionGuid { get; set; }
-        
-		[Column("accessLevel")]
+
+        [Column("accessLevel")]
         [JsonProperty("accessLevel")]
         public ulong AccessLevel { get; set; }
 
@@ -58,7 +58,7 @@ namespace DerethForever.Web.Models.Account
         [JsonIgnore]
         public AccessLevel? NewAccessLevel { get; set; }
 
-		[Column("subscriptionName")]
+        [Column("subscriptionName")]
         [JsonProperty("name")]
         public string Name { get; set; }
     }

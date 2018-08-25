@@ -7,27 +7,27 @@ using System.Web;
 
 namespace DerethForever.Web
 {
-	public class DatabaseProviderBase
-	{
-		private static DbProviderFactory DbFactory;
-		private static string ConnectionString;
+    public class DatabaseProviderBase
+    {
+        private static DbProviderFactory DbFactory;
+        private static string ConnectionString;
 
-		static DatabaseProviderBase()
-		{
-			ConnectionStringSettings cs = ConfigurationManager.ConnectionStrings["AuthDbConnection"];
-			if (cs == null)
-				throw new InvalidOperationException("AuthDbConnection connection string not configured");
+        static DatabaseProviderBase()
+        {
+            ConnectionStringSettings cs = ConfigurationManager.ConnectionStrings["AuthDbConnection"];
+            if (cs == null)
+                throw new InvalidOperationException("AuthDbConnection connection string not configured");
 
-			ConnectionString = cs.ConnectionString;
-			DbFactory = DbProviderFactories.GetFactory(cs.ProviderName);
-		}
+            ConnectionString = cs.ConnectionString;
+            DbFactory = DbProviderFactories.GetFactory(cs.ProviderName);
+        }
 
-		protected DbConnection GetConnection()
-		{
-			DbConnection connection = DbFactory.CreateConnection();
-			connection.ConnectionString = ConnectionString;
-			connection.Open();
-			return connection;
-		}
-	}
+        protected DbConnection GetConnection()
+        {
+            DbConnection connection = DbFactory.CreateConnection();
+            connection.ConnectionString = ConnectionString;
+            connection.Open();
+            return connection;
+        }
+    }
 }

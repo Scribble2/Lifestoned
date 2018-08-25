@@ -1,30 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Web;
 using Dapper;
 
+using DerethForever.Web.Models.Account;
+
 namespace DerethForever.Web
 {
-    static class DapperMappingConfig
+    internal static class DapperMappingConfig
     {
-        // Section
-        //SqlMapper.SetTypeMap(typeof(Section), new CustomPropertyTypeMap(
-        //  typeof(Section), (type, columnName) => type.GetProperties().FirstOrDefault(prop =>
-        //	prop.GetCustomAttributes(false).OfType<ColumnAttribute>().Any(attr => attr.Name == columnName))));
-		public static void RegisterMapping()
+        public static void RegisterMapping()
         {
+            SqlMapper.AddTypeHandler(new GuidTypeHandler());
+
+            ScanType<AccountModel>();
+            ScanType<ManagedServerModel>();
+            ScanType<SubscriptionModel>();
         }
 
-		private static void ScanType<T>()
+        private static void ScanType<T>()
         {
             Type tt = typeof(T);
             SqlMapper.SetTypeMap(tt, new CustomPropertyTypeMap(tt,
                 (type, column) => type.GetProperties()
-					.FirstOrDefault(prop => prop.GetCustomAttributes(false)
-						.OfType<ColumnAttribute>().Any(attr => attr.Name == column))
+                    .FirstOrDefault(prop => prop.GetCustomAttributes(false)
+                        .OfType<ColumnAttribute>().Any(attr => attr.Name == column))
                 ));
+        }
+
+        private class GuidTypeHandler : SqlMapper.TypeHandler<Guid>
+        {
+            public override Guid Parse(object value)
+            {
+                return new Guid((byte[])value);
+            }
+
+            public override void SetValue(IDbDataParameter parameter, Guid value)
+            {
+                parameter.Value = value.ToByteArray();
+            }
         }
     }
 }

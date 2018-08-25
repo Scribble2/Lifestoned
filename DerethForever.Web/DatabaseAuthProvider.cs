@@ -25,38 +25,38 @@ namespace DerethForever.Web
 
             using (DbConnection connection = GetConnection())
             {
-                var result = connection.Query(
+                var result = connection.Query<AccountModel>(
                     "SELECT * FROM account WHERE accountName = @name;",
                     new { name = username }).FirstOrDefault();
 
-                if (string.Compare(result.accountName, username, true) == 0)
+                if (string.Compare(result.Name, username, true) == 0)
                 {
                     // compare the password
-                    string hashedPassword = HashPassword(password, result.passwordSalt);
+                    string hashedPassword = HashPassword(password, result.PasswordSalt);
 
-                    if (string.Compare(result.passwordHash, hashedPassword) == 0)
+                    if (string.Compare(result.PasswordHash, hashedPassword) == 0)
                     {
                         // password correct
                         resultStatus = HttpStatusCode.OK;
 
                         // fetch subscription / roles
-                        var role = connection.Query(
-                            "SELECT accessLevel FROM subscription WHERE accountGuid = @gid;",
-                            new { gid = result.accountGuid }).FirstOrDefault();
+                        var role = connection.Query<SubscriptionModel>(
+                            "SELECT * FROM subscription WHERE accountGuid = @gid;",
+                            new { gid = result.Gid.ToByteArray() }).FirstOrDefault();
 
                         List<string> roles = new List<string>();
                         foreach (AccessLevel level in Enum.GetValues(typeof(AccessLevel)))
                         {
-                            if ((int)role.accessLevel >= (int)level)
+                            if ((int)role.AccessLevel >= (int)level)
                                 roles.Add(level.ToString());
                         }
 
                         // token
                         resultToken = CreateFakeToken(
-                            new Guid(result.accountGuid),
-                            result.accountId,
-                            result.accountName,
-                            result.displayName,
+                            result.Gid,
+                            result.Id,
+                            result.Name,
+                            result.DisplayName,
                             roles.ToArray());
                     }
                 }
@@ -71,12 +71,44 @@ namespace DerethForever.Web
 
         public ApiAccountModel GetAccount(string token, string accountGuid)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(accountGuid))
+                accountGuid = JwtCookieManager.GetUserGuid(token);
+
+            using (DbConnection connection = GetConnection())
+            {
+                using (var result = connection.QueryMultiple(
+                    "SELECT * FROM account WHERE accountGuid = @gid; SELECT * FROM managed_world WHERE accountGuid = @gid;",
+                    new { gid = Guid.Parse(accountGuid).ToByteArray() }))
+                {
+                    AccountModel account = result.ReadSingle<AccountModel>();
+                    List<ManagedServerModel> servers = result.Read<ManagedServerModel>().ToList();
+
+                    return new ApiAccountModel()
+                    {
+                        AccountGuid = account.Gid.ToString(),
+                        Name = account.Name,
+                        DisplayName = account.DisplayName,
+                        Email = account.Email,
+                        ManagedWorlds = servers
+                    };
+                }
+            }
         }
 
         public List<ApiAccountModel> GetAccounts(string token)
         {
-            throw new NotImplementedException();
+            using (DbConnection connection = GetConnection())
+            {
+                var results = connection.Query<AccountModel>("SELECT * FROM account;");
+
+                return results.Select((account) => new ApiAccountModel()
+                {
+                    AccountGuid = account.Gid.ToString(),
+                    Name = account.Name,
+                    DisplayName = account.DisplayName,
+                    Email = account.Email
+                }).ToList();
+            }
         }
 
         public bool Register(RegisterModel model)
@@ -91,7 +123,8 @@ namespace DerethForever.Web
 
                     var id = connection.Query(
                         "INSERT INTO account (accountGuid, accountName, displayName, email, passwordHash, passwordSalt) VALUES (@gid, @account, @name, @email, @hash, @salt); SELECT accountId FROM account WHERE accountGuid = @gid",
-                        new {
+                        new
+                        {
                             gid = gid.ToByteArray(),
                             account = model.Username,
                             name = model.DisplayName,
