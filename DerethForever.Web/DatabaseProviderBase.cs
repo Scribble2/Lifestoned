@@ -29,10 +29,5 @@ namespace DerethForever.Web
 			connection.Open();
 			return connection;
 		}
-
-		// Section
-		//SqlMapper.SetTypeMap(typeof(Section), new CustomPropertyTypeMap(
-		//  typeof(Section), (type, columnName) => type.GetProperties().FirstOrDefault(prop =>
-		//	prop.GetCustomAttributes(false).OfType<ColumnAttribute>().Any(attr => attr.Name == columnName))));
 	}
 }

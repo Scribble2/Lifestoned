@@ -182,6 +182,7 @@
     </Compile>
     <Compile Include="JwtCookieManager.cs" />
     <Compile Include="ManagedWorldProvider.cs" />
+    <Compile Include="Models\Account\Account.cs" />
     <Compile Include="Models\Account\AccountListModel.cs" />
     <Compile Include="Models\Account\ApiAccountModel.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />

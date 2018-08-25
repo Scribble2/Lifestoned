@@ -34,6 +34,8 @@ namespace DerethForever.Web
     {
         protected void Application_Start()
         {
+            DapperMappingConfig.RegisterMapping();
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -42,7 +44,8 @@ namespace DerethForever.Web
             string cacheDir = ConfigurationManager.AppSettings["SandboxCacheDir"];
             string apiEndpoint = ConfigurationManager.AppSettings["DerethForever.Api"];
 
-            SandboxContentProviderHost.CurrentProvider = new SandboxContentProvider(new ApiContentProvider(apiEndpoint), cacheDir);
+            //SandboxContentProviderHost.CurrentProvider = new SandboxContentProvider(new ApiContentProvider(apiEndpoint), cacheDir);
+            SandboxContentProviderHost.CurrentProvider = new SandboxContentProvider(new DatabaseContentProvider(), cacheDir);
             ContentProviderHost.CurrentProvider = SandboxContentProviderHost.CurrentProvider;
             ContentProviderHost.ManagedWorldProvider = new ManagedWorldProvider();
 			//AuthProviderHost.PrimaryAuthProvider = new DerethForeverAuthProvider(apiEndpoint);

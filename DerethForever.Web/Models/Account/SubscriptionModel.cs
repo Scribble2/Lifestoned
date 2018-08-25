@@ -19,6 +19,8 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using DerethForever.Web.Models.Enums;
@@ -26,17 +28,23 @@ using Newtonsoft.Json;
 
 namespace DerethForever.Web.Models.Account
 {
+	[Table("subscription")]
     public class SubscriptionModel
     {
+		[Column("accountGuid")]
         [JsonProperty("accountGuid")]
         public Guid AccountGuid { get; set; }
         
+		[Key]
+		[Column("subscriptionId")]
         [JsonProperty("subscriptionId")]
         public uint SubscriptionId { get; set; }
 
+		[Column("subscriptionGuid")]
         [JsonProperty("subscriptionGuid")]
         public Guid SubscriptionGuid { get; set; }
         
+		[Column("accessLevel")]
         [JsonProperty("accessLevel")]
         public ulong AccessLevel { get; set; }
 
@@ -50,6 +58,7 @@ namespace DerethForever.Web.Models.Account
         [JsonIgnore]
         public AccessLevel? NewAccessLevel { get; set; }
 
+		[Column("subscriptionName")]
         [JsonProperty("name")]
         public string Name { get; set; }
     }
