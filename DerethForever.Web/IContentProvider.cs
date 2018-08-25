@@ -65,13 +65,5 @@ namespace DerethForever.Web
         Recipe GetRecipe(string token, Guid recipeGuid);
 
         bool UpdateRecipe(string token, Recipe recipe);
-
-        List<SubscriptionModel> GetSubscriptions(string token, string accountGuid);
-
-        /// <summary>
-        /// using the token provided, attempts to update the permissions of the specified
-        /// subscription.  provider will validate the token's permissions accordingly.
-        /// </summary>
-        bool UpdatePermissions(string token, string subscriptionGuid, ulong newPermissions);
     }
 }

@@ -60,16 +60,6 @@ namespace DerethForever.Web
             throw new NotImplementedException();
         }
 
-        public List<SubscriptionModel> GetSubscriptions(string token, string accountGuid)
-        {
-            using (DbConnection connection = GetConnection())
-            {
-                return connection.Query<SubscriptionModel>(
-                    "SELECT * FROM subscription WHERE accountGuid = @gid",
-                    new { gid = Guid.Parse(accountGuid).ToByteArray() }).ToList();
-            }
-        }
-
         public Weenie GetWeenie(string token, uint weenieClassId)
         {
             throw new NotImplementedException();
@@ -98,26 +88,6 @@ namespace DerethForever.Web
         public HttpStatusCode UpdateContent(string token, Content content)
         {
             throw new NotImplementedException();
-        }
-
-        public bool UpdatePermissions(string token, string subscriptionGuid, ulong newPermissions)
-        {
-            try
-            {
-                using (DbConnection connection = GetConnection())
-                {
-                    connection.Execute(
-                        "UPDATE subscription SET accessLevel = @level WHERE subscriptionGuid = @gid",
-                        new { gid = Guid.Parse(subscriptionGuid).ToByteArray(), level = newPermissions });
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-
         }
 
         public bool UpdateRecipe(string token, Recipe recipe)

@@ -137,6 +137,7 @@ namespace DerethForever.Web
                         "INSERT INTO subscription (subscriptionGuid, accountGuid, subscriptionName, accessLevel) VALUES (@sgid, @agid, 'default', 0);",
                         new { sgid = Guid.NewGuid().ToByteArray(), agid = gid.ToByteArray() });
                 }
+
                 return true;
             }
             catch
@@ -148,6 +149,35 @@ namespace DerethForever.Web
         public void UpdateAccount(string token, ApiAccountModel model)
         {
             throw new NotImplementedException();
+        }
+
+        public List<SubscriptionModel> GetSubscriptions(string token, string accountGuid)
+        {
+            using (DbConnection connection = GetConnection())
+            {
+                return connection.Query<SubscriptionModel>(
+                    "SELECT * FROM subscription WHERE accountGuid = @gid",
+                    new { gid = Guid.Parse(accountGuid).ToByteArray() }).ToList();
+            }
+        }
+
+        public bool UpdatePermissions(string token, string subscriptionGuid, ulong newPermissions)
+        {
+            try
+            {
+                using (DbConnection connection = GetConnection())
+                {
+                    connection.Execute(
+                        "UPDATE subscription SET accessLevel = @level WHERE subscriptionGuid = @gid",
+                        new { gid = Guid.Parse(subscriptionGuid).ToByteArray(), level = newPermissions });
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static string HashPassword(string password, string salt)
@@ -173,6 +203,7 @@ namespace DerethForever.Web
             {
                 salter.GetNonZeroBytes(salt);
             }
+
             return Convert.ToBase64String(salt);
         }
 
@@ -188,7 +219,8 @@ namespace DerethForever.Web
             token.Add("display_name", display);
             token.Add("role", JToken.FromObject(roles));
 
-            return string.Format("{0}.{1}.{2}",
+            return string.Format(
+                "{0}.{1}.{2}",
                 Convert.ToBase64String(Encoding.UTF8.GetBytes("{ \"alg\":\"NONE\",\"typ\":\"JWT\" }")),
                 Convert.ToBase64String(Encoding.UTF8.GetBytes(token.ToString(Formatting.None))),
                 null);
