@@ -72,7 +72,7 @@ TODO for Int Property Editing
                     @Html.EnumDropDownListFor(m => m[i].HeritageBinder, new { @class = "form-control" })
                     break;
                 case (int)IntPropertyId.WieldRequirements:
-                    @Html.EditorFor(m => m[i].MultiSelect, "FlagsEnumMultiSelect", new { @class = "form-control customMultiselect", enumType = typeof(WieldRequirements) })
+                    @Html.EnumDropDownListFor(m => m[i].WieldRequirementsBoundValue, new { @class = "form-control" })
                     break;
                 default:
                     @Html.TextBoxFor(m => m[i].Value, new { @class = "form-control" })

@@ -266,7 +266,7 @@ namespace DerethForever.Web.Models.Shared
         /// </summary>
         [JsonProperty("display")]
         [Display(Name = "Display")]
-        [EmoteType(new uint[] { 0x32 })]
+        [EmoteType(new uint[] { 49, 50 })]
         public bool? Display { get; set; }
 
         [JsonProperty("positionLandblockId")]
