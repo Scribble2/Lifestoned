@@ -137,7 +137,7 @@ namespace DerethForever.Web.Controllers
             {
                 // id is the account guid.  subscriptions are on the main API, not the auth API
                 var account = AuthProviderHost.PrimaryAuthProvider.GetAccount(GetUserToken(), id);
-                var subs = ContentProviderHost.CurrentProvider.GetSubscriptions(GetUserToken(), id);
+                var subs = AuthProviderHost.PrimaryAuthProvider.GetSubscriptions(GetUserToken(), id);
 
                 model.AccountGuid = id;
                 model.AccountName = account.Name;
@@ -168,7 +168,7 @@ namespace DerethForever.Web.Controllers
                     // attempt to update it
                     try
                     {
-                        if (ContentProviderHost.CurrentProvider.UpdatePermissions(GetUserToken(), sub.SubscriptionGuid.ToString(), (ulong)sub.NewAccessLevel))
+                        if (AuthProviderHost.PrimaryAuthProvider.UpdatePermissions(GetUserToken(), sub.SubscriptionGuid.ToString(), (ulong)sub.NewAccessLevel))
                         {
                             model.SuccessMessages.Add("Subscription " + sub.Name + " updated.");
                             sub.AccessLevel = (ulong)sub.NewAccessLevel;
@@ -201,18 +201,23 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult Index(ApiAccountModel model)
         {
-            if (model.AccountAction == "AddManagedWorld")
-            {
-                model.ManagedWorlds.Add(new ManagedServerModel());
-                model.AccountAction = "";
-                ModelState.Clear();
-                return View(model);
-            }
-
-            model.ManagedWorlds.RemoveAll(w => w == null || w.Deleted);
-
             try
             {
+                string gid = GetUserGuid();
+
+                if (string.Compare(gid, model.AccountGuid, true) != 0
+                    && !User.IsInRole("Admin"))
+                    throw new UnauthorizedAccessException("You do not have permission to edit this user");
+
+                if (model.AccountAction == "AddManagedWorld")
+                {
+                    model.ManagedWorlds.Add(new ManagedServerModel());
+                    model.AccountAction = "";
+                    ModelState.Clear();
+                    return View(model);
+                }
+
+                model.ManagedWorlds.RemoveAll(w => w == null || w.Deleted);
                 AuthProviderHost.PrimaryAuthProvider.UpdateAccount(GetUserToken(), model);
                 BaseController.CurrentUser = model;
                 return RedirectToAction("Index", "Home");

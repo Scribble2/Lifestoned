@@ -441,16 +441,6 @@ namespace DerethForever.Web
             return _backingProvider.UpdateRecipe(token, recipe);
         }
 
-        public List<SubscriptionModel> GetSubscriptions(string token, string accountGuid)
-        {
-            return _backingProvider.GetSubscriptions(token, accountGuid);
-        }
-
-        public bool UpdatePermissions(string token, string subscriptionGuid, ulong newPermissions)
-        {
-            return _backingProvider.UpdatePermissions(token, subscriptionGuid, newPermissions);
-        }
-
         public bool DeleteWeenie(string token, uint weenieClassId)
         {
             return _backingProvider.DeleteWeenie(token, weenieClassId);

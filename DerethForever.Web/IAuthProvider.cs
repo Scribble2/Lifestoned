@@ -60,5 +60,13 @@ namespace DerethForever.Web
         /// trigger an ApplicationException to be thrown.
         /// </summary>
         void UpdateAccount(string token, ApiAccountModel model);
+
+        List<SubscriptionModel> GetSubscriptions(string token, string accountGuid);
+
+        /// <summary>
+        /// using the token provided, attempts to update the permissions of the specified
+        /// subscription.  provider will validate the token's permissions accordingly.
+        /// </summary>
+        bool UpdatePermissions(string token, string subscriptionGuid, ulong newPermissions);
     }
 }

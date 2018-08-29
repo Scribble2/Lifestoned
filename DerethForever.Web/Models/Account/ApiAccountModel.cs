@@ -26,7 +26,7 @@ using Newtonsoft.Json;
 
 namespace DerethForever.Web.Models.Account
 {
-    public class ApiAccountModel : BaseModel
+   public class ApiAccountModel : BaseModel
     {
         [JsonProperty("accountName")]
         public string Name { get; set; }
