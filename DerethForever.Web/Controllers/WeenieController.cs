@@ -79,11 +79,12 @@ namespace DerethForever.Web.Controllers
                 var contents = JsonConvert.SerializeObject(cachePwn, Formatting.None, settings);
 
                 // add json to zip file
-                var filename = weenie.StringProperties.First(p => p.StringPropertyId == (int)StringPropertyId.Name).Value + " (" + update.WeenieClassId + ").json";
+                var filename = update.WeenieClassId + "-" + weenie.StringProperties.First(p => p.StringPropertyId == (int)StringPropertyId.Name).Value + ".json";
                 zipFile.AddFile(filename, contents);
             }
             var bytes = zipFile.BuildZip();
-            return File(bytes, "application/zip", "GDLE-Latest-Updates.zip");
+            string date = string.Format("{0:yyyy-MM-dd_hh-mm}", DateTime.Now);
+            return File(bytes, "application/zip", "GDLE-Latest-Updates-" + date +".zip");
         }
 
 

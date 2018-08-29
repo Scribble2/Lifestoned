@@ -208,6 +208,7 @@
     <Compile Include="Models\EnumHelper.cs" />
     <Compile Include="Models\Enums\AbilityId.cs" />
     <Compile Include="Models\Enums\AccessLevel.cs" />
+    <Compile Include="Models\Enums\Weapon Type.cs" />
     <Compile Include="Models\Enums\WieldRequirements.cs" />
     <Compile Include="Models\Enums\ArmorType.cs" />
     <Compile Include="Models\Enums\BodyPartType.cs" />
