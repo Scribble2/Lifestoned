@@ -148,9 +148,22 @@ namespace DerethForever.Web
 
         public void UpdateAccount(string token, ApiAccountModel model)
         {
+            string gid = JwtCookieManager.GetUserGuid(token);
+
+            if (!Guid.Equals(gid, model.AccountGuid))
+                return;
+
             using (DbConnection connection = GetConnection())
             {
-
+                // we don't care about managed worlds any more
+                connection.Execute(
+                    "UPDATE account SET displayName = @display, email = @email WHERE accountGuid = @gid",
+                    new
+                    {
+                        gid = model.AccountGuid,
+                        display = model.DisplayName,
+                        email = model.Email
+                    });
             }
         }
 

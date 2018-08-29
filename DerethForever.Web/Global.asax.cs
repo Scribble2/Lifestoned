@@ -43,12 +43,11 @@ namespace DerethForever.Web
 
             string cacheDir = ConfigurationManager.AppSettings["SandboxCacheDir"];
             string apiEndpoint = ConfigurationManager.AppSettings["DerethForever.Api"];
+            string finalDir = ConfigurationManager.AppSettings["FinalDir"];
 
-            ////SandboxContentProviderHost.CurrentProvider = new SandboxContentProvider(new ApiContentProvider(apiEndpoint), cacheDir);
-            SandboxContentProviderHost.CurrentProvider = new SandboxContentProvider(new DatabaseContentProvider(), cacheDir);
+            SandboxContentProviderHost.CurrentProvider = new SandboxContentProvider(new LocalContentProvider(finalDir), cacheDir);
             ContentProviderHost.CurrentProvider = SandboxContentProviderHost.CurrentProvider;
             ContentProviderHost.ManagedWorldProvider = new ManagedWorldProvider();
-            ////AuthProviderHost.PrimaryAuthProvider = new DerethForeverAuthProvider(apiEndpoint);
             AuthProviderHost.PrimaryAuthProvider = new DatabaseAuthProvider();
 
             // To handle exceptions

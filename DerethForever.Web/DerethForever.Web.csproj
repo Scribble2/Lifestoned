@@ -163,13 +163,13 @@
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="CustomErrorHandler.cs" />
     <Compile Include="DatabaseAuthProvider.cs" />
-    <Compile Include="DatabaseContentProvider.cs" />
     <Compile Include="DatabaseProviderBase.cs" />
     <None Include="DerethForeverAuthProvider.cs" />
     <Compile Include="IAuthProvider.cs" />
     <Compile Include="IContentProvider.cs" />
     <Compile Include="IManagedWorldProvider.cs" />
     <Compile Include="ISandboxContentProvider.cs" />
+    <Compile Include="LocalContentProvider.cs" />
     <Compile Include="LoginResult.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

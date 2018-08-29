@@ -201,18 +201,23 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult Index(ApiAccountModel model)
         {
-            if (model.AccountAction == "AddManagedWorld")
-            {
-                model.ManagedWorlds.Add(new ManagedServerModel());
-                model.AccountAction = "";
-                ModelState.Clear();
-                return View(model);
-            }
-
-            model.ManagedWorlds.RemoveAll(w => w == null || w.Deleted);
-
             try
             {
+                string gid = GetUserGuid();
+
+                if (string.Compare(gid, model.AccountGuid, true) != 0
+                    && !User.IsInRole("Admin"))
+                    throw new UnauthorizedAccessException("You do not have permission to edit this user");
+
+                if (model.AccountAction == "AddManagedWorld")
+                {
+                    model.ManagedWorlds.Add(new ManagedServerModel());
+                    model.AccountAction = "";
+                    ModelState.Clear();
+                    return View(model);
+                }
+
+                model.ManagedWorlds.RemoveAll(w => w == null || w.Deleted);
                 AuthProviderHost.PrimaryAuthProvider.UpdateAccount(GetUserToken(), model);
                 BaseController.CurrentUser = model;
                 return RedirectToAction("Index", "Home");
