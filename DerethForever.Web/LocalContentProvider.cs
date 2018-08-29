@@ -148,6 +148,24 @@ namespace DerethForever.Web
             }).ToList();
         }
 
+        public List<WeenieSearchResult> AllUpdates(string token)
+        {
+            var copy = Weenies.Values.Select(w => w)
+                .Where(w => w.LastModified != null)
+                .OrderByDescending(w => w.LastModified);
+
+            return copy.Select(w => new WeenieSearchResult()
+            {
+                Description = w.StringProperties.Find(p => p.StringPropertyId == (int)StringPropertyId.ShortDesc)?.Value,
+                LastModified = w.LastModified,
+                ModifiedBy = w.ModifiedBy,
+                Name = w.Name,
+                ItemType = (ItemType?)w.ItemType,
+                WeenieClassId = w.WeenieClassId,
+                WeenieType = (WeenieType?)w.WeenieType
+            }).ToList();
+        }
+
         public List<Recipe> RecipeSearch(string token, SearchRecipesCriteria criteria)
         {
             throw new NotImplementedException();
