@@ -107,14 +107,19 @@ namespace DerethForever.Web.Controllers
 
             try
             {
-                model.Results = SandboxContentProviderHost.CurrentProvider.WeenieSearch(GetUserToken(), model.Criteria);
+                string token = GetUserToken();
 
-                List<WeenieChange> mine = SandboxContentProviderHost.CurrentProvider.GetMyWeenieChanges(GetUserToken());
-                model.Results.ForEach(w =>
+                model.Results = SandboxContentProviderHost.CurrentProvider.WeenieSearch(token, model.Criteria);
+
+                if (!string.IsNullOrEmpty(token))
                 {
-                    if (mine.Any(m => m.Weenie.WeenieClassId == w.WeenieClassId))
-                        w.HasSandboxChange = true;
-                });
+                    List<WeenieChange> mine = SandboxContentProviderHost.CurrentProvider.GetMyWeenieChanges(GetUserToken());
+                    model.Results.ForEach(w =>
+                    {
+                        if (mine.Any(m => m.Weenie.WeenieClassId == w.WeenieClassId))
+                            w.HasSandboxChange = true;
+                    });
+                }
 
                 model.ShowResults = true;
             }
