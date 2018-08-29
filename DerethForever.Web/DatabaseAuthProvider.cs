@@ -148,7 +148,10 @@ namespace DerethForever.Web
 
         public void UpdateAccount(string token, ApiAccountModel model)
         {
-            throw new NotImplementedException();
+            using (DbConnection connection = GetConnection())
+            {
+
+            }
         }
 
         public List<SubscriptionModel> GetSubscriptions(string token, string accountGuid)
