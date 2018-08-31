@@ -88,20 +88,30 @@ namespace DerethForever.Web.Models.CachePwn
                 WeenieClassId = WeenieId
             };
 
-            w.IntProperties.Add(new Shared.IntProperty()
-            {
-                IntPropertyId = (int)IntPropertyId.WeenieType,
-                Value = WeenieTypeId
-            });
-
+            bool intWeenieTypeFound = false;
             IntStats.ForEach(stat =>
             {
+                if (stat.Key == (int)IntPropertyId.WeenieType)
+                {
+                    intWeenieTypeFound = true;
+                }
+
                 w.IntProperties.Add(new Shared.IntProperty()
                 {
                     IntPropertyId = stat.Key,
                     Value = stat.Value
                 });
             });
+
+            if (!intWeenieTypeFound)
+            {
+                w.IntProperties.Add(new Shared.IntProperty()
+                {
+                    IntPropertyId = (int)IntPropertyId.WeenieType,
+                    Value = WeenieTypeId
+                });
+
+            }
 
             Int64Stats?.ForEach(stat =>
             {
@@ -186,11 +196,7 @@ namespace DerethForever.Web.Models.CachePwn
             {
                 w.Positions.Add(new Shared.Position()
                 {
-                    PositionType = position.PositionType
-                });
-
-                w.Positions.Add(new Shared.Position()
-                {
+                    PositionType = position.PositionType,
                     X = position.Position.Frame.Position.X,
                     Y = position.Position.Frame.Position.Y,
                     Z = position.Position.Frame.Position.Z,
