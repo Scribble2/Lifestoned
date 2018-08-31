@@ -10,25 +10,23 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal well">
-        <h4>Most Recent Weenie Changes</h4>
-    </div>
+    <h4>Most Recent Weenie Changes</h4>
 
     if (Model.Results != null)
     { 
-        <table class="table table-striped table-bordered table-hover table-condensed">
+        <table class="table table-striped table-bordered table-hover table-condensed weenie-table">
             <thead>
                 <tr>
-                    <th style="width: 65px;">Actions</th>
-                    <th style="width: 50px;">Done</th>
-                    <th style="width: 80px;">Weenie Id</th>
+                    @*<th style="width: 65px;">Actions</th>
+                    <th style="width: 50px;">Done</th>*@
+                    <th>Id</th>
                     <th style="width: 150px;">Name</th>
                     <th style="width: auto;">Description</th>
                     <th style="width: 95px;">Item Type</th>
                     <th style="width: 95px;">Weenie Type</th>
                     <th style="width: 110px;">Last Modified</th>
                     <th style="width: 95px;">Modified By</th>
-                    <th style="width: 75px;"></th>
+                    <th style="width: 18.5rem; text-wrap:none;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,8 +37,8 @@
                 @{
                     foreach (var weenie in Model.Results)
                     {
-                        <tr>
-                            <td>
+                        <tr class="@(weenie.IsDone ? "done" : weenie.HasSandboxChange ? "working" : "")">
+                            @*<td>
                                 <a href="@Url.Action("Edit", "Weenie", new {id = weenie.WeenieClassId})">
                                     <span class="glyphicon glyphicon-edit" title="Edit"></span>
                                 </a>
@@ -59,7 +57,7 @@
                                 {
                                     <span class="glyphicon glyphicon-check" title="Done"></span>
                                 }
-                            </td>
+                            </td>*@
                             <td>
                                 @weenie.WeenieClassId.ToString()
                             </td>
@@ -82,19 +80,35 @@
                                 @weenie.ModifiedBy
                             </td>
                             <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-download" title="Download"></span>&nbsp;&nbsp; <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="@Url.Action("DownloadOriginalToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Original, Phat JSON</a></li>
-                                        <li><a href="@Url.Action("DownloadOriginalToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Original, DF JSON</a></li>
-                                        <!-- <li><a href="#" title="Send to DF Server, coming soon">Original, Send ...</a></li> -->
-                                        @if (weenie.HasSandboxChange)
-                                        {
-                                            <li><a href="@Url.Action("DownloadSandboxToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, Phat JSON</a></li>
-                                            <li><a href="@Url.Action("DownloadSandboxToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, DF JSON</a></li>
-                                            <!-- <li><a href="#" title="Send to DF Server, coming soon">Sandbox, Send ...</a></li> -->
-                                        }
-                                    </ul>
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-secondary" href="@Url.Action("Edit", "Weenie", new {id = weenie.WeenieClassId})">
+                                        <span class="glyphicon glyphicon-edit" title="Edit"></span>
+                                    </a>
+                                    <a class="btn btn-secondary" href="@Url.Action("Clone", "Weenie", new {id = weenie.WeenieClassId})">
+                                        <span class="glyphicon glyphicon-copy" title="Clone"></span>
+                                    </a>
+
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <a class="btn btn-secondary" href="@Url.Action("Delete", "Weenie", new { id = weenie.WeenieClassId })">
+                                            <span class="glyphicon glyphicon-remove" title="Delete"></span>
+                                        </a>
+                                    }
+
+                                    <div class="btn-group dropdown" role="group">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"><span class="glyphicon glyphicon-download" title="Download"></span>&nbsp; <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="@Url.Action("DownloadOriginalToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Original, Phat JSON</a></li>
+                                            <li><a href="@Url.Action("DownloadOriginalToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Original, DF JSON</a></li>
+                                            <!-- <li><a href="#" title="Send to DF Server, coming soon">Original, Send ...</a></li> -->
+                                            @if (weenie.HasSandboxChange)
+                                            {
+                                                <li><a href="@Url.Action("DownloadSandboxToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, Phat JSON</a></li>
+                                                <li><a href="@Url.Action("DownloadSandboxToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, DF JSON</a></li>
+                                                <!-- <li><a href="#" title="Send to DF Server, coming soon">Sandbox, Send ...</a></li> -->
+                                            }
+                                        </ul>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

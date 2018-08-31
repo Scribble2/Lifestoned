@@ -1,6 +1,12 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #00d6d6;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -20,6 +26,7 @@ body {
 input,
 select {
     max-width: 280px;
+    color: #000;
 }
 
 .text-light {
@@ -28,6 +35,18 @@ select {
 
 .row-spacer {
     margin: 4px;
+}
+.table > thead > tr {
+    background-color: #00302c;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    color: #333;
+}
+.table-hover > tbody > tr:hover {
+    background-color: #20635e;
+}
+.well {
+    color: #333;
 }
 
 .navbar, .navbar .dropdown-menu {
@@ -61,6 +80,10 @@ select {
     }
 
 /* Home Screen */
+.jumbotron.home-map {
+    background: url('../images/lifeStonedMapBG.png') center top no-repeat;
+}
+
 .tile-notice {
     margin: 2.5rem 0;
     padding: 0.25rem;
@@ -70,6 +93,7 @@ select {
 }
     .tile-notice em {
         text-decoration: none;
+        font-style: normal;
         font-weight: bold;
         color: #c7961d;
     }
@@ -122,3 +146,31 @@ select {
     display: inline-block;
     max-width: 100%;
 }
+
+.weenie-table > tbody > tr.done {
+    background-color: #caffa2;
+    color: #298f01;
+}
+    .weenie-table > tbody > tr.done .btn {
+        background-color: #298f01;
+        color: #caffa2;
+    }
+
+.weenie-table > tbody > tr.working {
+    background-color: #d9d9d9;
+    color: #6b6b6b;
+}
+    .weenie-table > tbody > tr.working .btn {
+        background-color: #6b6b6b;
+        color: #d9d9d9;
+    }
+
+.weenie-table > tbody > tr {
+    background-color: #fff2b4;
+    color: #d7b401;
+}
+    .weenie-table > tbody > tr .btn {
+        background-color: #d7b401;
+        color: #fff2b4;
+    }
+

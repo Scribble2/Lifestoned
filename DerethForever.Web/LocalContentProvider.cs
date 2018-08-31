@@ -144,14 +144,15 @@ namespace DerethForever.Web
                 Name = w.Name,
                 ItemType = (ItemType?)w.ItemType,
                 WeenieClassId = w.WeenieClassId,
-                WeenieType = (WeenieType?)w.WeenieType
+                WeenieType = (WeenieType?)w.WeenieType,
+                IsDone = w.IsDone,
+                HasSandboxChange = !w.IsDone
             }).ToList();
         }
 
         public List<WeenieSearchResult> AllUpdates(string token)
         {
             var copy = Weenies.Values.Select(w => w)
-                .Where(w => w.LastModified != null)
                 .OrderByDescending(w => w.LastModified);
 
             return copy.Select(w => new WeenieSearchResult()
@@ -162,7 +163,9 @@ namespace DerethForever.Web
                 Name = w.Name,
                 ItemType = (ItemType?)w.ItemType,
                 WeenieClassId = w.WeenieClassId,
-                WeenieType = (WeenieType?)w.WeenieType
+                WeenieType = (WeenieType?)w.WeenieType,
+				IsDone = w.IsDone,
+				HasSandboxChange = !w.IsDone && w.LastModified != null
             }).ToList();
         }
 
