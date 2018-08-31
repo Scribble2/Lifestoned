@@ -197,6 +197,7 @@ namespace DerethForever.Web.Models.CachePwn
                 w.Positions.Add(new Shared.Position()
                 {
                     PositionType = position.PositionType,
+                    Landblock = position.Position.LandCellId,
                     X = position.Position.Frame.Position.X,
                     Y = position.Position.Frame.Position.Y,
                     Z = position.Position.Frame.Position.Z,
@@ -684,6 +685,7 @@ namespace DerethForever.Web.Models.CachePwn
                         if (dfEmote.PositionLandBlockId != null)
                         {
                             ea.MPosition = new Position();
+                            ea.MPosition.LandCellId = dfEmote.PositionLandBlockId.Value;
                         }
 
                         if (dfEmote.PositionX != null)
