@@ -52,7 +52,7 @@ namespace DerethForever.Web
                         }
 
                         // token
-                        resultToken = CreateFakeToken(
+                        resultToken = JwtCookieManager.CreateToken(
                             result.Gid,
                             result.Id,
                             result.Name,
@@ -221,25 +221,6 @@ namespace DerethForever.Web
             }
 
             return Convert.ToBase64String(salt);
-        }
-
-        private static string CreateFakeToken(Guid gid, uint id, string name, string display, string[] roles)
-        {
-            long issue = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            JObject token = new JObject();
-            token.Add("exp", issue + 1800); // 30 minutes
-            token.Add("nbf", issue);
-            token.Add("nameid", gid.ToString());
-            token.Add("account_id", id);
-            token.Add("unique_name", name);
-            token.Add("display_name", display);
-            token.Add("role", JToken.FromObject(roles));
-
-            return string.Format(
-                "{0}.{1}.{2}",
-                Convert.ToBase64String(Encoding.UTF8.GetBytes("{ \"alg\":\"NONE\",\"typ\":\"JWT\" }")),
-                Convert.ToBase64String(Encoding.UTF8.GetBytes(token.ToString(Formatting.None))),
-                null);
         }
     }
 }

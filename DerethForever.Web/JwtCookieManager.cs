@@ -26,12 +26,27 @@ using System.Security.Claims;
 using System.Text;
 using System.Web.Mvc.Filters;
 using DerethForever.Web.Controllers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace DerethForever.Web
 {
     public class JwtCookieManager : IAuthenticationFilter
     {
+        public static int TokenLifespan = 3600;
+
+        static JwtCookieManager()
+        {
+            try
+            {
+                int.TryParse(System.Configuration.ConfigurationManager.AppSettings["TokenLife"], out TokenLifespan);
+            }
+            catch
+            {
+
+            }
+        }
+
         public void OnAuthentication(System.Web.Mvc.Filters.AuthenticationContext filterContext)
         {
             SessionSecurityToken sst = null;
@@ -45,6 +60,8 @@ namespace DerethForever.Web
                     if (ticketClaim != null && !IsExpired(ticketClaim.Value))
                     {
                         filterContext.Principal = sst.ClaimsPrincipal;
+
+                        UpdateToken(ticketClaim.Value);
 
                         if (BaseController.CurrentUser == null)
                         {
@@ -67,18 +84,13 @@ namespace DerethForever.Web
         {
             // no-op
         }
-        
+
         /// <summary>
         /// parses the token to set the cookie with a ClaimsPrincipal, returns the expiration time of the token.
         /// </summary>
         public static ClaimsPrincipal SetCookie(string token)
         {
-            var parts = token.Split('.');
-            var bodyBase64 = parts[1];
-
-            // parse the header and body into objects
-            var bodyJson = Encoding.UTF8.GetString(Base64UrlDecode(bodyBase64));
-            var bodyData = JObject.Parse(bodyJson);
+            var bodyData = ParseToken(token);
 
             // standard claims
             string username = (string)bodyData["unique_name"];
@@ -99,8 +111,8 @@ namespace DerethForever.Web
             {
                 roles = new string[] { bodyData["role"].ToObject<string>() };
             }
-            
-            int duration = expire - issued - 60; // fudge factor of 1 minute
+
+            int duration = expire - issued + 60; // fudge factor of 1 minute
 
             List<Claim> claims = new List<Claim>
             {
@@ -115,7 +127,7 @@ namespace DerethForever.Web
 
             foreach (string role in roles)
                 claims.Add(new Claim(ClaimTypes.Role, role));
-            
+
             ClaimsIdentity ci = new ClaimsIdentity(claims, "DerethForever");
             ClaimsPrincipal cp = new ClaimsPrincipal(ci);
 
@@ -124,6 +136,37 @@ namespace DerethForever.Web
             FederatedAuthentication.SessionAuthenticationModule.AuthenticateSessionSecurityToken(sessionToken, true);
 
             return cp;
+        }
+
+        public static string CreateToken(Guid gid, uint id, string name, string display, string[] roles)
+        {
+            long issue = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            JObject token = new JObject();
+            token.Add("exp", issue + TokenLifespan);
+            token.Add("nbf", issue);
+            token.Add("nameid", gid.ToString());
+            token.Add("account_id", id);
+            token.Add("unique_name", name);
+            token.Add("display_name", display);
+            token.Add("role", JToken.FromObject(roles));
+
+            return string.Format(
+                "{0}.{1}.{2}",
+                Convert.ToBase64String(Encoding.UTF8.GetBytes("{ \"alg\":\"NONE\",\"typ\":\"JWT\" }")),
+                Convert.ToBase64String(Encoding.UTF8.GetBytes(token.ToString(Formatting.None))),
+                null);
+        }
+
+        private static void UpdateToken(string token)
+        {
+            JObject data = ParseToken(token);
+
+            SetCookie(CreateToken(
+                Guid.Parse((string)data["nameid"]),
+                (uint)data["account_id"],
+                (string)data["unique_name"],
+                (string)data["display_name"],
+                data["role"].ToObject<string[]>()));
         }
 
         public static string GetUserGuid(string token)
@@ -144,7 +187,7 @@ namespace DerethForever.Web
             string username = (string)bodyData["unique_name"];
             return username;
         }
-        
+
         public static string GetUserDisplayName(string token)
         {
             var parts = token.Split('.');
@@ -158,6 +201,18 @@ namespace DerethForever.Web
         public static void SignOut()
         {
             FederatedAuthentication.SessionAuthenticationModule.SignOut();
+        }
+
+        private static JObject ParseToken(string token)
+        {
+            var parts = token.Split('.');
+            var bodyBase64 = parts[1];
+
+            // parse the header and body into objects
+            var bodyJson = Encoding.UTF8.GetString(Base64UrlDecode(bodyBase64));
+            var bodyData = JObject.Parse(bodyJson);
+
+            return bodyData;
         }
 
         private bool IsExpired(string token)
