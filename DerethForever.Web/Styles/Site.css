@@ -1,6 +1,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #000033;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -28,6 +29,20 @@ select {
 
 .row-spacer {
     margin: 4px;
+}
+
+.navbar, .navbar .dropdown-menu {
+    background-color: #00302c;
+    color: #00d6d6;
+}
+
+.navbar .navbar-nav > li > a, .navbar .dropdown-menu a {
+    color: #00d6d6;
+}
+
+.navbar-brand {
+    background: url('../images/LifeStonedHeader.png') center 10px no-repeat;
+    width: 150px;
 }
 
 .nav-tabs > li.active > a {
