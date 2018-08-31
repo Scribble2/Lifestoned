@@ -1,7 +1,6 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: #000033;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -60,6 +59,34 @@ select {
         background-color: #333;
         color: #FFF;
     }
+
+/* Home Screen */
+.tile-notice {
+    margin: 2.5rem 0;
+    padding: 0.25rem;
+    font-size: 2rem;
+    color: #fff;
+    text-align: right;
+}
+    .tile-notice em {
+        text-decoration: none;
+        font-weight: bold;
+        color: #c7961d;
+    }
+
+.tile-button {
+    background-color: #996734;
+    border-radius: 5px;
+    margin: 0.75rem 0;
+    padding: 0.25rem;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.tile-button a {
+    color: #fff;
+}
 
 /* Weenie Edit  */
 

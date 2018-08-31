@@ -2,9 +2,22 @@
     ViewBag.Title = "Home Page";
 }
 
-<div style="background-color: #444444 !important" class="jumbotron">
-    <img src="@Url.Content("~/images/lifestoned-full-500-anim.gif")" height="500px" >
+<div style="background-color: #444444 !important" class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6">
+            <img src="@Url.Content("~/images/lifestoned-full-500-anim.gif")" height="450">
+        </div>
+
+        <div class="col-xs-4 col-xs-push-2">
+            <div class="tile-notice"><em>XX%</em> Complete</div>
+            <div class="tile-button">@Html.ActionLink("New Weenie", "New", "Weenie")</div>
+            <div class="tile-button">@Html.ActionLink("Edit Weenie", "Index", "Weenie")</div>
+            <div class="tile-button">@Html.ActionLink("Copy Weenie", "Index", "Weenie")</div>
+            <div class="tile-button">@Html.ActionLink("Upload Weenie", "Upload", "Weenie")</div>
+        </div>
+    </div>
+
     <p></p>
-    <p class="lead text-light">Web based Server Control Panel and Content editing system for AC Emulators</p>
+    <p class="text-light">Web based Server Control Panel and Content editing system for AC Emulators</p>
 </div>
 
