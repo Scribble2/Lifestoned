@@ -515,6 +515,7 @@
     <Content Include="Views\Weenie\Recent.cshtml" />
     <Content Include="Views\WorldRelease\Index.cshtml" />
     <Content Include="Views\Server\CutWorldRelease.cshtml" />
+    <Content Include="Views\Shared\WeenieList.cshtml" />
     <None Include="Web.example.config">
       <SubType>Designer</SubType>
     </None>

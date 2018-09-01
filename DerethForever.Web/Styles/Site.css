@@ -36,15 +36,7 @@ select {
 .row-spacer {
     margin: 4px;
 }
-.table > thead > tr {
-    background-color: #00302c;
-}
-.table-striped > tbody > tr:nth-of-type(odd) {
-    color: #333;
-}
-.table-hover > tbody > tr:hover {
-    background-color: #20635e;
-}
+
 .well {
     color: #333;
 }
@@ -148,13 +140,18 @@ select {
 }
 
 .weenie-table > tbody > tr.done {
-    background-color: #caffa2;
-    color: #298f01;
+    background-color: #cceab6;
+    color: #377020;
 }
     .weenie-table > tbody > tr.done .btn {
-        background-color: #298f01;
-        color: #caffa2;
+        background-color: #377020;
+        color: #cceab6;
     }
+    .weenie-table > tbody > tr.done .btn:hover {
+        background-color: #cceab6;
+        color: #377020;
+    }
+
 
 .weenie-table > tbody > tr.working {
     background-color: #d9d9d9;
@@ -164,13 +161,55 @@ select {
         background-color: #6b6b6b;
         color: #d9d9d9;
     }
-
-.weenie-table > tbody > tr {
-    background-color: #fff2b4;
-    color: #d7b401;
-}
-    .weenie-table > tbody > tr .btn {
-        background-color: #d7b401;
-        color: #fff2b4;
+    .weenie-table > tbody > tr.working .btn:hover {
+        background-color: #d9d9d9;
+        color: #6b6b6b;
     }
 
+.weenie-table > tbody > tr {
+    background-color: #f3eabf;
+    color: #b69e21;
+}
+    .weenie-table > tbody > tr .btn {
+        background-color: #b69e21;
+        color: #f3eabf;
+    }
+    .weenie-table > tbody > tr .btn:hover {
+        background-color: #f3eabf;
+        color: #b69e21;
+    }
+
+.table > thead > tr {
+    background-color: #00302c;
+}
+
+.table > tbody > tr .btn {
+    background-color: #20635e;
+    color: #cccccc;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    color: #333;
+}
+
+
+.table-hover > tbody > tr:hover {
+    background-color: #20635e !important;
+    color: #cccccc !important;
+}
+
+    .table-hover > tbody > tr:hover .btn {
+        background-color: #cccccc !important;
+        color: #20635e !important;
+    }
+
+        .table-hover > tbody > tr:hover .btn:hover {
+            background-color: #20635e !important;
+            color: #cccccc !important;
+        }
+
+.btn-group-vertical.stuck {
+    position: fixed;
+    left: 0;
+    top: 15rem;
+}

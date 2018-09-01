@@ -7,9 +7,18 @@
 
 <br />
 
-@using (Html.BeginForm("Edit", "Weenie", FormMethod.Post))
+@using (Html.BeginForm("Edit", "Weenie", FormMethod.Post, new { onsubmit = "return validate();" }))
 {
     @Html.AntiForgeryToken()
+
+<div class="btn-group-vertical stuck" role="group">
+    <button id="btnSave" type="submit" class="btn btn-primary" title="Save"><i class="glyphicon glyphicon-floppy-save"></i></button>
+    <a href="@Url.Action("Edit", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Cancel"><i class="glyphicon glyphicon-remove"></i></a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("Delete", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+    }
+</div>
 
     <div class="form-horizontal">
         <h2>
@@ -391,7 +400,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="well">
                 <div class="row row-spacer">
                     <div class="col-md-2">
@@ -423,14 +432,7 @@
                 </div>
             </div>
         </div>
-        <br />
 
-        <br />
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </div>
     </div>
 
     <!-- Search Weenie Modal -->
@@ -698,6 +700,16 @@
         function selectSearchWCID(wcid) {
             $("#" + weenieSearchTarget).val(wcid);
             $("#searchWeenieModal").modal('hide');
+        }
+
+        function validate() {
+            var cl = $('#UserChangeSummary');
+            if (cl.text() == 0) {
+                cl.focus();
+                return false;
+            } else {
+                return true;
+            }
         }
 
         $(document).ready(function () {
