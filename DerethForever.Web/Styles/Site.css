@@ -170,55 +170,15 @@ select {
     max-width: 100%;
 }
 
-.table > tbody > tr.done td:first-child {
+.weenie-table > tbody > tr.done td:first-child {
     color: #377020;
 }
-.table > tbody > tr.working td:first-child {
+.weenie-table > tbody > tr.working td:first-child {
     color: #6b6b6b;
 }
-.table > tbody > tr td:first-child {
+.weenie-table > tbody > tr td:first-child {
     color: #b69e21;
 }
-
-.weenie-table > tbody > tr.done {
-    background-color: #cceab6;
-    color: #377020;
-}
-    .weenie-table > tbody > tr.done .btn {
-        background-color: #377020;
-        color: #cceab6;
-    }
-    .weenie-table > tbody > tr.done .btn:hover {
-        background-color: #cceab6;
-        color: #377020;
-    }
-
-
-.weenie-table > tbody > tr.working {
-    background-color: #d9d9d9;
-    color: #6b6b6b;
-}
-    .weenie-table > tbody > tr.working .btn {
-        background-color: #6b6b6b;
-        color: #d9d9d9;
-    }
-    .weenie-table > tbody > tr.working .btn:hover {
-        background-color: #d9d9d9;
-        color: #6b6b6b;
-    }
-
-.weenie-table > tbody > tr {
-    background-color: #f3eabf;
-    color: #b69e21;
-}
-    .weenie-table > tbody > tr .btn {
-        background-color: #b69e21;
-        color: #f3eabf;
-    }
-    .weenie-table > tbody > tr .btn:hover {
-        background-color: #f3eabf;
-        color: #b69e21;
-    }
 
 .table > thead > tr {
     background-color: #00302c;
