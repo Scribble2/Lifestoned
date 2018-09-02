@@ -170,6 +170,16 @@ select {
     max-width: 100%;
 }
 
+.table > tbody > tr.done td:first-child {
+    color: #377020;
+}
+.table > tbody > tr.working td:first-child {
+    color: #6b6b6b;
+}
+.table > tbody > tr td:first-child {
+    color: #b69e21;
+}
+
 .weenie-table > tbody > tr.done {
     background-color: #cceab6;
     color: #377020;
