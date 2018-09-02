@@ -7,7 +7,7 @@
 
 <br />
 
-@using (Html.BeginForm("Edit", "Weenie", FormMethod.Post, new { onsubmit = "return validate();" }))
+@using (Html.BeginForm("Edit", "Weenie", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -704,7 +704,7 @@
 
         function validate() {
             var cl = $('#UserChangeSummary');
-            if (cl.text() == 0) {
+            if (cl.val().length == 0) {
                 cl.focus();
                 return false;
             } else {
@@ -721,6 +721,11 @@
 
             $("#MvcAction").val("");
             $("#PropertyTab").val("");
+
+            $('#btnSave').click(function (e) {
+                if (!validate())
+                    e.preventDefault();
+            });
         });
 
         $(document).ready(function() {
