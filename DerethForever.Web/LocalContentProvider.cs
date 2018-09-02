@@ -164,8 +164,8 @@ namespace DerethForever.Web
                 ItemType = (ItemType?)w.ItemType,
                 WeenieClassId = w.WeenieClassId,
                 WeenieType = (WeenieType?)w.WeenieType,
-				IsDone = w.IsDone,
-				HasSandboxChange = !w.IsDone && w.LastModified != null
+                IsDone = w.IsDone,
+                HasSandboxChange = !w.IsDone && w.LastModified != null
             }).ToList();
         }
 
@@ -257,7 +257,9 @@ namespace DerethForever.Web
                 Name = w.Name,
                 ItemType = (ItemType?)w.ItemType,
                 WeenieClassId = w.WeenieClassId,
-                WeenieType = (WeenieType?)w.WeenieType
+                WeenieType = (WeenieType?)w.WeenieType,
+                IsDone = w.IsDone,
+                HasSandboxChange = !w.IsDone && w.LastModified != null
             }).ToList();
         }
 
