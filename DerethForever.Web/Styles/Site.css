@@ -46,6 +46,10 @@ select {
     color: #fff;
 }
 
+.panel-default > .panel-body, .panel-default > .panel-collapse > .panel-body {
+    color: #333;
+}
+
 .navbar, .navbar .dropdown-menu {
     background-color: #00302c;
     color: #00d6d6;

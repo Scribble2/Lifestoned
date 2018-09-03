@@ -12,6 +12,11 @@
 {
     @Html.AntiForgeryToken()
 
+<div class="btn-group-vertical stuck" role="group">
+    <button id="btnSave" type="submit" class="btn btn-primary" title="Save"><i class="glyphicon glyphicon-floppy-save"></i></button>
+    <a href="@Url.Action("Sandbox", "Weenie")" class="btn btn-primary" title="Cancel"><i class="glyphicon glyphicon-remove"></i></a>
+</div>
+
     <div class="form-horizontal">
         <h2>
             New Weenie
@@ -387,14 +392,6 @@
                 <div class="col-md-4">
                     @Html.TextAreaFor(m => m.UserChangeSummary, new { @class = "form-control" })
                 </div>
-            </div>
-        </div>
-        <br />
-
-        <br />
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>

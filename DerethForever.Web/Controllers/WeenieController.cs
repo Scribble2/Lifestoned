@@ -516,7 +516,7 @@ namespace DerethForever.Web.Controllers
             SortTheThings(model);
             model.MvcAction = null;
             model.NewPositionType = null;
-            return View("Edit", model);
+            return View(model);
         }
 
         [HttpGet]
