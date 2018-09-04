@@ -46,8 +46,13 @@ select {
     color: #fff;
 }
 
+.panel-default > .panel-heading {
+    color: #fff;
+    background-color: #00302c;
+}
 .panel-default > .panel-body, .panel-default > .panel-collapse > .panel-body {
-    color: #333;
+    color: #fff;
+    background-color: #0b4843;
 }
 
 .navbar, .navbar .dropdown-menu {
