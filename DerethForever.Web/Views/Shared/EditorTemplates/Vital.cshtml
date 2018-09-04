@@ -3,8 +3,8 @@
 <div class="col-md-2 vcenter">
     @Html.HiddenFor(m => m.AbilityId)
     @Html.HiddenFor(m => m.ExperienceSpent)
-    @Html.HiddenFor(m => m.Base)
+    @Html.HiddenFor(m => m.UnbuffedValue)
     @Model.AbilityIdBinder
 </div>
-<div class="col-md-1 vcenter">@Html.DisplayFor(m => m.Base, new { @class = "form-control" })</div>
+<div class="col-md-1 vcenter">@Html.TextBoxFor(m => m.Base, new { @class = "form-control" })</div>
 <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.Ranks, new { @class = "form-control" })</div>

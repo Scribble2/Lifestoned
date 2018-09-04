@@ -38,7 +38,7 @@ namespace DerethForever.Web.Models.CachePwn
         [JsonProperty("motion")]
         public int? Motion { get; set; }
 
-        [JsonProperty("msg")]
+        [JsonProperty("msg", NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; set; }
 
         [JsonProperty("amount64")]
