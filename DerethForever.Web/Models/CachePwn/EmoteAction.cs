@@ -109,5 +109,11 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("treasure_type")]
         public int? TreasureType { get; set; }
+
+        [JsonIgnore]
+        public int? SortOrder { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

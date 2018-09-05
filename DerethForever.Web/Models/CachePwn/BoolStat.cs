@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DerethForever.Web.Models.Enums;
 using Newtonsoft.Json;
 
 namespace DerethForever.Web.Models.CachePwn
@@ -39,5 +40,14 @@ namespace DerethForever.Web.Models.CachePwn
             get { return (Value != 0); }
             set { Value = (value ? 1 : 0); }
         }
+
+        [JsonIgnore]
+        public string PropertyIdBinder
+        {
+            get { return ((BoolPropertyId)Key).GetName(); }
+        }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

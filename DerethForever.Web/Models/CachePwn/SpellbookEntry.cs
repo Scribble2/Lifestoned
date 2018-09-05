@@ -28,5 +28,8 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("value")]
         public SpellCastingStats Stats { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

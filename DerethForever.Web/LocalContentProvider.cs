@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using DerethForever.Web.Models.CachePwn;
 using DerethForever.Web.Models.Content;
 using DerethForever.Web.Models.Enums;
 using DerethForever.Web.Models.Recipe;
@@ -24,7 +25,7 @@ namespace DerethForever.Web
 
         protected string ContentPath { get; private set; }
 
-        protected ConcurrentDictionary<uint, Weenie> Weenies { get; private set; }
+        protected ConcurrentDictionary<uint, CachePwnWeenie> Weenies { get; private set; }
 
         [Flags]
         protected enum LoadingFlags
@@ -53,7 +54,7 @@ namespace DerethForever.Web
 
         #region IContentProvider
 
-        public bool CreateWeenie(string token, Weenie weenie)
+        public bool CreateWeenie(string token, CachePwnWeenie weenie)
         {
             return SaveWeenie(weenie);
         }
@@ -67,7 +68,7 @@ namespace DerethForever.Web
         {
             try
             {
-                Weenie weenie = null;
+                CachePwnWeenie weenie = null;
                 if (Weenies.TryRemove(weenieClassId, out weenie))
                 {
                     string path = Path.Combine(ContentPath, "weenies", $"{weenieClassId}.json");
@@ -112,9 +113,9 @@ namespace DerethForever.Web
             throw new NotImplementedException();
         }
 
-        public Weenie GetWeenie(string token, uint weenieClassId)
+        public CachePwnWeenie GetWeenie(string token, uint weenieClassId)
         {
-            Weenie result = null;
+            CachePwnWeenie result = null;
             Weenies.TryGetValue(weenieClassId, out result);
             return result;
         }
@@ -138,12 +139,12 @@ namespace DerethForever.Web
 
             return copy.Select(w => new WeenieSearchResult()
             {
-                Description = w.StringProperties.Find(p => p.StringPropertyId == (int)StringPropertyId.ShortDesc)?.Value,
+                Description = w.StringStats.Find(p => p.Key == (int)StringPropertyId.ShortDesc)?.Value,
                 LastModified = w.LastModified,
                 ModifiedBy = w.ModifiedBy,
                 Name = w.Name,
                 ItemType = (ItemType?)w.ItemType,
-                WeenieClassId = w.WeenieClassId,
+                WeenieClassId = w.WeenieId,
                 WeenieType = (WeenieType?)w.WeenieType,
                 IsDone = w.IsDone,
                 HasSandboxChange = !w.IsDone
@@ -158,12 +159,12 @@ namespace DerethForever.Web
 
             return copy.Select(w => new WeenieSearchResult()
             {
-                Description = w.StringProperties.Find(p => p.StringPropertyId == (int)StringPropertyId.ShortDesc)?.Value,
+                Description = w.StringStats.Find(p => p.Key == (int)StringPropertyId.ShortDesc)?.Value,
                 LastModified = w.LastModified,
                 ModifiedBy = w.ModifiedBy,
                 Name = w.Name,
                 ItemType = (ItemType?)w.ItemType,
-                WeenieClassId = w.WeenieClassId,
+                WeenieClassId = w.WeenieId,
                 WeenieType = (WeenieType?)w.WeenieType,
                 IsDone = w.IsDone,
                 HasSandboxChange = !w.IsDone && w.LastModified != null
@@ -185,7 +186,7 @@ namespace DerethForever.Web
             throw new NotImplementedException();
         }
 
-        public bool UpdateWeenie(string token, Weenie weenie)
+        public bool UpdateWeenie(string token, CachePwnWeenie weenie)
         {
             return SaveWeenie(weenie);
         }
@@ -197,7 +198,7 @@ namespace DerethForever.Web
             if (criteria != null)
             {
                 if (criteria.WeenieClassId.HasValue)
-                    copy = copy.Where(w => w.WeenieClassId == criteria.WeenieClassId);
+                    copy = copy.Where(w => w.WeenieId == criteria.WeenieClassId);
 
                 if (criteria.ItemType.HasValue)
                     copy = copy.Where(w => w.ItemType == (int)criteria.ItemType);
@@ -220,22 +221,22 @@ namespace DerethForever.Web
                             switch (pc.PropertyType)
                             {
                                 case PropertyType.PropertyBool:
-                                    copy = copy.Where(w => w.BoolProperties.Any(p => p.BoolPropertyId == pc.PropertyId && p.Value == bool.Parse(pc.PropertyValue)));
+                                    copy = copy.Where(w => w.BoolStats.Any(p => p.Key == pc.PropertyId && p.BoolValue == bool.Parse(pc.PropertyValue)));
                                     break;
                                 case PropertyType.PropertyDataId:
-                                    copy = copy.Where(w => w.DidProperties.Any(p => p.DataIdPropertyId == pc.PropertyId && p.Value == uint.Parse(pc.PropertyValue)));
+                                    copy = copy.Where(w => w.DidStats.Any(p => p.Key == pc.PropertyId && p.Value == uint.Parse(pc.PropertyValue)));
                                     break;
                                 case PropertyType.PropertyDouble:
-                                    copy = copy.Where(w => w.DoubleProperties.Any(p => p.DoublePropertyId == pc.PropertyId && p.Value == double.Parse(pc.PropertyValue)));
+                                    copy = copy.Where(w => w.FloatStats.Any(p => p.Key == pc.PropertyId && p.Value == double.Parse(pc.PropertyValue)));
                                     break;
                                 case PropertyType.PropertyInt:
-                                    copy = copy.Where(w => w.IntProperties.Any(p => p.IntPropertyId == pc.PropertyId && p.Value == int.Parse(pc.PropertyValue)));
+                                    copy = copy.Where(w => w.IntStats.Any(p => p.Key == pc.PropertyId && p.Value == int.Parse(pc.PropertyValue)));
                                     break;
                                 case PropertyType.PropertyInt64:
-                                    copy = copy.Where(w => w.Int64Properties.Any(p => p.Int64PropertyId == pc.PropertyId && p.Value == long.Parse(pc.PropertyValue)));
+                                    copy = copy.Where(w => w.Int64Stats.Any(p => p.Key == pc.PropertyId && p.Value == long.Parse(pc.PropertyValue)));
                                     break;
                                 case PropertyType.PropertyString:
-                                    copy = copy.Where(w => w.StringProperties.Any(p => p.StringPropertyId == pc.PropertyId && p.Value.Contains(pc.PropertyValue)));
+                                    copy = copy.Where(w => w.StringStats.Any(p => p.Key == pc.PropertyId && p.Value.Contains(pc.PropertyValue)));
                                     break;
                                 default:
                                     log.Warn($"Weenie search for unsupported property type {pc.PropertyType}");
@@ -252,12 +253,12 @@ namespace DerethForever.Web
 
             return copy.Select(w => new WeenieSearchResult()
             {
-                Description = w.StringProperties.Find(p => p.StringPropertyId == (int)StringPropertyId.ShortDesc)?.Value,
+                Description = w.StringStats.Find(p => p.Key == (int)StringPropertyId.ShortDesc)?.Value,
                 LastModified = w.LastModified,
                 ModifiedBy = w.ModifiedBy,
                 Name = w.Name,
                 ItemType = (ItemType?)w.ItemType,
-                WeenieClassId = w.WeenieClassId,
+                WeenieClassId = w.WeenieId,
                 WeenieType = (WeenieType?)w.WeenieType,
                 IsDone = w.IsDone,
                 HasSandboxChange = !w.IsDone && w.LastModified != null
@@ -291,7 +292,7 @@ namespace DerethForever.Web
         {
             SetLoadState(LoadingFlags.WeenieLoading, LoadingFlags.WeenieLoaded);
 
-            Weenies = new ConcurrentDictionary<uint, Weenie>();
+            Weenies = new ConcurrentDictionary<uint, CachePwnWeenie>();
 
             string path = Path.Combine(ContentPath, "weenies");
             if (!Directory.Exists(path))
@@ -319,7 +320,7 @@ namespace DerethForever.Web
                             string sid = Path.GetFileNameWithoutExtension(file);
                             uint id = uint.Parse(sid);
 
-                            Weenie weenie = JsonConvert.DeserializeObject<Weenie>(content);
+                            CachePwnWeenie weenie = JsonConvert.DeserializeObject<CachePwnWeenie>(content);
 
                             Weenies.TryAdd(id, weenie);
 
@@ -350,19 +351,19 @@ namespace DerethForever.Web
 
         #endregion
 
-        private bool SaveWeenie(Weenie weenie)
+        private bool SaveWeenie(CachePwnWeenie weenie)
         {
             if (weenie == null)
                 throw new ArgumentNullException(nameof(weenie));
 
             try
             {
-                string path = Path.Combine(ContentPath, "weenies", $"{weenie.WeenieClassId}.json");
+                string path = Path.Combine(ContentPath, "weenies", $"{weenie.WeenieId}.json");
                 string content = JsonConvert.SerializeObject(weenie);
 
                 File.WriteAllText(path, content);
 
-                Weenies[weenie.WeenieClassId] = weenie;
+                Weenies[weenie.WeenieId] = weenie;
 
                 return true;
             }

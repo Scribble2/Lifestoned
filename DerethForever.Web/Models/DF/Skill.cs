@@ -20,40 +20,44 @@ DEALINGS IN THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
+using DerethForever.Web.Models.Enums;
 using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Weenie
+namespace DerethForever.Web.Models.DF
 {
-    public class WeenieChange
+    public class Skill
     {
-        [JsonProperty("weenie")]
-        public Weenie Weenie { get; set; }
+        [JsonProperty("skillId")]
+        public int? SkillId { get; set; }
+        
+        [JsonProperty("skillStatus")]
+        public int? Status { get; set; }
 
-        [JsonProperty("userGuid")]
-        public string UserGuid { get; set; }
-
-        [JsonProperty("userName")]
-        public string UserName { get; set; }
-
-        [JsonProperty("submitted")]
-        public bool Submitted { get; set; }
-
-        [JsonProperty("comments")]
-        public DateTime SubmissionTime { get; set; }
-
-        public string SubmissionTimeDisplay
+        [JsonIgnore]
+        public SkillStatus? Status_Binder
         {
-            get { return SubmissionTime.ToString("g"); }
+            get { return (SkillStatus?)Status; }
+            set { Status = (int?)value; }
         }
 
-        [JsonProperty("discussion")]
-        public List<ChangeDiscussionEntry> Discussion { get; set; } = new List<ChangeDiscussionEntry>();
+        [JsonProperty("ranks")]
+        public uint? Ranks { get; set; }
+
+        [JsonProperty("baseValue")]
+        public uint? BaseValue { get; set; }
+
+        [JsonProperty("experienceSpent")]
+        public uint? ExperienceSpent { get; set; }
 
         [JsonIgnore]
-        public uint NewCommentWeenieId { get; set; }
-
+        public string SkillName
+        {
+            get { return ((SkillId?)SkillId).GetName(); }
+        }
+        
         [JsonIgnore]
-        public string NewComment { get; set; }
+        public bool Deleted { get; set; }
     }
 }

@@ -32,5 +32,8 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("value")]
         public Skill Skill { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

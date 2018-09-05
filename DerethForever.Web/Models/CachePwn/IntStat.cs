@@ -17,6 +17,8 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
+
+using DerethForever.Web.Models.Enums;
 using Newtonsoft.Json;
 
 namespace DerethForever.Web.Models.CachePwn
@@ -28,5 +30,14 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("value")]
         public int Value { get; set; }
+
+        [JsonIgnore]
+        public string PropertyIdBinder
+        {
+            get { return ((IntPropertyId)Key).GetName(); }
+        }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

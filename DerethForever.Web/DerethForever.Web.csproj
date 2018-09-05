@@ -296,6 +296,7 @@
     <Compile Include="Models\Recipe\IndexModel.cs" />
     <Compile Include="Models\Recipe\Recipe.cs" />
     <Compile Include="Models\Recipe\SearchRecipesCriteria.cs" />
+    <Compile Include="Models\Shared\Book.cs" />
     <Compile Include="Models\WorldRelease\IndexModel.cs" />
     <Compile Include="Models\WorldRelease\ReleaseType.cs" />
     <Compile Include="Models\WorldRelease\Version.cs" />
@@ -339,8 +340,8 @@
     <Compile Include="Models\Enums\IidPropertyId.cs" />
     <Compile Include="Models\Shared\TypedArmorRatings.cs" />
     <Compile Include="Models\Shared\VitalSet.cs" />
-    <Compile Include="Models\Weenie\ChangeDiscussionEntry.cs" />
-    <Compile Include="Models\Weenie\ChangelogEntry.cs" />
+    <Compile Include="Models\Shared\ChangeDiscussionEntry.cs" />
+    <Compile Include="Models\Shared\ChangelogEntry.cs" />
     <Compile Include="Models\Weenie\DownloadChangeModel.cs" />
     <Compile Include="Models\Weenie\IndexModel.cs" />
     <Compile Include="Models\Enums\Int64PropertyId.cs" />
@@ -353,15 +354,15 @@
     <Compile Include="Models\Weenie\SearchWeenieProperty.cs" />
     <Compile Include="Models\Weenie\SearchWeeniesCriteria.cs" />
     <Compile Include="Models\Enums\StringPropertyId.cs" />
-    <Compile Include="Models\Weenie\Weenie.cs" />
-    <Compile Include="Models\Weenie\WeenieChange.cs" />
-    <Compile Include="Models\Weenie\WeenieCommands.cs" />
+    <Compile Include="Models\Shared\WeenieChange.cs" />
+    <Compile Include="Models\Shared\WeenieCommands.cs" />
     <Compile Include="Models\Weenie\WeenieSearchResult.cs" />
     <Compile Include="Models\Enums\WeenieType.cs" />
     <Compile Include="NonSuckyJsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SandboxContentProvider.cs" />
     <Compile Include="SandboxContentProviderHost.cs" />
+    <Compile Include="DummyAuthProvider.cs" />
     <Compile Include="SimpleMessage.cs" />
     <Compile Include="ZipFile.cs" />
   </ItemGroup>
@@ -528,6 +529,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lifestoned.Lib\Lifestoned.Lib.csproj">
+      <Project>{0ccf41b5-882a-4feb-8e2d-9d7d094b95f3}</Project>
+      <Name>Lifestoned.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

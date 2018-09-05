@@ -35,7 +35,7 @@ namespace DerethForever.Web.Models.Shared
         [JsonProperty("authorAccount")]
         public string AuthorAccount { get; set; }
 
-        [JsonProperty("authorId")]
+        [JsonProperty("authorID")]
         public uint? AuthorId { get; set; }
 
         [JsonProperty("ignoreAuthor")]

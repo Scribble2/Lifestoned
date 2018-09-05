@@ -23,7 +23,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using DerethForever.Web.Models.Weenie;
+using DerethForever.Web.Models.CachePwn;
 using RestSharp;
 
 namespace DerethForever.Web
@@ -32,8 +32,8 @@ namespace DerethForever.Web
     {
         string Authenticate(string url, string username, string password);
 
-        IRestResponse UpdateWeenie(string url, string token, Weenie weenie);
+        IRestResponse UpdateWeenie(string url, string token, CachePwnWeenie weenie);
 
-        IRestResponse PreviewWeenie(string url, string token, Weenie weenie);
+        IRestResponse PreviewWeenie(string url, string token, CachePwnWeenie weenie);
     }
 }

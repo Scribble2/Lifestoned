@@ -23,6 +23,12 @@ namespace DerethForever.Web.Models.CachePwn
 {
     public class BodyPart
     {
+        public BodyPart()
+        {
+            ArmorValues = new ArmorValues();
+            SD = new Zones();
+        }
+
         [JsonProperty("dtype")]
         public int DType { get; set; }
 
@@ -40,5 +46,8 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("bpsd")]
         public Zones SD { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

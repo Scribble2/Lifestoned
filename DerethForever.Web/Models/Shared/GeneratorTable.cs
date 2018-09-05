@@ -36,7 +36,7 @@ namespace DerethForever.Web.Models.Shared
         [JsonProperty("initCreate")]
         public uint InitCreate { get; set; }
 
-        [JsonProperty("maxNumber")]
+        [JsonProperty("maxNum")]
         public uint MaxNumber { get; set; }
 
         [JsonProperty("whenCreate")]
@@ -62,18 +62,19 @@ namespace DerethForever.Web.Models.Shared
         [JsonProperty("stackSize")]
         public int StackSize { get; set; }
 
-        [JsonProperty("paletteId")]
+        [JsonProperty("ptid")]
         public uint PaletteId { get; set; }
 
         [JsonProperty("slot")]
         public uint Slot { get; set; }
 
-        [JsonProperty("objectCell")]
+        [JsonProperty("objcell_id")]
         public uint ObjectCell { get; set; }
 
         [JsonProperty("shade")]
         public float Shade { get; set; }
 
+        [JsonProperty("frame")]
         public Frame Frame { get; set; } = new Frame();
 
         [JsonIgnore]

@@ -27,6 +27,7 @@ namespace DerethForever.Web.Models.Shared
     /// allows for attribute decoration of properties on the Emote class to control
     /// which properties are applicable.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class EmoteTypeAttribute : Attribute
     {
         public EmoteTypeAttribute() : base()

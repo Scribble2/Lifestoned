@@ -17,35 +17,19 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Weenie
+namespace DerethForever.Web.Models.DF
 {
-    public enum WeenieCommands
+    public class Origin
     {
-        Invalid,
-        AddIntProperty,
-        AddStringProperty,
-        AddInt64Property,
-        AddDoubleProperty,
-        AddDidProperty,
-        AddIidProperty,
-        AddBoolProperty,
-        AddSpell,
-        AddPosition,
-        AddBookPage,
-        AddEmoteSet,
-        AddEmote,
-        AddSkill,
-        AddCreateItem,
-        AddBodyParts,
-        AddBodyPart,
-        AddGeneratorTable,
+        [JsonProperty("x")]
+        public float X { get; set; }
 
-        Delete,
-        Cancel
+        [JsonProperty("y")]
+        public float Y { get; set; }
+
+        [JsonProperty("z")]
+        public float Z { get; set; }
     }
 }

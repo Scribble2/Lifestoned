@@ -23,7 +23,7 @@ using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Weenie
+namespace DerethForever.Web.Models.Shared
 {
     public class ChangeDiscussionEntry
     {

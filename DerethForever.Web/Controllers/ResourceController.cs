@@ -22,6 +22,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Web.Mvc;
+using Lifestoned.Lib.ClientLib.Enum;
 
 namespace DerethForever.Web.Controllers
 {
@@ -35,7 +36,8 @@ namespace DerethForever.Web.Controllers
             {
                 try
                 {
-                    src = ContentProviderHost.CurrentProvider.GetFullyLayeredPngIcon(weenieClassId);
+                    var weenie = ContentProviderHost.CurrentProvider.GetWeenie(null, weenieClassId);
+                    src = Lifestoned.Lib.ResourceManager.GetFullyLayeredPngIcon(weenie.ItemType, weenie.UnderlayId, weenie.OverlayId, weenie.IconId, weenie.UIEffects);
                 }
                 catch (Exception)
                 {

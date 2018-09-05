@@ -56,5 +56,11 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("maxhealth")]
         public float? MaxHealth { get; set; }
+
+        [JsonIgnore]
+        public int? SortOrder { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

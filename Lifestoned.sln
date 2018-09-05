@@ -8,11 +8,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{341E3C67-8B61-43EB-8B02-6C9760DE94B2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		DerethForever.Web\Models\Enums\Bonded.cs = DerethForever.Web\Models\Enums\Bonded.cs
-		..\changelog.md = ..\changelog.md
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		ContentEditor.sln.licenseheader = ContentEditor.sln.licenseheader
-		..\readme.md = ..\readme.md
-		..\todo.md = ..\todo.md
+		LICENSE = LICENSE
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DerethForever.Web.Tests", "DerethForever.Web.Tests\DerethForever.Web.Tests.csproj", "{324AE598-4356-46FF-9A5D-14F83FAA7D6A}"
@@ -23,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "changelog-archive", "change
 		2018-02.md = 2018-02.md
 		2018-03.md = 2018-03.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lifestoned.Lib", "Lifestoned.Lib\Lifestoned.Lib.csproj", "{0CCF41B5-882A-4FEB-8E2D-9D7D094B95F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +49,14 @@ Global
 		{324AE598-4356-46FF-9A5D-14F83FAA7D6A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{324AE598-4356-46FF-9A5D-14F83FAA7D6A}.Release|x64.ActiveCfg = Release|x64
 		{324AE598-4356-46FF-9A5D-14F83FAA7D6A}.Release|x64.Build.0 = Release|x64
+		{0CCF41B5-882A-4FEB-8E2D-9D7D094B95F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCF41B5-882A-4FEB-8E2D-9D7D094B95F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCF41B5-882A-4FEB-8E2D-9D7D094B95F3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0CCF41B5-882A-4FEB-8E2D-9D7D094B95F3}.Debug|x64.Build.0 = Debug|Any CPU
+		{0CCF41B5-882A-4FEB-8E2D-9D7D094B95F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CCF41B5-882A-4FEB-8E2D-9D7D094B95F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCF41B5-882A-4FEB-8E2D-9D7D094B95F3}.Release|x64.ActiveCfg = Release|Any CPU
+		{0CCF41B5-882A-4FEB-8E2D-9D7D094B95F3}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

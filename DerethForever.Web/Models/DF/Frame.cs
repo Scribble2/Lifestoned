@@ -17,23 +17,16 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Weenie
+namespace DerethForever.Web.Models.DF
 {
-    public class ChangelogEntry
+    public class Frame
     {
-        [JsonProperty("created")]
-        public DateTime Created { get; set; }
+        [JsonProperty("origin")]
+        public Origin Origin { get; set; }
 
-        [JsonProperty("author")]
-        public string Author { get; set; }
-
-        [JsonProperty("comment")]
-        public string Comment { get; set; }
+        [JsonProperty("angles")]
+        public Angles Angles { get; set; }
     }
 }

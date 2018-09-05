@@ -47,7 +47,7 @@ namespace DerethForever.Web.Models.CachePwn
         {
             CreationProfile cp = new CreationProfile()
             {
-                CreationProfileGuid = Guid.NewGuid(),
+                // CreationProfileGuid = Guid.NewGuid(),
                 Destination = Destination,
                 Palette = Palette,
                 Shade = Shade,
@@ -58,5 +58,8 @@ namespace DerethForever.Web.Models.CachePwn
 
             return cp;
         }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

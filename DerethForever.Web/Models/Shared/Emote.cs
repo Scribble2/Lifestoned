@@ -29,21 +29,9 @@ namespace DerethForever.Web.Models.Shared
     public class Emote
     {
         /// <summary>
-        /// Table field Primary Key
-        /// </summary>
-        [JsonProperty("emoteGuid")]
-        public Guid? EmoteGuid { get; set; }
-
-        /// <summary>
-        /// guid of the emote set
-        /// </summary>
-        [JsonProperty("emoteSetGuid")]
-        public Guid? EmoteSetGuid { get; set; }
-
-        /// <summary>
         /// Emote Type Id - these are found in the code emotetype.cs
         /// </summary>
-        [JsonProperty("emoteTypeId")]
+        [JsonProperty("type")]
         public uint EmoteTypeId { get; set; }
 
         [JsonIgnore]
@@ -90,27 +78,55 @@ namespace DerethForever.Web.Models.Shared
         /// </summary>
         [JsonProperty("percent")]
         [Display(Name = "Percent")]
-        [EmoteType(new uint[] { 0x31, 0x32, 0x76 })]
+        [EmoteType(EmoteType.AwardLevelProportionalXP)]
+        [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
+        [EmoteType(EmoteType.SetFloatStat)]
         public double? Percent { get; set; }
 
-        [JsonProperty("minimum")]
+        [JsonProperty("min")]
         [Display(Name = "Minimum")]
-        [EmoteType(new uint[] { 0x1E, 0x24, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x32, 0x3B, 0x47, 0x52 })]
+        [EmoteType(EmoteType.InqQuestSolves)]
+        [EmoteType(EmoteType.InqIntStat)]
+        [EmoteType(EmoteType.InqAttributeStat)]
+        [EmoteType(EmoteType.InqRawAttributeStat)]
+        [EmoteType(EmoteType.InqSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqRawSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqSkillStat)]
+        [EmoteType(EmoteType.InqRawSkillStat)]
+        [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
+        [EmoteType(EmoteType.InqFellowNum)]
+        [EmoteType(EmoteType.InqNumCharacterTitles)]
+        [EmoteType(EmoteType.InqMyQuestSolves)]
         public uint? Minimum { get; set; }
 
-        [JsonProperty("maximum")]
+        [JsonProperty("max")]
         [Display(Name = "Maximum")]
-        [EmoteType(new uint[] { 0x1E, 0x24, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x32, 0x3B, 0x47, 0x52 })]
+        [EmoteType(EmoteType.InqQuestSolves)]
+        [EmoteType(EmoteType.InqIntStat)]
+        [EmoteType(EmoteType.InqAttributeStat)]
+        [EmoteType(EmoteType.InqRawAttributeStat)]
+        [EmoteType(EmoteType.InqSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqRawSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqSkillStat)]
+        [EmoteType(EmoteType.InqRawSkillStat)]
+        [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
+        [EmoteType(EmoteType.InqFellowNum)]
+        [EmoteType(EmoteType.InqNumCharacterTitles)]
+        [EmoteType(EmoteType.InqMyQuestSolves)]
         public uint? Maximum { get; set; }
 
         [JsonProperty("amount64")]
         [Display(Name = "Amount 64")]
-        [EmoteType(new uint[] { 0x02, 0x3E, 0x70, 0x71 })]
+        [EmoteType(EmoteType.AwardXP)]
+        [EmoteType(EmoteType.AwardNoShareXP)]
+        [EmoteType(EmoteType.SpendLuminance)]
+        [EmoteType(EmoteType.AwardLuminance)]
         public ulong? Amount64 { get; set; }
 
-        [JsonProperty("heroXp64")]
+        [JsonProperty("heroxp64")]
         [Display(Name = "Hero XP 64")]
-        [EmoteType(new uint[] { 0x02, 0x3E })]
+        [EmoteType(EmoteType.AwardXP)]
+        [EmoteType(EmoteType.AwardNoShareXP)]
         public ulong? HeroXp64 { get; set; }
 
         /// <summary>
@@ -123,9 +139,11 @@ namespace DerethForever.Web.Models.Shared
         ///   InqOwnsItems (76 / 0x4C)
         ///   TakeItems (74 / 0x4A)
         /// </summary>
-        [JsonProperty("item")]
+        [JsonProperty("cprof")]
         [Display(Name = "Creation Profile")]
-        [EmoteType(new uint[] { 0x03, 0x4A, 0x4C })]
+        [EmoteType(EmoteType.Give)]
+        [EmoteType(EmoteType.TakeItems)]
+        [EmoteType(EmoteType.InqOwnsItems)]
         public CreationProfile CreationProfile { get; set; } = new CreationProfile();
 
         /// <summary>
@@ -133,27 +151,28 @@ namespace DerethForever.Web.Models.Shared
         /// Emote Types:
         ///   CreateTreasure (56 / 0x38)
         /// </summary>
-        [JsonProperty("wealthRating")]
+        [JsonProperty("wealth_rating")]
         public uint? WealthRatingId { get; set; }
 
         [JsonIgnore]
         [Display(Name = "Wealth Rating")]
-        [EmoteType(new uint[] { 0x38 })]
+        [EmoteType(EmoteType.CreateTreasure)]
         public WealthRating? WealthRating
         {
             get { return (WealthRating?)WealthRatingId; }
             set { WealthRatingId = (uint?)value; }
         }
 
-        [JsonProperty("treasureClass")]
+        [JsonProperty("treasure_class")]
         public uint? TreasureClassId { get; set; }
 
         /// <summary>
         /// Emote Types:
         ///   CreateTreasure (56 / 0x38)
         /// </summary>
+        [JsonIgnore]
         [Display(Name = "Treasure Class")]
-        [EmoteType(new uint[] { 0x38 })]
+        [EmoteType(EmoteType.CreateTreasure)]
         public TreasureClass? TreasureClass
         {
             get { return (TreasureClass?)TreasureClassId; }
@@ -165,9 +184,9 @@ namespace DerethForever.Web.Models.Shared
         /// Emote Types:
         ///   CreateTreasure (56 / 0x38)
         /// </summary>
-        [JsonProperty("treasureType")]
+        [JsonProperty("treasure_type")]
         [Display(Name = "Treasure Type")]
-        [EmoteType(new uint[] { 0x38 })]
+        [EmoteType(EmoteType.CreateTreasure)]
         public uint? TreasureType { get; set; }
 
         /// <summary>
@@ -178,9 +197,10 @@ namespace DerethForever.Web.Models.Shared
         [JsonProperty("motion")]
         public int? MotionId { get; set; }
 
-        [Display(Name = "Motion")]
-        [EmoteType(new uint[] { 0x05, 0x34 })]
         [JsonIgnore]
+        [Display(Name = "Motion")]
+        [EmoteType(EmoteType.Motion)]
+        [EmoteType(EmoteType.ForceMotion)]
         public MotionCommand? Motion
         {
             get { return (MotionCommand?)MotionId; }
@@ -196,7 +216,7 @@ namespace DerethForever.Web.Models.Shared
 
         [JsonIgnore]
         [Display(Name = "Physics Script")]
-        [EmoteType(new uint[] { 0x07 })]
+        [EmoteType(EmoteType.PhysScript)]
         public PhysicsScriptType? PhysicsScript
         {
             get { return (PhysicsScriptType?) PhysicsScriptId; }
@@ -209,7 +229,7 @@ namespace DerethForever.Web.Models.Shared
         /// </summary>
         [JsonProperty("sound")]
         [Display(Name = "Sound")]
-        [EmoteType(new uint[] { 0x09 })]
+        [EmoteType(EmoteType.Sound)]
         public uint? Sound { get; set; }
 
         /// <summary>
@@ -217,9 +237,10 @@ namespace DerethForever.Web.Models.Shared
         ///   InqStringStat (38 / 0x26)
         ///   InqYesNo (75 / 0x4B)
         /// </summary>
-        [JsonProperty("testString")]
+        [JsonProperty("teststring")]
         [Display(Name = "Test String")]
-        [EmoteType(new uint[] { 0x26, 0x4B })]
+        [EmoteType(EmoteType.InqStringStat)]
+        [EmoteType(EmoteType.InqYesNo)]
         public string TestString { get; set; }
 
         /// <summary>
@@ -227,9 +248,10 @@ namespace DerethForever.Web.Models.Shared
         ///   ( / 0x72)
         ///   ( / 0x31)
         /// </summary>
-        [JsonProperty("minimum64")]
+        [JsonProperty("min64")]
         [Display(Name = "Minimum 64")]
-        [EmoteType(new uint[] { 0x31, 0x72 })]
+        [EmoteType(EmoteType.AwardLevelProportionalXP)]
+        [EmoteType(EmoteType.InqInt64Stat)]
         public long? Minimum64 { get; set; }
 
         /// <summary>
@@ -237,27 +259,28 @@ namespace DerethForever.Web.Models.Shared
         ///   ( / 0x72)
         ///   ( / 0x31)
         /// </summary>
-        [JsonProperty("maximum64")]
+        [JsonProperty("max64")]
         [Display(Name = "Maximum 64")]
-        [EmoteType(new uint[] { 0x31, 0x72 })]
+        [EmoteType(EmoteType.AwardLevelProportionalXP)]
+        [EmoteType(EmoteType.InqInt64Stat)]
         public long? Maximum64 { get; set; }
 
         /// <summary>
         /// Emote Types:
         ///   ( / 0x25)
         /// </summary>
-        [JsonProperty("minimumFloat")]
+        [JsonProperty("fmin")]
         [Display(Name = "Minimum Float")]
-        [EmoteType(new uint[] { 0x25 })]
+        [EmoteType(EmoteType.InqFloatStat)]
         public float? MinimumFloat { get; set; }
 
         /// <summary>
         /// Emote Types:
         ///   ( / 0x25)
         /// </summary>
-        [JsonProperty("maximumFloat")]
+        [JsonProperty("fmax")]
         [Display(Name = "Maximum Float")]
-        [EmoteType(new uint[] { 0x25 })]
+        [EmoteType(EmoteType.InqFloatStat)]
         public float? MaximumFloat { get; set; }
 
         /// <summary>
@@ -266,57 +289,37 @@ namespace DerethForever.Web.Models.Shared
         /// </summary>
         [JsonProperty("display")]
         [Display(Name = "Display")]
-        [EmoteType(new uint[] { 49, 50 })]
+        [EmoteType(EmoteType.AwardLevelProportionalXP)]
+        [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
         public bool? Display { get; set; }
-
-        [JsonProperty("positionLandblockId")]
-        [Display(Name = "Position Landblock Id")]
-        [EmoteType(new uint[] { 0x3F, 0x63, 0x64 })]
-        public uint? PositionLandBlockId { get; set; }
-
-        [JsonProperty("positionX")]
-        [Display(Name = "Position X")]
-        [EmoteType(new uint[] { 0x3F, 0x63, 0x64 })]
-        public float? PositionX { get; set; }
-
-        [JsonProperty("positionY")]
-        [Display(Name = "Position Y")]
-        [EmoteType(new uint[] { 0x3F, 0x63, 0x64 })]
-        public float? PositionY { get; set; }
-
-        [JsonProperty("positionZ")]
-        [Display(Name = "Position Z")]
-        [EmoteType(new uint[] { 0x3F, 0x63, 0x64 })]
-        public float? PositionZ { get; set; }
-
-        [JsonProperty("rotationW")]
-        [Display(Name = "Rotation W")]
-        [EmoteType(new uint[] { 0x3F, 0x63, 0x64 })]
-        public float? RotationW { get; set; }
-
-        [JsonProperty("rotationX")]
-        [Display(Name = "Rotation X")]
-        [EmoteType(new uint[] { 0x3F, 0x63, 0x64 })]
-        public float? RotationX { get; set; }
-
-        [JsonProperty("rotationY")]
-        [Display(Name = "Rotation Y")]
-        [EmoteType(new uint[] { 0x3F, 0x63, 0x64 })]
-        public float? RotationY { get; set; }
-
-        [JsonProperty("rotationZ")]
-        [Display(Name = "Rotation Z")]
-        [EmoteType(new uint[] { 0x3F, 0x63, 0x64 })]
-        public float? RotationZ { get; set; }
-
+        
+        /// <summary>
+        /// not really part of the specification, but useful
+        /// </summary>
         [JsonProperty("sortOrder")]
         [Display(Name = "Sort Order")]
         public uint? SortOrder { get; set; }
 
-        [JsonProperty("spellId")]
+        [JsonProperty("spellid")]
         [Display(Name = "Spell Id")]
-        [EmoteType(new uint[] { 0x0E, 0x13, 0x1B, 0x49 })]
+        [EmoteType(EmoteType.CastSpell)]
+        [EmoteType(EmoteType.CastSpellInstant)]
+        [EmoteType(EmoteType.TeachSpell)]
+        [EmoteType(EmoteType.PetCastSpellOnOwner)]
         public uint? SpellId { get; set; }
+
+        [JsonProperty("mPosition")]
+        [EmoteType(EmoteType.SetSanctuaryPosition)]
+        [EmoteType(EmoteType.TeleportTarget)]
+        [EmoteType(EmoteType.TeleportSelf)]
+        public Position Position { get; set; }
+        
+        [JsonProperty("frame")]
+        [EmoteType(EmoteType.MoveHome)]
+        [EmoteType(EmoteType.Move)]
+        [EmoteType(EmoteType.Turn)]
+        [EmoteType(EmoteType.MoveToPos)]
+        public Frame Frame { get; set; }
 
         [JsonIgnore]
         public bool Deleted { get; set; }

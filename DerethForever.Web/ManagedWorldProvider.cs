@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using DerethForever.Web.Models.CachePwn;
 using DerethForever.Web.Models.Weenie;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -44,7 +45,7 @@ namespace DerethForever.Web
             throw new ApplicationException($"Unable to authenticate with {url}.  Response message was {authResponse.Content}.");
         }
 
-        public IRestResponse UpdateWeenie(string url, string token, Weenie weenie)
+        public IRestResponse UpdateWeenie(string url, string token, CachePwnWeenie weenie)
         {
             var client = new RestClient(url);
             var request = new RestRequest($"/Weenie/Update", Method.POST);
@@ -56,7 +57,7 @@ namespace DerethForever.Web
             return response;
         }
 
-        public IRestResponse PreviewWeenie(string url, string token, Weenie weenie)
+        public IRestResponse PreviewWeenie(string url, string token, CachePwnWeenie weenie)
         {
             var client = new RestClient(url);
             var request = new RestRequest($"/Weenie/Preview", Method.POST);

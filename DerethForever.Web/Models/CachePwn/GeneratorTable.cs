@@ -61,5 +61,8 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("whereCreate")]
         public uint WhereCreate { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

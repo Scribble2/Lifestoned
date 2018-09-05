@@ -25,8 +25,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using DerethForever.Web.Models.Account;
+using DerethForever.Web.Models.CachePwn;
 using DerethForever.Web.Models.Content;
 using DerethForever.Web.Models.Recipe;
+using DerethForever.Web.Models.Shared;
 using DerethForever.Web.Models.WorldRelease;
 using DerethForever.Web.Models.Weenie;
 using log4net;
@@ -334,7 +336,7 @@ namespace DerethForever.Web
             return _backingProvider.GetRecipe(token, recipeGuid);
         }
 
-        public Weenie GetWeenie(string token, uint weenieClassId)
+        public CachePwnWeenie GetWeenie(string token, uint weenieClassId)
         {
             if (token != null)
             {
@@ -354,7 +356,7 @@ namespace DerethForever.Web
             return _backingProvider.GetWeenie(token, weenieClassId);
         }
 
-        public Weenie GetWeenieFromSource(string token, uint weenieClassId)
+        public CachePwnWeenie GetWeenieFromSource(string token, uint weenieClassId)
         {
             return _backingProvider.GetWeenie(token, weenieClassId);
         }
@@ -369,7 +371,7 @@ namespace DerethForever.Web
             return _backingProvider.UpdateContent(token, content);
         }
 
-        public bool UpdateWeenie(string token, Weenie weenie)
+        public bool UpdateWeenie(string token, CachePwnWeenie weenie)
         {
             return SaveWeenie(token, weenie);
         }
@@ -389,12 +391,12 @@ namespace DerethForever.Web
             return _backingProvider.AllUpdates(token);
         }
 
-        public bool CreateWeenie(string token, Weenie weenie)
+        public bool CreateWeenie(string token, CachePwnWeenie weenie)
         {
             return SaveWeenie(token, weenie);
         }
 
-        private bool SaveWeenie(string token, Weenie weenie)
+        private bool SaveWeenie(string token, CachePwnWeenie weenie)
         {
             if (_weenieCache == null)
                 throw new ApplicationException("Sandboxing is not configured correctly.  See error logs for details.");
@@ -407,7 +409,7 @@ namespace DerethForever.Web
                 Directory.CreateDirectory(weenieFolder);
 
             WeenieChange wc = null;
-            string weenieFile = Path.Combine(weenieFolder, $"{weenie.WeenieClassId}.json");
+            string weenieFile = Path.Combine(weenieFolder, $"{weenie.WeenieId}.json");
             if (File.Exists(weenieFile))
             {
                 // replace the weenie
@@ -430,8 +432,8 @@ namespace DerethForever.Web
             if (!_weenieCache.ContainsKey(userGuid))
                 _weenieCache.TryAdd(userGuid, new Dictionary<uint, string>());
 
-            if (!_weenieCache[userGuid].ContainsKey(weenie.WeenieClassId))
-                _weenieCache[userGuid].Add(weenie.WeenieClassId, weenieFile);
+            if (!_weenieCache[userGuid].ContainsKey(weenie.WeenieId))
+                _weenieCache[userGuid].Add(weenie.WeenieId, weenieFile);
 
             return true;
         }
@@ -475,7 +477,7 @@ namespace DerethForever.Web
         public void UpdateWeenieChange(string changeOwnerGuid, WeenieChange wc)
         {
             string userGuidString = changeOwnerGuid;
-            uint wcid = wc.Weenie.WeenieClassId;
+            uint wcid = wc.Weenie.WeenieId;
             Guid userGuid = Guid.Parse(userGuidString);
 
             string weenieFolder = Path.Combine(_cacheDirectory, "weenies", userGuid.ToString());
@@ -491,7 +493,7 @@ namespace DerethForever.Web
         public void DeleteWeenieChange(string changeOwnerGuid, WeenieChange wc)
         {
             string userGuidString = changeOwnerGuid;
-            uint wcid = wc.Weenie.WeenieClassId;
+            uint wcid = wc.Weenie.WeenieId;
             Guid userGuid = Guid.Parse(userGuidString);
 
             string weenieFolder = Path.Combine(_cacheDirectory, "weenies", userGuid.ToString());
@@ -499,15 +501,15 @@ namespace DerethForever.Web
             if (!Directory.Exists(weenieFolder))
                 Directory.CreateDirectory(weenieFolder);
 
-            if (_weenieCache[userGuid].ContainsKey(wc.Weenie.WeenieClassId))
-                _weenieCache[userGuid].Remove(wc.Weenie.WeenieClassId);
+            if (_weenieCache[userGuid].ContainsKey(wc.Weenie.WeenieId))
+                _weenieCache[userGuid].Remove(wc.Weenie.WeenieId);
 
             string weenieFile = Path.Combine(weenieFolder, $"{wcid}.json");
             if (File.Exists(weenieFile))
                 File.Delete(weenieFile);
         }
 
-        public bool UpdateWeenieInSource(string token, Weenie weenie)
+        public bool UpdateWeenieInSource(string token, CachePwnWeenie weenie)
         {
             return _backingProvider.UpdateWeenie(token, weenie);
         }

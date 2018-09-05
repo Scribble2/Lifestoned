@@ -74,12 +74,12 @@ namespace DerethForever.Web.Controllers
             {
                 // build the CachePwn json for this weenie
                 var weenie = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), update.WeenieClassId);
-                var cachePwn = CachePwnWeenie.ConvertFromWeenie(weenie);
+                // var cachePwn = CachePwnWeenie.ConvertFromWeenie(weenie);
                 var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-                var contents = JsonConvert.SerializeObject(cachePwn, Formatting.None, settings);
+                var contents = JsonConvert.SerializeObject(weenie, Formatting.None, settings);
 
                 // add json to zip file
-                var filename = update.WeenieClassId + "-" + weenie.StringProperties.First(p => p.StringPropertyId == (int)StringPropertyId.Name).Value + ".json";
+                var filename = update.WeenieClassId + "-" + weenie.Name + ".json";
                 zipFile.AddFile(filename, contents);
             }
             var bytes = zipFile.BuildZip();
@@ -116,7 +116,7 @@ namespace DerethForever.Web.Controllers
                     List<WeenieChange> mine = SandboxContentProviderHost.CurrentProvider.GetMyWeenieChanges(GetUserToken());
                     model.Results.ForEach(w =>
                     {
-                        if (mine.Any(m => m.Weenie.WeenieClassId == w.WeenieClassId))
+                        if (mine.Any(m => m.Weenie.WeenieId == w.WeenieClassId))
                             w.HasSandboxChange = true;
                     });
                 }
@@ -138,17 +138,17 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult Edit(uint id)
         {
-            Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
+            CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
             SortTheThings(model);
 
             return View(model);
         }
 
-        private void SortTheThings(Weenie model)
+        private void SortTheThings(CachePwnWeenie model)
         {
             // Setting sort order for edit
-            model.IntProperties = model.IntProperties.OrderBy(ip => ip.IntPropertyId).ToList();
-            model.DoubleProperties = model.DoubleProperties.OrderBy(dp => dp.DoublePropertyId).ToList();
+            model.IntStats = model.IntStats.OrderBy(ip => ip.Key).ToList();
+            model.FloatStats = model.FloatStats.OrderBy(dp => dp.Key).ToList();
 
             model.EmoteTable.ForEach(t => t.Emotes = t.Emotes.OrderBy(e => e.SortOrder).ToList());
             model.EmoteTable = model.EmoteTable.OrderBy(e => e.EmoteCategoryId).ToList();
@@ -158,9 +158,9 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult Clone(uint id)
         {
-            Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
-            model.WeenieClassId = 0;
-            model.DataObjectId = 0;
+            CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
+            model.WeenieId = 0;
+            // model.DataObjectId = 0;
             ImportedWeenie = model;
             return RedirectToAction("New");
         }
@@ -169,7 +169,7 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult New()
         {
-            Weenie model = ImportedWeenie ?? new Weenie();
+            CachePwnWeenie model = ImportedWeenie ?? new CachePwnWeenie();
 
             return View(model);
         }
@@ -178,12 +178,12 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult EditImported()
         {
-            Weenie model = ImportedWeenie;
+            CachePwnWeenie model = ImportedWeenie;
 
             if (model == null)
                 RedirectToAction("Upload");
 
-            Weenie existing = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), model.WeenieClassId);
+            CachePwnWeenie existing = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), model.WeenieId);
             if (existing == null)
                 return RedirectToAction("NewImported");
 
@@ -196,7 +196,7 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult NewImported()
         {
-            Weenie model = ImportedWeenie;
+            CachePwnWeenie model = ImportedWeenie;
 
             if (model == null)
                 RedirectToAction("Upload");
@@ -208,7 +208,7 @@ namespace DerethForever.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult New(Weenie model)
+        public ActionResult New(CachePwnWeenie model)
         {
             ActionResult result = HandlePostback(model);
 
@@ -223,14 +223,13 @@ namespace DerethForever.Web.Controllers
             model.CleanDeletedAndEmptyProperties();
             model.LastModified = DateTime.Now;
             model.ModifiedBy = GetUserName();
-            model.DataObjectId = model.WeenieClassId; // both need to be set, only 1 is editable.
 
             try
             {
                 SandboxContentProviderHost.CurrentProvider.CreateWeenie(GetUserToken(), model);
 
                 IndexModel indexModel = new IndexModel();
-                indexModel.SuccessMessages.Add("Weenie " + model.WeenieClassId.ToString() + " successfully created.");
+                indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully created.");
                 CurrentIndexModel = indexModel;
 
                 return RedirectToAction("Index");
@@ -246,7 +245,7 @@ namespace DerethForever.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(Weenie model)
+        public ActionResult Edit(CachePwnWeenie model)
         {
             ActionResult result = HandlePostback(model);
 
@@ -273,7 +272,7 @@ namespace DerethForever.Web.Controllers
                 SandboxContentProviderHost.CurrentProvider.UpdateWeenie(GetUserToken(), model);
 
                 IndexModel indexModel = new IndexModel();
-                indexModel.SuccessMessages.Add("Weenie " + model.WeenieClassId.ToString() + " successfully saved.");
+                indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully saved.");
                 CurrentIndexModel = indexModel;
 
                 return RedirectToAction("Index");
@@ -287,58 +286,58 @@ namespace DerethForever.Web.Controllers
             return View(model);
         }
 
-        private ActionResult ValidateWeenie(Weenie model)
+        private ActionResult ValidateWeenie(CachePwnWeenie model)
         {
             bool isValid = true;
 
             // validatate no duplicate properties
-            var dupeInts = model.IntProperties.GroupBy(p => p.IntPropertyId).SelectMany(s => s.Skip(1));
+            var dupeInts = model.IntStats.GroupBy(p => p.Key).SelectMany(s => s.Skip(1));
             if (dupeInts.Count() > 0)
             {
                 isValid = false;
-                dupeInts.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Int property {dupe.IntPropertyId} - you may only have one."));
+                dupeInts.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Int property {dupe.Key} - you may only have one."));
             }
 
-            var dupeInt64s = model.Int64Properties.GroupBy(p => p.Int64PropertyId).SelectMany(s => s.Skip(1));
+            var dupeInt64s = model.Int64Stats.GroupBy(p => p.Key).SelectMany(s => s.Skip(1));
             if (dupeInt64s.Count() > 0)
             {
                 isValid = false;
-                dupeInt64s.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Int64 property {dupe.Int64PropertyId} - you may only have one."));
+                dupeInt64s.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Int64 property {dupe.Key} - you may only have one."));
             }
 
-            var dupeDoubles = model.DoubleProperties.GroupBy(p => p.DoublePropertyId).SelectMany(p => p.Skip(1));
+            var dupeDoubles = model.FloatStats.GroupBy(p => p.Key).SelectMany(p => p.Skip(1));
             if (dupeDoubles.Count() > 0)
             {
                 isValid = false;
-                dupeDoubles.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Double property {dupe.DoublePropertyId} - you may only have one."));
+                dupeDoubles.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Double property {dupe.Key} - you may only have one."));
             }
 
-            var dupeStrings = model.StringProperties.GroupBy(p => p.StringPropertyId).SelectMany(p => p.Skip(1));
+            var dupeStrings = model.StringStats.GroupBy(p => p.Key).SelectMany(p => p.Skip(1));
             if (dupeStrings.Count() > 0)
             {
                 isValid = false;
-                dupeStrings.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate String property {dupe.StringPropertyId} - you may only have one."));
+                dupeStrings.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate String property {dupe.Key} - you may only have one."));
             }
 
-            var dupeIids = model.IidProperties.GroupBy(p => p.IidPropertyId).SelectMany(p => p.Skip(1));
-            if (dupeIids.Count() > 0)
-            {
-                isValid = false;
-                dupeIids.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Instance ID property {dupe.IidPropertyId} - you may only have one."));
-            }
+            //var dupeIids = model.IidProperties.GroupBy(p => p.IidPropertyId).SelectMany(p => p.Skip(1));
+            //if (dupeIids.Count() > 0)
+            //{
+            //    isValid = false;
+            //    dupeIids.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Instance ID property {dupe.IidPropertyId} - you may only have one."));
+            //}
 
-            var dupeDids = model.DidProperties.GroupBy(p => p.DataIdPropertyId).SelectMany(p => p.Skip(1));
+            var dupeDids = model.FloatStats.GroupBy(p => p.Key).SelectMany(p => p.Skip(1));
             if (dupeDids.Count() > 0)
             {
                 isValid = false;
-                dupeDids.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Data ID property {dupe.DataIdPropertyId} - you may only have one."));
+                dupeDids.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Data ID property {dupe.Key} - you may only have one."));
             }
 
-            var dupeBools = model.BoolProperties.GroupBy(p => p.BoolPropertyId).SelectMany(p => p.Skip(1));
+            var dupeBools = model.BoolStats.GroupBy(p => p.Key).SelectMany(p => p.Skip(1));
             if (dupeBools.Count() > 0)
             {
                 isValid = false;
-                dupeBools.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Bool property {dupe.BoolPropertyId} - you may only have one."));
+                dupeBools.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Bool property {dupe.Key} - you may only have one."));
             }
 
             var emotes = model.EmoteTable
@@ -381,7 +380,7 @@ namespace DerethForever.Web.Controllers
             return null;
         }
 
-        private ActionResult HandlePostback(Weenie model)
+        private ActionResult HandlePostback(CachePwnWeenie model)
         {
             model.CleanDeletedAndEmptyProperties();
 
@@ -391,7 +390,7 @@ namespace DerethForever.Web.Controllers
                     if (model.NewIntPropertyId == null)
                         model.ErrorMessages.Add("You must select a Property to add.");
                     else
-                        model.IntProperties.Add(new IntProperty() { IntPropertyId = (int)model.NewIntPropertyId.Value });
+                        model.IntStats.Add(new IntStat() { Key = (int)model.NewIntPropertyId.Value });
 
                     model.NewIntPropertyId = null;
                     break;
@@ -400,7 +399,7 @@ namespace DerethForever.Web.Controllers
                     if (model.NewStringPropertyId == null)
                         model.ErrorMessages.Add("You must select a Property to add.");
                     else
-                        model.StringProperties.Add(new StringProperty() { StringPropertyId = (int)model.NewStringPropertyId.Value });
+                        model.StringStats.Add(new StringStat() { Key = (int)model.NewStringPropertyId.Value });
 
                     model.NewStringPropertyId = null;
                     break;
@@ -409,7 +408,7 @@ namespace DerethForever.Web.Controllers
                     if (model.NewInt64PropertyId == null)
                         model.ErrorMessages.Add("You must select a Property to add.");
                     else
-                        model.Int64Properties.Add(new Int64Property() { Int64PropertyId = (int)model.NewInt64PropertyId.Value });
+                        model.Int64Stats.Add(new Int64Stat() { Key = (int)model.NewInt64PropertyId.Value });
 
                     model.NewInt64PropertyId = null;
                     break;
@@ -418,7 +417,7 @@ namespace DerethForever.Web.Controllers
                     if (model.NewDoublePropertyId == null)
                         model.ErrorMessages.Add("You must select a Property to add.");
                     else
-                        model.DoubleProperties.Add(new DoubleProperty() { DoublePropertyId = (int)model.NewDoublePropertyId.Value });
+                        model.FloatStats.Add(new FloatStat() { Key = (int)model.NewDoublePropertyId.Value });
 
                     model.NewDoublePropertyId = null;
                     break;
@@ -427,25 +426,16 @@ namespace DerethForever.Web.Controllers
                     if (model.NewDidPropertyId == null)
                         model.ErrorMessages.Add("You must select a Property to add.");
                     else
-                        model.DidProperties.Add(new DataIdProperty() { DataIdPropertyId = (int)model.NewDidPropertyId.Value });
+                        model.DidStats.Add(new DidStat() { Key = (int)model.NewDidPropertyId.Value });
 
                     model.NewDidPropertyId = null;
                     break;
-
-                case WeenieCommands.AddIidProperty:
-                    if (model.NewIidPropertyId == null)
-                        model.ErrorMessages.Add("You must select a Property to add.");
-                    else
-                        model.IidProperties.Add(new InstanceIdProperty() { IidPropertyId = (int)model.NewIidPropertyId.Value });
-
-                    model.NewIidPropertyId = null;
-                    break;
-
+                    
                 case WeenieCommands.AddBoolProperty:
                     if (model.NewBoolPropertyId == null)
                         model.ErrorMessages.Add("You must select a Property to add.");
                     else
-                        model.BoolProperties.Add(new BoolProperty() { BoolPropertyId = (int)model.NewBoolPropertyId.Value });
+                        model.BoolStats.Add(new BoolStat() { Key = (int)model.NewBoolPropertyId.Value });
 
                     model.NewBoolPropertyId = null;
                     break;
@@ -454,7 +444,7 @@ namespace DerethForever.Web.Controllers
                     if (model.NewSpellId == null)
                         model.ErrorMessages.Add("You must select a Spell to add.");
                     else
-                        model.Spells.Add(new Spell() { SpellId = (int)model.NewSpellId.Value });
+                        model.Spells.Add(new SpellbookEntry() { SpellId = (int)model.NewSpellId.Value });
 
                     model.NewSpellId = null;
                     break;
@@ -463,36 +453,39 @@ namespace DerethForever.Web.Controllers
                     if (model.NewPositionType == null)
                         model.ErrorMessages.Add("You must select a Position Type to add.");
                     else
-                        model.Positions.Add(new Models.Shared.Position() { PositionType = (int)model.NewPositionType.Value });
+                        model.Positions.Add(new PositionListing() { PositionType = (int)model.NewPositionType.Value });
 
                     break;
 
                 case WeenieCommands.AddBookPage:
-                    model.BookProperties.Add(new BookPage() { Page = (uint)model.BookProperties.Count });
+                    model.Book.Pages.Add(new Page());
                     break;
 
                 case WeenieCommands.AddEmoteSet:
-                    model.EmoteTable.Add(new EmoteSet() { EmoteCategoryId = (uint)model.NewEmoteCategory, EmoteSetGuid = Guid.NewGuid() });
+                    if (model.EmoteTable.All(ecl => ecl.EmoteCategoryId != (int) model.NewEmoteCategory))
+                        model.EmoteTable.Add(new EmoteCategoryListing() { EmoteCategoryId = (int)model.NewEmoteCategory });
+
+                    model.EmoteTable.First(ecl => ecl.EmoteCategoryId == (int)model.NewEmoteCategory).Emotes.Add(new Models.CachePwn.Emote());
                     model.NewEmoteCategory = EmoteCategory.Invalid;
                     break;
 
                 case WeenieCommands.AddGeneratorTable:
-                    model.GeneratorTable.Add(new Models.Shared.GeneratorTable());
+                    model.GeneratorTable.Add(new Models.CachePwn.GeneratorTable());
                     break;
 
                 case WeenieCommands.AddEmote:
-                    EmoteSet emoteSet = model.EmoteTable.FirstOrDefault(es => es.EmoteSetGuid == model.EmoteSetGuid);
+                    //EmoteSet emoteSet = model.EmoteTable.FirstOrDefault(es => es.EmoteSetGuid == model.EmoteSetGuid);
 
-                    if (emoteSet == null)
-                    {
-                        model.ErrorMessages.Add("You must select an Emote Type to add.");
-                    }
-                    else
-                    {
-                        var order = emoteSet.Emotes.Max(e => e.SortOrder) + 1;
-                        emoteSet.Emotes.Add(new Models.Shared.Emote() { EmoteSetGuid = emoteSet.EmoteSetGuid, EmoteType = emoteSet.NewEmoteType, EmoteGuid = Guid.NewGuid(), SortOrder = order });
-                        emoteSet.NewEmoteType = EmoteType.Invalid;
-                    }
+                    //if (emoteSet == null)
+                    //{
+                    //    model.ErrorMessages.Add("You must select an Emote Type to add.");
+                    //}
+                    //else
+                    //{
+                    //    var order = emoteSet.Emotes.Max(e => e.SortOrder) + 1;
+                    //    emoteSet.Emotes.Add(new Models.Shared.Emote() { EmoteSetGuid = emoteSet.EmoteSetGuid, EmoteType = emoteSet.NewEmoteType, EmoteGuid = Guid.NewGuid(), SortOrder = order });
+                    //    emoteSet.NewEmoteType = EmoteType.Invalid;
+                    //}
 
                     break;
 
@@ -500,23 +493,24 @@ namespace DerethForever.Web.Controllers
                     if (model.NewSkillId == null)
                         model.ErrorMessages.Add("You must select a skill to add.");
                     else
-                        model.Skills.Add(new Models.Shared.Skill() { SkillId = (int)model.NewSkillId.Value });
+                        model.Skills.Add(new SkillListing() { SkillId = (int)model.NewSkillId.Value });
                     
                     break;
 
                 case WeenieCommands.AddCreateItem:
-                    model.CreateList.Add(new CreationProfile() { CreationProfileGuid = Guid.NewGuid(), OwnerId = model.DataObjectId });
+                    model.CreateList.Add(new CreateItem());
                     break;
 
                 case WeenieCommands.AddBodyParts:
-                    model.BodyParts = new List<Models.Shared.BodyPart>
+                    model.Body = model.Body ?? new Body();
+                    model.Body.BodyParts = model.Body.BodyParts ?? new List<BodyPartListing>()
                     {
-                        new Models.Shared.BodyPart() { BodyPartType = 0 }
+                        new BodyPartListing() { Key = 0 }
                     };
                     break;
 
                 case WeenieCommands.AddBodyPart:
-                    model.BodyParts.Add(new Models.Shared.BodyPart() { BodyPartType = model.NewBodyPartType ?? BodyPartType.Head });
+                    // model.BodyParts.Add(new Models.Shared.BodyPart() { BodyPartType = model.NewBodyPartType ?? BodyPartType.Head });
                     break;
 
                 case null:
@@ -569,12 +563,7 @@ namespace DerethForever.Web.Controllers
                         byte[] data = memStream.ToArray();
 
                         string serialized = Encoding.UTF8.GetString(data);
-                        CachePwnWeenie pw = JsonConvert.DeserializeObject<CachePwnWeenie>(serialized);
-
-                        List<string> messages = new List<string>();
-                        Weenie w = pw.ConvertToWeenie(out messages);
-                        ImportedWeenie = w;
-                        weenieId = w.DataObjectId;
+                        ImportedWeenie = JsonConvert.DeserializeObject<CachePwnWeenie>(serialized);
                     }
 
                     return Json(new { id = weenieId });
@@ -593,11 +582,11 @@ namespace DerethForever.Web.Controllers
         {
             try
             {
-                Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
-                CachePwnWeenie pwn = CachePwnWeenie.ConvertFromWeenie(model);
+                CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
+                // CachePwnWeenie pwn = CachePwnWeenie.ConvertFromWeenie(model);
                 JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-                string content = JsonConvert.SerializeObject(pwn, Formatting.None, s);
-                string filename = model.StringProperties.First(p => p.StringPropertyId == (int)StringPropertyId.Name).Value + " (" + id.ToString() + ").json";
+                string content = JsonConvert.SerializeObject(model, Formatting.None, s);
+                string filename = model.Name + " (" + id.ToString() + ").json";
                 return File(Encoding.UTF8.GetBytes(content), "application/json", filename);
             }
             catch (Exception ex)
@@ -618,7 +607,7 @@ namespace DerethForever.Web.Controllers
         {
             try
             {
-                Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenieFromSource(GetUserToken(), id);
+                CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenieFromSource(GetUserToken(), id);
                 JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
                 string content = JsonConvert.SerializeObject(model, Formatting.None, s);
                 string filename = $"{id}.json";
@@ -673,7 +662,7 @@ namespace DerethForever.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(uint id)
         {
-            Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
+            CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
             if (model == null)
                 return RedirectToAction("Index");
 
@@ -682,15 +671,15 @@ namespace DerethForever.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete(Weenie model)
+        public ActionResult Delete(CachePwnWeenie model)
         {
             try
             {
                 if (model.MvcAction == WeenieCommands.Delete)
                 {
                     IndexModel indexModel = new IndexModel();
-                    SandboxContentProviderHost.CurrentProvider.DeleteWeenie(GetUserToken(), model.WeenieClassId);
-                    indexModel.SuccessMessages.Add("Weenie " + model.WeenieClassId.ToString() + " successfully deleted.");
+                    SandboxContentProviderHost.CurrentProvider.DeleteWeenie(GetUserToken(), model.WeenieId);
+                    indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully deleted.");
                     CurrentIndexModel = indexModel;
                 }
             }
@@ -727,10 +716,10 @@ namespace DerethForever.Web.Controllers
             if (wc == null)
                 return new HttpNotFoundResult();
 
-            CachePwnWeenie pwn = CachePwnWeenie.ConvertFromWeenie(wc.Weenie);
+            // CachePwnWeenie pwn = CachePwnWeenie.ConvertFromWeenie(wc.Weenie);
             JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            string content = JsonConvert.SerializeObject(pwn, Formatting.None, s);
-            string filename = wc.Weenie.StringProperties.First(p => p.StringPropertyId == (int)StringPropertyId.Name).Value + $" ({id}).json";
+            string content = JsonConvert.SerializeObject(wc.Weenie, Formatting.None, s);
+            string filename = wc.Weenie.Name + $" ({id}).json";
             return File(Encoding.UTF8.GetBytes(content), "application/json", filename);
         }
 
@@ -888,7 +877,7 @@ namespace DerethForever.Web.Controllers
             IRestResponse restResponse;
             if (model.PreviewOnly)
             {
-                wc.Weenie.ReplaceLiveObjects = true;
+                // wc.Weenie.ReplaceLiveObjects = true;
                 restResponse = ContentProviderHost.ManagedWorldProvider.PreviewWeenie(managedWorld.Address, managedWorld.CachedToken, wc.Weenie);
             }
             else
@@ -922,7 +911,7 @@ namespace DerethForever.Web.Controllers
         {
             List<WeenieChange> data = SandboxContentProviderHost.CurrentProvider.GetMyWeenieChanges(GetUserToken());
 
-            WeenieChange theOne = data.FirstOrDefault(wc => wc.Weenie.WeenieClassId == id);
+            WeenieChange theOne = data.FirstOrDefault(wc => wc.Weenie.WeenieId == id);
             if (theOne != null)
             {
                 theOne.Submitted = false;
@@ -938,7 +927,7 @@ namespace DerethForever.Web.Controllers
         {
             List<WeenieChange> data = SandboxContentProviderHost.CurrentProvider.GetMyWeenieChanges(GetUserToken());
 
-            WeenieChange theOne = data.FirstOrDefault(wc => wc.Weenie.WeenieClassId == id);
+            WeenieChange theOne = data.FirstOrDefault(wc => wc.Weenie.WeenieId == id);
             if (theOne != null)
             {
                 theOne.Submitted = true;
@@ -948,7 +937,7 @@ namespace DerethForever.Web.Controllers
                 wse.SubmittingUserGuid = theOne.UserGuid;
                 wse.ChangelogComment = theOne.Weenie.UserChangeSummary;
                 wse.SubmittingUser = CurrentUser.DisplayName;
-                wse.WeenieId = theOne.Weenie.DataObjectId;
+                // wse.WeenieId = theOne.Weenie.DataObjectId;
                 wse.WeenieName = theOne.Weenie.Name;
                 wse.SubmissionTime = DateTimeOffset.Now;
                 DiscordController.PostToDiscordAsync(wse);
@@ -963,7 +952,7 @@ namespace DerethForever.Web.Controllers
         {
             List<WeenieChange> data = SandboxContentProviderHost.CurrentProvider.GetMyWeenieChanges(GetUserToken());
 
-            WeenieChange theOne = data.FirstOrDefault(wc => wc.Weenie.WeenieClassId == id);
+            WeenieChange theOne = data.FirstOrDefault(wc => wc.Weenie.WeenieId == id);
             if (theOne != null)
                 SandboxContentProviderHost.CurrentProvider.DeleteWeenieChange(theOne.UserGuid, theOne);
 
@@ -975,7 +964,7 @@ namespace DerethForever.Web.Controllers
         public ActionResult AcceptChange(uint id, string userGuid)
         {
             List<WeenieChange> temp = SandboxContentProviderHost.CurrentProvider.GetAllWeenieChanges();
-            WeenieChange change = temp.FirstOrDefault(x => x.Submitted && x.UserGuid == userGuid && x.Weenie.WeenieClassId == id);
+            WeenieChange change = temp.FirstOrDefault(x => x.Submitted && x.UserGuid == userGuid && x.Weenie.WeenieId == id);
 
             BaseModel baseModel = CurrentBaseModel ?? new BaseModel();
 
@@ -1018,7 +1007,7 @@ namespace DerethForever.Web.Controllers
         public ActionResult RejectChange(string userGuid, int weenieClassId, string rejectionComment)
         {
             List<WeenieChange> temp = SandboxContentProviderHost.CurrentProvider.GetAllWeenieChanges();
-            WeenieChange change = temp.FirstOrDefault(x => x.Submitted && x.UserGuid == userGuid && x.Weenie.WeenieClassId == weenieClassId);
+            WeenieChange change = temp.FirstOrDefault(x => x.Submitted && x.UserGuid == userGuid && x.Weenie.WeenieId == weenieClassId);
 
             BaseModel baseModel = CurrentBaseModel ?? new BaseModel();
 
@@ -1054,7 +1043,7 @@ namespace DerethForever.Web.Controllers
             }
 
             List<WeenieChange> temp = SandboxContentProviderHost.CurrentProvider.GetAllWeenieChanges();
-            WeenieChange change = temp.FirstOrDefault(x => x.UserGuid == userGuid && x.Weenie.WeenieClassId == weenieClassId);
+            WeenieChange change = temp.FirstOrDefault(x => x.UserGuid == userGuid && x.Weenie.WeenieId == weenieClassId);
 
             if (change == null)
                 return RedirectToAction(source);

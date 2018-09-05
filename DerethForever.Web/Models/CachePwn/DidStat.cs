@@ -28,5 +28,8 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("value")]
         public uint Value { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

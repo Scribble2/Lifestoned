@@ -29,5 +29,8 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("value")]
         public List<Emote> Emotes { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

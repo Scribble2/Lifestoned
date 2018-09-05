@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using DerethForever.Web.Models.Account;
+using DerethForever.Web.Models.CachePwn;
 using DerethForever.Web.Models.Content;
 using DerethForever.Web.Models.Recipe;
 using DerethForever.Web.Models.WorldRelease;
@@ -42,11 +43,11 @@ namespace DerethForever.Web
 
         List<WeenieSearchResult> AllUpdates(string token);
 
-        Weenie GetWeenie(string token, uint weenieClassId);
+        CachePwnWeenie GetWeenie(string token, uint weenieClassId);
 
-        bool UpdateWeenie(string token, Weenie weenie);
+        bool UpdateWeenie(string token, CachePwnWeenie weenie);
 
-        bool CreateWeenie(string token, Weenie weenie);
+        bool CreateWeenie(string token, CachePwnWeenie weenie);
 
         bool DeleteWeenie(string token, uint weenieClassId);
 

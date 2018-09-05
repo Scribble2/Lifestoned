@@ -27,10 +27,18 @@ namespace DerethForever.Web.Models.CachePwn
 {
     public class BodyPartListing
     {
+        public BodyPartListing()
+        {
+            BodyPart = new BodyPart();
+        }
+
         [JsonProperty("key")]
         public int Key { get; set; }
 
         [JsonProperty("value")]
         public BodyPart BodyPart { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

@@ -66,43 +66,44 @@ namespace DerethForever.Web.Models.PreComp
 
         public List<ExtraItem2> Extra3Items { get; set; }
 
-        public Weenie.Weenie Convert(out List<string> warnings)
-        {
-            warnings = new List<string>();
-            Weenie.Weenie w = new Weenie.Weenie();
-            w.DataObjectId = WCID;
-            w.WeenieClassId = WCID;
+        //public Weenie.Weenie Convert(out List<string> warnings)
+        //{
+            //warnings = new List<string>();
+            //Weenie.Weenie w = new Weenie.Weenie();
+            //w.DataObjectId = WCID;
+            //w.WeenieClassId = WCID;
 
-            w.IntProperties.Add(new Shared.IntProperty() { IntPropertyId = (int)IntPropertyId.WeenieType, Value = (int)WeenieType });
+            //w.IntProperties.Add(new Shared.IntProperty() { IntPropertyId = (int)IntPropertyId.WeenieType, Value = (int)WeenieType });
 
-            foreach (var kvp in IntValues)
-                w.IntProperties.Add(new Shared.IntProperty() { IntPropertyId = int.Parse(kvp.Key), Value = kvp.Value });
+            //foreach (var kvp in IntValues)
+            //    w.IntProperties.Add(new Shared.IntProperty() { IntPropertyId = int.Parse(kvp.Key), Value = kvp.Value });
 
-            foreach (var kvp in LongValues)
-                w.Int64Properties.Add(new Shared.Int64Property() { Int64PropertyId = int.Parse(kvp.Key), Value = kvp.Value });
+            //foreach (var kvp in LongValues)
+            //    w.Int64Properties.Add(new Shared.Int64Property() { Int64PropertyId = int.Parse(kvp.Key), Value = kvp.Value });
 
-            foreach (var kvp in BoolValues)
-                w.BoolProperties.Add(new Shared.BoolProperty() { BoolPropertyId = int.Parse(kvp.Key), Value = kvp.Value });
+            //foreach (var kvp in BoolValues)
+            //    w.BoolProperties.Add(new Shared.BoolProperty() { BoolPropertyId = int.Parse(kvp.Key), Value = kvp.Value });
 
-            foreach (var kvp in DoubleValues)
-                w.DoubleProperties.Add(new Shared.DoubleProperty() { DoublePropertyId = int.Parse(kvp.Key), Value = kvp.Value });
+            //foreach (var kvp in DoubleValues)
+            //    w.DoubleProperties.Add(new Shared.DoubleProperty() { DoublePropertyId = int.Parse(kvp.Key), Value = kvp.Value });
 
-            foreach (var kvp in StringValues)
-                w.StringProperties.Add(new Shared.StringProperty() { StringPropertyId = int.Parse(kvp.Key), Value = kvp.Value });
+            //foreach (var kvp in StringValues)
+            //    w.StringProperties.Add(new Shared.StringProperty() { StringPropertyId = int.Parse(kvp.Key), Value = kvp.Value });
 
-            foreach (var kvp in DIDValues)
-                w.DidProperties.Add(new Shared.DataIdProperty() { DataIdPropertyId = int.Parse(kvp.Key), Value = kvp.Value });
+            //foreach (var kvp in DIDValues)
+            //    w.DidProperties.Add(new Shared.DataIdProperty() { DataIdPropertyId = int.Parse(kvp.Key), Value = kvp.Value });
 
-            if (Extra1 != null)
-                warnings.Add("GDLWeenie contained 'Extra1' data - this data will be lost.");
+            //if (Extra1 != null)
+            //    warnings.Add("GDLWeenie contained 'Extra1' data - this data will be lost.");
 
-            if (Extra1 != null)
-                warnings.Add("GDLWeenie contained 'Extra2Items' data - this data will be lost.");
+            //if (Extra1 != null)
+            //    warnings.Add("GDLWeenie contained 'Extra2Items' data - this data will be lost.");
 
-            if (Extra1 != null)
-                warnings.Add("GDLWeenie contained 'Extra3Items' data - this data will be lost.");
+            //if (Extra1 != null)
+            //    warnings.Add("GDLWeenie contained 'Extra3Items' data - this data will be lost.");
+        //    warnings = null;
 
-            return w;
-        }
+        //    return null;
+        //}
     }
 }

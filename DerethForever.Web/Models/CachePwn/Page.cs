@@ -44,5 +44,8 @@ namespace DerethForever.Web.Models.CachePwn
 
         [JsonProperty("pageText")]
         public string PageText { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
     }
 }

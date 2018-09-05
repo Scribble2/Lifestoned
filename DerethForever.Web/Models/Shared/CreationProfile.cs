@@ -26,21 +26,9 @@ namespace DerethForever.Web.Models.Shared
     public class CreationProfile
     {
         /// <summary>
-        /// Table field Primary Key
-        /// </summary>
-        [JsonProperty("creationProfileGuid")]
-        public Guid? CreationProfileGuid { get; set; }
-
-        /// <summary>
-        /// owning weenie id
-        /// </summary>
-        [JsonProperty("ownerId")]
-        public uint? OwnerId { get; set; }
-
-        /// <summary>
         /// Table Field Weenie Class
         /// </summary>
-        [JsonProperty("weenieClassId")]
+        [JsonProperty("wcid")]
         public uint? WeenieClassId { get; set; }
 
         /// <summary>
@@ -71,13 +59,13 @@ namespace DerethForever.Web.Models.Shared
         /// <summary>
         /// Table Field StackSize - how many are we creating of stackable items.   Not all items have this property.
         /// </summary>
-        [JsonProperty("stackSize")]
+        [JsonProperty("stack_size")]
         public int? StackSize { get; set; }
 
         /// <summary>
         /// Table Field TryToBond - flag for the item that we create to be bonded.
         /// </summary>
-        [JsonProperty("bond")]
+        [JsonProperty("try_to_bond")]
         public bool? TryToBond { get; set; }
 
         [JsonIgnore]

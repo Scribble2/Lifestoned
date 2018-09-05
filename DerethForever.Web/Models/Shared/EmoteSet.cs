@@ -39,7 +39,7 @@ namespace DerethForever.Web.Models.Shared
         [Display(Name = "Sort Order")]
         public uint SortOrder { get; set; }
 
-        [JsonProperty("emoteCategoryId")]
+        [JsonProperty("category")]
         public uint EmoteCategoryId { get; set; }
 
         [JsonIgnore]
