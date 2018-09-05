@@ -317,12 +317,10 @@ namespace DerethForever.Web
                                 return;
 
                             string content = File.ReadAllText(file);
-                            string sid = Path.GetFileNameWithoutExtension(file);
-                            uint id = uint.Parse(sid);
 
                             CachePwnWeenie weenie = JsonConvert.DeserializeObject<CachePwnWeenie>(content);
 
-                            Weenies.TryAdd(id, weenie);
+                            Weenies.TryAdd(weenie.WeenieId, weenie);
 
                         }
                         catch (Exception ex)
