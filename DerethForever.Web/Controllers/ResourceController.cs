@@ -39,7 +39,7 @@ namespace DerethForever.Web.Controllers
                     var weenie = ContentProviderHost.CurrentProvider.GetWeenie(null, weenieClassId);
                     src = Lifestoned.Lib.ResourceManager.GetFullyLayeredPngIcon(weenie.ItemType, weenie.UnderlayId, weenie.OverlayId, weenie.IconId, weenie.UIEffects);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     return null;
                 }

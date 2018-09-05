@@ -340,15 +340,15 @@ namespace DerethForever.Web.Controllers
                 dupeBools.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Bool property {dupe.Key} - you may only have one."));
             }
 
-            var emotes = model.EmoteTable
-				.SelectMany(et => et.Emotes)
-				.Where(e => Models.Shared.Emote.IsPropertyVisible("Message", e.EmoteType))
-				.Where(e => string.IsNullOrEmpty(e.Message));
-			if (emotes.Count() > 0)
-            {
-                isValid = false;
-                model.ErrorMessages.Add("Tell emotes without required message");
-            }
+   //         var emotes = model.EmoteTable
+			//	.SelectMany(et => et.Emotes)
+			//	.Where(e => Models.Shared.Emote.IsPropertyVisible("Message", e.e))
+			//	.Where(e => string.IsNullOrEmpty(e.Message));
+			//if (emotes.Count() > 0)
+   //         {
+   //             isValid = false;
+   //             model.ErrorMessages.Add("Tell emotes without required message");
+   //         }
 
             if (model.ItemType == null)
             {

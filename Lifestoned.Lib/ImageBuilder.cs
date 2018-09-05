@@ -16,6 +16,7 @@ namespace Lifestoned.Lib
     {
         private static uint itemTypeMap = 0x25000008;
         private static uint itemEffectMap = 0x25000009;
+        private static uint defaultBackground = 0x060011D4;
 
         /// <summary>
         /// Returns RenderSurface for a weenieclass.
@@ -78,7 +79,7 @@ namespace Lifestoned.Lib
             // Lookup the background ID from the DIDMapper in the Dat file
             // Magic number 620757000 : 0x25000008 : UIBackgrounds
             var itemMap = PortalDatReader.Current.Unpack<DidMapper>(itemTypeMap);
-            uint backgroundId = (uint)UiEffectIcons.Default;
+            uint backgroundId = defaultBackground;
 
             foreach (var enumMap in itemMap.Enum)
             {
