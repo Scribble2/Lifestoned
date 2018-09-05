@@ -1,3 +1,7 @@
+/* color palette
+   #00302c - accent
+*/
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -9,7 +13,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #00d6d6;
 }
 
-a, a:hover, a:visited, a:active {
+a, a:hover, a:visited, a:active, a:focus {
     color: #00d6d6;
 }
 
@@ -44,6 +48,10 @@ select {
 .well {
     background-color: #0B4843;
     color: #fff;
+}
+
+.need-submit {
+    border-color: #a94442;
 }
 
 .panel-default > .panel-heading {
@@ -105,15 +113,24 @@ select {
     background: url('../images/lifeStonedMapBG.png') center top no-repeat;
 }
 
-.btn {
+.btn-primary, .btn-default {
     background-color: #001c1a;
     border-color: #000c0b;
     color: #fff;
 }
 
-.btn:hover {
-    background-color: #20635e;
-    color: #fff;
+    .btn-primary:hover, .btn-default:hover {
+        background-color: #20635e;
+        border-color: #000c0b;
+        color: #fff;
+    }
+
+.btn-warning {
+    color: #333;
+}
+
+.btn-group {
+    margin-bottom: 0.25rem;
 }
 
 .tile-notice {
@@ -222,4 +239,25 @@ select {
     position: fixed;
     left: 0;
     top: 15rem;
+}
+
+a[data-toggle]:before {
+    position: relative;
+    top: 0px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.95rem;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-right: 5px;
+}
+
+a[data-toggle][aria-expanded=false]:before {
+    content: "\002b";
+}
+a[data-toggle][aria-expanded=true]:before {
+    content: "\2212";
 }

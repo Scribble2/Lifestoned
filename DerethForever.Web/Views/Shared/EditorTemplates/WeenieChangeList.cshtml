@@ -11,8 +11,8 @@ else
 {
     for (int i = 0; i < Model.Count; i++)
     {
-    <div class="well">
-        <div class="row">
+    <div class="well @(!Model[i].Submitted ? "need-submit" : "")">
+        <div class="">
             <div class="col-md-1">
                 <div class="icon">
                     <img src="@Url.Action("GetFullyLayeredPngIcon", "Resource", new { weenieClassId = Convert.ToUInt32(Model[i].Weenie.WeenieClassId) })" />
@@ -23,72 +23,73 @@ else
                 (@Html.DisplayFor(m => m[i].Weenie.WeenieClassId))<br />
                 Submitted by @Html.DisplayFor(m => m[i].UserName) on @Html.DisplayFor(m => m[i].SubmissionTimeDisplay)<br />
                 <br />
-                @if (BaseController.CurrentUser.AccountGuid == Model[i].UserGuid)
-                {
-                    if (Model[i].Submitted)
-                    {
-                        @Html.ActionLink("Withdraw Submission", "WithdrawSubmission", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "btn btn-primary" })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Submit for Review", "CreateSubmission", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "btn btn-primary" })
-                    }
-                }
-                @Html.ActionLink("Delete Changes", "DeleteSandboxWeenie", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "btn btn-primary" })
             </div>
             <div class="col-md-5">
-                <ul>
-                    <li>@Html.ActionLink("Edit", "Edit", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null)</li>
-                    <li>
-                        Download as @Html.ActionLink("Dereth Forever JSON", "DownloadSandboxToDfJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null)
-                        (download @Html.ActionLink("original", "DownloadOriginalToDfJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null))
-                    </li>
-                    <li>
-                        Download as @Html.ActionLink("GDLE JSON", "DownloadSandboxToPhatJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null)
-                        (download @Html.ActionLink("original", "DownloadOriginalToPhatJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null))
-                    </li>
-                    @if (BaseController.CurrentUser.ManagedWorlds.Count > 0)
+                <div class="btn-group">
+                    <div class="btn btn-default btn-sm">@Html.ActionLink("Edit", "Edit", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null)</div>
+                    <div class="btn btn-default btn-sm">@Html.ActionLink("Clone", "Clone", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null)</div>
+                    <div class="btn btn-default btn-sm">
+                        <i class="glyphicon glyphicon-download"></i>
+                        @Html.ActionLink("Sandbox", "DownloadSandboxToPhatJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null)
+                    </div>
+                    <div class="btn btn-default btn-sm">
+                        <i class="glyphicon glyphicon-download"></i>
+                        @Html.ActionLink("Original", "DownloadOriginalToPhatJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null)
+                    </div>
+
+                </div>
+                <div>
+                    @if (BaseController.CurrentUser.AccountGuid == Model[i].UserGuid)
                     {
-                        <li>@Html.ActionLink("Save Directly", "SendToDfServer", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null) to DF Server</li>
-                        <li>@Html.ActionLink("Preview", "SendToDfServer", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid, preview = true }, null) on DF Server</li>
+                        if (Model[i].Submitted)
+                        {
+                            @Html.ActionLink("Withdraw Submission", "WithdrawSubmission", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "btn btn-sm btn-primary" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Submit for Review", "CreateSubmission", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "btn btn-sm btn-warning" })
+                        }
                     }
-                </ul>
+                    @Html.ActionLink("Delete Changes", "DeleteSandboxWeenie", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "btn btn-sm btn-primary" })
+                </div>
             </div>
         </div>
         <br />
-        @Html.Label("Discussion")<br />
-        <div class="row">
-            <div class="panel-group col-sm-10">
-            @for (int j = 0; j < (Model[i].Discussion?.Count ?? 0); j++)
-            {
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        @Html.Raw(Html.Encode(Model[i].Discussion[j].UserName + " on " + Model[i].Discussion[j].Created.ToString("g")))
-                    </div>
-                    <div class="panel-body">
-                        @Html.Raw(Html.Encode(Model[i].Discussion[j].Comment))
-                    </div>
+        <a href="#discussion@(Model[i].Weenie.WeenieClassId)" data-toggle="collapse" aria-expanded="false">Discussion</a><br />
+        <div id="discussion@(Model[i].Weenie.WeenieClassId)" class="collapse">
+            <div class="row">
+                <div class="panel-group col-sm-10">
+                    @for (int j = 0; j < (Model[i].Discussion?.Count ?? 0); j++)
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                @Html.Raw(Html.Encode(Model[i].Discussion[j].UserName + " on " + Model[i].Discussion[j].Created.ToString("g")))
+                            </div>
+                            <div class="panel-body">
+                                @Html.Raw(Html.Encode(Model[i].Discussion[j].Comment))
+                            </div>
+                        </div>
+                    }
+
+                    @if ((Model[i].Discussion?.Count ?? 0) == 0)
+                    {
+                        <p>No comments.</p>
+                    }
                 </div>
-            }
-
-            @if ((Model[i].Discussion?.Count ?? 0) == 0)
-            {
-                <p>No comments.</p>
-            }
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-10">
-                @using (Html.BeginForm("AddDiscussionComment", "Weenie", FormMethod.Post))
-                {
-                    <input type="hidden" name="source" value="Sandbox" />
-                    <input type="hidden" name="userGuid" value="@(Model[i].UserGuid)" />
-                    <input type="hidden" name="weenieClassId" value="@(Model[i].Weenie.WeenieClassId)" />
-                    <textarea name="discussionComment" class="form-control" cols="25" rows="3"></textarea>
-                    <br />
-                    <input type="submit" class="btn btn-primary" value="Add Comment" />
-                }
+            <div class="row">
+                <div class="col-md-10">
+                    @using (Html.BeginForm("AddDiscussionComment", "Weenie", FormMethod.Post))
+                    {
+                        <input type="hidden" name="source" value="Sandbox" />
+                        <input type="hidden" name="userGuid" value="@(Model[i].UserGuid)" />
+                        <input type="hidden" name="weenieClassId" value="@(Model[i].Weenie.WeenieClassId)" />
+                        <textarea name="discussionComment" class="form-control" cols="25" rows="3"></textarea>
+                        <br />
+                        <input type="submit" class="btn btn-primary" value="Add Comment" />
+                    }
+                </div>
             </div>
         </div>
     </div>
