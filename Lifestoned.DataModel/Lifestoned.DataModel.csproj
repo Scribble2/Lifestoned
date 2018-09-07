@@ -44,6 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\AccountListModel.cs" />
+    <Compile Include="Account\AccountModel.cs" />
+    <Compile Include="Account\ApiAccountModel.cs" />
+    <Compile Include="Account\LoginModel.cs" />
+    <Compile Include="Account\ManagedServerModel.cs" />
+    <Compile Include="Account\RegisterModel.cs" />
+    <Compile Include="Account\SubListModel.cs" />
+    <Compile Include="Account\SubscriptionModel.cs" />
     <Compile Include="DerethForever\Ability.cs" />
     <Compile Include="DerethForever\AbilitySet.cs" />
     <Compile Include="DerethForever\Angles.cs" />
@@ -52,6 +60,7 @@
     <Compile Include="DerethForever\BodyPartSelectionData.cs" />
     <Compile Include="DerethForever\BookPage.cs" />
     <Compile Include="DerethForever\BoolProperty.cs" />
+    <Compile Include="Gdle\IidStat.cs" />
     <Compile Include="Shared\ChangeDiscussionEntry.cs" />
     <Compile Include="Shared\ChangelogEntry.cs" />
     <Compile Include="DerethForever\Contract.cs" />

@@ -1,4 +1,4 @@
-/*****************************************************************************************
+﻿/*****************************************************************************************
 Copyright 2018 Dereth Forever
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -17,44 +17,14 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using Lifestoned.DataModel.Shared;
-using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Account
+namespace Lifestoned.DataModel.Account
 {
-    public class RegisterModel : BaseModel
+    public class LoginModel : BaseModel
     {
-        [Required]
-        [StringLength(50, MinimumLength = 4)]
-        [JsonProperty("username")]
         public string Username { get; set; }
 
-        [Required]
-        [JsonProperty("displayName")]
-        [StringLength(50, MinimumLength = 4)]
-        public string DisplayName { get; set; }
-        
-        [JsonProperty("emailAddress")]
-        [StringLength(280)]
-        [DisplayName("Email Address")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        public string Email { get; set; }
-
-        [Required]
-        [JsonProperty("password")]
-        [PasswordPropertyText]
-        [StringLength(100, MinimumLength = 8)]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        [Required]
-        [JsonIgnore]
-        [PasswordPropertyText]
-        [StringLength(100, MinimumLength = 8)]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "The password and confirmation do not match.")]
-        public string ConfirmPassword { get; set; }
     }
 }

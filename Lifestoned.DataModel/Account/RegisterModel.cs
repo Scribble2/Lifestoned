@@ -17,46 +17,44 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Account
+namespace Lifestoned.DataModel.Account
 {
-   public class ApiAccountModel : BaseModel
+    public class RegisterModel : BaseModel
     {
-        [JsonProperty("accountName")]
-        public string Name { get; set; }
+        [Required]
+        [StringLength(50, MinimumLength = 4)]
+        [JsonProperty("username")]
+        public string Username { get; set; }
 
+        [Required]
         [JsonProperty("displayName")]
+        [StringLength(50, MinimumLength = 4)]
         public string DisplayName { get; set; }
-
-        [JsonProperty("email")]
+        
+        [JsonProperty("emailAddress")]
+        [StringLength(280)]
+        [DisplayName("Email Address")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
-        [JsonProperty("accountGuid")]
-        public string AccountGuid { get; set; }
-        
-        [JsonProperty("managedWorlds")]
-        public List<ManagedServerModel> ManagedWorlds { get; set; } = new List<ManagedServerModel>();
+        [Required]
+        [JsonProperty("password")]
+        [PasswordPropertyText]
+        [StringLength(100, MinimumLength = 8)]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
 
+        [Required]
         [JsonIgnore]
-        public List<SelectListItem> ManagedWorldSelectListItems
-        {
-            get { return ManagedWorlds.Select(w => new SelectListItem() { Text = w.ServerName, Value = w.ManagedServerGuid.ToString() }).ToList(); }
-        }
-
-        [JsonIgnore]
-        public string SelectedManagedWorld { get; set; }
-
-        [JsonIgnore]
-        public Guid? SelectedManagedWorldGuid { get; set; }
-
-        [JsonIgnore]
-        public string AccountAction { get; set; }
+        [PasswordPropertyText]
+        [StringLength(100, MinimumLength = 8)]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "The password and confirmation do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 }

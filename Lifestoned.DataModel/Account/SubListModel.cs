@@ -19,38 +19,18 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using Newtonsoft.Json;
+using Lifestoned.DataModel.Shared;
 
-namespace DerethForever.Web.Models.Account
+namespace Lifestoned.DataModel.Account
 {
-    [Table("managed_world")]
-    public class ManagedServerModel
+    public class SubListModel : BaseModel
     {
-        [Key]
-        [Column("worldGuid")]
-        [JsonProperty("worldGuid")]
-        public Guid? ManagedServerGuid { get; set; }
+        public string AccountGuid { get; set; }
 
-        [Column("accountGuid")]
-        [JsonProperty("accountGuid")]
-        public Guid? AccountGuid { get; set; }
+        public string AccountName { get; set; }
 
-        [Column("serverName")]
-        [JsonProperty("serverName")]
-        public string ServerName { get; set; }
-
-        [Column("address")]
-        [JsonProperty("address")]
-        public string Address { get; set; }
-
-        [JsonIgnore]
-        public bool Deleted { get; set; } = false;
-
-        [JsonIgnore]
-        public string CachedToken { get; set; }
+        public List<SubscriptionModel> Subscriptions { get; set; } = new List<SubscriptionModel>();
     }
 }

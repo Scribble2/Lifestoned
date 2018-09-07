@@ -11,7 +11,7 @@ using Dapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using DerethForever.Web.Models.Account;
+using Lifestoned.DataModel.Account;
 using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Providers

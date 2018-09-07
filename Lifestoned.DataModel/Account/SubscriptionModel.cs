@@ -26,7 +26,7 @@ using System.Web;
 using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Account
+namespace Lifestoned.DataModel.Account
 {
     [Table("subscription")]
     public class SubscriptionModel

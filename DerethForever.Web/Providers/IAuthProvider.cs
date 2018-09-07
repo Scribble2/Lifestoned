@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using DerethForever.Web.Models.Account;
+using Lifestoned.DataModel.Account;
 
 namespace DerethForever.Web.Providers
 {

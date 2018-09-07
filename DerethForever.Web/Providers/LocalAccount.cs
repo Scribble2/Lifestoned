@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
-using DerethForever.Web.Models.Account;
+using Lifestoned.DataModel.Account;
 using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 

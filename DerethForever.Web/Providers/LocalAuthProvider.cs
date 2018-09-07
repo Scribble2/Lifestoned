@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using DerethForever.Web.Models.Account;
 using log4net;
+using Lifestoned.DataModel.Account;
 using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 

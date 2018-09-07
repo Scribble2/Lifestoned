@@ -19,7 +19,7 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System.Security.Claims;
 using System.Web.Mvc;
-using DerethForever.Web.Models.Account;
+using Lifestoned.DataModel.Account;
 using Lifestoned.DataModel.Gdle;
 using Lifestoned.DataModel.Shared;
 

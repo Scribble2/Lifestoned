@@ -23,14 +23,10 @@ using System.Linq;
 using System.Web;
 using Lifestoned.DataModel.Shared;
 
-namespace DerethForever.Web.Models.Account
+namespace Lifestoned.DataModel.Account
 {
-    public class SubListModel : BaseModel
+    public class AccountListModel : BaseModel
     {
-        public string AccountGuid { get; set; }
-
-        public string AccountName { get; set; }
-
-        public List<SubscriptionModel> Subscriptions { get; set; } = new List<SubscriptionModel>();
+        public List<ApiAccountModel> Accounts { get; set; } = new List<ApiAccountModel>();
     }
 }

@@ -53,6 +53,9 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("didStats")]
         public List<DidStat> DidStats { get; set; } = new List<DidStat>();
 
+        [JsonProperty("iidStats")]
+        public List<IidStat> IidStats { get; set; } = new List<IidStat>();
+
         [JsonProperty("floatStats")]
         public List<FloatStat> FloatStats { get; set; } = new List<FloatStat>();
 
@@ -609,6 +612,18 @@ namespace Lifestoned.DataModel.Gdle
                 pwn.DidStats.Add(new DidStat()
                 {
                     Key = dp.DataIdPropertyId,
+                    Value = dp.Value.Value
+                });
+            });
+
+            if (dfWeenie.IidProperties?.Count > 0)
+                pwn.IidStats = new List<IidStat>();
+
+            dfWeenie.IidProperties?.Where(dp => dp.Value != null).ToList().ForEach(dp =>
+            {
+                pwn.IidStats.Add(new IidStat()
+                {
+                    Key = dp.IidPropertyId,
                     Value = dp.Value.Value
                 });
             });

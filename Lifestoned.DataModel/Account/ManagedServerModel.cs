@@ -1,4 +1,4 @@
-﻿/*****************************************************************************************
+/*****************************************************************************************
 Copyright 2018 Dereth Forever
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -17,14 +17,40 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
-using Lifestoned.DataModel.Shared;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
+using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Account
+namespace Lifestoned.DataModel.Account
 {
-    public class LoginModel : BaseModel
+    [Table("managed_world")]
+    public class ManagedServerModel
     {
-        public string Username { get; set; }
+        [Key]
+        [Column("worldGuid")]
+        [JsonProperty("worldGuid")]
+        public Guid? ManagedServerGuid { get; set; }
 
-        public string Password { get; set; }
+        [Column("accountGuid")]
+        [JsonProperty("accountGuid")]
+        public Guid? AccountGuid { get; set; }
+
+        [Column("serverName")]
+        [JsonProperty("serverName")]
+        public string ServerName { get; set; }
+
+        [Column("address")]
+        [JsonProperty("address")]
+        public string Address { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; } = false;
+
+        [JsonIgnore]
+        public string CachedToken { get; set; }
     }
 }

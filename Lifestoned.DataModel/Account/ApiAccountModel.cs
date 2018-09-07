@@ -22,11 +22,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Lifestoned.DataModel.Shared;
+using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Account
+namespace Lifestoned.DataModel.Account
 {
-    public class AccountListModel : BaseModel
+   public class ApiAccountModel : BaseModel
     {
-        public List<ApiAccountModel> Accounts { get; set; } = new List<ApiAccountModel>();
+        [JsonProperty("accountName")]
+        public string Name { get; set; }
+
+        [JsonProperty("displayName")]
+        public string DisplayName { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("accountGuid")]
+        public string AccountGuid { get; set; }
+        
+        [JsonProperty("managedWorlds")]
+        public List<ManagedServerModel> ManagedWorlds { get; set; } = new List<ManagedServerModel>();
+        
+        [JsonIgnore]
+        public string SelectedManagedWorld { get; set; }
+
+        [JsonIgnore]
+        public Guid? SelectedManagedWorldGuid { get; set; }
+
+        [JsonIgnore]
+        public string AccountAction { get; set; }
     }
 }

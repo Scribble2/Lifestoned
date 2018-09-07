@@ -154,6 +154,7 @@
   <ItemGroup>
     <None Include="Providers\ApiContentProvider.cs" />
     <Compile Include="App_Start\DapperMappingConfig.cs" />
+    <Compile Include="Models\Account\ApiAccountModelExtensions.cs" />
     <Compile Include="Providers\AuthProviderHost.cs" />
     <Compile Include="Providers\ContentProviderHost.cs" />
     <Compile Include="Controllers\DiscordController.cs" />
@@ -189,14 +190,6 @@
     </Compile>
     <Compile Include="JwtCookieManager.cs" />
     <Compile Include="Providers\ManagedWorldProvider.cs" />
-    <Compile Include="Models\Account\AccountModel.cs" />
-    <Compile Include="Models\Account\AccountListModel.cs" />
-    <Compile Include="Models\Account\ApiAccountModel.cs" />
-    <Compile Include="Models\Account\LoginModel.cs" />
-    <Compile Include="Models\Account\ManagedServerModel.cs" />
-    <Compile Include="Models\Account\RegisterModel.cs" />
-    <Compile Include="Models\Account\SubscriptionModel.cs" />
-    <Compile Include="Models\Account\SubListModel.cs" />
     <Compile Include="Models\Content\Content.cs" />
     <Compile Include="Models\Content\ContentLandblock.cs" />
     <Compile Include="Models\Content\ContentLink.cs" />
