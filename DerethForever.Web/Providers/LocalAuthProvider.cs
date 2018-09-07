@@ -34,7 +34,7 @@ namespace DerethForever.Web.Providers
             if (string.IsNullOrWhiteSpace(configPath) || !Directory.Exists(configPath))
                 throw new ConfigurationErrorsException("LocalAuthProviderDir app setting is missing or invalid.");
 
-            _localPath = Path.Combine(_localPath, LocalAuthFilename);
+            _localPath = Path.Combine(configPath, LocalAuthFilename);
 
             lock (_locker)
             {
@@ -233,8 +233,16 @@ namespace DerethForever.Web.Providers
         /// </summary>
         private void LoadCache()
         {
-            var content = File.ReadAllText(_localPath);
-            _accountCache = JsonConvert.DeserializeObject<List<LocalAccount>>(content);
+            if (File.Exists(_localPath))
+            {
+                var content = File.ReadAllText(_localPath);
+                _accountCache = JsonConvert.DeserializeObject<List<LocalAccount>>(content);
+            }
+            else
+            {
+                log.Warn("Local auth json database is missing.  Creating a new one.");
+                _accountCache = new List<LocalAccount>();
+            }
         }
     }
 }
