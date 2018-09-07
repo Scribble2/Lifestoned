@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using DerethForever.Web.Models.Account;
-using DerethForever.Web.Models.Enums;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace DerethForever.Web.Providers

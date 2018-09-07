@@ -19,47 +19,52 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
-using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace DerethForever.Web.Models.Account
+namespace Lifestoned.DataModel.Shared
 {
-    [Table("subscription")]
-    public class SubscriptionModel
+    /// <summary>
+    /// this is a dual purpose class for interacting with the Api as well as serving 
+    /// as a model for this web ui
+    /// </summary>
+    public class WeenieSearchResult
     {
-        [Column("accountGuid")]
-        [JsonProperty("accountGuid")]
-        public Guid AccountGuid { get; set; }
+        [Description("Weenie Id")]
+        [JsonProperty("weenieClassId")]
+        public uint WeenieClassId { get; set; }
 
-        [Key]
-        [Column("subscriptionId")]
-        [JsonProperty("subscriptionId")]
-        public uint SubscriptionId { get; set; }
-
-        [Column("subscriptionGuid")]
-        [JsonProperty("subscriptionGuid")]
-        public Guid SubscriptionGuid { get; set; }
-
-        [Column("accessLevel")]
-        [JsonProperty("accessLevel")]
-        public ulong AccessLevel { get; set; }
-
-        [JsonIgnore]
-        public AccessLevel? AccessLevel_Binder
-        {
-            get { return (AccessLevel?)AccessLevel; }
-            set { AccessLevel = (ulong)value; }
-        }
-
-        [JsonIgnore]
-        public AccessLevel? NewAccessLevel { get; set; }
-
-        [Column("subscriptionName")]
+        [Description("Name")]
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [Description("Description")]
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [Description("Type")]
+        [JsonProperty("weenieType")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public WeenieType? WeenieType { get; set; }
+
+        [Description("Item Type")]
+        [JsonProperty("itemType")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ItemType? ItemType { get; set; }
+
+        [JsonProperty("lastModified")]
+        public DateTime? LastModified { get; set; }
+        
+        [JsonProperty("modifiedBy")]
+        public string ModifiedBy { get; set; }
+
+        [JsonProperty("isDone")]
+        public bool IsDone { get; set; }
+
+        [JsonIgnore]
+        public bool HasSandboxChange { get; set; }
     }
 }

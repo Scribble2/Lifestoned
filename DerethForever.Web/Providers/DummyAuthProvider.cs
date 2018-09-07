@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DerethForever.Web.Models.Account;
-using DerethForever.Web.Models.Enums;
+using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Providers
 {

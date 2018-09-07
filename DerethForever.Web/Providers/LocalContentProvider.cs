@@ -8,14 +8,13 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using DerethForever.Web.Models.CachePwn;
 using DerethForever.Web.Models.Content;
-using DerethForever.Web.Models.Enums;
 using DerethForever.Web.Models.Recipe;
-using DerethForever.Web.Models.Weenie;
 using DerethForever.Web.Models.WorldRelease;
 using log4net;
+using Lifestoned.DataModel.Gdle;
 using Newtonsoft.Json;
+using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Providers
 {
@@ -25,7 +24,7 @@ namespace DerethForever.Web.Providers
 
         protected string ContentPath { get; private set; }
 
-        protected ConcurrentDictionary<uint, CachePwnWeenie> Weenies { get; private set; }
+        protected ConcurrentDictionary<uint, Weenie> Weenies { get; private set; }
 
         [Flags]
         protected enum LoadingFlags
@@ -54,7 +53,7 @@ namespace DerethForever.Web.Providers
 
         #region IContentProvider
 
-        public bool CreateWeenie(string token, CachePwnWeenie weenie)
+        public bool CreateWeenie(string token, Weenie weenie)
         {
             return SaveWeenie(weenie);
         }
@@ -68,7 +67,7 @@ namespace DerethForever.Web.Providers
         {
             try
             {
-                CachePwnWeenie weenie = null;
+                Weenie weenie = null;
                 if (Weenies.TryRemove(weenieClassId, out weenie))
                 {
                     string path = Path.Combine(ContentPath, "weenies", $"{weenieClassId}.json");
@@ -113,9 +112,9 @@ namespace DerethForever.Web.Providers
             throw new NotImplementedException();
         }
 
-        public CachePwnWeenie GetWeenie(string token, uint weenieClassId)
+        public Weenie GetWeenie(string token, uint weenieClassId)
         {
-            CachePwnWeenie result = null;
+            Weenie result = null;
             Weenies.TryGetValue(weenieClassId, out result);
             return result;
         }
@@ -186,7 +185,7 @@ namespace DerethForever.Web.Providers
             throw new NotImplementedException();
         }
 
-        public bool UpdateWeenie(string token, CachePwnWeenie weenie)
+        public bool UpdateWeenie(string token, Weenie weenie)
         {
             return SaveWeenie(weenie);
         }
@@ -292,7 +291,7 @@ namespace DerethForever.Web.Providers
         {
             SetLoadState(LoadingFlags.WeenieLoading, LoadingFlags.WeenieLoaded);
 
-            Weenies = new ConcurrentDictionary<uint, CachePwnWeenie>();
+            Weenies = new ConcurrentDictionary<uint, Weenie>();
 
             string path = Path.Combine(ContentPath, "weenies");
             if (!Directory.Exists(path))
@@ -318,7 +317,7 @@ namespace DerethForever.Web.Providers
 
                             string content = File.ReadAllText(file);
 
-                            CachePwnWeenie weenie = JsonConvert.DeserializeObject<CachePwnWeenie>(content);
+                            Weenie weenie = JsonConvert.DeserializeObject<Weenie>(content);
 
                             Weenies.TryAdd(weenie.WeenieId, weenie);
 
@@ -349,7 +348,7 @@ namespace DerethForever.Web.Providers
 
         #endregion
 
-        private bool SaveWeenie(CachePwnWeenie weenie)
+        private bool SaveWeenie(Weenie weenie)
         {
             if (weenie == null)
                 throw new ArgumentNullException(nameof(weenie));

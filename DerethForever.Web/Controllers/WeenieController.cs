@@ -24,17 +24,14 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using DerethForever.Web.Models;
 using DerethForever.Web.Models.Account;
-using DerethForever.Web.Models.CachePwn;
 using DerethForever.Web.Models.Discord;
-using DerethForever.Web.Models.Enums;
-using DerethForever.Web.Models.Shared;
-using DerethForever.Web.Models.Weenie;
 using DerethForever.Web.Providers;
 using log4net;
+using Lifestoned.DataModel.Gdle;
 using Newtonsoft.Json;
 using RestSharp;
+using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Controllers
 {
@@ -75,7 +72,7 @@ namespace DerethForever.Web.Controllers
             {
                 // build the CachePwn json for this weenie
                 var weenie = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), update.WeenieClassId);
-                // var cachePwn = CachePwnWeenie.ConvertFromWeenie(weenie);
+                // var cachePwn = Weenie.ConvertFromWeenie(weenie);
                 var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
                 var contents = JsonConvert.SerializeObject(weenie, Formatting.None, settings);
 
@@ -139,13 +136,13 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult Edit(uint id)
         {
-            CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
+            Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
             SortTheThings(model);
 
             return View(model);
         }
 
-        private void SortTheThings(CachePwnWeenie model)
+        private void SortTheThings(Weenie model)
         {
             // Setting sort order for edit
             model.IntStats = model.IntStats.OrderBy(ip => ip.Key).ToList();
@@ -159,7 +156,7 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult Clone(uint id)
         {
-            CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
+            Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
             model.WeenieId = 0;
             // model.DataObjectId = 0;
             ImportedWeenie = model;
@@ -170,7 +167,7 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult New()
         {
-            CachePwnWeenie model = ImportedWeenie ?? new CachePwnWeenie();
+            Weenie model = ImportedWeenie ?? new Weenie();
 
             return View(model);
         }
@@ -179,12 +176,12 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult EditImported()
         {
-            CachePwnWeenie model = ImportedWeenie;
+            Weenie model = ImportedWeenie;
 
             if (model == null)
                 RedirectToAction("Upload");
 
-            CachePwnWeenie existing = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), model.WeenieId);
+            Weenie existing = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), model.WeenieId);
             if (existing == null)
                 return RedirectToAction("NewImported");
 
@@ -197,7 +194,7 @@ namespace DerethForever.Web.Controllers
         [Authorize]
         public ActionResult NewImported()
         {
-            CachePwnWeenie model = ImportedWeenie;
+            Weenie model = ImportedWeenie;
 
             if (model == null)
                 RedirectToAction("Upload");
@@ -209,7 +206,7 @@ namespace DerethForever.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult New(CachePwnWeenie model)
+        public ActionResult New(Weenie model)
         {
             ActionResult result = HandlePostback(model);
 
@@ -246,7 +243,7 @@ namespace DerethForever.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(CachePwnWeenie model)
+        public ActionResult Edit(Weenie model)
         {
             ActionResult result = HandlePostback(model);
 
@@ -287,7 +284,7 @@ namespace DerethForever.Web.Controllers
             return View(model);
         }
 
-        private ActionResult ValidateWeenie(CachePwnWeenie model)
+        private ActionResult ValidateWeenie(Weenie model)
         {
             bool isValid = true;
 
@@ -381,7 +378,7 @@ namespace DerethForever.Web.Controllers
             return null;
         }
 
-        private ActionResult HandlePostback(CachePwnWeenie model)
+        private ActionResult HandlePostback(Weenie model)
         {
             model.CleanDeletedAndEmptyProperties();
 
@@ -466,12 +463,12 @@ namespace DerethForever.Web.Controllers
                     if (model.EmoteTable.All(ecl => ecl.EmoteCategoryId != (int) model.NewEmoteCategory))
                         model.EmoteTable.Add(new EmoteCategoryListing() { EmoteCategoryId = (int)model.NewEmoteCategory });
 
-                    model.EmoteTable.First(ecl => ecl.EmoteCategoryId == (int)model.NewEmoteCategory).Emotes.Add(new Models.CachePwn.Emote());
+                    model.EmoteTable.First(ecl => ecl.EmoteCategoryId == (int)model.NewEmoteCategory).Emotes.Add(new Emote());
                     model.NewEmoteCategory = EmoteCategory.Invalid;
                     break;
 
                 case WeenieCommands.AddGeneratorTable:
-                    model.GeneratorTable.Add(new Models.CachePwn.GeneratorTable());
+                    model.GeneratorTable.Add(new GeneratorTable());
                     break;
 
                 case WeenieCommands.AddEmote:
@@ -564,7 +561,7 @@ namespace DerethForever.Web.Controllers
                         byte[] data = memStream.ToArray();
 
                         string serialized = Encoding.UTF8.GetString(data);
-                        ImportedWeenie = JsonConvert.DeserializeObject<CachePwnWeenie>(serialized);
+                        ImportedWeenie = JsonConvert.DeserializeObject<Weenie>(serialized);
                     }
 
                     return Json(new { id = weenieId });
@@ -583,8 +580,8 @@ namespace DerethForever.Web.Controllers
         {
             try
             {
-                CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
-                // CachePwnWeenie pwn = CachePwnWeenie.ConvertFromWeenie(model);
+                Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
+                // Weenie pwn = Weenie.ConvertFromWeenie(model);
                 JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
                 string content = JsonConvert.SerializeObject(model, Formatting.None, s);
                 string filename = model.Name + " (" + id.ToString() + ").json";
@@ -608,7 +605,7 @@ namespace DerethForever.Web.Controllers
         {
             try
             {
-                CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenieFromSource(GetUserToken(), id);
+                Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenieFromSource(GetUserToken(), id);
                 JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
                 string content = JsonConvert.SerializeObject(model, Formatting.None, s);
                 string filename = $"{id}.json";
@@ -663,7 +660,7 @@ namespace DerethForever.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(uint id)
         {
-            CachePwnWeenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
+            Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
             if (model == null)
                 return RedirectToAction("Index");
 
@@ -672,7 +669,7 @@ namespace DerethForever.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete(CachePwnWeenie model)
+        public ActionResult Delete(Weenie model)
         {
             try
             {
@@ -717,7 +714,7 @@ namespace DerethForever.Web.Controllers
             if (wc == null)
                 return new HttpNotFoundResult();
 
-            // CachePwnWeenie pwn = CachePwnWeenie.ConvertFromWeenie(wc.Weenie);
+            // Weenie pwn = Weenie.ConvertFromWeenie(wc.Weenie);
             JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             string content = JsonConvert.SerializeObject(wc.Weenie, Formatting.None, s);
             string filename = wc.Weenie.Name + $" ({id}).json";

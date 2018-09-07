@@ -20,6 +20,7 @@ DEALINGS IN THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

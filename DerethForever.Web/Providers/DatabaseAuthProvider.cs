@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using DerethForever.Web.Models.Account;
-using DerethForever.Web.Models.Enums;
+using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Providers
 {

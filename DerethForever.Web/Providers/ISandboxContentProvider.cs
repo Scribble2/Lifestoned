@@ -19,11 +19,9 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.Collections.Generic;
-using DerethForever.Web.Models.CachePwn;
 using DerethForever.Web.Models.Content;
 using DerethForever.Web.Models.Recipe;
-using DerethForever.Web.Models.Shared;
-using DerethForever.Web.Models.Weenie;
+using Lifestoned.DataModel.Gdle;
 
 namespace DerethForever.Web.Providers
 {
@@ -37,7 +35,7 @@ namespace DerethForever.Web.Providers
 
         void DeleteWeenieChange(string changeOwnerGuid, WeenieChange wc);
 
-        CachePwnWeenie GetWeenieFromSource(string token, uint weenieClassId);
+        Weenie GetWeenieFromSource(string token, uint weenieClassId);
 
         List<Recipe> GetAllRecipeChanges();
 
@@ -51,7 +49,7 @@ namespace DerethForever.Web.Providers
 
         WeenieChange GetMySandboxedChange(string token, uint weenieClassId);
 
-        bool UpdateWeenieInSource(string token, CachePwnWeenie weenie);
+        bool UpdateWeenieInSource(string token, Weenie weenie);
 
         void ReloadCache();
     }

@@ -17,18 +17,26 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
-using Lifestoned.DataModel.Shared;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Newtonsoft.Json;
 
-namespace DerethForever.Web.Models.Recipe
+namespace Lifestoned.DataModel.Shared
 {
-    public class SearchRecipesCriteria
+    public class ChangeDiscussionEntry
     {
-        public RecipeType? RecipeType { get; set; }
+        [JsonProperty("created")]
+        public DateTime Created { get; set; }
 
-        public SkillId? Skill { get; set; }
+        [JsonProperty("userGuid")]
+        public Guid UserGuid { get; set; }
 
-        public uint? SourceWcid { get; set; }
+        [JsonProperty("userName")]
+        public string UserName { get; set; }
 
-        public uint? TargetWcid { get; set; }
+        [JsonProperty("comment")]
+        public string Comment { get; set; }
     }
 }

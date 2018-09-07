@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Models.WorldRelease
 {

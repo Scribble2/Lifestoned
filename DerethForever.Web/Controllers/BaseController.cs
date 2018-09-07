@@ -19,10 +19,9 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System.Security.Claims;
 using System.Web.Mvc;
-using DerethForever.Web.Models;
 using DerethForever.Web.Models.Account;
-using DerethForever.Web.Models.CachePwn;
-using DerethForever.Web.Models.Weenie;
+using Lifestoned.DataModel.Gdle;
+using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Controllers
 {
@@ -34,9 +33,9 @@ namespace DerethForever.Web.Controllers
 
         private const string _Session_Account = "__account";
 
-        public CachePwnWeenie ImportedWeenie
+        public Weenie ImportedWeenie
         {
-            get { return (CachePwnWeenie)Session[_Session_ImportedWeenie]; }
+            get { return (Weenie)Session[_Session_ImportedWeenie]; }
             set { Session[_Session_ImportedWeenie] = value; }
         }
 

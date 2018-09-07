@@ -4,8 +4,8 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using DerethForever.Web.Models.Account;
-using DerethForever.Web.Models.Enums;
 using log4net;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace DerethForever.Web.Providers

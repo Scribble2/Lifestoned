@@ -25,14 +25,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using DerethForever.Web.Models.Account;
-using DerethForever.Web.Models.CachePwn;
 using DerethForever.Web.Models.Content;
 using DerethForever.Web.Models.Recipe;
-using DerethForever.Web.Models.Shared;
 using DerethForever.Web.Models.WorldRelease;
-using DerethForever.Web.Models.Weenie;
 using log4net;
 using Newtonsoft.Json;
+using Lifestoned.DataModel.Gdle;
+using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Providers
 {
@@ -336,7 +335,7 @@ namespace DerethForever.Web.Providers
             return _backingProvider.GetRecipe(token, recipeGuid);
         }
 
-        public CachePwnWeenie GetWeenie(string token, uint weenieClassId)
+        public Weenie GetWeenie(string token, uint weenieClassId)
         {
             if (token != null)
             {
@@ -356,7 +355,7 @@ namespace DerethForever.Web.Providers
             return _backingProvider.GetWeenie(token, weenieClassId);
         }
 
-        public CachePwnWeenie GetWeenieFromSource(string token, uint weenieClassId)
+        public Weenie GetWeenieFromSource(string token, uint weenieClassId)
         {
             return _backingProvider.GetWeenie(token, weenieClassId);
         }
@@ -371,7 +370,7 @@ namespace DerethForever.Web.Providers
             return _backingProvider.UpdateContent(token, content);
         }
 
-        public bool UpdateWeenie(string token, CachePwnWeenie weenie)
+        public bool UpdateWeenie(string token, Weenie weenie)
         {
             return SaveWeenie(token, weenie);
         }
@@ -391,12 +390,12 @@ namespace DerethForever.Web.Providers
             return _backingProvider.AllUpdates(token);
         }
 
-        public bool CreateWeenie(string token, CachePwnWeenie weenie)
+        public bool CreateWeenie(string token, Weenie weenie)
         {
             return SaveWeenie(token, weenie);
         }
 
-        private bool SaveWeenie(string token, CachePwnWeenie weenie)
+        private bool SaveWeenie(string token, Weenie weenie)
         {
             if (_weenieCache == null)
                 throw new ApplicationException("Sandboxing is not configured correctly.  See error logs for details.");
@@ -509,7 +508,7 @@ namespace DerethForever.Web.Providers
                 File.Delete(weenieFile);
         }
 
-        public bool UpdateWeenieInSource(string token, CachePwnWeenie weenie)
+        public bool UpdateWeenieInSource(string token, Weenie weenie)
         {
             return _backingProvider.UpdateWeenie(token, weenie);
         }

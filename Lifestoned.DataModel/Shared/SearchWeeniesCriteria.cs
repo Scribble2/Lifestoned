@@ -19,47 +19,46 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
-using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace DerethForever.Web.Models.Account
+namespace Lifestoned.DataModel.Shared
 {
-    [Table("subscription")]
-    public class SubscriptionModel
+    public class SearchWeeniesCriteria
     {
-        [Column("accountGuid")]
-        [JsonProperty("accountGuid")]
-        public Guid AccountGuid { get; set; }
-
-        [Key]
-        [Column("subscriptionId")]
-        [JsonProperty("subscriptionId")]
-        public uint SubscriptionId { get; set; }
-
-        [Column("subscriptionGuid")]
-        [JsonProperty("subscriptionGuid")]
-        public Guid SubscriptionGuid { get; set; }
-
-        [Column("accessLevel")]
-        [JsonProperty("accessLevel")]
-        public ulong AccessLevel { get; set; }
-
-        [JsonIgnore]
-        public AccessLevel? AccessLevel_Binder
+        public SearchWeeniesCriteria()
         {
-            get { return (AccessLevel?)AccessLevel; }
-            set { AccessLevel = (ulong)value; }
         }
 
-        [JsonIgnore]
-        public AccessLevel? NewAccessLevel { get; set; }
+        [Description("Name")]
+        [JsonProperty("partialName")]
+        public string PartialName { get; set; }
 
-        [Column("subscriptionName")]
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        [Description("ID")]
+        [JsonProperty("weenieClassId")]
+        public uint? WeenieClassId { get; set; }
+
+        [Description("Weenie Type")]
+        [JsonProperty("weenieType")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public WeenieType? WeenieType { get; set; }
+
+        [Description("Item Type")]
+        [JsonProperty("itemType")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ItemType? ItemType { get; set; }
+
+        [JsonProperty("contentGuid")]
+        public Guid? ContentGuid { get; set; }
+        
+        [Description("User Modified")]
+        [JsonProperty("userModified")]
+        public bool? UserModified { get; set; }
+
+        [JsonProperty("criteria")]
+        public List<SearchWeenieProperty> PropertyCriteria { get; set; } = new List<SearchWeenieProperty>();
     }
 }

@@ -52,7 +52,7 @@
     <Compile Include="DerethForever\BodyPartSelectionData.cs" />
     <Compile Include="DerethForever\BookPage.cs" />
     <Compile Include="DerethForever\BoolProperty.cs" />
-    <Compile Include="DerethForever\ChangeDiscussionEntry.cs" />
+    <Compile Include="Shared\ChangeDiscussionEntry.cs" />
     <Compile Include="Shared\ChangelogEntry.cs" />
     <Compile Include="DerethForever\Contract.cs" />
     <Compile Include="DerethForever\CreationProfile.cs" />
@@ -98,6 +98,7 @@
     <Compile Include="Gdle\XYZ.cs" />
     <Compile Include="Gdle\Zones.cs" />
     <Compile Include="Shared\BaseModel.cs" />
+    <Compile Include="Shared\DownloadChangeModel.cs" />
     <Compile Include="Shared\IconEffects.cs" />
     <Compile Include="DerethForever\IndexModel.cs" />
     <Compile Include="DerethForever\InstanceIdProperty.cs" />
@@ -106,8 +107,10 @@
     <Compile Include="DerethForever\Origin.cs" />
     <Compile Include="DerethForever\Palette.cs" />
     <Compile Include="DerethForever\Position.cs" />
-    <Compile Include="DerethForever\SearchWeenieProperty.cs" />
-    <Compile Include="DerethForever\SearchWeeniesCriteria.cs" />
+    <Compile Include="Gdle\IndexModel.cs" />
+    <Compile Include="Shared\SandboxModel.cs" />
+    <Compile Include="Shared\SearchWeenieProperty.cs" />
+    <Compile Include="Shared\SearchWeeniesCriteria.cs" />
     <Compile Include="DerethForever\Skill.cs" />
     <Compile Include="DerethForever\Spell.cs" />
     <Compile Include="DerethForever\StringProperty.cs" />
@@ -115,8 +118,8 @@
     <Compile Include="DerethForever\TypedArmorRatings.cs" />
     <Compile Include="DerethForever\VitalSet.cs" />
     <Compile Include="DerethForever\Weenie.cs" />
-    <Compile Include="DerethForever\WeenieChange.cs" />
-    <Compile Include="DerethForever\WeenieSearchResult.cs" />
+    <Compile Include="Gdle\WeenieChange.cs" />
+    <Compile Include="Shared\WeenieSearchResult.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\AbilityId.cs" />

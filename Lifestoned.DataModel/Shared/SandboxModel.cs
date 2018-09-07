@@ -17,18 +17,16 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using Lifestoned.DataModel.Shared;
 
-namespace DerethForever.Web.Models.Recipe
+namespace Lifestoned.DataModel.Gdle
 {
-    public class SearchRecipesCriteria
+    public class SandboxModel : BaseModel
     {
-        public RecipeType? RecipeType { get; set; }
-
-        public SkillId? Skill { get; set; }
-
-        public uint? SourceWcid { get; set; }
-
-        public uint? TargetWcid { get; set; }
+        public List<WeenieChange> Changes { get; set; } = new List<WeenieChange>();
     }
 }

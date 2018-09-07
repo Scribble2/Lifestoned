@@ -19,7 +19,7 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.ComponentModel.DataAnnotations;
-using DerethForever.Web.Models.Enums;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace DerethForever.Web.Models.Recipe

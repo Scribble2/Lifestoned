@@ -20,12 +20,11 @@ DEALINGS IN THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Net;
-using DerethForever.Web.Models.Account;
-using DerethForever.Web.Models.CachePwn;
 using DerethForever.Web.Models.Content;
 using DerethForever.Web.Models.Recipe;
 using DerethForever.Web.Models.WorldRelease;
-using DerethForever.Web.Models.Weenie;
+using Lifestoned.DataModel.Gdle;
+using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Providers
 {
@@ -43,11 +42,11 @@ namespace DerethForever.Web.Providers
 
         List<WeenieSearchResult> AllUpdates(string token);
 
-        CachePwnWeenie GetWeenie(string token, uint weenieClassId);
+        Weenie GetWeenie(string token, uint weenieClassId);
 
-        bool UpdateWeenie(string token, CachePwnWeenie weenie);
+        bool UpdateWeenie(string token, Weenie weenie);
 
-        bool CreateWeenie(string token, CachePwnWeenie weenie);
+        bool CreateWeenie(string token, Weenie weenie);
 
         bool DeleteWeenie(string token, uint weenieClassId);
 
