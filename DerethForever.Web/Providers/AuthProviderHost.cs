@@ -48,6 +48,7 @@ namespace DerethForever.Web.Providers
             catch (Exception ex)
             {
                 log.Error($"Unable to load Auth Provider Host {providerType}", ex);
+                throw;
             }
         }
     }
