@@ -22,6 +22,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Web.Mvc;
+using DerethForever.Web.Providers;
 using Lifestoned.Lib.ClientLib.Enum;
 
 namespace DerethForever.Web.Controllers

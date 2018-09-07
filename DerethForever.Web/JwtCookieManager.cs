@@ -26,6 +26,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Web.Mvc.Filters;
 using DerethForever.Web.Controllers;
+using DerethForever.Web.Providers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

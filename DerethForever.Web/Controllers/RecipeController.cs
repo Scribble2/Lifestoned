@@ -20,6 +20,7 @@ DEALINGS IN THE SOFTWARE.
 using System;
 using System.Web.Mvc;
 using DerethForever.Web.Models.Recipe;
+using DerethForever.Web.Providers;
 
 namespace DerethForever.Web.Controllers
 {

@@ -25,6 +25,7 @@ using System.Web.Mvc;
 using DerethForever.Web.Models;
 using DerethForever.Web.Models.Account;
 using DerethForever.Web.Models.Enums;
+using DerethForever.Web.Providers;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 

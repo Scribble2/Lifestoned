@@ -24,6 +24,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DerethForever.Web.Models.Discord;
+using DerethForever.Web.Providers;
 
 namespace DerethForever.Web.Controllers
 {

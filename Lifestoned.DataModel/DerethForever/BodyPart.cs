@@ -1,0 +1,52 @@
+/*****************************************************************************************
+Copyright 2018 Dereth Forever
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+*****************************************************************************************/
+
+using Lifestoned.DataModel.Shared;
+using Newtonsoft.Json;
+
+namespace Lifestoned.DataModel.DerethForever
+{
+    public class BodyPart
+    {
+        [JsonProperty("bodyPartType")]
+        public BodyPartType BodyPartType { get; set; }
+
+        [JsonProperty("targetingData")]
+        public BodyPartSelectionData TargetingData { get; } = new BodyPartSelectionData();
+
+        [JsonProperty("armorValues")]
+        public TypedArmorRatings ArmorValues { get; } = new TypedArmorRatings();
+
+        [JsonProperty("bodyHeight")]
+        public int BodyHeight { get; set; }
+
+        [JsonProperty("damage")]
+        public int Damage { get; set; }
+
+        [JsonProperty("damageType")]
+        public DamageType DamageType { get; set; }
+        
+        [JsonProperty("damageVariance")]
+        public float DamageVariance { get; set; }
+
+        [JsonIgnore]
+        public bool Deleted { get; set; }
+    }
+}

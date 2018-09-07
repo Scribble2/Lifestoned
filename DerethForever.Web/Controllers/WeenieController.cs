@@ -31,6 +31,7 @@ using DerethForever.Web.Models.Discord;
 using DerethForever.Web.Models.Enums;
 using DerethForever.Web.Models.Shared;
 using DerethForever.Web.Models.Weenie;
+using DerethForever.Web.Providers;
 using log4net;
 using Newtonsoft.Json;
 using RestSharp;
