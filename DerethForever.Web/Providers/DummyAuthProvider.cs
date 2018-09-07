@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using DerethForever.Web.Models.Account;
+using Lifestoned.DataModel.Account;
 using Lifestoned.DataModel.Shared;
 
 namespace DerethForever.Web.Providers
