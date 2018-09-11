@@ -152,11 +152,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Providers\ApiContentProvider.cs" />
     <Compile Include="App_Start\DapperMappingConfig.cs" />
     <Compile Include="Models\Account\ApiAccountModelExtensions.cs" />
-    <Compile Include="Providers\AuthProviderHost.cs" />
-    <Compile Include="Providers\ContentProviderHost.cs" />
     <Compile Include="Controllers\DiscordController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ModelViewerController.cs" />
@@ -165,17 +162,6 @@
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="CustomErrorHandler.cs" />
-    <Compile Include="Providers\DatabaseAuthProvider.cs" />
-    <Compile Include="Providers\DatabaseProviderBase.cs" />
-    <None Include="Providers\DerethForeverAuthProvider.cs" />
-    <Compile Include="Providers\IAuthProvider.cs" />
-    <Compile Include="Providers\IContentProvider.cs" />
-    <Compile Include="Providers\IManagedWorldProvider.cs" />
-    <Compile Include="Providers\ISandboxContentProvider.cs" />
-    <Compile Include="Providers\LocalAccount.cs" />
-    <Compile Include="Providers\LocalAuthProvider.cs" />
-    <Compile Include="Providers\LocalContentProvider.cs" />
-    <Compile Include="Providers\LoginResult.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -188,14 +174,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="JwtCookieManager.cs" />
-    <Compile Include="Providers\ManagedWorldProvider.cs" />
-    <Compile Include="Models\Content\Content.cs" />
-    <Compile Include="Models\Content\ContentLandblock.cs" />
-    <Compile Include="Models\Content\ContentLink.cs" />
-    <Compile Include="Models\Content\ContentResource.cs" />
-    <Compile Include="Models\Content\ContentType.cs" />
-    <Compile Include="Models\Content\ContentWeenie.cs" />
     <Compile Include="Models\Discord\WeenieAcceptanceEvent.cs" />
     <Compile Include="Models\Discord\Author.cs" />
     <Compile Include="Models\Discord\Embed.cs" />
@@ -206,35 +184,7 @@
     <Compile Include="Models\Discord\Message.cs" />
     <Compile Include="Models\Discord\WorldReleaseEvent.cs" />
     <Compile Include="Models\Discord\WeenieSubmissionEvent.cs" />
-    <Compile Include="Models\PreComp\Angles.cs" />
-    <Compile Include="Models\PreComp\ArmorValues.cs" />
-    <Compile Include="Models\PreComp\Attribute.cs" />
-    <Compile Include="Models\PreComp\AttributeSet.cs" />
-    <Compile Include="Models\PreComp\BodyPart.cs" />
-    <Compile Include="Models\PreComp\CreateItem.cs" />
-    <Compile Include="Models\PreComp\Emote.cs" />
-    <Compile Include="Models\PreComp\EmoteAction.cs" />
-    <Compile Include="Models\PreComp\Extra1.cs" />
-    <Compile Include="Models\PreComp\ExtraItem2.cs" />
-    <Compile Include="Models\PreComp\ExtraItem3.cs" />
-    <Compile Include="Models\PreComp\Generator.cs" />
-    <Compile Include="Models\PreComp\Item.cs" />
-    <Compile Include="Models\PreComp\Origin.cs" />
-    <Compile Include="Models\PreComp\PrecompWeenie.cs" />
-    <Compile Include="Models\PreComp\Position.cs" />
-    <Compile Include="Models\PreComp\Zones.cs" />
-    <Compile Include="Models\Recipe\IndexModel.cs" />
-    <Compile Include="Models\Recipe\Recipe.cs" />
-    <Compile Include="Models\Recipe\SearchRecipesCriteria.cs" />
-    <Compile Include="Models\WorldRelease\IndexModel.cs" />
-    <Compile Include="Models\WorldRelease\ReleaseType.cs" />
-    <Compile Include="Models\WorldRelease\Version.cs" />
-    <Compile Include="Models\WorldRelease\WorldRelease.cs" />
-    <Compile Include="NonSuckyJsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\SandboxContentProvider.cs" />
-    <Compile Include="Providers\SandboxContentProviderHost.cs" />
-    <Compile Include="Providers\DummyAuthProvider.cs" />
     <Compile Include="SimpleMessage.cs" />
     <Compile Include="ZipFile.cs" />
   </ItemGroup>
@@ -410,6 +360,10 @@
     <ProjectReference Include="..\Lifestoned.Lib\Lifestoned.Lib.csproj">
       <Project>{0ccf41b5-882a-4feb-8e2d-9d7d094b95f3}</Project>
       <Name>Lifestoned.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lifestoned.Providers\Lifestoned.Providers.csproj">
+      <Project>{2f97bf81-0a5e-42ee-9c93-1795dbe7d1c1}</Project>
+      <Name>Lifestoned.Providers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

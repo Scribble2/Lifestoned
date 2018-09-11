@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lifestoned.Lib", "Lifestone
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lifestoned.DataModel", "Lifestoned.DataModel\Lifestoned.DataModel.csproj", "{EBDA5F74-7272-4244-A126-3633DD4260B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lifestoned.WeenieMigrator", "Lifestoned.WeenieMigrator\Lifestoned.WeenieMigrator.csproj", "{4CE39C4C-604D-4493-8C61-D73CCA448B74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lifestoned.Providers", "Lifestoned.Providers\Lifestoned.Providers.csproj", "{2F97BF81-0A5E-42EE-9C93-1795DBE7D1C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,22 @@ Global
 		{EBDA5F74-7272-4244-A126-3633DD4260B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBDA5F74-7272-4244-A126-3633DD4260B3}.Release|x64.ActiveCfg = Release|Any CPU
 		{EBDA5F74-7272-4244-A126-3633DD4260B3}.Release|x64.Build.0 = Release|Any CPU
+		{4CE39C4C-604D-4493-8C61-D73CCA448B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE39C4C-604D-4493-8C61-D73CCA448B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE39C4C-604D-4493-8C61-D73CCA448B74}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4CE39C4C-604D-4493-8C61-D73CCA448B74}.Debug|x64.Build.0 = Debug|Any CPU
+		{4CE39C4C-604D-4493-8C61-D73CCA448B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE39C4C-604D-4493-8C61-D73CCA448B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CE39C4C-604D-4493-8C61-D73CCA448B74}.Release|x64.ActiveCfg = Release|Any CPU
+		{4CE39C4C-604D-4493-8C61-D73CCA448B74}.Release|x64.Build.0 = Release|Any CPU
+		{2F97BF81-0A5E-42EE-9C93-1795DBE7D1C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F97BF81-0A5E-42EE-9C93-1795DBE7D1C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F97BF81-0A5E-42EE-9C93-1795DBE7D1C1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2F97BF81-0A5E-42EE-9C93-1795DBE7D1C1}.Debug|x64.Build.0 = Debug|Any CPU
+		{2F97BF81-0A5E-42EE-9C93-1795DBE7D1C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F97BF81-0A5E-42EE-9C93-1795DBE7D1C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F97BF81-0A5E-42EE-9C93-1795DBE7D1C1}.Release|x64.ActiveCfg = Release|Any CPU
+		{2F97BF81-0A5E-42EE-9C93-1795DBE7D1C1}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

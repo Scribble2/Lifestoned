@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using System.Web;
 using DerethForever.Web.Models.Discord;
 using log4net;
+using Lifestoned.Providers;
 using RestSharp;
 
 namespace DerethForever.Web.Controllers

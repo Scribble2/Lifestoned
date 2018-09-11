@@ -17,13 +17,13 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
-using DerethForever.Web.Models.WorldRelease;
 using System;
 using System.Configuration;
 using System.IO;
 using System.Web.Mvc;
-using DerethForever.Web.Providers;
+using Lifestoned.DataModel.WorldRelease;
 using Lifestoned.Lib.ClientLib.Enum;
+using Lifestoned.Providers;
 
 namespace DerethForever.Web.Controllers
 {
@@ -53,7 +53,7 @@ namespace DerethForever.Web.Controllers
         public ActionResult GetCurrentWorldRelease()
         {
             byte[] src = new byte[] { };
-            WorldRelease info = new WorldRelease();
+            Release info = new Release();
 
             try
             {
@@ -91,7 +91,7 @@ namespace DerethForever.Web.Controllers
         [HttpGet]
         public ActionResult GetCurrentWorldReleaseInfo()
         {
-            WorldRelease releaseInfo = new WorldRelease() { Type = ReleaseType.Unknown };
+            Release releaseInfo = new Release() { Type = ReleaseType.Unknown };
 
             try
             {
@@ -108,7 +108,7 @@ namespace DerethForever.Web.Controllers
         [HttpGet]
         public ActionResult GetWorldReleaseInfo(string fileName)
         {
-            WorldRelease src = new WorldRelease() { Type = ReleaseType.Unknown };
+            Release src = new Release() { Type = ReleaseType.Unknown };
 
             if (fileName?.Length > 0)
             {

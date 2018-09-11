@@ -25,13 +25,13 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using DerethForever.Web.Models.Discord;
-using DerethForever.Web.Providers;
 using log4net;
 using Lifestoned.DataModel.Gdle;
 using Newtonsoft.Json;
 using RestSharp;
 using Lifestoned.DataModel.Shared;
 using Lifestoned.DataModel.Account;
+using Lifestoned.Providers;
 
 namespace DerethForever.Web.Controllers
 {

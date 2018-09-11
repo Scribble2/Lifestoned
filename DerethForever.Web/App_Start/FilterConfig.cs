@@ -18,6 +18,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System.Web.Mvc;
+using Lifestoned.Providers;
 
 namespace DerethForever.Web
 {

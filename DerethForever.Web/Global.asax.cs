@@ -27,8 +27,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
-using DerethForever.Web.Providers;
 using Lifestoned.Lib;
+using Lifestoned.Providers;
 
 namespace DerethForever.Web
 {

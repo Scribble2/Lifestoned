@@ -83,6 +83,8 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("generatorTable")]
         public List<GeneratorTable> GeneratorTable { get; set; }
 
+        #region Shortcut properties without standard backers
+
         [JsonIgnore]
         public string Name
         {
@@ -158,6 +160,10 @@ namespace Lifestoned.DataModel.Gdle
             get { return DidStats.FirstOrDefault(d => d.Key == (int)DidPropertyId.IconOverlaySecondary)?.Value; }
         }
 
+        #endregion
+
+        #region unpersisted MVC helper properties
+
         [JsonIgnore]
         public WeenieCommands? MvcAction { get; set; }
 
@@ -203,6 +209,10 @@ namespace Lifestoned.DataModel.Gdle
         [JsonIgnore]
         public EmoteCategory NewEmoteCategory { get; set; }
 
+        #endregion
+
+        #region Meta data properties
+
         [JsonProperty("lastModified")]
         [Display(Name = "Last Modified Date")]
         public DateTime? LastModified { get; set; }
@@ -223,6 +233,8 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("comments")]
         public string Comments { get; set; }
+
+        #endregion
 
         /// <summary>
         /// This should be called after any postback and/or before any save.  due to how we can delete mid-row
@@ -249,409 +261,118 @@ namespace Lifestoned.DataModel.Gdle
             if (!HasAbilities)
                 Attributes = null;
         }
-
-        //public Weenie.Weenie ConvertToWeenie(out List<string> messages)
-        //{
-        //    messages = new List<string>();
-        //    Weenie.Weenie w = new Weenie.Weenie
-        //    {
-        //        DataObjectId = WeenieId,
-        //        WeenieClassId = WeenieId
-        //    };
-
-        //    bool intWeenieTypeFound = false;
-        //    IntStats.ForEach(stat =>
-        //    {
-        //        if (stat.Key == (int)IntPropertyId.WeenieType)
-        //        {
-        //            intWeenieTypeFound = true;
-        //        }
-
-        //        w.IntProperties.Add(new Shared.IntProperty()
-        //        {
-        //            IntPropertyId = stat.Key,
-        //            Value = stat.Value
-        //        });
-        //    });
-
-        //    if (!intWeenieTypeFound)
-        //    {
-        //        w.IntProperties.Add(new Shared.IntProperty()
-        //        {
-        //            IntPropertyId = (int)IntPropertyId.WeenieType,
-        //            Value = WeenieTypeId
-        //        });
-
-        //    }
-
-        //    Int64Stats?.ForEach(stat =>
-        //    {
-        //        w.Int64Properties.Add(new Shared.Int64Property()
-        //        {
-        //            Int64PropertyId = stat.Key,
-        //            Value = stat.Value
-        //        });
-        //    });
-
-        //    FloatStats?.ForEach(stat =>
-        //    {
-        //        w.DoubleProperties.Add(new Shared.DoubleProperty()
-        //        {
-        //            DoublePropertyId = stat.Key,
-        //            Value = stat.Value
-        //        });
-        //    });
-
-        //    DidStats?.ForEach(stat =>
-        //    {
-        //        w.DidProperties.Add(new Shared.DataIdProperty()
-        //        {
-        //            DataIdPropertyId = stat.Key,
-        //            Value = stat.Value
-        //        });
-        //    });
-
-        //    BoolStats?.ForEach(stat =>
-        //    {
-        //        w.BoolProperties.Add(new Shared.BoolProperty()
-        //        {
-        //            BoolPropertyId = stat.Key,
-        //            Value = stat.BoolValue
-        //        });
-        //    });
-
-        //    StringStats?.ForEach(stat =>
-        //    {
-        //        w.StringProperties.Add(new Shared.StringProperty()
-        //        {
-        //            StringPropertyId = stat.Key,
-        //            Value = stat.Value
-        //        });
-        //    });
-
-        //    Book?.Pages.ForEach(page =>
-        //    {
-        //        w.BookProperties.Add(new Shared.BookPage()
-        //        {
-        //            AuthorAccount = page.AuthorAccount,
-        //            AuthorId = page.AuthorId,
-        //            AuthorName = page.AuthorName,
-        //            IgnoreAuthor = page.IgnoreAuthor ?? false,
-        //            Page = 1 + (uint)Book.Pages.IndexOf(page),
-        //            PageText = page.PageText
-        //        });
-        //    });
-
-        //    Skills?.ForEach(skill =>
-        //    {
-        //        w.Skills.Add(new Shared.Skill()
-        //        {
-        //            SkillId = skill.SkillId,
-        //            Ranks = skill.Skill.Ranks,
-        //            ExperienceSpent = skill.Skill.XpInvested,
-        //            Status = skill.Skill.TrainedLevel,
-        //            BaseValue = 0
-        //        });
-        //    });
-
-        //    Spells?.ForEach(spell =>
-        //    {
-        //        w.Spells.Add(new Shared.Spell()
-        //        {
-        //            SpellId = spell.SpellId,
-        //            Probability = spell.Stats.CastingChance
-        //        });
-        //    });
-
-        //    Positions?.ForEach(position =>
-        //    {
-        //        w.Positions.Add(new Shared.Position()
-        //        {
-        //            PositionType = position.PositionType,
-        //            X = position.Position.Frame.Position.X,
-        //            Y = position.Position.Frame.Position.Y,
-        //            Z = position.Position.Frame.Position.Z,
-        //            QW = position.Position.Frame.Rotations.W,
-        //            QX = position.Position.Frame.Rotations.X,
-        //            QY = position.Position.Frame.Rotations.Y,
-        //            QZ = position.Position.Frame.Rotations.Z,
-        //        });
-        //    });
-
-        //    GeneratorTable?.ForEach(entry =>
-        //    {
-        //        Shared.GeneratorTable gt = new Shared.GeneratorTable
-        //        {
-        //            Frame = new Shared.Frame()
-        //        };
-        //        gt.Frame.Origin = new Shared.Origin();
-        //        gt.Frame.Angles = new Shared.Angles();
-
-        //        PropertyCopier<GeneratorTable, Shared.GeneratorTable>.Copy(entry, gt);
-        //        gt.Frame.Angles.W = entry.Frame.Rotations.W;
-        //        gt.Frame.Angles.X = entry.Frame.Rotations.X;
-        //        gt.Frame.Angles.Y = entry.Frame.Rotations.Y;
-        //        gt.Frame.Angles.Z = entry.Frame.Rotations.Z;
-        //        gt.Frame.Origin.X = entry.Frame.Position.X;
-        //        gt.Frame.Origin.Y = entry.Frame.Position.Y;
-        //        gt.Frame.Origin.Z = entry.Frame.Position.Z;
-
-        //        w.GeneratorTable.Add(gt);
-        //    });
-
-        //    uint emoteSetCounter = 0;
-        //    if (EmoteTable != null)
-        //        emoteSetCounter = (uint)EmoteTable?.Count;
-
-        //    uint emoteCounter = 0;
-        //    uint holdCategory = 0;
-
-        //    EmoteTable?.ForEach(category =>
-        //    {
-        //        if (category.EmoteCategoryId != holdCategory)
-        //        {
-        //            holdCategory = (uint)category.EmoteCategoryId;
-
-        //            if (holdCategory != 0)
-        //                emoteSetCounter--;
-        //        }
-
-        //        category.Emotes.ForEach(e =>
-        //        {
-        //            var es = new Shared.EmoteSet()
-        //            {
-        //                EmoteSetGuid = Guid.NewGuid(),
-        //                ClassId = e.ClassId,
-        //                EmoteCategoryId = e.Category,
-        //                MaxHealth = e.MaxHealth,
-        //                MinHealth = e.MinHealth,
-        //                Probability = e.Probability,
-        //                Quest = e.Quest,
-        //                Style = e.Style,
-        //                SubStyle = e.SubStyle,
-        //                SortOrder = emoteSetCounter,
-        //                VendorType = e.VendorType
-        //            };
-
-        //            emoteCounter = 0;
-        //            e.Emotes.ForEach(ea =>
-        //            {
-        //                es.Emotes.Add(new Shared.Emote()
-        //                {
-        //                    Amount = ea.Amount,
-        //                    Amount64 = ea.Amount64,
-        //                    CreationProfile = ea?.Item?.Convert(),
-        //                    Delay = ea.Delay ?? 0f,
-        //                    Deleted = false,
-        //                    Display = ea.Display,
-        //                    EmoteTypeId = ea.EmoteActionType,
-        //                    EmoteGuid = Guid.NewGuid(),
-        //                    EmoteSetGuid = es.EmoteSetGuid,
-        //                    Extent = ea.Extent ?? 0f,
-        //                    HeroXp64 = ea.HeroXp64,
-        //                    Maximum = ea.Max,
-        //                    Maximum64 = ea.Maximum64,
-        //                    MaximumFloat = ea.FMax,
-        //                    Message = ea.Message,
-        //                    Minimum = ea.Min,
-        //                    Minimum64 = ea.Minimum64,
-        //                    MinimumFloat = ea.FMin,
-        //                    Motion = (MotionCommand?)ea.Motion,
-        //                    Percent = ea.Percent,
-        //                    PhysicsScript = (PhysicsScriptType?)ea.PScript,
-        //                    PositionLandBlockId = ea.MPosition?.LandCellId,
-        //                    RotationW = ea.MPosition?.Frame.Rotations.W,
-        //                    RotationX = ea.MPosition?.Frame.Rotations.X,
-        //                    RotationY = ea.MPosition?.Frame.Rotations.Y,
-        //                    RotationZ = ea.MPosition?.Frame.Rotations.Z,
-        //                    PositionX = ea.MPosition?.Frame.Position.X,
-        //                    PositionY = ea.MPosition?.Frame.Position.Y,
-        //                    PositionZ = ea.MPosition?.Frame.Position.Z,
-        //                    Sound = ea.Sound,
-        //                    SpellId = ea.SpellId,
-        //                    Stat = ea.Stat,
-        //                    TestString = ea.TestString,
-        //                    TreasureClass = (TreasureClass?)ea.TreasureClass,
-        //                    TreasureType = (uint?)ea.TreasureType,
-        //                    SortOrder = emoteCounter,
-        //                    WealthRating = (WealthRating?)ea.WealthRating
-        //                });
-        //                emoteCounter++;
-        //            });
-        //            w.EmoteTable.Add(es);
-        //        });
-        //    });
-
-        //    CreateList?.ForEach(ci =>
-        //    {
-        //        w.CreateList.Add(ci.Convert());
-        //    });
-
-        //    if (w.HasAbilities)
-        //    {
-        //        w.Abilities.Strength = Attributes.Strength.Convert(AbilityId.Strength);
-        //        w.Abilities.Endurance = Attributes.Endurance.Convert(AbilityId.Endurance);
-        //        w.Abilities.Coordination = Attributes.Coordination.Convert(AbilityId.Coordination);
-        //        w.Abilities.Quickness = Attributes.Quickness.Convert(AbilityId.Quickness);
-        //        w.Abilities.Focus = Attributes.Focus.Convert(AbilityId.Focus);
-        //        w.Abilities.Self = Attributes.Self.Convert(AbilityId.Self);
-
-        //        w.Vitals.Health = Attributes.Health.Convert(AbilityId.Health);
-        //        w.Vitals.Stamina = Attributes.Stamina.Convert(AbilityId.Stamina);
-        //        w.Vitals.Mana = Attributes.Mana.Convert(AbilityId.Mana);
-        //    }
-
-        //    Body?.BodyParts?.ForEach(bp =>
-        //    {
-        //        var part = new Shared.BodyPart()
-        //        {
-        //            BodyHeight = bp.BodyPart.BH,
-        //            BodyPartType = (BodyPartType)bp.Key,
-        //            Damage = bp.BodyPart.DVal,
-        //            DamageType = (DamageType)bp.BodyPart.DType,
-        //            DamageVariance = bp.BodyPart.DVar
-        //        };
-
-        //        if (bp.BodyPart.ArmorValues != null)
-        //        {
-        //            part.ArmorValues.Base = bp.BodyPart.ArmorValues.BaseArmor;
-        //            part.ArmorValues.Acid = bp.BodyPart.ArmorValues.ArmorVsAcid;
-        //            part.ArmorValues.Bludgeon = bp.BodyPart.ArmorValues.ArmorVsBludgeon;
-        //            part.ArmorValues.Cold = bp.BodyPart.ArmorValues.ArmorVsCold;
-        //            part.ArmorValues.Electric = bp.BodyPart.ArmorValues.ArmorVsElectric;
-        //            part.ArmorValues.Fire = bp.BodyPart.ArmorValues.ArmorVsFire;
-        //            part.ArmorValues.Nether = bp.BodyPart.ArmorValues.ArmorVsNether;
-        //            part.ArmorValues.Pierce = bp.BodyPart.ArmorValues.ArmorVsPierce;
-        //            part.ArmorValues.Slash = bp.BodyPart.ArmorValues.ArmorVsSlash;
-        //        }
-
-        //        if (bp.BodyPart.SD != null)
-        //        {
-        //            part.TargetingData.HighLeftBack = bp.BodyPart.SD.HLB;
-        //            part.TargetingData.HighLeftFront = bp.BodyPart.SD.HLF;
-        //            part.TargetingData.HighRightBack = bp.BodyPart.SD.HRB;
-        //            part.TargetingData.HighRightFront = bp.BodyPart.SD.HRF;
-        //            part.TargetingData.LowLeftBack = bp.BodyPart.SD.LLB;
-        //            part.TargetingData.LowLeftFront = bp.BodyPart.SD.LLF;
-        //            part.TargetingData.LowRightBack = bp.BodyPart.SD.LRB;
-        //            part.TargetingData.LowRightFront = bp.BodyPart.SD.LRF;
-        //            part.TargetingData.MidLeftBack = bp.BodyPart.SD.MLB;
-        //            part.TargetingData.MidLeftFront = bp.BodyPart.SD.MLF;
-        //            part.TargetingData.MidRightBack = bp.BodyPart.SD.MRB;
-        //            part.TargetingData.MidRightFront = bp.BodyPart.SD.MRF;
-        //        }
-
-        //        w.BodyParts.Add(part);
-        //    });
-
-        //    return w;
-        //}
-
-        public static Weenie ConvertFromWeenie(DerethForever.Weenie dfWeenie)
+        
+        public static Weenie ConvertFromWeenie(DerethForever.Weenie df)
         {
-            Weenie pwn = new Weenie
+            Weenie gdle = new Weenie
             {
-                WeenieId = dfWeenie.WeenieClassId,
-                WeenieTypeId = dfWeenie.IntProperties.First(i => i.IntPropertyId == (int)IntPropertyId.WeenieType).Value
-                .Value
+                WeenieId = df.WeenieClassId,
+                WeenieTypeId = df.IntProperties.First(i => i.IntPropertyId == (int)IntPropertyId.WeenieType).Value
+                .Value,
+                IsDone = df.IsDone,
+                Comments = df.Comments,
+                UserChangeSummary = df.UserChangeSummary,
+                Changelog = df.Changelog.ToList(), // force a copy
+                ModifiedBy = df.ModifiedBy,
+                LastModified = df.LastModified
             };
 
-            if (dfWeenie.IntProperties?.Count > 0)
-                pwn.IntStats = new List<IntStat>();
+            if (df.IntProperties?.Count > 0)
+                gdle.IntStats = new List<IntStat>();
 
-            dfWeenie.IntProperties?.Where(ip => ip.Value != null).ToList().ForEach(ip =>
+            df.IntProperties?.Where(ip => ip.Value != null).ToList().ForEach(ip =>
             {
-                pwn.IntStats.Add(new IntStat()
+                gdle.IntStats.Add(new IntStat()
                 {
                     Key = ip.IntPropertyId,
                     Value = ip.Value.Value
                 });
             });
 
-            if (dfWeenie.Int64Properties?.Count > 0)
-                pwn.Int64Stats = new List<Int64Stat>();
+            if (df.Int64Properties?.Count > 0)
+                gdle.Int64Stats = new List<Int64Stat>();
 
-            dfWeenie.Int64Properties?.Where(ip => ip.Value != null).ToList().ForEach(ip =>
+            df.Int64Properties?.Where(ip => ip.Value != null).ToList().ForEach(ip =>
             {
-                pwn.Int64Stats.Add(new Int64Stat()
+                gdle.Int64Stats.Add(new Int64Stat()
                 {
                     Key = ip.Int64PropertyId,
                     Value = ip.Value.Value
                 });
             });
 
-            if (dfWeenie.DoubleProperties?.Count > 0)
-                pwn.FloatStats = new List<FloatStat>();
+            if (df.DoubleProperties?.Count > 0)
+                gdle.FloatStats = new List<FloatStat>();
 
-            dfWeenie.DoubleProperties?.Where(dp => dp.Value != null).ToList().ForEach(dp =>
+            df.DoubleProperties?.Where(dp => dp.Value != null).ToList().ForEach(dp =>
             {
-                pwn.FloatStats.Add(new FloatStat()
+                gdle.FloatStats.Add(new FloatStat()
                 {
                     Key = dp.DoublePropertyId,
                     Value = (float)dp.Value.Value
                 });
             });
 
-            if (dfWeenie.BoolProperties?.Count > 0)
-                pwn.BoolStats = new List<BoolStat>();
+            if (df.BoolProperties?.Count > 0)
+                gdle.BoolStats = new List<BoolStat>();
 
-            dfWeenie.BoolProperties?.ForEach(bp =>
+            df.BoolProperties?.ForEach(bp =>
             {
-                pwn.BoolStats.Add(new BoolStat()
+                gdle.BoolStats.Add(new BoolStat()
                 {
                     Key = bp.BoolPropertyId,
                     BoolValue = bp.Value
                 });
             });
 
-            if (dfWeenie.DidProperties?.Count > 0)
-                pwn.DidStats = new List<DidStat>();
+            if (df.DidProperties?.Count > 0)
+                gdle.DidStats = new List<DidStat>();
 
-            dfWeenie.DidProperties?.Where(dp => dp.Value != null).ToList().ForEach(dp =>
+            df.DidProperties?.Where(dp => dp.Value != null).ToList().ForEach(dp =>
             {
-                pwn.DidStats.Add(new DidStat()
+                gdle.DidStats.Add(new DidStat()
                 {
                     Key = dp.DataIdPropertyId,
                     Value = dp.Value.Value
                 });
             });
 
-            if (dfWeenie.IidProperties?.Count > 0)
-                pwn.IidStats = new List<IidStat>();
+            if (df.IidProperties?.Count > 0)
+                gdle.IidStats = new List<IidStat>();
 
-            dfWeenie.IidProperties?.Where(dp => dp.Value != null).ToList().ForEach(dp =>
+            df.IidProperties?.Where(dp => dp.Value != null).ToList().ForEach(dp =>
             {
-                pwn.IidStats.Add(new IidStat()
+                gdle.IidStats.Add(new IidStat()
                 {
                     Key = dp.IidPropertyId,
                     Value = dp.Value.Value
                 });
             });
 
-            if (dfWeenie.StringProperties?.Count > 0)
-                pwn.StringStats = new List<StringStat>();
+            if (df.StringProperties?.Count > 0)
+                gdle.StringStats = new List<StringStat>();
 
-            dfWeenie.StringProperties?.ForEach(sp =>
+            df.StringProperties?.ForEach(sp =>
             {
-                pwn.StringStats.Add(new StringStat()
+                gdle.StringStats.Add(new StringStat()
                 {
                     Key = sp.StringPropertyId,
                     Value = sp.Value
                 });
             });
 
-            if (dfWeenie.BookProperties.Count > 0)
+            if (df.BookProperties.Count > 0)
             {
-                pwn.Book = new Book
+                gdle.Book = new Book
                 {
                     Pages = new List<Page>(),
 
                     MaxCharactersPerPage = 1000
                 };
 
-                dfWeenie.BookProperties.ForEach(bp =>
+                df.BookProperties.ForEach(bp =>
                 {
-                    pwn.Book.Pages.Add(new Page()
+                    gdle.Book.Pages.Add(new Page()
                     {
                         AuthorAccount = bp.AuthorAccount,
                         AuthorId = bp.AuthorId,
@@ -660,33 +381,33 @@ namespace Lifestoned.DataModel.Gdle
                         PageText = bp.PageText.Replace("\r\n", "\n").Replace("\r\n\r\n", "\n") // This is looking for both \r\n and \r\n\r\n that happen to show up when an upload is made. If the upload has \n\n it is creating \r\n\r\n so this looks for both and replaces them with \n
                     });
                 });
-                pwn.Book.MaxNumberPages = pwn.Book.Pages.Count; // Thwargle fixed the maxNumPages to count pages woo woo
+                gdle.Book.MaxNumberPages = gdle.Book.Pages.Count; // Thwargle fixed the maxNumPages to count pages woo woo
             }
 
-            if (dfWeenie.HasAbilities)
+            if (df.HasAbilities)
             {
-                pwn.Attributes = new AttributeSet
+                gdle.Attributes = new AttributeSet
                 {
-                    Strength = Attribute.Convert(dfWeenie.Abilities.Strength),
-                    Endurance = Attribute.Convert(dfWeenie.Abilities.Endurance),
-                    Coordination = Attribute.Convert(dfWeenie.Abilities.Coordination),
-                    Quickness = Attribute.Convert(dfWeenie.Abilities.Quickness),
-                    Focus = Attribute.Convert(dfWeenie.Abilities.Focus),
-                    Self = Attribute.Convert(dfWeenie.Abilities.Self),
+                    Strength = Attribute.Convert(df.Abilities.Strength),
+                    Endurance = Attribute.Convert(df.Abilities.Endurance),
+                    Coordination = Attribute.Convert(df.Abilities.Coordination),
+                    Quickness = Attribute.Convert(df.Abilities.Quickness),
+                    Focus = Attribute.Convert(df.Abilities.Focus),
+                    Self = Attribute.Convert(df.Abilities.Self),
 
-                    Health = Vital.Convert(dfWeenie.Vitals.Health),
-                    Stamina = Vital.Convert(dfWeenie.Vitals.Stamina),
-                    Mana = Vital.Convert(dfWeenie.Vitals.Mana)
+                    Health = Vital.Convert(df.Vitals.Health),
+                    Stamina = Vital.Convert(df.Vitals.Stamina),
+                    Mana = Vital.Convert(df.Vitals.Mana)
                 };
 
 
-                if (dfWeenie.Skills?.Count > 0)
-                    pwn.Skills = new List<SkillListing>();
+                if (df.Skills?.Count > 0)
+                    gdle.Skills = new List<SkillListing>();
 
                 // also applies to skills
-                dfWeenie.Skills.ForEach(s =>
+                df.Skills.ForEach(s =>
                 {
-                    pwn.Skills.Add(new SkillListing()
+                    gdle.Skills.Add(new SkillListing()
                     {
                         SkillId = s.SkillId,
                         Skill = new Skill()
@@ -702,12 +423,12 @@ namespace Lifestoned.DataModel.Gdle
                 });
             }
 
-            if (dfWeenie.Positions?.Count > 0)
-                pwn.Positions = new List<PositionListing>();
+            if (df.Positions?.Count > 0)
+                gdle.Positions = new List<PositionListing>();
 
-            dfWeenie.Positions?.ForEach(p =>
+            df.Positions?.ForEach(p =>
             {
-                pwn.Positions.Add(new PositionListing()
+                gdle.Positions.Add(new PositionListing()
                 {
                     PositionType = p.PositionType,
                     Position = new Position()
@@ -733,24 +454,24 @@ namespace Lifestoned.DataModel.Gdle
                 });
             });
 
-            if (dfWeenie.Spells?.Count > 0)
-                pwn.Spells = new List<SpellbookEntry>();
+            if (df.Spells?.Count > 0)
+                gdle.Spells = new List<SpellbookEntry>();
 
-            dfWeenie.Spells?.ForEach(s =>
+            df.Spells?.ForEach(s =>
             {
-                pwn.Spells.Add(new SpellbookEntry()
+                gdle.Spells.Add(new SpellbookEntry()
                 {
                     SpellId = s.SpellId,
                     Stats = new SpellCastingStats() { CastingChance = s.Probability }
                 });
             });
 
-            if (dfWeenie.CreateList?.Count > 0)
-                pwn.CreateList = new List<CreateItem>();
+            if (df.CreateList?.Count > 0)
+                gdle.CreateList = new List<CreateItem>();
 
-            dfWeenie.CreateList?.ForEach(cl =>
+            df.CreateList?.ForEach(cl =>
             {
-                pwn.CreateList.Add(new CreateItem()
+                gdle.CreateList.Add(new CreateItem()
                 {
                     Destination = cl.Destination,
                     Palette = cl.Palette,
@@ -761,10 +482,10 @@ namespace Lifestoned.DataModel.Gdle
                 });
             });
 
-            if (dfWeenie.GeneratorTable?.Count > 0)
-                pwn.GeneratorTable = new List<GeneratorTable>();
+            if (df.GeneratorTable?.Count > 0)
+                gdle.GeneratorTable = new List<GeneratorTable>();
 
-            dfWeenie.GeneratorTable?.ForEach(gt =>
+            df.GeneratorTable?.ForEach(gt =>
             {
                 GeneratorTable ngt = new GeneratorTable()
                 {
@@ -796,24 +517,24 @@ namespace Lifestoned.DataModel.Gdle
                 ngt.Frame.Position.Y = gt.Frame.Origin.Y;
                 ngt.Frame.Position.X = gt.Frame.Origin.X;
 
-                pwn.GeneratorTable.Add(ngt);
+                gdle.GeneratorTable.Add(ngt);
             });
 
-            if (dfWeenie.EmoteTable?.Count > 0)
+            if (df.EmoteTable?.Count > 0)
             {
-                pwn.EmoteTable = new List<EmoteCategoryListing>();
+                gdle.EmoteTable = new List<EmoteCategoryListing>();
 
-                foreach (var es in dfWeenie.EmoteTable)
+                foreach (var es in df.EmoteTable)
                 {
-                    if (!pwn.EmoteTable.Any(et => et.EmoteCategoryId == (int)es.EmoteCategoryId))
-                        pwn.EmoteTable.Add(new EmoteCategoryListing()
+                    if (!gdle.EmoteTable.Any(et => et.EmoteCategoryId == (int)es.EmoteCategoryId))
+                        gdle.EmoteTable.Add(new EmoteCategoryListing()
                         {
                             EmoteCategoryId = (int)es.EmoteCategoryId,
                             Emotes = new List<Emote>()
                         });
 
                     EmoteCategoryListing ecl =
-                        pwn.EmoteTable.First(et => et.EmoteCategoryId == (int)es.EmoteCategoryId);
+                        gdle.EmoteTable.First(et => et.EmoteCategoryId == (int)es.EmoteCategoryId);
 
                     var pwnEmote = new Emote()
                     {
@@ -913,17 +634,17 @@ namespace Lifestoned.DataModel.Gdle
                 }
             }
 
-            if (dfWeenie.BodyParts?.Count > 0)
+            if (df.BodyParts?.Count > 0)
             {
-                pwn.Body = new Body
+                gdle.Body = new Body
                 {
                     BodyParts = new List<BodyPartListing>()
                 };
             }
 
-            dfWeenie.BodyParts?.ForEach(bp =>
+            df.BodyParts?.ForEach(bp =>
             {
-                pwn.Body.BodyParts.Add(new BodyPartListing()
+                gdle.Body.BodyParts.Add(new BodyPartListing()
                 {
                     Key = (int)bp.BodyPartType,
                     BodyPart = new BodyPart()
@@ -962,7 +683,7 @@ namespace Lifestoned.DataModel.Gdle
                     }
                 });
             });
-            return pwn;
+            return gdle;
         }
 
         public class PropertyCopier<TParent, TChild> where TParent : class where TChild : class

@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +53,12 @@
     <Compile Include="Account\RegisterModel.cs" />
     <Compile Include="Account\SubListModel.cs" />
     <Compile Include="Account\SubscriptionModel.cs" />
+    <Compile Include="Content\Content.cs" />
+    <Compile Include="Content\ContentLandblock.cs" />
+    <Compile Include="Content\ContentLink.cs" />
+    <Compile Include="Content\ContentResource.cs" />
+    <Compile Include="Content\ContentType.cs" />
+    <Compile Include="Content\ContentWeenie.cs" />
     <Compile Include="DerethForever\Ability.cs" />
     <Compile Include="DerethForever\AbilitySet.cs" />
     <Compile Include="DerethForever\Angles.cs" />
@@ -61,6 +68,9 @@
     <Compile Include="DerethForever\BookPage.cs" />
     <Compile Include="DerethForever\BoolProperty.cs" />
     <Compile Include="Gdle\IidStat.cs" />
+    <Compile Include="Recipe\IndexModel.cs" />
+    <Compile Include="Recipe\Recipe.cs" />
+    <Compile Include="Recipe\SearchRecipesCriteria.cs" />
     <Compile Include="Shared\ChangeDiscussionEntry.cs" />
     <Compile Include="Shared\ChangelogEntry.cs" />
     <Compile Include="DerethForever\Contract.cs" />
@@ -178,6 +188,10 @@
     <Compile Include="Shared\WeenieCommands.cs" />
     <Compile Include="Shared\WeenieType.cs" />
     <Compile Include="Shared\WieldRequirements.cs" />
+    <Compile Include="WorldRelease\IndexModel.cs" />
+    <Compile Include="WorldRelease\ReleaseType.cs" />
+    <Compile Include="WorldRelease\Version.cs" />
+    <Compile Include="WorldRelease\WorldRelease.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
