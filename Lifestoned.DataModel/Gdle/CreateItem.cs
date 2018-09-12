@@ -18,6 +18,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -35,6 +36,13 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("destination")]
         public uint? Destination { get; set; }
+
+        [JsonIgnore]
+        public Destination? Destination_Binder
+        {
+            get { return (Destination?)Destination; }
+            set { Destination = (uint?)value; }
+        }
 
         [JsonProperty("stack_size")]
         public int? StackSize { get; set; }

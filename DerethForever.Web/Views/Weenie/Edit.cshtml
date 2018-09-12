@@ -1,4 +1,5 @@
-@using DerethForever.Web.Models.Weenie;
+@using Lifestoned.DataModel.Gdle;
+@using Lifestoned.DataModel.Shared
 @model Weenie
 
 @{
@@ -34,11 +35,8 @@
         <div class="container">
 
             @Html.HiddenFor(m => m.WeenieClassId)
-            @Html.HiddenFor(m => m.DataObjectId)
             @Html.HiddenFor(m => m.MvcAction)
             @Html.HiddenFor(m => m.PropertyTab)
-            @Html.HiddenFor(m => m.EmoteSetGuid)
-            @Html.HiddenFor(m => m.EmoteGuid)
             @Html.DisplayFor(m => m, "InfoMessages")
 
             <div class="well">
@@ -59,18 +57,18 @@
                 <h3>Properties</h3>
 
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#stringProperties">Strings <span class="badge">@Model.StringProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#int32Properties">Int32 <span class="badge">@Model.IntProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#int64Properties">Int64 <span class="badge">@Model.Int64Properties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#dblProperties">Double <span class="badge">@Model.DoubleProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#didProperties">Data IDs <span class="badge">@Model.DidProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#iidProperties">Instance IDs <span class="badge">@Model.IidProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#boolProperties">Bool <span class="badge">@Model.BoolProperties.Count()</span></a></li>
+                    <li class="active"><a data-toggle="tab" href="#stringProperties">Strings <span class="badge">@Model.StringStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#int32Properties">Int32 <span class="badge">@Model.IntStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#int64Properties">Int64 <span class="badge">@Model.Int64Stats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#dblProperties">Double <span class="badge">@Model.FloatStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#didProperties">Data IDs <span class="badge">@Model.DidStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#iidProperties">Instance IDs <span class="badge">@Model.IidStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#boolProperties">Bool <span class="badge">@Model.BoolStats.Count()</span></a></li>
                 </ul>
 
                 <div class="tab-content">
                     <div id="stringProperties" class="tab-pane fade in active">
-                        @Html.EditorFor(m => m.StringProperties, "StringPropertyList")
+                        @Html.EditorFor(m => m.StringStats, "StringPropertyList")
 
                         <hr id="newStringRowMarker" />
                         <div class="row row-spacer">
@@ -89,7 +87,7 @@
                     </div>
 
                     <div id="int32Properties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.IntProperties, "IntPropertyList")
+                        @Html.EditorFor(m => m.IntStats, "IntPropertyList")
                         <hr id="newIntRowMarker" />
                         <div class="row row-spacer">
                             <div class="col-md-3">
@@ -107,7 +105,7 @@
                     </div>
 
                     <div id="int64Properties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.Int64Properties, "Int64PropertyList")
+                        @Html.EditorFor(m => m.Int64Stats, "Int64PropertyList")
 
                         <hr id="newInt64RowMarker" />
                         <div class="row row-spacer">
@@ -125,7 +123,7 @@
                         </div>
                     </div>
                     <div id="dblProperties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.DoubleProperties, "DoublePropertyList")
+                        @Html.EditorFor(m => m.FloatStats, "DoublePropertyList")
 
                         <hr id="newDoubleRowMarker" />
                         <div class="row row-spacer">
@@ -143,7 +141,7 @@
                         </div>
                     </div>
                     <div id="didProperties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.DidProperties, "DataIdPropertyList")
+                        @Html.EditorFor(m => m.DidStats, "DataIdPropertyList")
 
                         <hr id="newDidRowMarker" />
                         <div class="row row-spacer">
@@ -161,7 +159,7 @@
                         </div>
                     </div>
                     <div id="iidProperties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.IidProperties, "InstanceIdPropertyList")
+                        @Html.EditorFor(m => m.IidStats, "InstanceIdPropertyList")
 
                         <hr id="newIidRowMarker" />
                         <div class="row row-spacer">
@@ -179,7 +177,7 @@
                         </div>
                     </div>
                     <div id="boolProperties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.BoolProperties, "BoolPropertyList")
+                        @Html.EditorFor(m => m.BoolStats, "BoolPropertyList")
 
                         <hr id="newBoolRowMarker" />
                         <div class="row row-spacer">
@@ -221,8 +219,7 @@
             @if (Model.HasAbilities)
             {
                 <div class="well">
-                    @Html.EditorFor(m => m.Abilities, "AbilityList")
-                    @Html.EditorFor(m => m.Vitals, "VitalList")
+                    @Html.EditorFor(m => m.Attributes, "AbilityList")
                 </div>
 
                 <div class="well">
@@ -258,7 +255,7 @@
             @if (Model.HasBodyPartList)
             {
                 <div class="well">
-                    @Html.EditorFor(m => m.BodyParts, "BodyPartList")
+                    @Html.EditorFor(m => m.Body, "BodyPartList")
 
                     <div class="row row-spacer">
                         <div class="col-md-3">
@@ -307,7 +304,7 @@
             </div>
 
             <div class="well">
-                @Html.EditorFor(m => m.BookProperties, "BookPages")
+                @Html.EditorFor(m => m.Book, "BookPages")
 
                 <hr id="newBookPageRowMarker" />
                 <div class="row row-spacer">

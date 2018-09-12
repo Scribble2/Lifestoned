@@ -17,6 +17,8 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
+
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -31,6 +33,13 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("dtype")]
         public int DType { get; set; }
+
+        [JsonIgnore]
+        public DamageType DamageType_Binder
+        {
+            get { return (DamageType)DType; }
+            set { DType = (int)value; }
+        }
 
         [JsonProperty("dval")]
         public int DVal { get; set; }

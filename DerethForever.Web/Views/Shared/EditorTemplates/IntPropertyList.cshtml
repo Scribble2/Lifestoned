@@ -1,5 +1,6 @@
-@using DerethForever.Web.Models.Enums
-@model List<DerethForever.Web.Models.Shared.IntProperty>
+@using Lifestoned.DataModel.Gdle;
+@using Lifestoned.DataModel.Shared;
+@model List<IntStat>
 
 <!--
 TODO for Int Property Editing
@@ -14,11 +15,11 @@ TODO for Int Property Editing
     <div class="row row-spacer">
         <div class="vcenter col-md-3">
             @Html.DisplayFor(m => m[i].PropertyIdBinder)
-            @Html.HiddenFor(m => m[i].IntPropertyId)
+            @Html.HiddenFor(m => m[i].Key)
             @Html.HiddenFor(m => m[i].Deleted)
         </div>
         <div class="vcenter col-md-4">
-            @switch (Model[i].IntPropertyId)
+            @switch (Model[i].Key)
             {
                 case (int)IntPropertyId.ItemType:
                     @Html.EnumDropDownListFor(m => m[i].ItemTypeBoundValue, new { @class = "form-control" })

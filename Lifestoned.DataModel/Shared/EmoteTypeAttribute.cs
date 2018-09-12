@@ -21,12 +21,13 @@ using System;
 using System.Collections.Generic;
 using Lifestoned.DataModel.Shared;
 
-namespace Lifestoned.DataModel.DerethForever
+namespace Lifestoned.DataModel.Shared
 {
     /// <summary>
     /// allows for attribute decoration of properties on the Emote class to control
     /// which properties are applicable.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class EmoteTypeAttribute : Attribute
     {
         public EmoteTypeAttribute() : base()

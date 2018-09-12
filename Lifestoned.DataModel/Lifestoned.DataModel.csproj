@@ -79,9 +79,9 @@
     <Compile Include="DerethForever\DoubleProperty.cs" />
     <Compile Include="DerethForever\DownloadChangeModel.cs" />
     <Compile Include="DerethForever\Emote.cs" />
-    <Compile Include="DerethForever\EmoteCategoryAttribute.cs" />
+    <Compile Include="Shared\EmoteCategoryAttribute.cs" />
     <Compile Include="DerethForever\EmoteSet.cs" />
-    <Compile Include="DerethForever\EmoteTypeAttribute.cs" />
+    <Compile Include="Shared\EmoteTypeAttribute.cs" />
     <Compile Include="DerethForever\Frame.cs" />
     <Compile Include="DerethForever\GeneratorTable.cs" />
     <Compile Include="Gdle\ArmorValues.cs" />
@@ -184,7 +184,7 @@
     <Compile Include="Shared\Usable.cs" />
     <Compile Include="Shared\ValidLocations.cs" />
     <Compile Include="Shared\WealthRating.cs" />
-    <Compile Include="Shared\Weapon Type.cs" />
+    <Compile Include="Shared\WeaponType.cs" />
     <Compile Include="Shared\WeenieCommands.cs" />
     <Compile Include="Shared\WeenieType.cs" />
     <Compile Include="Shared\WieldRequirements.cs" />

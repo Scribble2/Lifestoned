@@ -1,113 +1,284 @@
-/*****************************************************************************************
-Copyright 2018 Dereth Forever
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this
-software and associated documentation files (the "Software"), to deal in the Software
-without restriction, including without limitation the rights to use, copy, modify, merge,
-publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
-to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or
-substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-*****************************************************************************************/
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
 {
     public class EmoteAction
     {
+        /// <summary>
+        /// used by all emote actions
+        /// </summary>
         [JsonProperty("type")]
         public uint EmoteActionType { get; set; }
 
+        /// <summary>
+        /// used by all emote actions
+        /// </summary>
         [JsonProperty("delay")]
         public float? Delay { get; set; }
 
+        /// <summary>
+        /// used by all emote actions
+        /// </summary>
         [JsonProperty("extent")]
         public float? Extent { get; set; }
 
-        [JsonProperty("amount")]
+        [JsonProperty("amount", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.DecrementQuest)]
+        [EmoteType(EmoteType.IncrementQuest)]
+        [EmoteType(EmoteType.SetQuestCompletions)]
+        [EmoteType(EmoteType.DecrementMyQuest)]
+        [EmoteType(EmoteType.IncrementMyQuest)]
+        [EmoteType(EmoteType.SetMyQuestCompletions)]
+        [EmoteType(EmoteType.InqPackSpace)]
+        [EmoteType(EmoteType.InqQuestBitsOn)]
+        [EmoteType(EmoteType.InqQuestBitsOff)]
+        [EmoteType(EmoteType.InqMyQuestBitsOn)]
+        [EmoteType(EmoteType.InqMyQuestBitsOff)]
+        [EmoteType(EmoteType.SetQuestBitsOn)]
+        [EmoteType(EmoteType.SetQuestBitsOff)]
+        [EmoteType(EmoteType.SetMyQuestBitsOn)]
+        [EmoteType(EmoteType.SetMyQuestBitsOff)]
+        [EmoteType(EmoteType.SetIntStat)]
+        [EmoteType(EmoteType.IncrementIntStat)]
+        [EmoteType(EmoteType.DecrementIntStat)]
+        [EmoteType(EmoteType.SetBoolStat)]
+        [EmoteType(EmoteType.AddCharacterTitle)]
+        [EmoteType(EmoteType.AwardTrainingCredits)]
+        [EmoteType(EmoteType.InflictVitaePenalty)]
+        [EmoteType(EmoteType.RemoveVitaePenalty)]
+        [EmoteType(EmoteType.AddContract)]
+        [EmoteType(EmoteType.RemoveContract)]
+        [EmoteType(EmoteType.AwardSkillXP)]
+        [EmoteType(EmoteType.AwardSkillPoints)]
+        [EmoteType(EmoteType.SetAltRacialSkills)]
         public uint? Amount { get; set; }
 
-        [JsonProperty("motion")]
+        [JsonProperty("motion", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.Motion)]
+        [EmoteType(EmoteType.ForceMotion)]
         public int? Motion { get; set; }
 
         [JsonProperty("msg", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.Act)]
+        [EmoteType(EmoteType.Say)]
+        [EmoteType(EmoteType.Tell)]
+        [EmoteType(EmoteType.TextDirect)]
+        [EmoteType(EmoteType.WorldBroadcast)]
+        [EmoteType(EmoteType.LocalBroadcast)]
+        [EmoteType(EmoteType.DirectBroadcast)]
+        [EmoteType(EmoteType.UpdateQuest)]
+        [EmoteType(EmoteType.InqQuest)]
+        [EmoteType(EmoteType.StampQuest)]
+        [EmoteType(EmoteType.StartEvent)]
+        [EmoteType(EmoteType.StopEvent)]
+        [EmoteType(EmoteType.BLog)]
+        [EmoteType(EmoteType.AdminSpam)]
+        [EmoteType(EmoteType.EraseQuest)]
+        [EmoteType(EmoteType.DecrementQuest)]
+        [EmoteType(EmoteType.IncrementQuest)]
+        [EmoteType(EmoteType.SetQuestCompletions)]
+        [EmoteType(EmoteType.InqEvent)]
+        [EmoteType(EmoteType.InqFellowQuest)]
+        [EmoteType(EmoteType.UpdateFellowQuest)]
+        [EmoteType(EmoteType.StampFellowQuest)]
+        [EmoteType(EmoteType.TellFellow)]
+        [EmoteType(EmoteType.FellowBroadcast)]
+        [EmoteType(EmoteType.Goto)]
+        [EmoteType(EmoteType.PopUp)]
+        [EmoteType(EmoteType.InqNumCharacterTitles)]
+        [EmoteType(EmoteType.UpdateMyQuest)]
+        [EmoteType(EmoteType.InqMyQuest)]
+        [EmoteType(EmoteType.StampMyQuest)]
+        [EmoteType(EmoteType.EraseMyQuest)]
+        [EmoteType(EmoteType.DecrementMyQuest)]
+        [EmoteType(EmoteType.IncrementMyQuest)]
+        [EmoteType(EmoteType.SetMyQuestCompletions)]
+        [EmoteType(EmoteType.LocalSignal)]
+        [EmoteType(EmoteType.InqPackSpace)]
+        [EmoteType(EmoteType.InqQuestBitsOn)]
+        [EmoteType(EmoteType.InqQuestBitsOff)]
+        [EmoteType(EmoteType.InqMyQuestBitsOn)]
+        [EmoteType(EmoteType.InqMyQuestBitsOff)]
+        [EmoteType(EmoteType.SetQuestBitsOn)]
+        [EmoteType(EmoteType.SetQuestBitsOff)]
+        [EmoteType(EmoteType.SetMyQuestBitsOn)]
+        [EmoteType(EmoteType.SetMyQuestBitsOff)]
+        [EmoteType(EmoteType.InqContractsFull)]
+        [EmoteType(EmoteType.InqQuestSolves)]
+        [EmoteType(EmoteType.InqFellowNum)]
+        [EmoteType(EmoteType.InqNumCharacterTitles)]
+        [EmoteType(EmoteType.InqMyQuestSolves)]
+        [EmoteType(EmoteType.InqOwnsItems)]
+        [EmoteType(EmoteType.InqBoolStat)]
+        [EmoteType(EmoteType.InqSkillTrained)]
+        [EmoteType(EmoteType.InqSkillSpecialized)]
+        [EmoteType(EmoteType.InqStringStat)]
+        [EmoteType(EmoteType.InqYesNo)]
+        [EmoteType(EmoteType.InqIntStat)]
+        [EmoteType(EmoteType.InqAttributeStat)]
+        [EmoteType(EmoteType.InqRawAttributeStat)]
+        [EmoteType(EmoteType.InqSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqRawSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqSkillStat)]
+        [EmoteType(EmoteType.InqRawSkillStat)]
+        [EmoteType(EmoteType.InqInt64Stat)]
+        [EmoteType(EmoteType.InqFloatStat)]
         public string Message { get; set; }
 
-        [JsonProperty("amount64")]
+        [JsonProperty("amount64", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.AwardXP)]
+        [EmoteType(EmoteType.AwardNoShareXP)]
+        [EmoteType(EmoteType.SpendLuminance)]
+        [EmoteType(EmoteType.AwardLuminance)]
         public ulong? Amount64 { get; set; }
 
-        [JsonProperty("heroxp64")]
+        [JsonProperty("heroxp64", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.AwardXP)]
+        [EmoteType(EmoteType.AwardNoShareXP)]
         public ulong? HeroXp64 { get; set; }
 
-        [JsonProperty("cprof")]
+        [JsonProperty("cprof", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.Give)]
+        [EmoteType(EmoteType.TakeItems)]
+        [EmoteType(EmoteType.InqOwnsItems)]
         public CreateItem Item { get; set; }
 
-        [JsonProperty("min64")]
+        [JsonProperty("min64", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.InqInt64Stat)]
+        [EmoteType(EmoteType.AwardLevelProportionalXP)]
         public long? Minimum64 { get; set; }
 
-        [JsonProperty("max64")]
+        [JsonProperty("max64", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.InqInt64Stat)]
+        [EmoteType(EmoteType.AwardLevelProportionalXP)]
         public long? Maximum64 { get; set; }
 
-        [JsonProperty("percent")]
+        [JsonProperty("percent", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.SetFloatStat)]
+        [EmoteType(EmoteType.AwardLevelProportionalXP)]
+        [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
         public float? Percent { get; set; }
 
-        [JsonProperty("display")]
+        [JsonProperty("display", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
         public byte? Display_Binder { get; set; }
 
+        [JsonIgnore]
         public bool? Display
         {
             get { return (Display_Binder == null) ? (bool?)null : (Display_Binder.Value == 0 ? true : false); }
             set { Display_Binder = (value == null) ? (byte?)null : (value.Value ? (byte)0 : (byte)1); }
         }
 
-        [JsonProperty("max")]
+        [JsonProperty("max", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.InqQuestSolves)]
+        [EmoteType(EmoteType.InqFellowNum)]
+        [EmoteType(EmoteType.InqNumCharacterTitles)]
+        [EmoteType(EmoteType.InqMyQuestSolves)]
+        [EmoteType(EmoteType.InqIntStat)]
+        [EmoteType(EmoteType.InqAttributeStat)]
+        [EmoteType(EmoteType.InqRawAttributeStat)]
+        [EmoteType(EmoteType.InqSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqRawSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqSkillStat)]
+        [EmoteType(EmoteType.InqRawSkillStat)]
+        [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
         public uint? Max { get; set; }
 
-        [JsonProperty("min")]
+        [JsonProperty("min", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.InqQuestSolves)]
+        [EmoteType(EmoteType.InqFellowNum)]
+        [EmoteType(EmoteType.InqNumCharacterTitles)]
+        [EmoteType(EmoteType.InqMyQuestSolves)]
+        [EmoteType(EmoteType.InqIntStat)]
+        [EmoteType(EmoteType.InqAttributeStat)]
+        [EmoteType(EmoteType.InqRawAttributeStat)]
+        [EmoteType(EmoteType.InqSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqRawSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqSkillStat)]
+        [EmoteType(EmoteType.InqRawSkillStat)]
+        [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
         public uint? Min { get; set; }
 
-        [JsonProperty("fmax")]
+        [JsonProperty("fmax", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.InqFloatStat)]
         public float? FMax { get; set; }
 
-        [JsonProperty("fmin")]
+        [JsonProperty("fmin", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.InqFloatStat)]
         public float? FMin { get; set; }
 
-        [JsonProperty("stat")]
+        [JsonProperty("stat", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.SetIntStat)]
+        [EmoteType(EmoteType.IncrementIntStat)]
+        [EmoteType(EmoteType.DecrementIntStat)]
+        [EmoteType(EmoteType.SetBoolStat)]
+        [EmoteType(EmoteType.SetInt64Stat)]
+        [EmoteType(EmoteType.SetFloatStat)]
+        [EmoteType(EmoteType.AwardSkillXP)]
+        [EmoteType(EmoteType.AwardSkillPoints)]
+        [EmoteType(EmoteType.UntrainSkill)]
+        [EmoteType(EmoteType.InqBoolStat)]
+        [EmoteType(EmoteType.InqSkillTrained)]
+        [EmoteType(EmoteType.InqSkillSpecialized)]
+        [EmoteType(EmoteType.InqStringStat)]
+        [EmoteType(EmoteType.InqYesNo)]
+        [EmoteType(EmoteType.InqIntStat)]
+        [EmoteType(EmoteType.InqAttributeStat)]
+        [EmoteType(EmoteType.InqRawAttributeStat)]
+        [EmoteType(EmoteType.InqSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqRawSecondaryAttributeStat)]
+        [EmoteType(EmoteType.InqSkillStat)]
+        [EmoteType(EmoteType.InqRawSkillStat)]
+        [EmoteType(EmoteType.InqInt64Stat)]
+        [EmoteType(EmoteType.InqFloatStat)]
+        [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
         public uint? Stat { get; set; }
 
-        [JsonProperty("pscript")]
+        [JsonProperty("pscript", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.PhysScript)]
         public uint? PScript { get; set; }
 
-        [JsonProperty("sound")]
+        [JsonProperty("sound", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.Sound)]
         public uint? Sound { get; set; }
 
-        [JsonProperty("mPosition")]
+        [JsonProperty("mPosition", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.SetSanctuaryPosition)]
+        [EmoteType(EmoteType.TeleportTarget)]
+        [EmoteType(EmoteType.TeleportSelf)]
         public Position MPosition { get; set; }
 
-        [JsonProperty("frame")]
+        [JsonProperty("frame", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.MoveHome)]
+        [EmoteType(EmoteType.Move)]
+        [EmoteType(EmoteType.Turn)]
+        [EmoteType(EmoteType.MoveToPos)]
         public Frame Frame { get; set; }
 
-        [JsonProperty("spellid")]
+        [JsonProperty("spellid", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.CastSpell)]
+        [EmoteType(EmoteType.CastSpellInstant)]
+        [EmoteType(EmoteType.TeachSpell)]
+        [EmoteType(EmoteType.PetCastSpellOnOwner)]
         public uint? SpellId { get; set; }
 
-        [JsonProperty("teststring")]
+        [JsonProperty("teststring", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.InqStringStat)]
+        [EmoteType(EmoteType.InqYesNo)]
         public string TestString { get; set; }
 
-        [JsonProperty("wealth_rating")]
+        [JsonProperty("wealth_rating", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.CreateTreasure)]
         public uint? WealthRating { get; set; }
 
-        [JsonProperty("treasure_class")]
+        [JsonProperty("treasure_class", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.CreateTreasure)]
         public uint? TreasureClass { get; set; }
 
-        [JsonProperty("treasure_type")]
+        [JsonProperty("treasure_type", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.CreateTreasure)]
         public int? TreasureType { get; set; }
 
         [JsonIgnore]

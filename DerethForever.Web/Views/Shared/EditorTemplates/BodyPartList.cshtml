@@ -1,43 +1,45 @@
 @using System
-@using DerethForever.Web.Models.Enums
-@model List<DerethForever.Web.Models.Shared.BodyPart>
+@using Lifestoned.DataModel.Shared;
+@using Lifestoned.DataModel.Gdle;
+@model Body
 
 <h3>Body Part Listing</h3>
 
-@for (int i = 0; i < (Model?.Count ?? 0); i++)
+@for (int i = 0; i < (Model?.BodyParts?.Count ?? 0); i++)
 {
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#bodyPart@(Html.Raw(i))">@Html.Raw("Show/Hide " + Enum.GetName(typeof(BodyPartType), Model[i].BodyPartType))</a>
+                    <a data-toggle="collapse" href="#bodyPart@(Html.Raw(i))">@Html.Raw("Show/Hide " + Enum.GetName(typeof(BodyPartType), Model.BodyParts[i].Key))</a>
                     <input type="button" class="btn btn-xs btn-danger pull-right" name="removeBodyPart" value="Remove" />
-                    @Html.HiddenFor(m => m[i].Deleted)
+                    @Html.HiddenFor(m => m.BodyParts[i].Deleted)
+                    @Html.HiddenFor(m => m.BodyParts[i].Key)
                 </h4>
             </div>
             <div id="bodyPart@(Html.Raw(i))" class="panel-collapse collapse">
                 <div class="panel-body">
                     <div class="row row-spacer">
                         <div class="col-md-2 vcenter">@Html.Label("Body Part")</div>
-                        <div class="col-md-2 vcenter">@Html.EnumDropDownListFor(m => m[i].BodyPartType)</div>
+                        <div class="col-md-2 vcenter">@Html.EnumDropDownListFor(m => m.BodyParts[i].Key)</div>
                         <div class="col-md-6 vcenter"></div>
                         <div class="col-md-2 vcenter">
                         </div>
                     </div>
                     <div class="row row-spacer">
                         <div class="col-md-2 vcenter">@Html.Label("Damage")</div>
-                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].Damage, new {@class = "form-control"})</div>
+                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.BodyParts[i].BodyPart.DVal, new {@class = "form-control"})</div>
                         <div class="col-md-1 vcenter">@Html.Label("Variance")</div>
-                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].DamageVariance, new {@class = "form-control"})</div>
+                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.BodyParts[i].BodyPart.DVar, new {@class = "form-control"})</div>
                         <div class="col-md-1 vcenter">@Html.Label("Height")</div>
-                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].BodyHeight, new {@class = "form-control"})</div>
+                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.BodyParts[i].BodyPart.BH, new {@class = "form-control"})</div>
                     </div>
                     <div class="row row-spacer">
                         <div class="col-md-2">
                             @Html.Label("Damage Type")
                         </div>
                         <div class="col-md-8">
-                            @Html.EditorFor(m => m[i].DamageType, "FlagsEnum")
+                            @Html.EditorFor(m => m.BodyParts[i].BodyPart.DamageType_Binder, "FlagsEnum")
                         </div>
                     </div>
                     <div class="row row-spacer">
@@ -51,19 +53,19 @@
                                 Base Armor
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].ArmorValues.Base, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.ArmorValues.BaseArmor, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Acid
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].ArmorValues.Acid, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.ArmorValues.ArmorVsAcid, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Electric
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].ArmorValues.Electric, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.ArmorValues.ArmorVsElectric, new {@class = "form-control"})
                             </div>
                         </div>
 
@@ -72,19 +74,19 @@
                                 Fire
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].ArmorValues.Fire, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.ArmorValues.ArmorVsFire, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Cold
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].ArmorValues.Cold, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.ArmorValues.ArmorVsCold, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Slashing
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].ArmorValues.Slash, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.ArmorValues.ArmorVsSlash, new {@class = "form-control"})
                             </div>
                         </div>
 
@@ -93,19 +95,19 @@
                                 Piercing
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].ArmorValues.Pierce, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.ArmorValues.ArmorVsPierce, new { @class = "form-control" })
                             </div>
                             <div class="col-md-2">
                                 Bludgeoning
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].ArmorValues.Bludgeon, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.ArmorValues.ArmorVsBludgeon, new { @class = "form-control" })
                             </div>
                             <div class="col-md-2">
                                 Nether
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].ArmorValues.Nether, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.ArmorValues.ArmorVsNether, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -120,19 +122,19 @@
                                 High Left Back
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.HighLeftBack, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.HLB, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Mid Left Back
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.MidLeftBack, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.MLB, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Low Left Back
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.LowLeftBack, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.LLB, new {@class = "form-control"})
                             </div>
                         </div>
                         <div class="row">
@@ -140,19 +142,19 @@
                                 High Left Front
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.HighLeftFront, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.HLF, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Mid Left Front
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.MidLeftFront, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.MLF, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Low Left Front
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.LowLeftFront, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.LLF, new {@class = "form-control"})
                             </div>
                         </div>
                         <div class="row">
@@ -160,19 +162,19 @@
                                 High Right Back
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.HighRightBack, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.HRB, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Mid Right Back
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.MidRightBack, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.MRB, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Low Right Back
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.LowRightBack, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.LRB, new {@class = "form-control"})
                             </div>
                         </div>
                         <div class="row">
@@ -180,19 +182,19 @@
                                 High Right Front
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.HighRightFront, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.HRF, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Mid Right Front
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.MidRightFront, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.MRF, new {@class = "form-control"})
                             </div>
                             <div class="col-md-2">
                                 Low Right Front
                             </div>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(m => m[i].TargetingData.LowRightFront, new {@class = "form-control"})
+                                @Html.TextBoxFor(m => m.BodyParts[i].BodyPart.SD.LRF, new {@class = "form-control"})
                             </div>
                         </div>
                     </div>

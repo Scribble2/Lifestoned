@@ -32,6 +32,13 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("wcid")]
         public uint WeenieId { get; set; }
 
+        [JsonIgnore]
+        public uint WeenieClassId
+        {
+            get { return WeenieId; }
+            set { WeenieId = value; }
+        }
+
         [JsonProperty("weenieType")]
         public int WeenieTypeId { get; set; }
 

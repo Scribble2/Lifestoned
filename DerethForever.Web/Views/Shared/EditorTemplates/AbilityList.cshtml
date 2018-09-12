@@ -1,29 +1,46 @@
-@model DerethForever.Web.Models.Shared.AbilitySet
+@model Lifestoned.DataModel.Gdle.AttributeSet
 
 <h3>Attributes</h3>
 
 <div id="abilitiesContainer">
     <div class="row row-spacer">
         <div class="col-md-2"><strong>Ability</strong></div>
-        <div class="col-md-1"><strong>Base</strong></div>
-        <div class="col-md-2"><strong>Ranks</strong></div>
+        <div class="col-md-2"><strong>Value</strong></div>
     </div>
     <div class="row row-spacer">
-        @Html.EditorFor(m => m.Strength, "Ability")
+        <div class="col-md-2 vcenter">Strength</div>
+        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Strength, "Ability")</div>
     </div>
     <div class="row row-spacer">
-        @Html.EditorFor(m => m.Endurance, "Ability")
+        <div class="col-md-2 vcenter">Endurance</div>
+        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Endurance, "Ability")</div>
     </div>
     <div class="row row-spacer">
-        @Html.EditorFor(m => m.Coordination, "Ability")
+        <div class="col-md-2 vcenter">Coordination</div>
+        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Coordination, "Ability")</div>
     </div>
     <div class="row row-spacer">
-        @Html.EditorFor(m => m.Quickness, "Ability")
+        <div class="col-md-2 vcenter">Quickness</div>
+        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Quickness, "Ability")</div>
     </div>
     <div class="row row-spacer">
-        @Html.EditorFor(m => m.Focus, "Ability")
+        <div class="col-md-2 vcenter">Focus</div>
+        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Focus, "Ability")</div>
     </div>
     <div class="row row-spacer">
-        @Html.EditorFor(m => m.Self, "Ability")
+        <div class="col-md-2 vcenter">Self</div>
+        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Self, "Ability")</div>
+    </div>
+    <div class="row row-spacer">
+        <div class="col-md-2 vcenter">Health</div>
+        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Health, "Ability")</div>
+    </div>
+    <div class="row row-spacer">
+        <div class="col-md-2 vcenter">Stamina</div>
+        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Stamina, "Ability")</div>
+    </div>
+    <div class="row row-spacer">
+        <div class="col-md-2 vcenter">Mana</div>
+        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Mana, "Ability")</div>
     </div>
 </div>

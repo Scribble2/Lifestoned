@@ -1,6 +1,5 @@
-@using DerethForever.Web.Models.Enums
-@using DerethForever.Web.Models.Shared
-@model List<DerethForever.Web.Models.Shared.CreationProfile>
+@using Lifestoned.DataModel.Gdle;
+@model List<CreateItem>
 
 <h3>Create List</h3>
 
@@ -18,8 +17,6 @@
 {
     <div class="row row-spacer">
         <div class="col-md-2">
-            @Html.HiddenFor(m => m[i].CreationProfileGuid)
-            @Html.HiddenFor(m => m[i].OwnerId)
             @Html.HiddenFor(m => m[i].Deleted)
             @Html.TextBoxFor(m => m[i].WeenieClassId, new { @class = "form-control weenieClassEntry" })
         </div>

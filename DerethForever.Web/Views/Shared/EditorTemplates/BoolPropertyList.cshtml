@@ -1,5 +1,5 @@
-@using DerethForever.Web.Models.Enums
-@model List<DerethForever.Web.Models.Shared.BoolProperty>
+@using Lifestoned.DataModel.Gdle;
+@model List<BoolStat>
 
 <input type="hidden" id="BoolPropertyCount" value="@Model.Count()" />
 @for (int i = 0; i < Model.Count(); i++)
@@ -7,11 +7,11 @@
     <div class="row row-spacer">
         <div class="col-md-3">
             @Html.DisplayFor(m => m[i].PropertyIdBinder)
-            @Html.HiddenFor(m => m[i].BoolPropertyId)
+            @Html.HiddenFor(m => m[i].Key)
             @Html.HiddenFor(m => m[i].Deleted)
         </div>
         <div class="col-md-2">
-            @Html.CheckBoxFor(m => m[i].Value, new { @class = "form-control" })
+            @Html.CheckBoxFor(m => m[i].BoolValue, new { @class = "form-control" })
         </div>
         <div class="col-md-1">
             <input type="button" class="btn btn-xs btn-danger" name="removeProperty" value="Remove" />

@@ -20,9 +20,8 @@ DEALINGS IN THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Lifestoned.DataModel.Shared;
 
-namespace Lifestoned.DataModel.DerethForever
+namespace Lifestoned.DataModel.Shared
 {
     public class EmoteCategoryAttribute : Attribute
     {
