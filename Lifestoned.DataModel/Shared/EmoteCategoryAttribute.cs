@@ -23,6 +23,7 @@ using System.Linq;
 
 namespace Lifestoned.DataModel.Shared
 {
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class EmoteCategoryAttribute : Attribute
     {
         public EmoteCategoryAttribute() : base()

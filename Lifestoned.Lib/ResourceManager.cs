@@ -19,5 +19,9 @@ namespace Lifestoned.Lib
             return ImageBuilder.GetFullyLayeredPngIcon(itemType, underlayDid, overlayDid, iconDid, (UiEffectIcons?)uiEffects);
         }
 
+        public static byte[] GetPngImage(uint imageId)
+        {
+            return ImageBuilder.GetPngImage(imageId);
+        }
     }
 }

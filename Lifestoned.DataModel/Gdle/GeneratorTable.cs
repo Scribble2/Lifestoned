@@ -17,6 +17,8 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
+
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -61,6 +63,20 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("whereCreate")]
         public uint WhereCreate { get; set; }
+
+        [JsonIgnore]
+        public RegenerationType WhenCreateEnum
+        {
+            get { return (RegenerationType)WhenCreate; }
+            set { WhenCreate = (uint)value; }
+        }
+        
+        [JsonIgnore]
+        public RegenerationLocation WhereCreateEnum
+        {
+            get { return (RegenerationLocation)WhereCreate; }
+            set { WhereCreate = (uint)value; }
+        }
 
         [JsonIgnore]
         public bool Deleted { get; set; }

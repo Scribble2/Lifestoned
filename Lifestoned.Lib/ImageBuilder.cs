@@ -18,6 +18,12 @@ namespace Lifestoned.Lib
         private static uint itemEffectMap = 0x25000009;
         private static uint defaultBackground = 0x060011D4;
 
+        public static byte[] GetPngImage(uint imageId)
+        {
+            var underlay = PortalDatReader.Current.Unpack<RenderSurface>(imageId);
+            return underlay.GetPngByteArray();
+        }
+
         /// <summary>
         /// Returns RenderSurface for a weenieclass.
         /// </summary>

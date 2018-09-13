@@ -19,8 +19,10 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -30,6 +32,14 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("category")]
         public uint Category { get; set; }
 
+        [JsonIgnore]
+        [Display(Name = "Emote Category")]
+        public EmoteCategory EmoteCategory
+        {
+            get { return (EmoteCategory)Category; }
+            set { Category = (uint)value; }
+        }
+
         [JsonProperty("emotes")]
         public List<EmoteAction> Emotes { get; set; }
 
@@ -37,24 +47,36 @@ namespace Lifestoned.DataModel.Gdle
         public float? Probability { get; set; }
 
         [JsonProperty("vendorType")]
+        [EmoteCategory(EmoteCategory.Vendor)]
         public uint? VendorType { get; set; }
 
         [JsonProperty("quest")]
+        [EmoteCategory(EmoteCategory.QuestFailure)]
+        [EmoteCategory(EmoteCategory.QuestSuccess)]
+        [EmoteCategory(EmoteCategory.TestSuccess)]
+        [EmoteCategory(EmoteCategory.TestFailure)]
+        [EmoteCategory(EmoteCategory.GotoSet)]
         public string Quest { get; set; }
 
         [JsonProperty("classID")]
+        [EmoteCategory(EmoteCategory.Refuse)]
+        [EmoteCategory(EmoteCategory.Give)]
         public uint? ClassId { get; set; }
 
         [JsonProperty("style")]
+        [EmoteCategory(EmoteCategory.HeartBeat)]
         public uint? Style { get; set; }
 
         [JsonProperty("substyle")]
+        [EmoteCategory(EmoteCategory.HeartBeat)]
         public uint? SubStyle { get; set; }
 
         [JsonProperty("minhealth")]
+        [EmoteCategory(EmoteCategory.WoundedTaunt)]
         public float? MinHealth { get; set; }
 
         [JsonProperty("maxhealth")]
+        [EmoteCategory(EmoteCategory.WoundedTaunt)]
         public float? MaxHealth { get; set; }
 
         [JsonIgnore]
@@ -62,5 +84,21 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonIgnore]
         public bool Deleted { get; set; }
+
+        /// <summary>
+        /// checks the EmoteType attributes of the requested property to determine whether or not
+        /// it should be shown
+        /// </summary>
+        public static bool IsPropertyVisible(string propertyName, Emote emote)
+        {
+            var property = typeof(Emote).GetProperty(propertyName);
+            var attribs = property.GetCustomAttributes(typeof(EmoteCategoryAttribute), false).Cast<EmoteCategoryAttribute>().ToList();
+
+            if (attribs == null || attribs.Count < 1)
+                return true;
+
+            // because the lists are long and could get unwieldy, we'll allow for multiple on the same property
+            return attribs.Any(a => a.CategoryList.Contains(emote.EmoteCategory));
+        }
     }
 }

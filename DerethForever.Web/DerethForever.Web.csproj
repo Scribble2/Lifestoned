@@ -340,6 +340,7 @@
     <Content Include="Views\Server\CutWorldRelease.cshtml" />
     <Content Include="Views\Shared\WeenieList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Weenie.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmoteTable.cshtml" />
     <None Include="Web.example.config">
       <SubType>Designer</SubType>
     </None>

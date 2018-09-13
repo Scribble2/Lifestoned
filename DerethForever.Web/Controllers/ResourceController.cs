@@ -50,6 +50,26 @@ namespace DerethForever.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetImage(uint imageId)
+        {
+            byte[] src = new byte[] { };
+
+            if (imageId > 0)
+            {
+                try
+                {
+                    src = Lifestoned.Lib.ResourceManager.GetPngImage(imageId);
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                }
+            }
+
+            return File(src, "image/png");
+        }
+
+        [HttpGet]
         public ActionResult GetCurrentWorldRelease()
         {
             byte[] src = new byte[] { };

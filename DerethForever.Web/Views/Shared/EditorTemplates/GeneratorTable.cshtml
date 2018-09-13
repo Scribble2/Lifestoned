@@ -1,4 +1,4 @@
-@model List<DerethForever.Web.Models.Shared.GeneratorTable>
+@model List<Lifestoned.DataModel.Gdle.GeneratorTable>
 
 <h3>Generator Table</h3>
 
@@ -65,13 +65,13 @@
                     </div>
                     <div class="row row-spacer">
                         <div class="col-md-2"></div>
-                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Origin.X, new { style = "width: 90px;" })</div>
-                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Origin.Y, new { style = "width: 90px;" })</div>
-                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Origin.Z, new { style = "width: 90px;" })</div>
-                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Angles.W, new { style = "width: 90px;" })</div>
-                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Angles.X, new { style = "width: 90px;" })</div>
-                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Angles.Y, new { style = "width: 90px;" })</div>
-                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Angles.Z, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Position.X, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Position.Y, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Position.Z, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Rotations.W, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Rotations.X, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Rotations.Y, new { style = "width: 90px;" })</div>
+                        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Frame.Rotations.Z, new { style = "width: 90px;" })</div>
                         <div class="col-md-3"></div>
                     </div>
                 </div>

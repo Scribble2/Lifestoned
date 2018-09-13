@@ -1,0 +1,166 @@
+﻿@using Lifestoned.DataModel.Shared
+@using Lifestoned.DataModel.Gdle
+@model List<EmoteCategoryListing>
+
+
+<h3>Emote Table</h3>
+
+@foreach (EmoteCategory category in Enum.GetValues(typeof(EmoteCategory)))
+{
+    // emotes sets are logically grouped by Category, ordered by Sort Order
+    var emoteSets = Model.Where(ecl => ecl.EmoteCategoryId == (uint)category).OrderBy(ecl => ecl.EmoteCategoryId).ToList();
+
+    if (emoteSets?.Count < 1)
+    {
+        continue;
+    }
+
+    <div class="row row-spacer">
+        <div class="col-md-12">
+            <h4>@Html.Label("Emotes for Category: " + category.GetName())</h4>
+        </div>
+    </div>
+    int panelId = 0;
+    string panelIdString = "";
+
+    // should be only 1 ECL for a given category
+    var categoryListing = emoteSets.FirstOrDefault();
+    int categoryIndex = Model.IndexOf(categoryListing);
+    
+    Html.HiddenFor(m => m[categoryIndex].EmoteCategoryId);
+
+    for (int i = 0; i < categoryListing?.Emotes?.Count; i++)
+    {
+
+        <div>
+            <div class="row row-spacer">
+                <div class="col-md-3">
+                    @Html.HiddenFor(m => m[categoryIndex].Emotes[i].Category)
+                    @Html.HiddenFor(m => m[i].Deleted)
+                </div>
+                <div class="col-md-3">
+                    
+                </div>
+                <div class="col-md-3">
+                    <input type="button" class="btn btn-xs btn-danger" name="removeEmoteSet" value="Remove Emote" />
+                </div>
+            </div>
+
+            <div class="row row-spacer">
+                <div class="col-md-3">
+                    @Html.LabelFor(m => m[categoryIndex].Emotes[i].Probability)
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m[categoryIndex].Emotes[i].Probability, new { @class = "form-control" })
+                </div>
+            </div>
+
+            @if (Emote.IsPropertyVisible("Style", Model[categoryIndex].Emotes[i]))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].Style)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].Style, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("Quest", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].Quest)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].Quest, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("SubStyle", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].SubStyle)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].SubStyle, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("ClassId", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].ClassId)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].ClassId, new { @class = "form-control weenieClassEntry" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("MaxHealth", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].MaxHealth)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].MaxHealth, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("MinHealth", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].MinHealth)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].MinHealth, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            @if (EmoteSet.IsPropertyVisible("VendorType", Model[i].EmoteCategory))
+            {
+                <div class="row row-spacer">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m[i].VendorType)
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m[i].VendorType, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" href="#@(Html.Raw(es.EmoteSetGuid.ToString()))">@Html.Label("Emotes")</a>
+                </div>
+                <div id="@(Html.Raw(es.EmoteSetGuid.ToString()))" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        @Html.EditorFor(m => m[i].Emotes, "EmoteList")
+
+                        <div class="row row-spacer">
+                            <div class="col-md-3">
+                                @Html.Label("Add new Emote")
+                            </div>
+                            <div class="col-md-3">
+                                @Html.EnumDropDownListFor(m => m[i].NewEmoteType, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-3">
+                                <input type="button" class="btn btn-primary" id="addEmote" name="addEmote" value="Add" formaction="Edit" data-content="@(Model[i].EmoteSetGuid.Value)" formnovalidate="formnovalidate" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
