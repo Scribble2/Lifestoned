@@ -204,19 +204,6 @@
                 <div class="col-md-5"></div>
             </div>
         }
-        @if (EmoteAction.IsPropertyVisible("Frame", Model[i]))
-        {
-            <div class="row row-spacer">
-                <div class="col-md-1"></div>
-                <div class=" col-md-3">
-                    @Html.LabelFor(m => m[i].Frame)
-                </div>
-                <div class=" col-md-3">
-                    @Html.EditorFor(m => m[i].Frame, new { @class = "form-control" })
-                </div>
-                <div class="col-md-5"></div>
-            </div>
-        }
         @if (EmoteAction.IsPropertyVisible("MPosition", Model[i]))
         {
             @Html.EditorFor(m => m[i].MPosition, new { @class = "form-control" })
