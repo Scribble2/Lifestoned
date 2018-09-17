@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -35,8 +36,16 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("key")]
         public int Key { get; set; }
 
+        [JsonIgnore]
+
+        public BodyPartType BodyPartType
+        {
+            get { return (BodyPartType)Key; }
+            set { Key = (int)value; }
+        }
+
         [JsonProperty("value")]
-        public BodyPart BodyPart { get; set; }
+        public BodyPart BodyPart { get; set; } = new BodyPart();
 
         [JsonIgnore]
         public bool Deleted { get; set; }

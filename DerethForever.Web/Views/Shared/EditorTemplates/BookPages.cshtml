@@ -1,7 +1,7 @@
 @model List<Lifestoned.DataModel.Gdle.Page>
 
 <h3>Book Pages</h3>
-<input type="hidden" id="PageCount" value="@Model.Count()" />
+<input type="hidden" id="PageCount" value="@Model?.Count ?? 0" />
 
 <div class="row row-spacer">
     <div class="col-md-2"><strong>Page #</strong></div>
@@ -11,7 +11,7 @@
     <div class="col-md-2"><strong>Ignore Author</strong></div>
 </div>
 
-@for (int i = 0; i < Model.Count(); i++)
+@for (int i = 0; i < (Model?.Count ?? 0); i++)
 {
     <div class="row row-spacer">
         <div class="col-md-2">

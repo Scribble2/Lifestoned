@@ -38,7 +38,7 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("current")]
         public uint? Current { get; set; }
-
+        
         public static Vital Convert(DerethForever.Ability ability)
         {
             Vital v = new Vital();

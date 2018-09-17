@@ -148,8 +148,11 @@ namespace DerethForever.Web.Controllers
             model.IntStats = model.IntStats.OrderBy(ip => ip.Key).ToList();
             model.FloatStats = model.FloatStats.OrderBy(dp => dp.Key).ToList();
 
-            model.EmoteTable.ForEach(t => t.Emotes = t.Emotes.OrderBy(e => e.SortOrder).ToList());
-            model.EmoteTable = model.EmoteTable.OrderBy(e => e.EmoteCategoryId).ToList();
+            if (model.EmoteTable != null)
+            {
+                model.EmoteTable = model.EmoteTable.OrderBy(e => e.EmoteCategoryId).ToList();
+                model.EmoteTable.ForEach(t => t.Emotes = t.Emotes.OrderBy(e => e.SortOrder).ToList());
+            }
         }
 
         [HttpGet]

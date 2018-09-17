@@ -24,9 +24,9 @@ namespace Lifestoned.DataModel.Gdle
     public class Frame
     {
         [JsonProperty("origin")]
-        public XYZ Position { get; set; }
+        public XYZ Position { get; set; } = new XYZ();
 
         [JsonProperty("angles")]
-        public Quaternion Rotations { get; set; }
+        public Quaternion Rotations { get; set; } = new Quaternion();
     }
 }

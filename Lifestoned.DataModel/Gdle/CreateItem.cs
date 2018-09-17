@@ -51,6 +51,13 @@ namespace Lifestoned.DataModel.Gdle
         public byte? TryToBond { get; set; }
         
         [JsonIgnore]
+        public bool TryToBond_BooleanBinder
+        {
+            get { return TryToBond != 0; }
+            set { TryToBond = (byte)(value ? 1 : 0); }
+        }
+
+        [JsonIgnore]
         public bool Deleted { get; set; }
     }
 }

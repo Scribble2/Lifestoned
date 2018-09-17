@@ -46,12 +46,12 @@ namespace Lifestoned.DataModel.Gdle
         public Attribute Self { get; set; }
 
         [JsonProperty("health")]
-        public Vital Health { get; set; }
+        public Vital Health { get; set; } = new Vital();
 
         [JsonProperty("stamina")]
-        public Vital Stamina { get; set; }
+        public Vital Stamina { get; set; } = new Vital();
 
         [JsonProperty("mana")]
-        public Vital Mana { get; set; }
+        public Vital Mana { get; set; } = new Vital();
     }
 }

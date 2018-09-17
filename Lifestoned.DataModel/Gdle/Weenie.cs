@@ -122,7 +122,7 @@ namespace Lifestoned.DataModel.Gdle
         [JsonIgnore]
         public bool HasGeneratorTable
         {
-            get { return GeneratorTable.Count > 0; }
+            get { return GeneratorTable?.Count > 0; }
         }
 
         [JsonIgnore]
@@ -554,7 +554,7 @@ namespace Lifestoned.DataModel.Gdle
                         Style = es.Style,
                         SubStyle = es.SubStyle,
                         VendorType = es.VendorType,
-                        Emotes = new List<EmoteAction>()
+                        Actions = new List<EmoteAction>()
                     };
 
                     es.Emotes.ForEach(dfEmote =>
@@ -632,7 +632,7 @@ namespace Lifestoned.DataModel.Gdle
                             };
                         }
 
-                        pwnEmote.Emotes.Add(ea);
+                        pwnEmote.Actions.Add(ea);
                     });
 
                     ecl.Emotes.Add(pwnEmote);

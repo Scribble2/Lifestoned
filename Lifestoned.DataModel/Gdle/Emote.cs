@@ -41,7 +41,7 @@ namespace Lifestoned.DataModel.Gdle
         }
 
         [JsonProperty("emotes")]
-        public List<EmoteAction> Emotes { get; set; }
+        public List<EmoteAction> Actions { get; set; }
 
         [JsonProperty("probability")]
         public float? Probability { get; set; }

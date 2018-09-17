@@ -17,6 +17,9 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
+
+using System.Text.RegularExpressions;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -27,7 +30,14 @@ namespace Lifestoned.DataModel.Gdle
         public int SpellId { get; set; }
 
         [JsonProperty("value")]
-        public SpellCastingStats Stats { get; set; }
+        public SpellCastingStats Stats { get; set; } = new SpellCastingStats();
+
+        public string GetSpellDescription()
+        {
+            string spellName = ((SpellId)SpellId).ToString();
+            string split = "(" + SpellId + ") " + Regex.Replace(spellName, "([A-Z0-9])", " $1", RegexOptions.Compiled).Trim();
+            return split;
+        }
 
         [JsonIgnore]
         public bool Deleted { get; set; }

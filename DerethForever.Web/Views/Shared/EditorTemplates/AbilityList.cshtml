@@ -33,14 +33,14 @@
     </div>
     <div class="row row-spacer">
         <div class="col-md-2 vcenter">Health</div>
-        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Health, "Ability")</div>
+        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.Health.Ranks, new { @class = "form-control" })</div>
     </div>
     <div class="row row-spacer">
         <div class="col-md-2 vcenter">Stamina</div>
-        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Stamina, "Ability")</div>
+        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.Stamina.Ranks, new { @class = "form-control" })</div>
     </div>
     <div class="row row-spacer">
         <div class="col-md-2 vcenter">Mana</div>
-        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Mana, "Ability")</div>
+        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.Mana.Ranks, new { @class = "form-control" })</div>
     </div>
 </div>

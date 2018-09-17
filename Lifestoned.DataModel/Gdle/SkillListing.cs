@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -32,6 +33,12 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("value")]
         public Skill Skill { get; set; }
+
+        [JsonIgnore]
+        public string SkillName
+        {
+            get { return ((SkillId?)SkillId).GetName(); }
+        }
 
         [JsonIgnore]
         public bool Deleted { get; set; }

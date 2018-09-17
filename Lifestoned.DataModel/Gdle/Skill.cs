@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -44,5 +45,13 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("sac")]
         public int? TrainedLevel { get; set; }
+
+        [JsonIgnore]
+        public SkillStatus? Status_Binder
+        {
+            get { return (SkillStatus?)TrainedLevel; }
+            set { TrainedLevel = (int?)value; }
+        }
+
     }
 }

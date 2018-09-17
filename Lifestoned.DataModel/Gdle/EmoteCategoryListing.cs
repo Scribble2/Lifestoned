@@ -18,6 +18,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System.Collections.Generic;
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -28,7 +29,10 @@ namespace Lifestoned.DataModel.Gdle
         public int EmoteCategoryId { get; set; }
 
         [JsonProperty("value")]
-        public List<Emote> Emotes { get; set; }
+        public List<Emote> Emotes { get; set; } = new List<Emote>();
+
+        [JsonIgnore]
+        public EmoteType? NewEmoteType { get; set; }
 
         [JsonIgnore]
         public bool Deleted { get; set; }

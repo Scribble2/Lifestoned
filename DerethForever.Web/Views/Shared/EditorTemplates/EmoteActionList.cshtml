@@ -1,0 +1,383 @@
+﻿@using Lifestoned.DataModel;
+@using Lifestoned.DataModel.Gdle;
+@using Lifestoned.DataModel.Shared
+
+@model List<EmoteAction>
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    <div>
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @{ /* emotes have a wide range of fields that are visible based on type.  only a few are mandatory. */ }
+                @Html.HiddenFor(m => m[i].EmoteActionType)
+                @Html.HiddenFor(m => m[i].Deleted)
+                @Html.Label("Type: " + Model[i].EmoteActionType_Binder.GetName())
+            </div>
+            <div class="col-md-8">
+                <input type="button" class="btn btn-xs btn-danger" name="removeEmote" value="Remove" />
+            </div>
+        </div>
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Delay)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].Delay, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].Extent)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].Extent, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <div class="row row-spacer">
+            <div class="col-md-1"></div>
+            <div class=" col-md-3">
+                @Html.LabelFor(m => m[i].SortOrder)
+            </div>
+            <div class=" col-md-3">
+                @Html.TextBoxFor(m => m[i].SortOrder, new { @class = "form-control" })
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        @if (EmoteAction.IsPropertyVisible("Message", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Message)
+                </div>
+                <div class="col-md-8">
+                    @Html.TextAreaFor(m => m[i].Message, new { @class = "form-control wide" })
+                </div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Amount", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Amount)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Amount, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Amount64", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Amount64)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Amount64, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Stat", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Stat)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Stat, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Percent", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Percent)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Percent, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Min", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Min)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Min, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Max", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Max)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Max, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("HeroXp64", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].HeroXp64)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].HeroXp64, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("WealthRating", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].WealthRating)
+                </div>
+                <div class=" col-md-3">
+                    @Html.EnumDropDownListFor(m => m[i].WealthRating_Binder, new { @class = "form-control force-inline" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("TreasureClass", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].TreasureClass)
+                </div>
+                <div class=" col-md-3">
+                    @Html.EnumDropDownListFor(m => m[i].TreasureClass_Binder, new { @class = "form-control force-inline" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("TreasureType", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].TreasureType)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].TreasureType, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Motion", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Motion)
+                </div>
+                <div class=" col-md-3">
+                    @Html.EnumDropDownListFor(m => m[i].Motion_Binder, new { @class = "form-control force-inline" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Frame", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Frame)
+                </div>
+                <div class=" col-md-3">
+                    @Html.EditorFor(m => m[i].Frame, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("MPosition", Model[i]))
+        {
+            @Html.EditorFor(m => m[i].MPosition, new { @class = "form-control" })
+        }
+        @if (EmoteAction.IsPropertyVisible("Frame", Model[i]))
+        {
+            @Html.EditorFor(m => m[i].Frame, new { @class = "form-control" })
+        }
+        @if (EmoteAction.IsPropertyVisible("SpellId", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].SpellId)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].SpellId, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("PScript", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].PScript)
+                </div>
+                <div class=" col-md-3">
+                    @Html.EnumDropDownListFor(m => m[i].PScript_Binder, new { @class = "form-control force-inline" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Sound", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Sound)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Sound, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("TestString", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].TestString)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].TestString, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Minimum64", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Minimum64)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Minimum64, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Maximum64", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Maximum64)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Maximum64, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("FMin", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].FMin)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].FMin, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("FMax", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].FMax)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].FMax, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Display", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-1"></div>
+                <div class=" col-md-3">
+                    @Html.LabelFor(m => m[i].Display)
+                </div>
+                <div class=" col-md-3">
+                    @Html.TextBoxFor(m => m[i].Display, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        }
+        @if (EmoteAction.IsPropertyVisible("Item", Model[i]))
+        {
+            <div class="row row-spacer">
+                <div class="col-md-2"></div>
+                <div class="col-md-2">@(Html.Label("Weenie"))</div>
+                <div class="col-md-2">@(Html.Label("Destination"))</div>
+                <div class="col-md-1">@(Html.Label("Palette"))</div>
+                <div class="col-md-3">@(Html.Label("Shade"))</div>
+                <div class="col-md-1">@(Html.Label("Quantity"))</div>
+                <div class="col-md-1">@(Html.Label("Bonded"))</div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row row-spacer">
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    @Html.HiddenFor(m => m[i].Item.Deleted)
+                    @Html.TextBoxFor(m => m[i].Item.WeenieClassId, new { @class = "form-control weenieClassEntry" })
+                </div>
+                <div class="col-md-2">
+                    @Html.EnumDropDownListFor(m => m[i].Item.Destination_Binder, new { @class = "form-control" })
+                </div>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(m => m[i].Item.Palette, new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m[i].Item.Shade, new { @class = "form-control" })
+                </div>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(m => m[i].Item.StackSize, new { @class = "form-control" })
+                </div>
+                <div class="col-md-1">
+                    @Html.EditorFor(m => m[i].Item.TryToBond)
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        }
+        <hr />
+    </div>
+}

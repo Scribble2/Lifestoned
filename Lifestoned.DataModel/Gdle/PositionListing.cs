@@ -17,6 +17,8 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
+
+using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -26,8 +28,14 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("key")]
         public int PositionType { get; set; }
 
+        [JsonIgnore]
+        public string PositionTypeName
+        {
+            get { return ((PositionType)PositionType).GetName(); }
+        }
+
         [JsonProperty("value")]
-        public Position Position { get; set; }
+        public Position Position { get; set; } = new Position();
 
         [JsonIgnore]
         public bool Deleted { get; set; }

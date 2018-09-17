@@ -1,3 +1,4 @@
+using System.Linq;
 using Lifestoned.DataModel.Shared;
 using Newtonsoft.Json;
 
@@ -10,6 +11,16 @@ namespace Lifestoned.DataModel.Gdle
         /// </summary>
         [JsonProperty("type")]
         public uint EmoteActionType { get; set; }
+
+        /// <summary>
+        /// used by all emote actions
+        /// </summary>
+        [JsonIgnore]
+        public EmoteType EmoteActionType_Binder
+        {
+            get { return (EmoteType)EmoteActionType; }
+            set { EmoteActionType = (uint)value; }
+        }
 
         /// <summary>
         /// used by all emote actions
@@ -58,6 +69,13 @@ namespace Lifestoned.DataModel.Gdle
         [EmoteType(EmoteType.Motion)]
         [EmoteType(EmoteType.ForceMotion)]
         public int? Motion { get; set; }
+
+        [JsonIgnore]
+        public MotionCommand? Motion_Binder
+        {
+            get { return (MotionCommand?)Motion; }
+            set { Motion = (int?)value; }
+        }
 
         [JsonProperty("msg", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.Act)]
@@ -240,6 +258,13 @@ namespace Lifestoned.DataModel.Gdle
         [EmoteType(EmoteType.PhysScript)]
         public uint? PScript { get; set; }
 
+        [JsonIgnore]
+        public PhysicsScriptType? PScript_Binder
+        {
+            get { return PScript != null ? (PhysicsScriptType)PScript : (PhysicsScriptType?)null; }
+            set { PScript = (uint?)value; }
+        }
+
         [JsonProperty("sound", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.Sound)]
         public uint? Sound { get; set; }
@@ -273,9 +298,23 @@ namespace Lifestoned.DataModel.Gdle
         [EmoteType(EmoteType.CreateTreasure)]
         public uint? WealthRating { get; set; }
 
+        [JsonIgnore]
+        public WealthRating? WealthRating_Binder
+        {
+            get { return (WealthRating?)WealthRating; }
+            set { WealthRating = (uint?)value; }
+        }
+
         [JsonProperty("treasure_class", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.CreateTreasure)]
         public uint? TreasureClass { get; set; }
+
+        [JsonIgnore]
+        public TreasureClass? TreasureClass_Binder
+        {
+            get { return (TreasureClass?)TreasureClass; }
+            set { TreasureClass = (uint?)value; }
+        }
 
         [JsonProperty("treasure_type", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.CreateTreasure)]
@@ -286,5 +325,21 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonIgnore]
         public bool Deleted { get; set; }
+
+        /// <summary>
+        /// checks the EmoteType attributes of the requested property to determine whether or not
+        /// it should be shown
+        /// </summary>
+        public static bool IsPropertyVisible(string propertyName, EmoteAction emote)
+        {
+            var property = typeof(EmoteAction).GetProperty(propertyName);
+            var attribs = property.GetCustomAttributes(typeof(EmoteTypeAttribute), false).Cast<EmoteTypeAttribute>().ToList();
+
+            if (attribs == null || attribs.Count < 1)
+                return true;
+
+            // because the lists are long and could get unwieldy, we'll allow for multiple on the same property
+            return attribs.Any(a => a.TypeList.Contains(emote.EmoteActionType_Binder));
+        }
     }
 }

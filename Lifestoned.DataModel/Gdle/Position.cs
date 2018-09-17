@@ -24,7 +24,7 @@ namespace Lifestoned.DataModel.Gdle
     public class Position
     {
         [JsonProperty("frame")]
-        public Frame Frame { get; set; }
+        public Frame Frame { get; set; } = new Frame();
 
         [JsonProperty("objcell_id")]
         public uint LandCellId { get; set; }

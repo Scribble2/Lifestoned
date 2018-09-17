@@ -301,8 +301,6 @@
     <Content Include="Views\Recipe\Index.cshtml" />
     <Content Include="Views\Recipe\Edit.cshtml" />
     <Content Include="Views\Shared\WeenieFinder.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EmoteSetList.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EmoteList.cshtml" />
     <Content Include="Views\Weenie\Upload.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\VitalList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CreateList.cshtml" />
@@ -341,6 +339,9 @@
     <Content Include="Views\Shared\WeenieList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Weenie.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmoteTable.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmoteActionList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Frame.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Position.cshtml" />
     <None Include="Web.example.config">
       <SubType>Designer</SubType>
     </None>
