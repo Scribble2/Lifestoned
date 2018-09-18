@@ -52,6 +52,17 @@
                     Check this box when this weenie is completely done with editing for purposes of restoring Dereth to its January 2017 state.
                 </div>
             </div>
+            
+            <div class="well">
+                <div class="row row-spacer">
+                    <div class="col-md-2 vcenter">
+                        @Html.Label("Weenie Type")
+                    </div>
+                    <div class="col-md-8 vcenter">
+                        @Html.EnumDropDownListFor(m => m.WeenieType_Binder, new { @class = "form-control force-inline" })
+                    </div>
+                </div>
+            </div>
 
             <div class="well" id="properties">
                 <h3>Properties</h3>

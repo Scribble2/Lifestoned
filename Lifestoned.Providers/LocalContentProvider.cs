@@ -144,7 +144,7 @@ namespace Lifestoned.Providers
                 Name = w.Name,
                 ItemType = (ItemType?)w.ItemType,
                 WeenieClassId = w.WeenieId,
-                WeenieType = (WeenieType?)w.WeenieType,
+                WeenieType = w.WeenieType_Binder,
                 IsDone = w.IsDone,
                 HasSandboxChange = !w.IsDone
             }).ToList();
@@ -164,7 +164,7 @@ namespace Lifestoned.Providers
                 Name = w.Name,
                 ItemType = (ItemType?)w.ItemType,
                 WeenieClassId = w.WeenieId,
-                WeenieType = (WeenieType?)w.WeenieType,
+                WeenieType = w.WeenieType_Binder,
                 IsDone = w.IsDone,
                 HasSandboxChange = !w.IsDone && w.LastModified != null
             }).ToList();
@@ -203,7 +203,7 @@ namespace Lifestoned.Providers
                     copy = copy.Where(w => w.ItemType == (int)criteria.ItemType);
 
                 if (criteria.WeenieType.HasValue)
-                    copy = copy.Where(w => w.WeenieType == (int)criteria.WeenieType);
+                    copy = copy.Where(w => w.WeenieTypeId == (int)criteria.WeenieType);
 
                 if (!string.IsNullOrWhiteSpace(criteria.PartialName))
                     copy = copy.Where(w => w.Name.ToLower().Contains(criteria.PartialName.ToLower()));
@@ -258,7 +258,7 @@ namespace Lifestoned.Providers
                 Name = w.Name,
                 ItemType = (ItemType?)w.ItemType,
                 WeenieClassId = w.WeenieId,
-                WeenieType = (WeenieType?)w.WeenieType,
+                WeenieType = (WeenieType?)w.WeenieTypeId,
                 IsDone = w.IsDone,
                 HasSandboxChange = !w.IsDone && w.LastModified != null
             }).ToList();

@@ -144,6 +144,10 @@ namespace DerethForever.Web.Controllers
 
         private void SortTheThings(Weenie model)
         {
+            var deprecatedWeenieTypeProperty = model.IntStats.FirstOrDefault(ip => ip.Key == 9007);
+            if (deprecatedWeenieTypeProperty != null)
+                model.IntStats.Remove(deprecatedWeenieTypeProperty);
+
             // Setting sort order for edit
             model.IntStats = model.IntStats.OrderBy(ip => ip.Key).ToList();
             model.FloatStats = model.FloatStats.OrderBy(dp => dp.Key).ToList();
@@ -357,7 +361,7 @@ namespace DerethForever.Web.Controllers
                 model.ErrorMessages.Add("Item Type is required.");
             }
 
-            if (model.WeenieType == null || model.WeenieType == 0)
+            if (model.WeenieTypeId == null || model.WeenieTypeId == 0)
             {
                 isValid = false;
                 model.ErrorMessages.Add("Weenie Type is required.");

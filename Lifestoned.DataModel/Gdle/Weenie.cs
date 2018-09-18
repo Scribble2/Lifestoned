@@ -40,20 +40,13 @@ namespace Lifestoned.DataModel.Gdle
         }
 
         [JsonProperty("weenieType")]
-        public int WeenieTypeId
-        {
-            get
-            {
-                var prop = IntStats.FirstOrDefault(i => i.Key == (int)IntPropertyId.WeenieType);
-                return prop?.Value ?? 0;
-            }
-            set
-            {
-                if (IntStats.FirstOrDefault(i => i.Key == (int)IntPropertyId.WeenieType) == null)
-                    IntStats.Add(new IntStat() { Key = (int)IntPropertyId.WeenieType });
+        public int WeenieTypeId { get; set; }
 
-                IntStats.FirstOrDefault(i => i.Key == (int)IntPropertyId.WeenieType).Value = value;
-            }
+        [JsonIgnore]
+        public WeenieType WeenieType_Binder
+        {
+            get { return (WeenieType)WeenieTypeId; }
+            set { WeenieTypeId = (int)value; }
         }
 
         [JsonProperty("attributes")]
@@ -145,12 +138,6 @@ namespace Lifestoned.DataModel.Gdle
             get { return (Body?.BodyParts.Count() ?? 0) > 0; }
         }
         
-        [JsonIgnore]
-        public int? WeenieType
-        {
-            get { return IntStats.FirstOrDefault(d => d.Key == (int)IntPropertyId.WeenieType)?.Value ?? 0; }
-        }
-
         [JsonIgnore]
         public int? UIEffects
         {
@@ -285,11 +272,12 @@ namespace Lifestoned.DataModel.Gdle
         
         public static Weenie ConvertFromWeenie(DerethForever.Weenie df)
         {
+            throw new NotImplementedException();
+
             Weenie gdle = new Weenie
             {
                 WeenieId = df.WeenieClassId,
-                WeenieTypeId = df.IntProperties.First(i => i.IntPropertyId == (int)IntPropertyId.WeenieType).Value
-                .Value,
+                // WeenieTypeId = df.IntProperties.First(i => i.IntPropertyId == (int)IntPropertyId.WeenieType).Value.Value,
                 IsDone = df.IsDone,
                 Comments = df.Comments,
                 UserChangeSummary = df.UserChangeSummary,

@@ -81,8 +81,10 @@ namespace Lifestoned.Providers
                         }
                     }
                     else
+                    {
                         // clear the cookie so we don't have to do this every time
                         SignOut();
+                    }
                 }
             }
             catch

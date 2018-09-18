@@ -67,6 +67,10 @@ namespace Lifestoned.Providers
             if (account.AccessLevel >= AccessLevel.Envoy && Guid.TryParse(accountGuid, out result))
                 return _accountCache.FirstOrDefault(a => a.AccountGuid == result)?.ToApiAccountModel();
 
+            // if account guid is null, this is an account fetch for a user's token
+            if (string.IsNullOrWhiteSpace(accountGuid))
+                return account.ToApiAccountModel();
+
             // anyone can get their own account
             if (account.AccountGuid.ToString().ToLower() == accountGuid.ToLower())
                 return account.ToApiAccountModel();

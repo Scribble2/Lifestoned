@@ -187,11 +187,11 @@ namespace Lifestoned.DataModel.DerethForever
             get { return IntProperties.FirstOrDefault(d => d.IntPropertyId == (int)IntPropertyId.ItemType)?.Value ?? 0; }
         }
 
-        [JsonIgnore]
-        public int? WeenieType
-        {
-            get { return IntProperties.FirstOrDefault(d => d.IntPropertyId == (int)IntPropertyId.WeenieType)?.Value ?? 0; }
-        }
+        //[JsonIgnore]
+        //public int? WeenieType
+        //{
+        //    get { return IntProperties.FirstOrDefault(d => d.IntPropertyId == (int)IntPropertyId.WeenieType)?.Value ?? 0; }
+        //}
 
         [JsonIgnore]
         public int? UIEffects

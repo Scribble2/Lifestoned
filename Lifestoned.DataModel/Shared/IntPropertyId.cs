@@ -816,9 +816,7 @@ namespace Lifestoned.DataModel.Shared
         [Display(Name                            = "9005 - Loot Tier")]
         LootTier                                 = 9005,
         [Display(Name                            = "9006 - Generator Probability")]
-        GeneratorProbability                     = 9006,
-        [Display(Name                            = "9007 - Weenie Type")]
-        WeenieType                               = 9007
+        GeneratorProbability                     = 9006
     }
 
     public static class PropertyIntExtensions

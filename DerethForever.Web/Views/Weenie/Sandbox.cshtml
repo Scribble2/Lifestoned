@@ -1,4 +1,4 @@
-@model DerethForever.Web.Models.Weenie.SandboxModel
+@model Lifestoned.DataModel.Gdle.SandboxModel
 
 @{
     ViewBag.Title = "Review Sandbox Changes";
@@ -8,7 +8,7 @@
 
 <br/>
 
-@if (Model.Changes == null || Model.Changes.Count < 1)
+@if (Model?.Changes == null || Model.Changes.Count < 1)
 {
     <div class="alert alert-info">
         There are no changes to review.
