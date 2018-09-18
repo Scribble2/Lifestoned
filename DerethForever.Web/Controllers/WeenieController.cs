@@ -79,11 +79,12 @@ namespace DerethForever.Web.Controllers
                 var contents = JsonConvert.SerializeObject(cachePwn, Formatting.None, settings);
 
                 // add json to zip file
-                var filename = weenie.StringProperties.First(p => p.StringPropertyId == (int)StringPropertyId.Name).Value + " (" + update.WeenieClassId + ").json";
+                var filename = update.WeenieClassId + "-" + weenie.StringProperties.First(p => p.StringPropertyId == (int)StringPropertyId.Name).Value + ".json";
                 zipFile.AddFile(filename, contents);
             }
             var bytes = zipFile.BuildZip();
-            return File(bytes, "application/zip", "GDLE-Latest-Updates.zip");
+            string date = string.Format("{0:yyyy-MM-dd_hh-mm}", DateTime.Now);
+            return File(bytes, "application/zip", "GDLE-Latest-Updates-" + date +".zip");
         }
 
 
@@ -106,14 +107,19 @@ namespace DerethForever.Web.Controllers
 
             try
             {
-                model.Results = SandboxContentProviderHost.CurrentProvider.WeenieSearch(GetUserToken(), model.Criteria);
+                string token = GetUserToken();
 
-                List<WeenieChange> mine = SandboxContentProviderHost.CurrentProvider.GetMyWeenieChanges(GetUserToken());
-                model.Results.ForEach(w =>
+                model.Results = SandboxContentProviderHost.CurrentProvider.WeenieSearch(token, model.Criteria);
+
+                if (!string.IsNullOrEmpty(token))
                 {
-                    if (mine.Any(m => m.Weenie.WeenieClassId == w.WeenieClassId))
-                        w.HasSandboxChange = true;
-                });
+                    List<WeenieChange> mine = SandboxContentProviderHost.CurrentProvider.GetMyWeenieChanges(GetUserToken());
+                    model.Results.ForEach(w =>
+                    {
+                        if (mine.Any(m => m.Weenie.WeenieClassId == w.WeenieClassId))
+                            w.HasSandboxChange = true;
+                    });
+                }
 
                 model.ShowResults = true;
             }
@@ -335,6 +341,16 @@ namespace DerethForever.Web.Controllers
                 dupeBools.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Bool property {dupe.BoolPropertyId} - you may only have one."));
             }
 
+            var emotes = model.EmoteTable
+				.SelectMany(et => et.Emotes)
+				.Where(e => Models.Shared.Emote.IsPropertyVisible("Message", e.EmoteType))
+				.Where(e => string.IsNullOrEmpty(e.Message));
+			if (emotes.Count() > 0)
+            {
+                isValid = false;
+                model.ErrorMessages.Add("Tell emotes without required message");
+            }
+
             if (model.ItemType == null)
             {
                 isValid = false;
@@ -510,7 +526,7 @@ namespace DerethForever.Web.Controllers
             SortTheThings(model);
             model.MvcAction = null;
             model.NewPositionType = null;
-            return View("Edit", model);
+            return View(model);
         }
 
         [HttpGet]

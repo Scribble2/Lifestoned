@@ -1,0 +1,75 @@
+﻿@model IEnumerable<DerethForever.Web.Models.Weenie.WeenieSearchResult>
+
+@if (Model != null)
+{
+<table class="table table-striped table-bordered table-hover table-condensed weenie-table">
+    <thead>
+        <tr>
+            <th style="width: 1rem;">&nbsp;</th>
+            <th>Id</th>
+            <th style="width: auto;">Name</th>
+            <th style="width: 95px;">Item Type</th>
+            <th style="width: 95px;">Weenie Type</th>
+            <th style="width: 13rem;">Last Modified</th>
+            <th style="width: 95px;">Modified By</th>
+            <th style="width: 16rem; text-wrap:none;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <tr><td colspan="8" align="center">No results.</td></tr>
+        }
+        @{
+            foreach (var weenie in Model)
+            {
+                <tr class="@(weenie.IsDone ? "done" : weenie.HasSandboxChange ? "working" : "")">
+                    <td><i class="glyphicon @(weenie.IsDone ? "glyphicon-ok" : weenie.HasSandboxChange ? "glyphicon-time" : "glyphicon-remove")"></i></td>
+                    <td>@weenie.WeenieClassId.ToString()</td>
+                    <td>@weenie.Name</td>
+                    <td>@weenie.ItemType</td>
+                    <td>@weenie.WeenieType</td>
+                    <td>@Html.DisplayFor(w => weenie.LastModified)</td>
+                    <td>@weenie.ModifiedBy</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-sm btn-secondary" href="@Url.Action("Edit", "Weenie", new {id = weenie.WeenieClassId})">
+                                <span class="glyphicon glyphicon-edit" title="Edit"></span>
+                            </a>
+                            <a class="btn btn-sm btn-secondary" href="@Url.Action("Clone", "Weenie", new {id = weenie.WeenieClassId})">
+                                <span class="glyphicon glyphicon-copy" title="Clone"></span>
+                            </a>
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a class="btn btn-sm btn-secondary" href="@Url.Action("Delete", "Weenie", new { id = weenie.WeenieClassId })">
+                                    <span class="glyphicon glyphicon-remove" title="Delete"></span>
+                                </a>
+                            }
+
+                            <div class="btn-group dropdown" role="group">
+                                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"><span class="glyphicon glyphicon-download" title="Download"></span>&nbsp;<span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("DownloadOriginalToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Original, Phat JSON</a></li>
+                                    <li><a href="@Url.Action("DownloadOriginalToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Original, DF JSON</a></li>
+                                    @if (weenie.HasSandboxChange)
+                                    {
+                                        <li><a href="@Url.Action("DownloadSandboxToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, Phat JSON</a></li>
+                                        <li><a href="@Url.Action("DownloadSandboxToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, DF JSON</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+    }
+    else
+    {
+<div class="alert alert-info">
+    Your search yielded no results.
+</div>
+}

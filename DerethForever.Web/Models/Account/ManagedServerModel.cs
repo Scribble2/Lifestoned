@@ -19,23 +19,31 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
 
 namespace DerethForever.Web.Models.Account
 {
+    [Table("managed_world")]
     public class ManagedServerModel
     {
+        [Key]
+        [Column("worldGuid")]
         [JsonProperty("worldGuid")]
         public Guid? ManagedServerGuid { get; set; }
 
+        [Column("accountGuid")]
         [JsonProperty("accountGuid")]
         public Guid? AccountGuid { get; set; }
 
+        [Column("serverName")]
         [JsonProperty("serverName")]
         public string ServerName { get; set; }
 
+        [Column("address")]
         [JsonProperty("address")]
         public string Address { get; set; }
 

@@ -1,6 +1,20 @@
+/* color palette
+   #00302c - accent
+*/
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #00d6d6;
+}
+
+a, a:hover, a:visited, a:active, a:focus {
+    color: #00d6d6;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -20,6 +34,7 @@ body {
 input,
 select {
     max-width: 280px;
+    color: #000;
 }
 
 .text-light {
@@ -30,14 +45,46 @@ select {
     margin: 4px;
 }
 
+.well {
+    background-color: #0B4843;
+    color: #fff;
+}
+
+.need-submit {
+    border-color: #a94442;
+}
+
+.panel-default > .panel-heading {
+    color: #fff;
+    background-color: #00302c;
+}
+.panel-default > .panel-body, .panel-default > .panel-collapse > .panel-body {
+    color: #fff;
+    background-color: #0b4843;
+}
+
+.navbar, .navbar .dropdown-menu {
+    background-color: #00302c;
+    color: #00d6d6;
+}
+
+.navbar .navbar-nav > li > a, .navbar .dropdown-menu a {
+    color: #00d6d6;
+}
+
+.navbar-brand {
+    background: url('../images/LifeStonedHeader.png') center 10px no-repeat;
+    width: 150px;
+}
+
 .nav-tabs > li.active > a {
-    background-color: #337ab7;
+    background-color: #00302c;
     color: #FFF;
 }
 
     .nav-tabs > li.active > a:hover,
     .nav-tabs > li.active > a:focus {
-        background-color: #419EEA;
+        background-color: #00302c;
         color: #FFF;
     }
 
@@ -45,6 +92,74 @@ select {
         background-color: #333;
         color: #FFF;
     }
+
+.nav-tabs > li > a, .nav-tabs > li > a:active, .nav-tabs > li > a:visited {
+    color: #fff;
+}
+    .nav-tabs > li > a:hover {
+        color: #333;
+    }
+
+    .nav-tabs + .tab-content {
+        background-color: #00302c;
+        padding: 1.5rem 0;
+        border: solid 1px #ddd;
+        border-top: 0;
+        border-radius: 0 0 5px 5px;
+    }
+
+/* Home Screen */
+.jumbotron.home-map {
+    background: url('../images/lifeStonedMapBG.png') center top no-repeat;
+}
+
+.btn-primary, .btn-default {
+    background-color: #001c1a;
+    border-color: #000c0b;
+    color: #fff;
+}
+
+    .btn-primary:hover, .btn-default:hover {
+        background-color: #20635e;
+        border-color: #000c0b;
+        color: #fff;
+    }
+
+.btn-warning {
+    color: #333;
+}
+
+.btn-group {
+    margin-bottom: 0.25rem;
+}
+
+.tile-notice {
+    margin: 2.5rem 0;
+    padding: 0.25rem;
+    font-size: 2rem;
+    color: #fff;
+    text-align: right;
+}
+    .tile-notice em {
+        text-decoration: none;
+        font-style: normal;
+        font-weight: bold;
+        color: #c7961d;
+    }
+
+.tile-button {
+    background-color: #996734;
+    border-radius: 5px;
+    margin: 0.75rem 0;
+    padding: 0.25rem;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.tile-button a {
+    color: #fff;
+}
 
 /* Weenie Edit  */
 
@@ -79,4 +194,70 @@ select {
     text-overflow: ellipsis;
     display: inline-block;
     max-width: 100%;
+}
+
+.weenie-table > tbody > tr.done td:first-child {
+    color: #377020;
+}
+.weenie-table > tbody > tr.working td:first-child {
+    color: #6b6b6b;
+}
+.weenie-table > tbody > tr td:first-child {
+    color: #b69e21;
+}
+
+.table > thead > tr {
+    background-color: #00302c;
+}
+
+.table > tbody > tr .btn {
+    background-color: #20635e;
+    color: #cccccc;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    color: #333;
+}
+
+
+.table-hover > tbody > tr:hover {
+    background-color: #20635e !important;
+    color: #cccccc !important;
+}
+
+    .table-hover > tbody > tr:hover .btn {
+        background-color: #cccccc !important;
+        color: #20635e !important;
+    }
+
+        .table-hover > tbody > tr:hover .btn:hover {
+            background-color: #20635e !important;
+            color: #cccccc !important;
+        }
+
+.btn-group-vertical.stuck {
+    position: fixed;
+    left: 0;
+    top: 15rem;
+}
+
+a[data-toggle]:before {
+    position: relative;
+    top: 0px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.95rem;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-right: 5px;
+}
+
+a[data-toggle][aria-expanded=false]:before {
+    content: "\002b";
+}
+a[data-toggle][aria-expanded=true]:before {
+    content: "\2212";
 }
