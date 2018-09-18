@@ -29,7 +29,7 @@ namespace Lifestoned.DataModel.Gdle
     public class Skill
     {
         [JsonProperty("level_from_pp")]
-        public uint? LevelFromPp { get; set; }
+        public uint? LevelFromPp { get; set; } = 0;
 
         [JsonProperty("last_used_time")]
         public float? LastUsed { get; set; }
@@ -41,7 +41,7 @@ namespace Lifestoned.DataModel.Gdle
         public uint? XpInvested { get; set; }
 
         [JsonProperty("resistance_of_last_check")]
-        public uint? ResistanceOfLastCheck { get; set; }
+        public uint? ResistanceOfLastCheck { get; set; } = 0;
 
         [JsonProperty("sac")]
         public int? TrainedLevel { get; set; }

@@ -29,7 +29,7 @@ namespace Lifestoned.DataModel.Gdle
     public class Attribute
     {
         [JsonProperty("cp_spent")]
-        public uint? XpSpent { get; set; }
+        public uint? XpSpent { get; set; } = 0;
 
         [JsonProperty("level_from_cp")]
         public uint LevelFromCp { get; set; }

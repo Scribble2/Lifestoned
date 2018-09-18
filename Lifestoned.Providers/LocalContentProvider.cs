@@ -355,8 +355,11 @@ namespace Lifestoned.Providers
 
             try
             {
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+
                 string path = Path.Combine(ContentPath, "weenies", $"{weenie.WeenieId}.json");
-                string content = JsonConvert.SerializeObject(weenie);
+                string content = JsonConvert.SerializeObject(weenie, settings);
 
                 File.WriteAllText(path, content);
 

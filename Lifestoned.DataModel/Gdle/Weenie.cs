@@ -40,7 +40,21 @@ namespace Lifestoned.DataModel.Gdle
         }
 
         [JsonProperty("weenieType")]
-        public int WeenieTypeId { get; set; }
+        public int WeenieTypeId
+        {
+            get
+            {
+                var prop = IntStats.FirstOrDefault(i => i.Key == (int)IntPropertyId.WeenieType);
+                return prop?.Value ?? 0;
+            }
+            set
+            {
+                if (IntStats.FirstOrDefault(i => i.Key == (int)IntPropertyId.WeenieType) == null)
+                    IntStats.Add(new IntStat() { Key = (int)IntPropertyId.WeenieType });
+
+                IntStats.FirstOrDefault(i => i.Key == (int)IntPropertyId.WeenieType).Value = value;
+            }
+        }
 
         [JsonProperty("attributes")]
         public AttributeSet Attributes { get; set; }

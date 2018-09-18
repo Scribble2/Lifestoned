@@ -46,36 +46,37 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("probability")]
         public float? Probability { get; set; }
 
-        [JsonProperty("vendorType")]
+        [JsonProperty("vendorType", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteCategory(EmoteCategory.Vendor)]
         public uint? VendorType { get; set; }
 
-        [JsonProperty("quest")]
+        [JsonProperty("quest", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteCategory(EmoteCategory.QuestFailure)]
         [EmoteCategory(EmoteCategory.QuestSuccess)]
         [EmoteCategory(EmoteCategory.TestSuccess)]
         [EmoteCategory(EmoteCategory.TestFailure)]
         [EmoteCategory(EmoteCategory.GotoSet)]
+        [EmoteCategory(EmoteCategory.QuestNoFellow)] // not part of client RE, but used by GDLE
         public string Quest { get; set; }
 
-        [JsonProperty("classID")]
+        [JsonProperty("classID", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteCategory(EmoteCategory.Refuse)]
         [EmoteCategory(EmoteCategory.Give)]
         public uint? ClassId { get; set; }
 
-        [JsonProperty("style")]
+        [JsonProperty("style", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteCategory(EmoteCategory.HeartBeat)]
         public uint? Style { get; set; }
 
-        [JsonProperty("substyle")]
+        [JsonProperty("substyle", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteCategory(EmoteCategory.HeartBeat)]
         public uint? SubStyle { get; set; }
 
-        [JsonProperty("minhealth")]
+        [JsonProperty("minhealth", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteCategory(EmoteCategory.WoundedTaunt)]
         public float? MinHealth { get; set; }
 
-        [JsonProperty("maxhealth")]
+        [JsonProperty("maxhealth", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteCategory(EmoteCategory.WoundedTaunt)]
         public float? MaxHealth { get; set; }
 

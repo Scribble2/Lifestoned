@@ -399,6 +399,9 @@ namespace Lifestoned.Providers
             if (_weenieCache == null)
                 throw new ApplicationException("Sandboxing is not configured correctly.  See error logs for details.");
 
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+
             string userGuidString = JwtCookieManager.GetUserGuid(token);
             Guid userGuid = Guid.Parse(userGuidString);
             string weenieFolder = Path.Combine(_cacheDirectory, "weenies", userGuid.ToString());
@@ -424,7 +427,7 @@ namespace Lifestoned.Providers
                 wc.SubmissionTime = DateTime.Now;
             }
 
-            string content = JsonConvert.SerializeObject(wc);
+            string content = JsonConvert.SerializeObject(wc, settings);
             File.WriteAllText(weenieFile, content);
 
             if (!_weenieCache.ContainsKey(userGuid))

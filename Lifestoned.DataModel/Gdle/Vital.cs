@@ -28,10 +28,10 @@ namespace Lifestoned.DataModel.Gdle
     public class Vital
     {
         [JsonProperty("cp_spent")]
-        public uint? XpSpent { get; set; }
+        public uint? XpSpent { get; set; } = 0;
 
         [JsonProperty("level_from_cp")]
-        public uint? LevelFromCp { get; set; }
+        public uint? LevelFromCp { get; set; } = 0;
 
         [JsonProperty("init_level")]
         public uint? Ranks { get; set; }
