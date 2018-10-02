@@ -1,6 +1,6 @@
 
 @using DerethForever.Web.Controllers
-@model List<DerethForever.Web.Models.Weenie.WeenieChange>
+@model List<Lifestoned.DataModel.Gdle.WeenieChange>
 
 @if (Model == null || Model.Count < 1)
 {
@@ -27,12 +27,10 @@ else
                 <div class="col-md-5">
                     <ul>
                         <li>
-                            Download as @Html.ActionLink("Dereth Forever JSON", "DownloadSandboxToDfJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null)
-                            (download @Html.ActionLink("original", "DownloadOriginalToDfJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null))
+                            @Html.ActionLink("Download Submission", "DownloadSandbox", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null)
                         </li>
                         <li>
-                            Download as @Html.ActionLink("GDLE JSON", "DownloadSandboxToPhatJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null)
-                            (download @Html.ActionLink("original", "DownloadOriginalToPhatJson", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null))
+                            @Html.ActionLink("Download Original", "DownloadOriginal", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null)
                         </li>
                         @if (BaseController.CurrentUser.ManagedWorlds.Count > 0)
                         {

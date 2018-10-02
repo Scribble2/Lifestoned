@@ -257,14 +257,14 @@ namespace Lifestoned.DataModel.Gdle
             BoolStats?.RemoveAll(x => x == null || x.Deleted);
             DidStats?.RemoveAll(x => x == null || x.Deleted || x.Value == null);
             Spells?.RemoveAll(x => x == null || x.Deleted);
-            Book?.Pages.RemoveAll(x => x == null || x.Deleted);
+            Book?.Pages?.RemoveAll(x => x == null || x.Deleted);
             Positions?.RemoveAll(x => x == null || x.Deleted);
-            EmoteTable.ForEach(es => es.Emotes.RemoveAll(x => x == null || x.Deleted));
+            EmoteTable?.ForEach(es => es?.Emotes?.RemoveAll(x => x == null || x.Deleted));
             EmoteTable?.RemoveAll(x => x == null || x.Deleted);
             Body?.BodyParts?.RemoveAll(x => x == null || x.Deleted);
             GeneratorTable?.RemoveAll(x => x == null || x.Deleted);
             CreateList?.RemoveAll(x => x == null || x.Deleted);
-            Skills.RemoveAll(x => x == null || x.Deleted);
+            Skills?.RemoveAll(x => x == null || x.Deleted);
 
             if (!HasAbilities)
                 Attributes = null;

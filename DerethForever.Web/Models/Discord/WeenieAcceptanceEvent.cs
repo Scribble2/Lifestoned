@@ -43,7 +43,7 @@ namespace DerethForever.Web.Models.Discord
             Embed embed = Embed.GetDefault(AcceptingUser, AcceptanceTime, WeenieId);
             
             embed.Title = $"{WeenieName} - {WeenieId} UPDATED!";
-            embed.Description = $"Changes were accepted by {AcceptingUser}.  Thanks you, {SubmittingUser}, for your contribution to restoring AC!\n";
+            embed.Description = $"Changes were accepted by {AcceptingUser}.  Thank you, {SubmittingUser}, for your contribution to restoring AC!\n";
             embed.Description += string.IsNullOrWhiteSpace(ChangelogComment) ? "(no change log comment)" : ChangelogComment;
 
             embed.Fields = new List<Field>();

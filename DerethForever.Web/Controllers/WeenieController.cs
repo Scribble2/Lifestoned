@@ -125,7 +125,7 @@ namespace DerethForever.Web.Controllers
             {
                 model.Results = null;
                 model.ShowResults = false;
-                model.ErrorMessages.Add("Error retrieving data from the API");
+                model.ErrorMessages.Add("Error retrieving data from the SandboxContentProviderHost");
                 model.Exception = ex;
             }
 
@@ -165,7 +165,6 @@ namespace DerethForever.Web.Controllers
         {
             Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
             model.WeenieId = 0;
-            // model.DataObjectId = 0;
             ImportedWeenie = model;
             return RedirectToAction("New");
         }
@@ -581,34 +580,9 @@ namespace DerethForever.Web.Controllers
 
             return new EmptyResult();
         }
-
+        
         [HttpGet]
-        public ActionResult DownloadOriginalToPhatJson(uint id)
-        {
-            try
-            {
-                Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
-                // Weenie pwn = Weenie.ConvertFromWeenie(model);
-                JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-                string content = JsonConvert.SerializeObject(model, Formatting.None, s);
-                string filename = model.Name + " (" + id.ToString() + ").json";
-                return File(Encoding.UTF8.GetBytes(content), "application/json", filename);
-            }
-            catch (Exception ex)
-            {
-                log.Error($"Error exporting weenie {id}", ex);
-
-                IndexModel model = new IndexModel();
-                model.ErrorMessages.Add($"Error exporting weenie {id}");
-                model.Exception = ex;
-                CurrentIndexModel = model;
-
-                return RedirectToAction("Index");
-            }
-        }
-
-        [HttpGet]
-        public ActionResult DownloadOriginalToDfJson(uint id)
+        public ActionResult DownloadOriginal(uint id)
         {
             try
             {
@@ -697,40 +671,10 @@ namespace DerethForever.Web.Controllers
 
             return RedirectToAction("Index");
         }
-
+        
         [HttpGet]
         [Authorize]
-        public ActionResult DownloadSandboxToPhatJson(uint id, string userGuid)
-        {
-            WeenieChange wc = null;
-
-            if (string.IsNullOrWhiteSpace(userGuid))
-            {
-                // no userGuid specified, assume your own sandbox
-                wc = SandboxContentProviderHost.CurrentProvider.GetMySandboxedChange(GetUserToken(), id);
-            }
-            else
-            {
-                // validate dev/admin or matches your id
-                if (User.IsInRole("Developer") || GetUserGuid() == userGuid)
-                    wc = SandboxContentProviderHost.CurrentProvider.GetSandboxedChange(Guid.Parse(userGuid), id);
-                else
-                    return new HttpNotFoundResult();
-            }
-
-            if (wc == null)
-                return new HttpNotFoundResult();
-
-            // Weenie pwn = Weenie.ConvertFromWeenie(wc.Weenie);
-            JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            string content = JsonConvert.SerializeObject(wc.Weenie, Formatting.None, s);
-            string filename = wc.Weenie.Name + $" ({id}).json";
-            return File(Encoding.UTF8.GetBytes(content), "application/json", filename);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult DownloadSandboxToDfJson(uint id, string userGuid)
+        public ActionResult DownloadSandbox(uint id, string userGuid)
         {
             WeenieChange wc = null;
 

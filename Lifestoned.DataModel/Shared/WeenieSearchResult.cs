@@ -50,10 +50,28 @@ namespace Lifestoned.DataModel.Shared
         [JsonConverter(typeof(StringEnumConverter))]
         public WeenieType? WeenieType { get; set; }
 
+        [JsonIgnore]
+        public string WeenieType_Display
+        {
+            get
+            {
+                return this.WeenieType.GetName();
+            }
+        }
+
         [Description("Item Type")]
         [JsonProperty("itemType")]
         [JsonConverter(typeof(StringEnumConverter))]
         public ItemType? ItemType { get; set; }
+
+        [JsonIgnore]
+        public string ItemType_Display
+        {
+            get
+            {
+                return this.ItemType.GetName();
+            }
+        }
 
         [JsonProperty("lastModified")]
         public DateTime? LastModified { get; set; }
