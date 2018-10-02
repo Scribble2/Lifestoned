@@ -153,6 +153,7 @@ namespace DerethForever.Web
         public List<WeenieSearchResult> AllUpdates(string token)
         {
             var copy = Weenies.Values.Select(w => w)
+                .Where(w => w.LastModified != null)
                 .OrderByDescending(w => w.LastModified);
 
             return copy.Select(w => new WeenieSearchResult()
