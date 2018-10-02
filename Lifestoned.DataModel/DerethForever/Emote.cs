@@ -176,7 +176,7 @@ namespace Lifestoned.DataModel.DerethForever
         ///   ForceMotion (52 / 0x34)
         /// </summary>
         [JsonProperty("motion")]
-        public int? MotionId { get; set; }
+        public uint? MotionId { get; set; }
 
         [Display(Name = "Motion")]
         [EmoteType(new uint[] { 0x05, 0x34 })]
@@ -184,7 +184,7 @@ namespace Lifestoned.DataModel.DerethForever
         public MotionCommand? Motion
         {
             get { return (MotionCommand?)MotionId; }
-            set { MotionId = (int?)value; }
+            set { MotionId = (uint?)value; }
         }
 
         /// <summary>

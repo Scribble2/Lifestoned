@@ -68,13 +68,13 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("motion", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.Motion)]
         [EmoteType(EmoteType.ForceMotion)]
-        public int? Motion { get; set; }
+        public uint? Motion { get; set; }
 
         [JsonIgnore]
         public MotionCommand? Motion_Binder
         {
             get { return (MotionCommand?)Motion; }
-            set { Motion = (int?)value; }
+            set { Motion = (uint?)value; }
         }
 
         [JsonProperty("msg", NullValueHandling = NullValueHandling.Ignore)]

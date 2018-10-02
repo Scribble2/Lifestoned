@@ -272,16 +272,14 @@ namespace Lifestoned.DataModel.Gdle
         
         public static Weenie ConvertFromWeenie(DerethForever.Weenie df)
         {
-            throw new NotImplementedException();
-
             Weenie gdle = new Weenie
             {
                 WeenieId = df.WeenieClassId,
-                // WeenieTypeId = df.IntProperties.First(i => i.IntPropertyId == (int)IntPropertyId.WeenieType).Value.Value,
+                WeenieTypeId = df.IntProperties.First(i => i.IntPropertyId == 9007).Value.Value,
                 IsDone = df.IsDone,
                 Comments = df.Comments,
                 UserChangeSummary = df.UserChangeSummary,
-                Changelog = df.Changelog.ToList(), // force a copy
+                Changelog = df.Changelog?.ToList(), // force a copy
                 ModifiedBy = df.ModifiedBy,
                 LastModified = df.LastModified
             };
@@ -601,6 +599,7 @@ namespace Lifestoned.DataModel.Gdle
 
                         if (dfEmote.PositionX != null)
                         {
+                            ea.MPosition = new Position();
                             ea.MPosition.Frame = new Frame()
                             {
                                 Position = new XYZ()
