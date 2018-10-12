@@ -67,6 +67,7 @@
     <Compile Include="DerethForever\BodyPartSelectionData.cs" />
     <Compile Include="DerethForever\BookPage.cs" />
     <Compile Include="DerethForever\BoolProperty.cs" />
+    <Compile Include="DerethForever\WeenieChange.cs" />
     <Compile Include="Gdle\IidStat.cs" />
     <Compile Include="Recipe\IndexModel.cs" />
     <Compile Include="Recipe\Recipe.cs" />

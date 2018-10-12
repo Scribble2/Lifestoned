@@ -40,7 +40,7 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("submitted")]
         public bool Submitted { get; set; }
 
-        [JsonProperty("comments")]
+        [JsonProperty("submissionTime")]
         public DateTime SubmissionTime { get; set; }
 
         public string SubmissionTimeDisplay
@@ -56,5 +56,17 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonIgnore]
         public string NewComment { get; set; }
+
+        public static WeenieChange ConvertFromDF(DerethForever.WeenieChange source)
+        {
+            WeenieChange converted = new WeenieChange();
+            converted.Weenie = Weenie.ConvertFromWeenie(source.Weenie);
+            converted.UserGuid = source.UserGuid;
+            converted.UserName = source.UserName;
+            converted.Submitted = source.Submitted;
+            converted.SubmissionTime = source.SubmissionTime;
+            converted.Discussion = source.Discussion.ToList(); // force a copy
+            return converted;
+        }
     }
 }

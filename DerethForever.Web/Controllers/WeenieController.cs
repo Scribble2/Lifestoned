@@ -880,6 +880,7 @@ namespace DerethForever.Web.Controllers
             if (theOne != null)
             {
                 theOne.Submitted = true;
+                theOne.SubmissionTime = DateTime.Now;
                 SandboxContentProviderHost.CurrentProvider.UpdateWeenieChange(GetUserGuid(), theOne);
 
                 WeenieSubmissionEvent wse = new WeenieSubmissionEvent();
