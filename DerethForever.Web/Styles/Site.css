@@ -73,8 +73,8 @@ select {
 }
 
 .navbar-brand {
-    background: url('../images/LifeStonedHeader.png') center 10px no-repeat;
-    width: 150px;
+    background: url('../images/lifestoned-site-logo-240.png') center 0px no-repeat;
+    width: 240px;
 }
 
 .nav-tabs > li.active > a {
