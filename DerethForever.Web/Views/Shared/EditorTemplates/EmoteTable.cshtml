@@ -144,7 +144,7 @@
                                 @Html.EnumDropDownListFor(m => m[k].NewEmoteType, new { @class = "form-control" })
                             </div>
                             <div class="col-md-3">
-                                <input type="button" class="btn btn-primary" id="addEmote" name="addEmote" value="Add" formaction="Edit" data-content="@(i)" formnovalidate="formnovalidate" />
+                                <input type="button" class="btn btn-primary" id="addEmote" name="addEmote" value="Add" formaction="Edit" data-content="@(i)" data-container="@(k)" formnovalidate="formnovalidate" />
                             </div>
                         </div>
                     </div>

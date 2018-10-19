@@ -217,6 +217,9 @@ namespace Lifestoned.DataModel.Gdle
         [JsonIgnore]
         public EmoteCategory NewEmoteCategory { get; set; }
 
+		[JsonIgnore]
+		public int? EmoteSetGuid { get; set; }
+
         #endregion
 
         #region Meta data properties

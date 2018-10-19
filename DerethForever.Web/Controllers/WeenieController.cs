@@ -82,7 +82,7 @@ namespace DerethForever.Web.Controllers
             }
             var bytes = zipFile.BuildZip();
             string date = string.Format("{0:yyyy-MM-dd_hh-mm}", DateTime.Now);
-            return File(bytes, "application/zip", "GDLE-Latest-Updates-" + date +".zip");
+            return File(bytes, "application/zip", "GDLE-Latest-Updates-" + date + ".zip");
         }
 
 
@@ -344,15 +344,15 @@ namespace DerethForever.Web.Controllers
                 dupeBools.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Bool property {dupe.Key} - you may only have one."));
             }
 
-   //         var emotes = model.EmoteTable
-			//	.SelectMany(et => et.Emotes)
-			//	.Where(e => Models.Shared.Emote.IsPropertyVisible("Message", e.e))
-			//	.Where(e => string.IsNullOrEmpty(e.Message));
-			//if (emotes.Count() > 0)
-   //         {
-   //             isValid = false;
-   //             model.ErrorMessages.Add("Tell emotes without required message");
-   //         }
+            //         var emotes = model.EmoteTable
+            //	.SelectMany(et => et.Emotes)
+            //	.Where(e => Models.Shared.Emote.IsPropertyVisible("Message", e.e))
+            //	.Where(e => string.IsNullOrEmpty(e.Message));
+            //if (emotes.Count() > 0)
+            //         {
+            //             isValid = false;
+            //             model.ErrorMessages.Add("Tell emotes without required message");
+            //         }
 
             if (model.ItemType == null)
             {
@@ -434,7 +434,7 @@ namespace DerethForever.Web.Controllers
 
                     model.NewDidPropertyId = null;
                     break;
-                    
+
                 case WeenieCommands.AddBoolProperty:
                     if (model.NewBoolPropertyId == null)
                         model.ErrorMessages.Add("You must select a Property to add.");
@@ -466,7 +466,10 @@ namespace DerethForever.Web.Controllers
                     break;
 
                 case WeenieCommands.AddEmoteSet:
-                    if (model.EmoteTable.All(ecl => ecl.EmoteCategoryId != (int) model.NewEmoteCategory))
+                    if (model.EmoteTable == null)
+                        model.EmoteTable = new List<EmoteCategoryListing>();
+
+                    if (model.EmoteTable.All(ecl => ecl.EmoteCategoryId != (int)model.NewEmoteCategory))
                         model.EmoteTable.Add(new EmoteCategoryListing() { EmoteCategoryId = (int)model.NewEmoteCategory });
 
                     model.EmoteTable.First(ecl => ecl.EmoteCategoryId == (int)model.NewEmoteCategory).Emotes.Add(new Emote());
@@ -478,12 +481,30 @@ namespace DerethForever.Web.Controllers
                     break;
 
                 case WeenieCommands.AddEmote:
-                    //EmoteSet emoteSet = model.EmoteTable.FirstOrDefault(es => es.EmoteSetGuid == model.EmoteSetGuid);
+                    EmoteCategoryListing emoteTable = null;
+                    if (model.EmoteTable.Count > (int)model.NewEmoteCategory)
+                        emoteTable = model.EmoteTable[(int)model.NewEmoteCategory];
 
-                    //if (emoteSet == null)
-                    //{
-                    //    model.ErrorMessages.Add("You must select an Emote Type to add.");
-                    //}
+                    if (emoteTable == null || model.EmoteSetGuid == null)
+                    {
+                        model.ErrorMessages.Add("Invalid Emote Set");
+                    }
+                    else
+                    {
+                        Emote emote = emoteTable.Emotes[model.EmoteSetGuid.Value];
+                        if (emote.Actions == null)
+                            emote.Actions = new List<EmoteAction>();
+
+                        int order = emote.Actions.Max(e => e.SortOrder) + 1 ?? 1;
+                        emote.Actions.Add(new EmoteAction()
+                        {
+							SortOrder = order,
+							EmoteActionType = (uint)emoteTable.NewEmoteType.Value,
+                        });
+                        emoteTable.NewEmoteType = EmoteType.Invalid;
+                    }
+                    model.NewEmoteCategory = EmoteCategory.Invalid;
+
                     //else
                     //{
                     //    var order = emoteSet.Emotes.Max(e => e.SortOrder) + 1;
@@ -498,7 +519,7 @@ namespace DerethForever.Web.Controllers
                         model.ErrorMessages.Add("You must select a skill to add.");
                     else
                         model.Skills.Add(new SkillListing() { SkillId = (int)model.NewSkillId.Value });
-                    
+
                     break;
 
                 case WeenieCommands.AddCreateItem:
@@ -581,7 +602,7 @@ namespace DerethForever.Web.Controllers
 
             return new EmptyResult();
         }
-        
+
         [HttpGet]
         public ActionResult DownloadOriginal(uint id)
         {
@@ -672,7 +693,7 @@ namespace DerethForever.Web.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
         [HttpGet]
         [Authorize]
         public ActionResult DownloadSandbox(uint id, string userGuid)
