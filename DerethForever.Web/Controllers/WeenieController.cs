@@ -568,6 +568,7 @@ namespace DerethForever.Web.Controllers
 
                         string serialized = Encoding.UTF8.GetString(data);
                         ImportedWeenie = JsonConvert.DeserializeObject<Weenie>(serialized);
+                        weenieId = ImportedWeenie.WeenieId;
                     }
 
                     return Json(new { id = weenieId });
