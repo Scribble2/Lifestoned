@@ -46,7 +46,7 @@ else
                         <div class="panel-heading">
                             @Html.Label("Changelog Comment")
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body text-nowrap">
                             @if (!string.IsNullOrWhiteSpace(Model[i].Weenie.UserChangeSummary))
                             {
                                 @Html.Raw(Html.Encode(Model[i].Weenie.UserChangeSummary))
@@ -70,7 +70,7 @@ else
                             <div class="panel-heading">
                                 @Html.Raw(Html.Encode(Model[i].Discussion[j].UserName + " on " + Model[i].Discussion[j].Created.ToString("g")))
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body text-nowrap">
                                 @Html.Raw(Html.Encode(Model[i].Discussion[j].Comment))
                             </div>
                         </div>

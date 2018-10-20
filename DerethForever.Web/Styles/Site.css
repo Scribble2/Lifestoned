@@ -255,9 +255,9 @@ a[data-toggle]:before {
     margin-right: 5px;
 }
 
-a[data-toggle][aria-expanded=false]:before {
+a[data-toggle=collapse][aria-expanded=false]:before, a[data-toggle=collapse]:before {
     content: "\002b";
 }
-a[data-toggle][aria-expanded=true]:before {
+a[data-toggle=collapse][aria-expanded=true]:before {
     content: "\2212";
 }
