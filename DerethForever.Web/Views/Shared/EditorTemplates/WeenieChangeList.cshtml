@@ -65,7 +65,7 @@ else
                             <div class="panel-heading">
                                 @Html.Raw(Html.Encode(Model[i].Discussion[j].UserName + " on " + Model[i].Discussion[j].Created.ToString("g")))
                             </div>
-                            <div class="panel-body text-nowrap">
+                            <div class="panel-body text-prewrap">
                                 @Html.Raw(Html.Encode(Model[i].Discussion[j].Comment))
                             </div>
                         </div>

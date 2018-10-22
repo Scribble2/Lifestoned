@@ -11,7 +11,7 @@
                 <div class="panel-heading">
                     @Html.Raw(Html.Encode(Model[i].Author + " on " + Model[i].Created.ToString("g")))
                 </div>
-                <div class="panel-body">
+                <div class="panel-body text-prewrap">
                     @Html.Raw(Html.Encode(Model[i].Comment))
                 </div>
             </div>

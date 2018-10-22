@@ -41,6 +41,10 @@ select {
     color: #DDDDDD !important;
 }
 
+.text-prewrap {
+    white-space: pre-wrap;
+}
+
 .row-spacer {
     margin: 4px;
 }
