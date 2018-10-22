@@ -50,6 +50,14 @@ namespace DerethForever.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetDynamicIcon(int? itemType, uint? underlayId, uint? overlayId, uint? iconId, int? uiEffects)
+        {
+            byte[] src = new byte[] { };
+            src = Lifestoned.Lib.ResourceManager.GetFullyLayeredPngIcon(itemType, underlayId, overlayId, iconId, uiEffects);
+            return File(src, "image/png");
+        }
+
+        [HttpGet]
         public ActionResult GetImage(uint imageId)
         {
             byte[] src = new byte[] { };

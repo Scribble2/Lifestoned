@@ -8,7 +8,7 @@
 
 <br />
 
-@using (Html.BeginForm("New", "Weenie", FormMethod.Post))
+@using (Html.BeginForm(Model.IsCloneMode ? "Clone" : "New", "Weenie", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -27,7 +27,14 @@
             @if (Model.IconId != null)
             {
                 <div class="icon">
-                    <img src="@Url.Action("GetFullyLayeredPngIcon", "Resource", new { weenieClassId = Convert.ToUInt32(Model.WeenieClassId) }) " />
+                    <!-- GetDynamicIcon(int? itemType, uint? underlayId, uint? overlayId, uint? iconId, int? uiEffects)-->
+                    <img src="@Url.Action("GetDynamicIcon", "Resource",
+                                  new {
+                                      itemType = Model.ItemType,
+                                      underlayId = Model.UnderlayId,
+                                      overlayId = Model.OverlayId,
+                                      iconId = Model.IconId,
+                                      uiEffects = Model.UIEffects }) "/>
                 </div>
             }
         </h2>
@@ -36,6 +43,7 @@
 
             @Html.HiddenFor(m => m.MvcAction)
             @Html.HiddenFor(m => m.PropertyTab)
+            @Html.HiddenFor(m => m.IsCloneMode)
             @Html.DisplayFor(m => m, "InfoMessages")
 
             <div class="well">

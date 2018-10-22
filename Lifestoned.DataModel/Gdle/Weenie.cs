@@ -29,6 +29,9 @@ namespace Lifestoned.DataModel.Gdle
 {
     public class Weenie : BaseModel
     {
+        [JsonIgnore]
+        public bool IsCloneMode { get; set; } = false;
+
         [JsonProperty("wcid")]
         public uint WeenieId { get; set; }
 

@@ -50,8 +50,7 @@ namespace DerethForever.Web.Models.Discord
 
             string links = "";
             links += $"[Lifestoned](http://www.lifestoned.org)";
-            links += $" | [Download DF Json](http://www.lifestoned.org/Weenie/DownloadOriginalToDfJson?id={WeenieId})";
-            links += $" | [Download GDLE Json](http://www.lifestoned.org/Weenie/DownloadOriginalToPhatJson?id={WeenieId})";
+            links += $" | [Download Json](http://www.lifestoned.org/Weenie/DownloadOriginal?id={WeenieId})";
 
             embed.Fields.Add(new Field { Name = "Links", Value = links });
 

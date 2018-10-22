@@ -165,15 +165,53 @@ namespace DerethForever.Web.Controllers
         {
             Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
             model.WeenieId = 0;
+            model.IsCloneMode = true;
             ImportedWeenie = model;
-            return RedirectToAction("New");
+            return View("New", model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Clone(Weenie model)
+        {
+            ActionResult result = HandlePostback(model);
+
+            if (result != null)
+                return result;
+
+            result = ValidateWeenie(model);
+
+            if (result != null)
+                return result;
+
+            model.CleanDeletedAndEmptyProperties();
+            model.LastModified = DateTime.Now;
+            model.ModifiedBy = GetUserName();
+
+            try
+            {
+                SandboxContentProviderHost.CurrentProvider.CreateWeenie(GetUserToken(), model);
+
+                IndexModel indexModel = new IndexModel();
+                indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully created.");
+                CurrentIndexModel = indexModel;
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                model.ErrorMessages.Add("Error saving weenie in the API");
+                model.Exception = ex;
+            }
+
+            return View("New", model);
         }
 
         [HttpGet]
         [Authorize]
         public ActionResult New()
         {
-            Weenie model = ImportedWeenie ?? new Weenie();
+            Weenie model = new Weenie();
 
             return View(model);
         }
@@ -909,7 +947,15 @@ namespace DerethForever.Web.Controllers
                 wse.SubmittingUserGuid = theOne.UserGuid;
                 wse.ChangelogComment = theOne.Weenie.UserChangeSummary;
                 wse.SubmittingUser = CurrentUser.DisplayName;
-                // wse.WeenieId = theOne.Weenie.DataObjectId;
+                wse.WeenieId = theOne.Weenie.WeenieId;
+
+                // icon generation data for thumbnail
+                wse.ItemType = theOne.Weenie.ItemType;
+                wse.UnderlayId = theOne.Weenie.UnderlayId;
+                wse.OverlayId = theOne.Weenie.OverlayId;
+                wse.IconId = theOne.Weenie.IconId;
+                wse.UiEffects = theOne.Weenie.UIEffects;
+
                 wse.WeenieName = theOne.Weenie.Name;
                 wse.SubmissionTime = DateTimeOffset.Now;
                 DiscordController.PostToDiscordAsync(wse);

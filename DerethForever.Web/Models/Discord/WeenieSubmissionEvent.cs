@@ -36,11 +36,21 @@ namespace DerethForever.Web.Models.Discord
 
         public uint WeenieId { get; set; }
 
+        public int? ItemType { get; set;}
+        
+        public uint? UnderlayId { get; set; }
+
+        public uint? OverlayId { get; set; }
+
+        public uint? IconId { get; set; }
+
+        public int? UiEffects { get; set; }
+
         public string ChangelogComment { get; set; }
 
         public Message GetDiscordMessage()
         {
-            Embed embed = Embed.GetDefault(SubmittingUser, SubmissionTime, WeenieId);
+            Embed embed = Embed.GetWithDynamicIcon(SubmittingUser, SubmissionTime, ItemType, UnderlayId, OverlayId, IconId, UiEffects);
 
             embed.Title = $"{WeenieName} - {WeenieId}";
             embed.Description = $"Changes submitted by {SubmittingUser}.\n";
