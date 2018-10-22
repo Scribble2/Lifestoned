@@ -138,12 +138,14 @@ namespace DerethForever.Web.Controllers
         {
             Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
             SortTheThings(model);
-
             return View(model);
         }
 
         private void SortTheThings(Weenie model)
         {
+            if (model == null)
+                return;
+
             var deprecatedWeenieTypeProperty = model.IntStats.FirstOrDefault(ip => ip.Key == 9007);
             if (deprecatedWeenieTypeProperty != null)
                 model.IntStats.Remove(deprecatedWeenieTypeProperty);
@@ -152,10 +154,31 @@ namespace DerethForever.Web.Controllers
             model.IntStats = model.IntStats.OrderBy(ip => ip.Key).ToList();
             model.FloatStats = model.FloatStats.OrderBy(dp => dp.Key).ToList();
 
+            int emoteOrder = 0;
+
             if (model.EmoteTable != null)
             {
                 model.EmoteTable = model.EmoteTable.OrderBy(e => e.EmoteCategoryId).ToList();
-                model.EmoteTable.ForEach(t => t.Emotes = t.Emotes.OrderBy(e => e.SortOrder).ToList());
+                model.EmoteTable.ForEach(
+					t => t.Emotes = t.Emotes.OrderBy(e => e.SortOrder).Select(ts =>
+						{
+                            if (ts.SortOrder != null && ts.SortOrder.Value > emoteOrder)
+                                emoteOrder = ts.SortOrder.Value;
+                            else
+                                ts.SortOrder = ++emoteOrder;
+
+                            int actionOrder = 0;
+                            ts.Actions = ts.Actions.OrderBy(ea => ea.SortOrder).Select(tsa =>
+                            {
+                                if (tsa.SortOrder != null && tsa.SortOrder.Value > actionOrder)
+                                    actionOrder = tsa.SortOrder.Value;
+                                else
+                                    tsa.SortOrder = ++actionOrder;
+
+                                return tsa;
+                            }).ToList();
+                            return ts;
+                        }).ToList());
             }
         }
 
@@ -398,7 +421,7 @@ namespace DerethForever.Web.Controllers
                 model.ErrorMessages.Add("Item Type is required.");
             }
 
-            if (model.WeenieTypeId == null || model.WeenieTypeId == 0)
+            if (model.WeenieTypeId == 0)
             {
                 isValid = false;
                 model.ErrorMessages.Add("Weenie Type is required.");
@@ -415,6 +438,8 @@ namespace DerethForever.Web.Controllers
                     }
                 }
             }
+
+            SortTheThings(model);
 
             if (!isValid)
                 return View(model);

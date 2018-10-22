@@ -342,6 +342,7 @@
     <Content Include="Views\Shared\EditorTemplates\EmoteActionList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Frame.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Position.cshtml" />
+    <Content Include="Views\Weenie\EditorScript.cshtml" />
     <None Include="Web.example.config">
       <SubType>Designer</SubType>
     </None>

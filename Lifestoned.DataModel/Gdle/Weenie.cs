@@ -256,15 +256,16 @@ namespace Lifestoned.DataModel.Gdle
         /// </summary>
         public void CleanDeletedAndEmptyProperties()
         {
-            StringStats?.RemoveAll(x => x == null || x.Deleted || x.Value == null);
-            IntStats?.RemoveAll(x => x == null || x.Deleted || x.Value == null);
-            Int64Stats?.RemoveAll(x => x == null || x.Deleted || x.Value == null);
-            FloatStats?.RemoveAll(x => x == null || x.Deleted || x.Value == null);
+            StringStats?.RemoveAll(x => x == null || x.Deleted || string.IsNullOrEmpty(x.Value));
+            IntStats?.RemoveAll(x => x == null || x.Deleted);
+            Int64Stats?.RemoveAll(x => x == null || x.Deleted);
+            FloatStats?.RemoveAll(x => x == null || x.Deleted);
             BoolStats?.RemoveAll(x => x == null || x.Deleted);
-            DidStats?.RemoveAll(x => x == null || x.Deleted || x.Value == null);
+            DidStats?.RemoveAll(x => x == null || x.Deleted);
             Spells?.RemoveAll(x => x == null || x.Deleted);
             Book?.Pages?.RemoveAll(x => x == null || x.Deleted);
             Positions?.RemoveAll(x => x == null || x.Deleted);
+            EmoteTable?.ForEach(es => es?.Emotes?.ForEach(esa => esa?.Actions.RemoveAll(x => x == null || x.Deleted)));
             EmoteTable?.ForEach(es => es?.Emotes?.RemoveAll(x => x == null || x.Deleted));
             EmoteTable?.RemoveAll(x => x == null || x.Deleted);
             Body?.BodyParts?.RemoveAll(x => x == null || x.Deleted);
