@@ -318,9 +318,8 @@ namespace Lifestoned.Providers
                             string content = File.ReadAllText(file);
 
                             Weenie weenie = JsonConvert.DeserializeObject<Weenie>(content);
-
+                            weenie.CleanDeletedAndEmptyProperties();
                             Weenies.TryAdd(weenie.WeenieId, weenie);
-
                         }
                         catch (Exception ex)
                         {

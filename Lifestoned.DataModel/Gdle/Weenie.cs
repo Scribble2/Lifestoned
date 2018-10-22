@@ -269,6 +269,9 @@ namespace Lifestoned.DataModel.Gdle
             CreateList?.RemoveAll(x => x == null || x.Deleted);
             Skills?.RemoveAll(x => x == null || x.Deleted);
 
+            // this property's existence causes all sorts of problems.  needs to go away.
+            IntStats?.RemoveAll(x => x.Key == 9007);
+
             if (!HasAbilities)
                 Attributes = null;
         }

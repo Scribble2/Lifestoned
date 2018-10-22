@@ -17,6 +17,8 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
+
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Lifestoned.DataModel.Shared
@@ -823,8 +825,15 @@ namespace Lifestoned.DataModel.Shared
     {
         public static string GetName(this IntPropertyId prop)
         {
-            var description = EnumHelper.GetAttributeOfType<DisplayAttribute>(prop);
-            return description?.Name ?? prop.ToString();
+            try
+            {
+                var description = EnumHelper.GetAttributeOfType<DisplayAttribute>(prop);
+                return description?.Name ?? prop.ToString();
+            }
+            catch (Exception ex)
+            {
+                return $"{(int)prop} - Unknown";
+            }
         }
     }
 }
