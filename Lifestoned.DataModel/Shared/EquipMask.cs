@@ -79,7 +79,7 @@ namespace Lifestoned.DataModel.Shared
         MissileAmmo      = 0x00800000,
         Held             = 0x01000000,
         [Display(Name    = "Two Hand")]
-        TwoHanded        = 0x0200000,
+        TwoHanded        = 0x02000000,
         [Display(Name    = "Trinket")]
         TrinketOne       = 0x04000000,
         [Display(Name    = "Cloak")]
