@@ -12,14 +12,14 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="btn-group-vertical stuck" role="group">
-    <button id="btnSave" type="submit" class="btn btn-primary" title="Save"><i class="glyphicon glyphicon-floppy-save"></i></button>
-    <a href="@Url.Action("Edit", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Cancel"><i class="glyphicon glyphicon-remove"></i></a>
-    @if (User.IsInRole("Admin"))
-    {
-        <a href="@Url.Action("Delete", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
-    }
-</div>
+    <div class="btn-group-vertical stuck" role="group">
+        <button id="btnSave" type="submit" class="btn btn-primary" title="Save"><i class="glyphicon glyphicon-floppy-save"></i></button>
+        <a href="@Url.Action("Edit", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Cancel"><i class="glyphicon glyphicon-remove"></i></a>
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="@Url.Action("Delete", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+        }
+    </div>
 
     <div class="form-horizontal">
         <h2>
@@ -52,7 +52,7 @@
                     Check this box when this weenie is completely done with editing for purposes of restoring Dereth to its January 2017 state.
                 </div>
             </div>
-            
+
             <div class="well">
                 <div class="row row-spacer">
                     <div class="col-md-2 vcenter">
@@ -398,16 +398,16 @@
                     </div>
                 </div>
                 @Html.DisplayFor(m => m.Changelog, "Changelog")
-                <div class="row row-spacer">
-                    <div class="col-md-2">
-                        @Html.Label("Comments")
+                @*<div class="row row-spacer">
+                        <div class="col-md-2">
+                            @Html.Label("Comments")
+                        </div>
                     </div>
-                </div>
-                <div class="row row-spacer">
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(m => m.Comments, new { @class = "form-control" })
-                    </div>
-                </div>
+                    <div class="row row-spacer">
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(m => m.Comments, new { @class = "form-control" })
+                        </div>
+                    </div>*@
             </div>
 
             <div class="well">
@@ -532,5 +532,5 @@
 
 
 @section scripts {
-@Html.Partial("EditorScript")
+    @Html.Partial("EditorScript")
 }

@@ -104,7 +104,8 @@
             parentDiv = $(this).parent().parent();
             var deleteInput = parentDiv.find("[id$=Deleted]");
             deleteInput.val("True");
-            parentDiv.parent().addClass("hidden");
+            $(this).parents(".row.row-spacer, .panel").addClass("hidden");
+            //parentDiv.parent().addClass("hidden");
         });
 
         $("#removePage").on("click", function () {

@@ -518,7 +518,11 @@ namespace DerethForever.Web.Controllers
                     if (model.NewSpellId == null)
                         model.ErrorMessages.Add("You must select a Spell to add.");
                     else
+                    {
+                        if (model.Spells == null)
+                            model.Spells = new List<SpellbookEntry>();
                         model.Spells.Add(new SpellbookEntry() { SpellId = (int)model.NewSpellId.Value });
+                    }
 
                     model.NewSpellId = null;
                     break;
@@ -527,11 +531,17 @@ namespace DerethForever.Web.Controllers
                     if (model.NewPositionType == null)
                         model.ErrorMessages.Add("You must select a Position Type to add.");
                     else
+                    {
+                        if (model.Positions == null)
+                            model.Positions = new List<PositionListing>();
                         model.Positions.Add(new PositionListing() { PositionType = (int)model.NewPositionType.Value });
+                    }
 
                     break;
 
                 case WeenieCommands.AddBookPage:
+                    if (model.Book == null)
+                        model.Book = new Book();
                     model.Book.Pages.Add(new Page());
                     break;
 
@@ -547,6 +557,8 @@ namespace DerethForever.Web.Controllers
                     break;
 
                 case WeenieCommands.AddGeneratorTable:
+                    if (model.GeneratorTable == null)
+                        model.GeneratorTable = new List<GeneratorTable>();
                     model.GeneratorTable.Add(new GeneratorTable());
                     break;
 
@@ -588,24 +600,37 @@ namespace DerethForever.Web.Controllers
                     if (model.NewSkillId == null)
                         model.ErrorMessages.Add("You must select a skill to add.");
                     else
+                    {
+                        if (model.Skills == null)
+                            model.Skills = new List<SkillListing>();
                         model.Skills.Add(new SkillListing() { SkillId = (int)model.NewSkillId.Value });
+                    }
+
 
                     break;
 
                 case WeenieCommands.AddCreateItem:
+                    if (model.CreateList == null)
+                        model.CreateList = new List<CreateItem>();
                     model.CreateList.Add(new CreateItem());
                     break;
 
                 case WeenieCommands.AddBodyParts:
                     model.Body = model.Body ?? new Body();
-                    model.Body.BodyParts = model.Body.BodyParts ?? new List<BodyPartListing>()
+                    model.Body.BodyParts.Add(new BodyPartListing()
                     {
-                        new BodyPartListing() { Key = 0 }
-                    };
+                        Key = 0
+                    });
+
                     break;
 
                 case WeenieCommands.AddBodyPart:
-                    // model.BodyParts.Add(new Models.Shared.BodyPart() { BodyPartType = model.NewBodyPartType ?? BodyPartType.Head });
+                    int key = model.Body.BodyParts.Max(bpl => bpl.Key) + 1;
+                    model.Body.BodyParts.Add(new BodyPartListing()
+                    {
+                        Key = key,
+                        BodyPartType = model.NewBodyPartType ?? BodyPartType.Head
+                    });
                     break;
 
                 case null:
