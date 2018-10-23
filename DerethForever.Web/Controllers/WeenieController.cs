@@ -76,8 +76,15 @@ namespace DerethForever.Web.Controllers
                 var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
                 var contents = JsonConvert.SerializeObject(weenie, Formatting.None, settings);
 
+                // build filename
+                var name = weenie.Name;
+                var removeChars = new List<string>() { "\t", "\n", "!", "\"" };
+                foreach (var removeChar in removeChars)
+                    name = name.Replace(removeChar, "");
+
+                var filename = $"{update.WeenieClassId} - {name}.json";
+
                 // add json to zip file
-                var filename = update.WeenieClassId + "-" + weenie.Name + ".json";
                 zipFile.AddFile(filename, contents);
             }
             var bytes = zipFile.BuildZip();

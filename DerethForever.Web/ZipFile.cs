@@ -21,6 +21,36 @@ namespace DerethForever.Web
             Files.Add(new ZippedFile(filename, contents));
         }
 
+        /*       public byte[] BuildZip()
+               {
+                   var stream = new MemoryStream();
+                   var zipStream = new ZipOutputStream(stream);
+
+                   zipStream.SetLevel(5); // 0-9, 9 being the highest level of compression
+
+                   foreach (var file in Files)
+                   {
+                       var entry = new ZipEntry(file.Filename);
+                       entry.DateTime = DateTime.Now;
+                       entry.Size = file.Contents.Length;
+
+                       zipStream.PutNextEntry(entry);
+
+                       var bytes = Encoding.UTF8.GetBytes(file.Contents);
+                       zipStream.Write(bytes, 0, bytes.Length);
+
+                       zipStream.CloseEntry();
+                   }
+
+                   zipStream.IsStreamOwner = false;
+                   zipStream.Flush();
+                   zipStream.Finish();
+                   zipStream.Close();
+
+                   return stream.ToArray();
+               }
+           }*/
+
         public byte[] BuildZip()
         {
             var stream = new MemoryStream();
@@ -30,13 +60,14 @@ namespace DerethForever.Web
 
             foreach (var file in Files)
             {
+                var bytes = Encoding.UTF8.GetBytes(file.Contents);
+
                 var entry = new ZipEntry(file.Filename);
                 entry.DateTime = DateTime.Now;
-                entry.Size = file.Contents.Length;
+                entry.Size = bytes.Length;
 
                 zipStream.PutNextEntry(entry);
 
-                var bytes = Encoding.UTF8.GetBytes(file.Contents);
                 zipStream.Write(bytes, 0, bytes.Length);
 
                 zipStream.CloseEntry();
@@ -51,7 +82,7 @@ namespace DerethForever.Web
         }
     }
 
-    public class ZippedFile
+        public class ZippedFile
     {
         public string Filename;
         public string Contents;
