@@ -24,20 +24,13 @@ namespace Lifestoned.Providers
 
         protected string ContentPath { get; private set; }
 
+        private object weenieCacheMutex = new object();
+
         protected ConcurrentDictionary<uint, Weenie> Weenies { get; private set; }
 
-        [Flags]
-        protected enum LoadingFlags
-        {
-            None = 0x0000,
-            WeenieLoading = 0x0001,
-            WeenieLoaded = 0x0002,
+        protected object contentCacheMutex = new object();
 
-            Busy = WeenieLoading,
-            Complete = WeenieLoaded
-        }
-
-        protected LoadingFlags LoadState { get; private set; }
+        protected ConcurrentDictionary<Guid, Content> Content { get; private set; }
 
         public LocalContentProvider()
         {
@@ -51,16 +44,90 @@ namespace Lifestoned.Providers
             Reload();
         }
 
-        #region IContentProvider
+        public Release CutWorldRelease(string token, ReleaseType releaseType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] GetCurrentWorldRelease(string token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Release GetCurrentWorldReleaseInfo(string token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] GetWorldRelease(string token, string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Release GetWorldReleaseInfo(string token, string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Content> GetAllContent(string token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Content GetContent(string token, Guid contentGuid)
+        {
+            Content c = null;
+            Content.TryGetValue(contentGuid, out c);
+            return c;
+        }
+
+        public HttpStatusCode SaveContent(string token, Content content)
+        {
+            if (SaveContent(content))
+                return HttpStatusCode.OK;
+
+            return HttpStatusCode.InternalServerError;
+        }
+
+        private bool SaveContent(Content content)
+        {
+            if (content == null)
+                throw new ArgumentNullException(nameof(content));
+
+            if (content.ContentGuid == null)
+                content.ContentGuid = Guid.NewGuid();
+
+            try
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+
+                string path = Path.Combine(ContentPath, "content", $"{content.ContentGuid}.json");
+                string text = JsonConvert.SerializeObject(content, settings);
+
+                File.WriteAllText(path, text);
+
+                Content[content.ContentGuid.Value] = content;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Error saving content : {0}", ex);
+                return false;
+            }
+        }
 
         public bool CreateWeenie(string token, Weenie weenie)
         {
             return SaveWeenie(weenie);
         }
 
-        public Release CutWorldRelease(string token, ReleaseType releaseType)
+        public Weenie GetWeenie(string token, uint weenieClassId)
         {
-            throw new NotImplementedException();
+            Weenie result = null;
+            Weenies.TryGetValue(weenieClassId, out result);
+            return result;
         }
 
         public bool DeleteWeenie(string token, uint weenieClassId)
@@ -80,53 +147,6 @@ namespace Lifestoned.Providers
             {
                 return false;
             }
-        }
-
-        public List<Content> GetAllContent(string token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Content GetContent(string token, Guid contentGuid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public byte[] GetCurrentWorldRelease(string token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Release GetCurrentWorldReleaseInfo(string token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public byte[] GetFullyLayeredPngIcon(uint weenieClassId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Recipe GetRecipe(string token, Guid recipeGuid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Weenie GetWeenie(string token, uint weenieClassId)
-        {
-            Weenie result = null;
-            Weenies.TryGetValue(weenieClassId, out result);
-            return result;
-        }
-
-        public byte[] GetWorldRelease(string token, string fileName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Release GetWorldReleaseInfo(string token, string fileName)
-        {
-            throw new NotImplementedException();
         }
 
         public List<WeenieSearchResult> RecentChanges(string token)
@@ -168,21 +188,6 @@ namespace Lifestoned.Providers
                 IsDone = w.IsDone,
                 HasSandboxChange = !w.IsDone && w.LastModified != null
             }).ToList();
-        }
-
-        public List<Recipe> RecipeSearch(string token, SearchRecipesCriteria criteria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HttpStatusCode UpdateContent(string token, Content content)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateRecipe(string token, Recipe recipe)
-        {
-            throw new NotImplementedException();
         }
 
         public bool UpdateWeenie(string token, Weenie weenie)
@@ -264,88 +269,99 @@ namespace Lifestoned.Providers
             }).ToList();
         }
 
-        #endregion
-
-        #region Loading
-
         public void Reload()
         {
-            if ((LoadState & LoadingFlags.Busy) == LoadingFlags.None)
-            {
-                LoadState = LoadingFlags.None;
-
-                LoadWeenies();
-            }
+            LoadWeenies();
+            LoadContent();
         }
 
-        private void SetLoadState(LoadingFlags state, LoadingFlags clear = LoadingFlags.None)
+        protected void LoadContent()
         {
-            LoadState &= ~clear;
-            LoadState |= state;
+            lock (contentCacheMutex)
+            {
+                Content = new ConcurrentDictionary<Guid, Content>();
 
-            if (LoadState.HasFlag(LoadingFlags.WeenieLoaded))
-                Debug.WriteLine("Final Weenie Load Complete");
+                string path = Path.Combine(ContentPath, "content");
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+                foreach (string filePath in Directory.EnumerateFiles(path, "*.json"))
+                {
+                    try
+                    {
+                        string text = File.ReadAllText(filePath);
+                        Content content = JsonConvert.DeserializeObject<Content>(text);
+
+                        if (content.ContentGuid != null)
+                            Content.TryAdd(content.ContentGuid.Value, content);
+                        else
+                            log.WarnFormat("Content {0} was missing identifier", filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.ErrorFormat("Failed to load final content at {0} : {1}", filePath, ex.ToString());
+                    }
+                }
+            }
         }
 
         protected void LoadWeenies()
         {
-            SetLoadState(LoadingFlags.WeenieLoading, LoadingFlags.WeenieLoaded);
-
-            Weenies = new ConcurrentDictionary<uint, Weenie>();
-
-            string path = Path.Combine(ContentPath, "weenies");
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            // Load in background so the site is still usable while busy
-            ThreadPool.QueueUserWorkItem((state) =>
+            lock (weenieCacheMutex)
             {
-                int maxTasks = Environment.ProcessorCount;
-                int taskCount = 0;
+                Weenies = new ConcurrentDictionary<uint, Weenie>();
 
-                foreach (string filePath in Directory.EnumerateFiles(path, "*.json"))
+                string path = Path.Combine(ContentPath, "weenies");
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+                // Load in background so the site is still usable while busy
+                ThreadPool.QueueUserWorkItem((state) =>
                 {
-                    Interlocked.Increment(ref taskCount);
+                    int maxTasks = Environment.ProcessorCount;
+                    int taskCount = 0;
 
-                    ThreadPool.QueueUserWorkItem((fileState) =>
+                    foreach (string filePath in Directory.EnumerateFiles(path, "*.json"))
                     {
-                        try
-                        {
-                            string file = fileState as string;
-                            if (string.IsNullOrEmpty(file))
-                                return;
+                        Interlocked.Increment(ref taskCount);
 
-                            string content = File.ReadAllText(file);
-
-                            Weenie weenie = JsonConvert.DeserializeObject<Weenie>(content);
-                            weenie.CleanDeletedAndEmptyProperties();
-                            Weenies.TryAdd(weenie.WeenieId, weenie);
-                        }
-                        catch (Exception ex)
+                        ThreadPool.QueueUserWorkItem((fileState) =>
                         {
-                            log.ErrorFormat("Failed to load final weenie at {0} : {1}", fileState, ex.ToString());
-                        }
-                        finally
-                        {
-                            Interlocked.Decrement(ref taskCount);
-                        }
-                    },
-                    filePath);
+                            try
+                            {
+                                string file = fileState as string;
+                                if (string.IsNullOrEmpty(file))
+                                    return;
 
-                    while (taskCount > maxTasks)
-                    {
-                        Thread.Sleep(1);
+                                string content = File.ReadAllText(file);
+
+                                Weenie weenie = JsonConvert.DeserializeObject<Weenie>(content);
+                                weenie.CleanDeletedAndEmptyProperties();
+                                Weenies.TryAdd(weenie.WeenieId, weenie);
+                            }
+                            catch (Exception ex)
+                            {
+                                log.ErrorFormat("Failed to load final weenie at {0} : {1}", fileState, ex.ToString());
+                            }
+                            finally
+                            {
+                                Interlocked.Decrement(ref taskCount);
+                            }
+                        },
+                        filePath);
+
+                        while (taskCount > maxTasks)
+                        {
+                            Thread.Sleep(1);
+                        }
                     }
-                }
 
-                while (taskCount > 0)
-                    Thread.Sleep(1);
+                    while (taskCount > 0)
+                        Thread.Sleep(1);
 
-                SetLoadState(LoadingFlags.WeenieLoaded, LoadingFlags.WeenieLoading);
-            });
+                });
+            }
         }
-
-        #endregion
 
         private bool SaveWeenie(Weenie weenie)
         {
@@ -370,6 +386,21 @@ namespace Lifestoned.Providers
             {
                 return false;
             }
+        }
+
+        public List<Recipe> RecipeSearch(string token, SearchRecipesCriteria criteria)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateRecipe(string token, Recipe recipe)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Recipe GetRecipe(string token, Guid recipeGuid)
+        {
+            throw new NotImplementedException();
         }
     }
 }

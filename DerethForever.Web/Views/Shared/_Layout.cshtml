@@ -30,8 +30,8 @@
                     {
                         <li class="@(@ctrl == "Server" ? "active" : "")">@Html.ActionLink("Server Admin", "Index", "Server")</li>
                         <li class="@(@ctrl == "Account" ? "active" : "")">@Html.ActionLink("Accounts", "Accounts", "Account")</li>
+                        <li class="@(@ctrl == "Content" ? "active" : "")">@Html.ActionLink("Content", "Index", "Content")</li>
                     }
-                    <li class="@(@ctrl == "Content" ? "active" : "")">@Html.ActionLink("Content", "Index", "Content")</li>
                     <li class="@(@ctrl == "WorldRelease" ? "active" : "")">@Html.ActionLink("World Releases", "Index", "WorldRelease")</li>
                     <li class="@(@ctrl == "Weenie" ? "active" : "") dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Weenies<span class="caret"></span></a>

@@ -65,7 +65,7 @@ namespace Lifestoned.Providers
 
             ReloadWeenieCache();
             ReloadRecipeCache();
-            ReloadContentCache();
+            // ReloadContentCache();
         }
 
         private void ReloadWeenieCache()
@@ -290,12 +290,7 @@ namespace Lifestoned.Providers
         {
             return _backingProvider.GetContent(token, contentGuid);
         }
-
-        public byte[] GetFullyLayeredPngIcon(uint weenieClassId)
-        {
-            return _backingProvider.GetFullyLayeredPngIcon(weenieClassId);
-        }
-
+        
         public byte[] GetWorldRelease(string token, string fileName)
         {
             return _backingProvider.GetWorldRelease(token, fileName);
@@ -364,9 +359,9 @@ namespace Lifestoned.Providers
             return _backingProvider.RecipeSearch(token, criteria);
         }
 
-        public HttpStatusCode UpdateContent(string token, Content content)
+        public HttpStatusCode SaveContent(string token, Content content)
         {
-            return _backingProvider.UpdateContent(token, content);
+            return _backingProvider.SaveContent(token, content);
         }
 
         public bool UpdateWeenie(string token, Weenie weenie)

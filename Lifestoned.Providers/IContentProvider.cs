@@ -34,7 +34,7 @@ namespace Lifestoned.Providers
 
         Content GetContent(string token, Guid contentGuid);
 
-        HttpStatusCode UpdateContent(string token, Content content);
+        HttpStatusCode SaveContent(string token, Content content);
 
         List<WeenieSearchResult> WeenieSearch(string token, SearchWeeniesCriteria criteria);
 
@@ -49,9 +49,7 @@ namespace Lifestoned.Providers
         bool CreateWeenie(string token, Weenie weenie);
 
         bool DeleteWeenie(string token, uint weenieClassId);
-
-        byte[] GetFullyLayeredPngIcon(uint weenieClassId);
-
+        
         byte[] GetWorldRelease(string token, string fileName);
 
         byte[] GetCurrentWorldRelease(string token);
