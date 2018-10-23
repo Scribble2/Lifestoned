@@ -59,7 +59,7 @@
                             console.log('result.id: ' + result.id);
 
                             if (result.id > 0)
-                                window.location.href = '@(Url.Action("EditImported", "Weenie"))';
+                                window.location.href = '@(Url.Action("NewImported", "Weenie"))';
                         },
                         error: function (xhr, status, p3, p4){
                             var err = "Error " + " " + status + " " + p3 + " " + p4;

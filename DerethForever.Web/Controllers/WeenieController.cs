@@ -360,6 +360,9 @@ namespace DerethForever.Web.Controllers
 
         private ActionResult ValidateWeenie(Weenie model)
         {
+            //ModelState.Clear();
+            //TryValidateModel(model);
+
             bool isValid = true;
 
             // validatate no duplicate properties
@@ -436,12 +439,15 @@ namespace DerethForever.Web.Controllers
 
             if (!ModelState.IsValid || !isValid)
             {
-                isValid = false;
-                foreach (ModelState state in ModelState.Values)
+                //foreach (ModelState state in ModelState.Values)
+				foreach (KeyValuePair<string, ModelState> pair in ModelState)
                 {
+                    ModelState state = pair.Value;
+
                     foreach (ModelError error in state.Errors)
                     {
                         model.ErrorMessages.Add(error.ErrorMessage);
+                        isValid = false;
                     }
                 }
             }
@@ -503,6 +509,15 @@ namespace DerethForever.Web.Controllers
                         model.DidStats.Add(new DidStat() { Key = (int)model.NewDidPropertyId.Value });
 
                     model.NewDidPropertyId = null;
+                    break;
+
+                case WeenieCommands.AddIidProperty:
+                    if (model.NewIidPropertyId == null)
+                        model.ErrorMessages.Add("You must select a Property to add.");
+                    else
+                        model.IidStats.Add(new IidStat() { Key = (int)model.NewIidPropertyId.Value });
+
+                    model.NewIidPropertyId = null;
                     break;
 
                 case WeenieCommands.AddBoolProperty:
@@ -704,10 +719,7 @@ namespace DerethForever.Web.Controllers
             try
             {
                 Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenieFromSource(GetUserToken(), id);
-                JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-                string content = JsonConvert.SerializeObject(model, Formatting.None, s);
-                string filename = $"{id}.json";
-                return File(Encoding.UTF8.GetBytes(content), "application/json", filename);
+                return DownloadWeenie(model);
             }
             catch (Exception ex)
             {
@@ -812,9 +824,18 @@ namespace DerethForever.Web.Controllers
             if (wc == null)
                 return new HttpNotFoundResult();
 
+            return DownloadWeenie(wc.Weenie);
+        }
+
+        private ActionResult DownloadWeenie(Weenie weenie)
+        {
             JsonSerializerSettings s = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            string content = JsonConvert.SerializeObject(wc.Weenie, Formatting.None, s);
-            string filename = $"{id}.json";
+            string content = JsonConvert.SerializeObject(weenie, Formatting.None, s);
+            string name = weenie.Name;
+            foreach (char ifn in System.IO.Path.GetInvalidFileNameChars())
+                name = name.Replace(ifn, '_');
+
+            string filename = $"{weenie.WeenieClassId} - {name}.json";
             return File(Encoding.UTF8.GetBytes(content), "application/json", filename);
         }
 
