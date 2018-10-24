@@ -265,3 +265,11 @@ a[data-toggle=collapse][aria-expanded=false]:before, a[data-toggle=collapse]:bef
 a[data-toggle=collapse][aria-expanded=true]:before {
     content: "\2212";
 }
+
+.dropzone {
+    color: #000;
+}
+
+    .dropzone .dz-preview.dz-error .dz-error-message {
+        display: none;
+    }

@@ -713,6 +713,44 @@ namespace DerethForever.Web.Controllers
             return new EmptyResult();
         }
 
+        [HttpPost]
+        [Authorize]
+        public ActionResult UploadEx2()
+        {
+            string fileNameCopy = "n/a";
+
+            try
+            {
+                foreach (string fileName in Request.Files)
+                {
+                    fileNameCopy = fileName;
+                    HttpPostedFileBase file = Request.Files[fileName];
+                    uint weenieId = 0;
+
+                    using (MemoryStream memStream = new MemoryStream())
+                    {
+                        file.InputStream.CopyTo(memStream);
+                        byte[] data = memStream.ToArray();
+
+                        string serialized = Encoding.UTF8.GetString(data);
+                        Weenie weenie = JsonConvert.DeserializeObject<Weenie>(serialized);
+                        weenieId = weenie.WeenieId;
+
+                        SandboxContentProviderHost.CurrentProvider.CreateWeenie(GetUserToken(), weenie);
+                    }
+
+                    //return Json(new { id = weenieId });
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error($"Error parsing uploaded weenie {fileNameCopy}.", ex);
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return new EmptyResult();
+        }
+
         [HttpGet]
         public ActionResult DownloadOriginal(uint id)
         {

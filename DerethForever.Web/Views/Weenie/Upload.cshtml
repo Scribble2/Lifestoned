@@ -10,11 +10,10 @@
     <hr />
 
     <p>
-        Using this page you can upload a <a href="#" data-toggle="tooltip" title="Intended to import/modify originally generated content from the GDLE emulator, not for use importing or modifying copyright protected content.">GDLE json file</a> of 1 object.  After uploading it, you will be taken to the
-    Weenie Editing page where you can make changes to it before saving it into Dereth Forever.  After uploading it
-    to Dereth Forever, you can download it from the Weenie Search page.
+    Using this page you can upload <a href="#" data-toggle="tooltip" title="Intended to import/modify originally generated content from the GDLE emulator, not for use importing or modifying copyright protected content.">GDLE json files</a> of 1 object each.
+    After upload, you can download it from the @Html.ActionLink("Sandbox", "Sandbox", "Weenie") page.
 
-    At the current time, the following properties are not yet implemented in Dereth Forever and will therefore be lost
+    At the current time, the following properties are not yet implemented and will therefore be lost
     upon export.  We recommend you restore this data into the JSON before importing into GDLE.
     <ul>
         <li>The Targeting data ("bpsd") of body parts is losing some floating point precision.</li>
@@ -25,15 +24,16 @@
     <br/>
 
     <div class="well">
-        <input type="file" name="UploadFile" id="txtUploadFile" />
+        @*<input type="file" name="UploadFile" id="txtUploadFile" />
         <br/>
-        <input type="button" value="Upload" id="btnUpload" class="btn btn-primary" />
+        <input type="button" value="Upload" id="btnUpload" class="btn btn-primary" />*@
+        <form id="dz" action="@Url.Action("UploadEx2", "Weenie")" class="dropzone"></form>
     </div>
 </div>
 
 @section scripts {
     <script language="javascript">
-        $('#btnUpload').on('click', function (e) {
+        @*$('#btnUpload').on('click', function (e) {
             var uploader = $('#txtUploadFile');
             var files = uploader[0].files;
             // console.log("files.length: " + files.length);
@@ -72,8 +72,27 @@
                     alert("This browser doesn't support HTML5 file uploads!");
                 }
             }
-        });
+        });*@
+        Dropzone.options.dz = {
 
+            acceptedFiles: 'application/json',
+            addRemoveLinks: true,
+            parallelUploads: 5,
+            init: function () {
+                var $this = this;
+
+                $this.on('addedfile', function () {
+                });
+
+                $this.on('success', function (file) {
+                    $this.removeFile(file);
+                });
+
+                $this.on('queueComplete', function () {
+                });
+            },
+            dictResponseError: "Upload Failed {{statusCode}}"
+        };
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });

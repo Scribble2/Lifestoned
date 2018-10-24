@@ -215,12 +215,14 @@
     <Content Include="images\mstile-150x150.png" />
     <Content Include="images\safari-pinned-tab.svg" />
     <Content Include="images\youtube_social_icon_red.png" />
+    <Content Include="Scripts\dropzone.js" />
     <Content Include="Styles\bootstrap-theme.css" />
     <Content Include="Styles\bootstrap-theme.min.css" />
     <Content Include="Styles\bootstrap.css" />
     <Content Include="Styles\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Styles\dropzone.css" />
     <Content Include="Styles\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
