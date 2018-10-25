@@ -4,43 +4,46 @@
 
 <div id="abilitiesContainer">
     <div class="row row-spacer">
-        <div class="col-md-2"><strong>Ability</strong></div>
-        <div class="col-md-2"><strong>Value</strong></div>
+        <div class="col-md-2"><strong>Name</strong></div>
+        <div class="col-md-2"><strong>Base</strong></div>
+        <div class="col-md-2"><strong>Ticks</strong></div>
+        <div class="col-md-2"><strong>Xp</strong></div>
+        <div class="col-md-2"><strong>Current</strong></div>
     </div>
     <div class="row row-spacer">
-        <div class="col-md-2 vcenter">Strength</div>
-        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Strength, "Ability")</div>
+        <div class="col-md-2">Strength</div>
+        @Html.EditorFor(m => m.Strength, "Ability")
     </div>
     <div class="row row-spacer">
-        <div class="col-md-2 vcenter">Endurance</div>
-        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Endurance, "Ability")</div>
+        <div class="col-md-2">Endurance</div>
+        @Html.EditorFor(m => m.Endurance, "Ability")
     </div>
     <div class="row row-spacer">
-        <div class="col-md-2 vcenter">Coordination</div>
-        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Coordination, "Ability")</div>
+        <div class="col-md-2">Coordination</div>
+        @Html.EditorFor(m => m.Coordination, "Ability")
     </div>
     <div class="row row-spacer">
-        <div class="col-md-2 vcenter">Quickness</div>
-        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Quickness, "Ability")</div>
+        <div class="col-md-2">Quickness</div>
+        @Html.EditorFor(m => m.Quickness, "Ability")
     </div>
     <div class="row row-spacer">
-        <div class="col-md-2 vcenter">Focus</div>
-        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Focus, "Ability")</div>
+        <div class="col-md-2">Focus</div>
+        @Html.EditorFor(m => m.Focus, "Ability")
     </div>
     <div class="row row-spacer">
-        <div class="col-md-2 vcenter">Self</div>
-        <div class="col-md-2 vcenter">@Html.EditorFor(m => m.Self, "Ability")</div>
+        <div class="col-md-2">Self</div>
+        @Html.EditorFor(m => m.Self, "Ability")
     </div>
     <div class="row row-spacer">
-        <div class="col-md-2 vcenter">Health</div>
-        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.Health.Ranks, new { @class = "form-control" })</div>
+        <div class="col-md-2">Health</div>
+        @Html.EditorFor(m => m.Health)
     </div>
     <div class="row row-spacer">
-        <div class="col-md-2 vcenter">Stamina</div>
-        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.Stamina.Ranks, new { @class = "form-control" })</div>
+        <div class="col-md-2">Stamina</div>
+        @Html.EditorFor(m => m.Stamina)
     </div>
     <div class="row row-spacer">
-        <div class="col-md-2 vcenter">Mana</div>
-        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.Mana.Ranks, new { @class = "form-control" })</div>
+        <div class="col-md-2">Mana</div>
+        @Html.EditorFor(m => m.Mana)
     </div>
 </div>

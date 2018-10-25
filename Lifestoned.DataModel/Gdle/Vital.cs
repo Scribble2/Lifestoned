@@ -34,10 +34,10 @@ namespace Lifestoned.DataModel.Gdle
         public uint? LevelFromCp { get; set; } = 0;
 
         [JsonProperty("init_level")]
-        public uint? Ranks { get; set; }
+        public uint? Ranks { get; set; } = 0;
 
         [JsonProperty("current")]
-        public uint? Current { get; set; }
+        public uint? Current { get; set; } = 0;
         
         public static Vital Convert(DerethForever.Ability ability)
         {

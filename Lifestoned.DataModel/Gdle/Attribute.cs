@@ -32,10 +32,10 @@ namespace Lifestoned.DataModel.Gdle
         public uint? XpSpent { get; set; } = 0;
 
         [JsonProperty("level_from_cp")]
-        public uint LevelFromCp { get; set; }
-        
+        public uint LevelFromCp { get; set; } = 0;
+
         [JsonProperty("init_level")]
-        public uint? Ranks { get; set; }
+        public uint? Ranks { get; set; } = 0;
         
         public static Attribute Convert(DerethForever.Ability ability)
         {

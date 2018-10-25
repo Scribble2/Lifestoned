@@ -44,6 +44,9 @@ select {
 .text-prewrap {
     white-space: pre-wrap;
 }
+    .text-prewrap:before, .text-prewrap:after {
+        white-space: normal;
+    }
 
 .row-spacer {
     margin: 4px;
@@ -58,14 +61,34 @@ select {
     border-color: #a94442;
 }
 
-.panel-default > .panel-heading {
+.panel:last-child {
+    margin-bottom: 0;
+}
+
+.panel-default > .panel-heading,
+.modal-content > .modal-header,
+.modal-content > .modal-footer {
     color: #fff;
     background-color: #00302c;
 }
-.panel-default > .panel-body, .panel-default > .panel-collapse > .panel-body {
+.panel-default > .panel-body,
+.panel-default > .panel-collapse > .panel-body,
+.modal-content > .modal-body {
     color: #fff;
     background-color: #0b4843;
 }
+
+.modal-content {
+    border: 1px solid #fff;
+}
+
+.modal-header .close {
+    color: #fff;
+    text-shadow: 0 1px 0 #000;
+    filter: alpha(opacity=30);
+    opacity: .3;
+}
+
 
 .navbar, .navbar .dropdown-menu {
     background-color: #00302c;

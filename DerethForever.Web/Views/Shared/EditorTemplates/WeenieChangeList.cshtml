@@ -12,7 +12,7 @@ else
     for (int i = 0; i < Model.Count; i++)
     {
     <div class="well @(!Model[i].Submitted ? "need-submit" : "")">
-        <div class="">
+        <div class="row">
             <div class="col-md-1">
                 <div class="icon">
                     <!-- GetDynamicIcon(int? itemType, uint? underlayId, uint? overlayId, uint? iconId, int? uiEffects)-->
@@ -62,43 +62,11 @@ else
             </div>
         </div>
         <br />
-        <a href="#discussion@(Model[i].Weenie.WeenieClassId)" data-toggle="collapse" aria-expanded="false">Discussion</a><br />
-        <div id="discussion@(Model[i].Weenie.WeenieClassId)" class="collapse">
-            <div class="row">
-                <div class="panel-group col-sm-10">
-                    @for (int j = 0; j < (Model[i].Discussion?.Count ?? 0); j++)
-                    {
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                @Html.Raw(Html.Encode(Model[i].Discussion[j].UserName + " on " + Model[i].Discussion[j].Created.ToString("g")))
-                            </div>
-                            <div class="panel-body text-prewrap">
-                                @Html.Raw(Html.Encode(Model[i].Discussion[j].Comment))
-                            </div>
-                        </div>
-                    }
 
-                    @if ((Model[i].Discussion?.Count ?? 0) == 0)
-                    {
-                        <p>No comments.</p>
-                    }
-                </div>
-            </div>
+        @Html.EditorFor(m => m[i], "WeenieChangeDiscussion")
 
-            <div class="row">
-                <div class="col-md-10">
-                    @using (Html.BeginForm("AddDiscussionComment", "Weenie", FormMethod.Post))
-                    {
-                        <input type="hidden" name="source" value="Sandbox" />
-                        <input type="hidden" name="userGuid" value="@(Model[i].UserGuid)" />
-                        <input type="hidden" name="weenieClassId" value="@(Model[i].Weenie.WeenieClassId)" />
-                        <textarea name="discussionComment" class="form-control" cols="25" rows="3"></textarea>
-                        <br />
-                        <input type="submit" class="btn btn-primary" value="Add Comment" />
-                    }
-                </div>
-            </div>
-        </div>
     </div>
     }
+
+    @Html.Partial("WeenieCommentModal", new { source = "Sandbox" })
 }

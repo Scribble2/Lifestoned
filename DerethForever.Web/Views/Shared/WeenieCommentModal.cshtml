@@ -1,0 +1,59 @@
+﻿
+<div class="modal fade" id="modal-discussion" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Discussion Comment</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input id="discussionUser" type="hidden" />
+                    <input id="discussionWeenie" type="hidden" />
+                    <textarea id="discussionComment" class="form-control" cols="25" rows="3"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#modal-discussion')
+            .on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                $('#discussionUser').val(button.data('user'));
+                $('#discussionWeenie').val(button.data('weenie'));
+            })
+            .find('.btn-primary').click(function (event) {
+                var comment = $('#discussionComment').val();
+                var weenie = $('#discussionWeenie').val();
+                var user = $('#discussionUser').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddDiscussionComment", "Weenie")',
+                    data: {
+                        source: '@(ViewBag.source)',
+                        userGuid: user,
+                        weenieClassId: weenie,
+                        discussionComment: comment
+                    },
+                    success: function(result) {
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, p3, p4){
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+                        console.log(err);
+                    }
+                });
+
+            });
+    });
+</script>

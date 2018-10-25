@@ -1,2 +1,5 @@
 @model Lifestoned.DataModel.Gdle.Attribute
-@Html.TextBoxFor(m => m.Ranks, new { @class = "form-control" })
+
+<div class="col-md-2">@Html.TextBoxFor(m => m.Ranks, new { @class = "form-control" })</div>
+<div class="col-md-2">@Html.TextBoxFor(m => m.LevelFromCp, new { @class = "form-control" })</div>
+<div class="col-md-2">@Html.TextBoxFor(m => m.XpSpent, new { @class = "form-control" })</div>

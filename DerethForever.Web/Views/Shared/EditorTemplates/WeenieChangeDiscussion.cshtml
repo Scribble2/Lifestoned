@@ -1,0 +1,46 @@
+﻿@using DerethForever.Web.Controllers
+@model Lifestoned.DataModel.Gdle.WeenieChange
+
+@*
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a data-toggle="collapse" href="#@(Html.Raw("emoteCategory_" + k))">@Html.Label("Emotes for Category: " + category.GetName())</a>
+                @Html.HiddenFor(m => m[k].EmoteCategoryId)
+            </div>
+
+            <div id="@(Html.Raw("emoteCategory_" + k))" class="panel-collapse collapse">
+*@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="#discussion@(Model.Weenie.WeenieClassId)" data-toggle="collapse" aria-expanded="false">Discussion</a>
+    </div>
+    <div id="discussion@(Model.Weenie.WeenieClassId)" class="panel-collapse collapse panel-body">
+        <div class="panel-group">
+            @for (int i = 0; i < (Model.Discussion?.Count ?? 0); i++)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @Html.Raw(Html.Encode(Model.Discussion[i].UserName + " on " + Model.Discussion[i].Created.ToString("g")))
+                    </div>
+                    <div class="panel-body text-prewrap">@Html.Raw(Html.Encode(Model.Discussion[i].Comment))</div>
+                </div>
+            }
+
+            @if ((Model.Discussion?.Count ?? 0) == 0)
+            {
+                <p>No comments.</p>
+            }
+        </div>
+        <div class="col-sm-10">
+            <button type="button" class="btn btn-primary"
+                    data-toggle="modal" data-target="#modal-discussion"
+                    data-user="@(Model.UserGuid)" data-weenie="@(Model.Weenie.WeenieClassId)">
+                Add Comment
+            </button>
+        </div>
+
+    </div>
+
+</div>

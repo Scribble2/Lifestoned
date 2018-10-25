@@ -345,6 +345,11 @@
     <Content Include="Views\Shared\EditorTemplates\Frame.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Position.cshtml" />
     <Content Include="Views\Weenie\EditorScript.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Skill.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\WeenieChangeDiscussion.cshtml" />
+    <Content Include="Views\Shared\WeenieCommentModal.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\WeenieChangeLog.cshtml" />
+    <Content Include="Views\Shared\SubmissionRejectModal.cshtml" />
     <None Include="Web.example.config">
       <SubType>Designer</SubType>
     </None>

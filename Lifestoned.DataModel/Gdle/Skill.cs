@@ -35,7 +35,7 @@ namespace Lifestoned.DataModel.Gdle
         public float? LastUsed { get; set; }
 
         [JsonProperty("init_level")]
-        public uint? Ranks { get; set; }
+        public uint? Ranks { get; set; } = 0;
 
         [JsonProperty("pp")]
         public uint? XpInvested { get; set; }
