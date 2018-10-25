@@ -280,7 +280,7 @@ namespace Lifestoned.DataModel.Gdle
         [EmoteType(EmoteType.Move)]
         [EmoteType(EmoteType.Turn)]
         [EmoteType(EmoteType.MoveToPos)]
-        public Frame Frame { get; set; }
+        public Frame Frame { get; set; } = new Frame();
 
         [JsonProperty("spellid", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.CastSpell)]
