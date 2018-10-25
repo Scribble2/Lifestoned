@@ -206,14 +206,49 @@
                 if (!validate())
                     e.preventDefault();
             });
-        });
 
-        $(document).ready(function() {
             $('#NewSpellId').selectize({});
-        });
-
-        $(document).ready(function () {
             $('.customMultiselect').selectize({ maxItems: null, allowEmptyOption: true });
+
+            $('#preview').click(function (evt) {
+                var link = $(this);
+                var href = link.attr('href');
+
+                var sid = $('#didProperties input[name$="Key"][value="1"]').parent().parent().find('input[name$="Value"]').val();
+                var cid = $('#didProperties input[name$="Key"][value="7"]').parent().parent().find('input[name$="Value"]').val();
+                var pid = $('#int32Properties input[name$="Key"][value="3"]')
+                    .parent().parent()
+                    .find('input[name$="Value"], option:selected').val();
+
+                var shade = $('#dblProperties input[name$="Key"][value="12"]')
+                    .parent().parent()
+                    .find('input[name$="Value"]').val();
+
+                if (cid && sid) {
+                    href = 'http://ac.yotesfan.com/10-Clothing/preview.php?id={{cid}}&setup={{sid}}&pal={{pid}}&shade={{shade}}';
+                    href = href.replace("{{cid}}", ('00000000' + parseInt(cid).toString(16)).substr(-8));
+                    if (pid) {
+                        href = href.replace("{{pid}}", pid);
+                    } else {
+                        alert('INT 3 Not Found');
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        return;
+                    }
+                    href = href.replace("{{shade}}", shade);
+                } else if (sid) {
+                    href = 'http://ac.yotesfan.com/02-Setup/?id={{sid}}'
+                } else {
+                    alert('Requires DID 1 or DID 1, 7, and INT 3');
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                    return;
+                }
+
+                href = href.replace("{{sid}}", ('00000000' + parseInt(sid).toString(16)).substr(-8));
+
+                link.attr('href', href);
+            });
         });
 </script>
 

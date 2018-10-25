@@ -12,14 +12,15 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="btn-group-vertical stuck" role="group">
-        <button id="btnSave" type="submit" class="btn btn-primary" title="Save"><i class="glyphicon glyphicon-floppy-save"></i></button>
-        <a href="@Url.Action("Edit", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Cancel"><i class="glyphicon glyphicon-remove"></i></a>
-        @if (User.IsInRole("Admin"))
-        {
-            <a href="@Url.Action("Delete", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
-        }
-    </div>
+<div class="btn-group-vertical stuck" role="group">
+    <button id="btnSave" type="submit" class="btn btn-primary" title="Save"><i class="glyphicon glyphicon-floppy-save"></i></button>
+    <a href="@Url.Action("Edit", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Cancel"><i class="glyphicon glyphicon-remove"></i></a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("Delete", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+    }
+    <a id="preview" target="_blank" href="http://ac.yotesfan.com/10-Clothing/preview.php?id={{cid}}&setup={{sid}}&pal={{pid}}" class="btn btn-primary" title="preview"><i class="glyphicon glyphicon-search"></i></a>
+</div>
 
     <div class="form-horizontal">
         <h2>
