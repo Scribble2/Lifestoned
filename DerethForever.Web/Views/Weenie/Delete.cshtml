@@ -1,5 +1,6 @@
 @using DerethForever.Web.Controllers;
-@using DerethForever.Web.Models.Weenie;
+@using Lifestoned.DataModel.Gdle;
+@using Lifestoned.DataModel.Shared;
 @model Weenie
 
 @{
@@ -17,8 +18,7 @@
 @using (Html.BeginForm("Delete", "Weenie", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.WeenieClassId)
-    @Html.HiddenFor(m => m.DataObjectId)
+    @Html.HiddenFor(m => m.WeenieId)
     @Html.HiddenFor(m => m.MvcAction)
 
     <button class="btn btn-danger" id="btnDelete">Delete</button>

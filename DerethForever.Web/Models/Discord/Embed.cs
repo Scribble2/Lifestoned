@@ -80,5 +80,16 @@ namespace DerethForever.Web.Models.Discord
 
             return embed;
         }
+
+        public static Embed GetWithDynamicIcon(string username, DateTimeOffset? created, int? itemType, uint? underlayId, uint? overlayId, uint? iconId, int? uiEffects)
+        {
+            Embed embed = new Embed();
+
+            embed.Timestamp = created;
+            embed.Thumbnail = new Image() { Url = $"http://www.lifestoned.org/Resource/GetDynamicIcon?itemType={itemType}&underlayId={underlayId}&overlayId={overlayId}&iconId={iconId}&uiEffects={uiEffects}" };
+            embed.Footer = new Footer { Text = $"Lifestoned WebHooks", IconUrl = "http://www.lifestoned.org/images/lifestone_192x192.png" };
+
+            return embed;
+        }
     }
 }

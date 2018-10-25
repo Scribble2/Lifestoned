@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DerethForever.Web.Models.Weenie.WeenieSearchResult>
+﻿@model IEnumerable<Lifestoned.DataModel.Shared.WeenieSearchResult>
 
 @if (Model != null)
 {
@@ -27,8 +27,8 @@
                     <td><i class="glyphicon @(weenie.IsDone ? "glyphicon-ok" : weenie.HasSandboxChange ? "glyphicon-time" : "glyphicon-remove")"></i></td>
                     <td>@weenie.WeenieClassId.ToString()</td>
                     <td>@weenie.Name</td>
-                    <td>@weenie.ItemType</td>
-                    <td>@weenie.WeenieType</td>
+                    <td>@weenie.ItemType_Display</td>
+                    <td>@weenie.WeenieType_Display</td>
                     <td>@Html.DisplayFor(w => weenie.LastModified)</td>
                     <td>@weenie.ModifiedBy</td>
                     <td>
@@ -50,12 +50,10 @@
                             <div class="btn-group dropdown" role="group">
                                 <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"><span class="glyphicon glyphicon-download" title="Download"></span>&nbsp;<span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="@Url.Action("DownloadOriginalToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Original, Phat JSON</a></li>
-                                    <li><a href="@Url.Action("DownloadOriginalToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Original, DF JSON</a></li>
+                                    <li><a href="@Url.Action("DownloadOriginal", "Weenie", new {id = weenie.WeenieClassId})">Original</a></li>
                                     @if (weenie.HasSandboxChange)
                                     {
-                                        <li><a href="@Url.Action("DownloadSandboxToPhatJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, Phat JSON</a></li>
-                                        <li><a href="@Url.Action("DownloadSandboxToDfJson", "Weenie", new {id = weenie.WeenieClassId})">Sandbox, DF JSON</a></li>
+                                        <li><a href="@Url.Action("DownloadSandbox", "Weenie", new {id = weenie.WeenieClassId})">Sandbox</a></li>
                                     }
                                 </ul>
                             </div>

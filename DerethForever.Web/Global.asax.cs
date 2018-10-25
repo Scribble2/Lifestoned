@@ -27,6 +27,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
+using Lifestoned.Lib;
+using Lifestoned.Providers;
 
 namespace DerethForever.Web
 {
@@ -48,7 +50,9 @@ namespace DerethForever.Web
             SandboxContentProviderHost.CurrentProvider = new SandboxContentProvider(new LocalContentProvider(finalDir), cacheDir);
             ContentProviderHost.CurrentProvider = SandboxContentProviderHost.CurrentProvider;
             ContentProviderHost.ManagedWorldProvider = new ManagedWorldProvider();
-            AuthProviderHost.PrimaryAuthProvider = new DatabaseAuthProvider();
+            // AuthProviderHost.PrimaryAuthProvider = new DummyAuthProvider();
+
+            PortalDatReader.Initialize(ConfigurationManager.AppSettings["PortalDat"]);
 
             // To handle exceptions
             GlobalFilters.Filters.Add(new CustomErrorHandler.CustomExceptionFilter());

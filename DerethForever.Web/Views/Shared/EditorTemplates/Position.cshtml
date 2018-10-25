@@ -1,0 +1,13 @@
+﻿@model Lifestoned.DataModel.Gdle.Position
+
+<div class="row row-spacer">
+    <div class="col-md-1"></div>
+    <div class=" col-md-3">
+        @Html.LabelFor(m => m.LandCellId)
+    </div>
+    <div class=" col-md-3">
+        @Html.TextBoxFor(m => m.LandCellId, new { @class = "form-control" })
+    </div>
+    <div class="col-md-5"></div>
+</div>
+@Html.EditorFor(m => m.Frame)

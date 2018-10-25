@@ -1,0 +1,69 @@
+﻿
+<div class="modal fade" id="modal-reject" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Reject Submission</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input id="rejectUser" type="hidden" />
+                    <input id="rejectWeenie" type="hidden" />
+                    <textarea id="rejectComment" class="form-control" cols="25" rows="3"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Reject</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@using (Html.BeginForm("RejectChange", "Weenie", FormMethod.Post))
+{
+    <input type="hidden" name="userGuid" value="@(Model[i].UserGuid)" />
+    <input type="hidden" name="weenieClassId" value="@(Model[i].Weenie.WeenieClassId)" />
+    <textarea name="rejectionComment" class="form-control" cols="25" rows="3"></textarea>
+    <br />
+    <input type="submit" class="btn btn-primary" value="Reject" />
+
+}*@
+
+<script>
+    $(function () {
+        $('#modal-reject')
+            .on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                $('#rejectUser').val(button.data('user'));
+                $('#rejectWeenie').val(button.data('weenie'));
+            })
+            .find('.btn-primary').click(function (event) {
+                var comment = $('#rejectComment').val();
+                var weenie = $('#rejectWeenie').val();
+                var user = $('#rejectUser').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RejectChange", "Weenie")',
+                    data: {
+                        userGuid: user,
+                        weenieClassId: weenie,
+                        rejectionComment: comment
+                    },
+                    success: function(result) {
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, p3, p4){
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+                        console.log(err);
+                    }
+                });
+
+            });
+    });
+</script>
+

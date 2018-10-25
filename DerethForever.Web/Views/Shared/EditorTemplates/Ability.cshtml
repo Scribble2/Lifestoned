@@ -1,10 +1,5 @@
-@model DerethForever.Web.Models.Shared.Ability
+@model Lifestoned.DataModel.Gdle.Attribute
 
-<div class="col-md-2 vcenter">
-    @Html.HiddenFor(m => m.AbilityId)
-    @Html.HiddenFor(m => m.ExperienceSpent)
-    @Html.HiddenFor(m => m.UnbuffedValue)
-    @Model.AbilityIdBinder
-</div>
-<div class="col-md-1 vcenter">@Html.TextBoxFor(m => m.Base, new { @class = "form-control" })</div>
-<div class="col-md-2 vcenter">@Html.TextBoxFor(m => m.Ranks, new { @class = "form-control" })</div>
+<div class="col-md-2">@Html.TextBoxFor(m => m.Ranks, new { @class = "form-control" })</div>
+<div class="col-md-2">@Html.TextBoxFor(m => m.LevelFromCp, new { @class = "form-control" })</div>
+<div class="col-md-2">@Html.TextBoxFor(m => m.XpSpent, new { @class = "form-control" })</div>

@@ -1,5 +1,5 @@
-@using DerethForever.Web.Controllers;
-@using DerethForever.Web.Models.Weenie;
+@using Lifestoned.DataModel.Gdle;
+@using Lifestoned.DataModel.Shared
 @model Weenie
 
 @{
@@ -8,42 +8,77 @@
 
 <br />
 
-@using (Html.BeginForm("New", "Weenie", FormMethod.Post))
+@using (Html.BeginForm(Model.IsCloneMode ? "Clone" : "New", "Weenie", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
 <div class="btn-group-vertical stuck" role="group">
     <button id="btnSave" type="submit" class="btn btn-primary" title="Save"><i class="glyphicon glyphicon-floppy-save"></i></button>
-    <a href="@Url.Action("Sandbox", "Weenie")" class="btn btn-primary" title="Cancel"><i class="glyphicon glyphicon-remove"></i></a>
+    <a href="@Url.Action("Edit", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Cancel"><i class="glyphicon glyphicon-remove"></i></a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("Delete", "Weenie", new { id = Model.WeenieClassId })" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
+    }
+    <a id="preview" target="_blank" href="http://ac.yotesfan.com/10-Clothing/preview.php?id={{cid}}&setup={{sid}}&pal={{pid}}" class="btn btn-primary" title="preview"><i class="glyphicon glyphicon-search"></i></a>
 </div>
 
     <div class="form-horizontal">
         <h2>
-            New Weenie
+            New @Html.Raw(Model.Name) (@(Html.DisplayFor(m => m.WeenieClassId)))
             @if (Model.IconId != null)
             {
                 <div class="icon">
-                    <img src="@Url.Action("GetFullyLayeredPngIcon", "Resource", new { weenieClassId = Convert.ToUInt32(Model.WeenieClassId) }) " />
+                    <!-- GetDynamicIcon(int? itemType, uint? underlayId, uint? overlayId, uint? iconId, int? uiEffects)-->
+                    <img src="@Url.Action("GetDynamicIcon", "Resource",
+                                  new {
+                                      itemType = Model.ItemType,
+                                      underlayId = Model.UnderlayId,
+                                      overlayId = Model.OverlayId,
+                                      iconId = Model.IconId,
+                                      uiEffects = Model.UIEffects }) "/>
                 </div>
             }
         </h2>
         <hr />
         <div class="container">
 
-            @Html.HiddenFor(m => m.DataObjectId)
             @Html.HiddenFor(m => m.MvcAction)
             @Html.HiddenFor(m => m.PropertyTab)
-            @Html.HiddenFor(m => m.EmoteSetGuid)
-            @Html.HiddenFor(m => m.EmoteGuid)
+            @Html.HiddenFor(m => m.IsCloneMode)
             @Html.DisplayFor(m => m, "InfoMessages")
 
             <div class="well">
-                <div class="row">
+                <div class="row row-spacer">
+                    <div class="col-md-2">
+                        @Html.LabelFor(m => m.IsDone)
+                    </div>
+                    <div class="col-md-8">
+                        @Html.CheckBoxFor(m => m.IsDone)
+                    </div>
+                </div>
+                <div class="row row-spacer">
+                    Check this box when this weenie is completely done with editing for purposes of restoring Dereth to its January 2017 state.
+                </div>
+            </div>
+            
+            <div class="well">
+                <div class="row row-spacer">
                     <div class="col-md-2 vcenter">
                         @Html.Label("Weenie ID")
                     </div>
+                    <div class="col-md-8 vcenter">
+                        @Html.TextBoxFor(m => m.WeenieClassId, new { @class = "form-control force-inline" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="well">
+                <div class="row row-spacer">
                     <div class="col-md-2 vcenter">
-                        @Html.TextBoxFor(m => m.WeenieClassId, new { @class = "form-control" })
+                        @Html.Label("Weenie Type")
+                    </div>
+                    <div class="col-md-8 vcenter">
+                        @Html.EnumDropDownListFor(m => m.WeenieType_Binder, new { @class = "form-control force-inline" })
                     </div>
                 </div>
             </div>
@@ -52,18 +87,18 @@
                 <h3>Properties</h3>
 
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#stringProperties">Strings <span class="badge">@Model.StringProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#int32Properties">Int32 <span class="badge">@Model.IntProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#int64Properties">Int64 <span class="badge">@Model.Int64Properties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#dblProperties">Double <span class="badge">@Model.DoubleProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#didProperties">Data IDs <span class="badge">@Model.DidProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#iidProperties">Instance IDs <span class="badge">@Model.IidProperties.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#boolProperties">Bool <span class="badge">@Model.BoolProperties.Count()</span></a></li>
+                    <li class="active"><a data-toggle="tab" href="#stringProperties">Strings <span class="badge">@Model.StringStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#int32Properties">Int32 <span class="badge">@Model.IntStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#int64Properties">Int64 <span class="badge">@Model.Int64Stats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#dblProperties">Double <span class="badge">@Model.FloatStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#didProperties">Data IDs <span class="badge">@Model.DidStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#iidProperties">Instance IDs <span class="badge">@Model.IidStats.Count()</span></a></li>
+                    <li><a data-toggle="tab" href="#boolProperties">Bool <span class="badge">@Model.BoolStats.Count()</span></a></li>
                 </ul>
 
                 <div class="tab-content">
                     <div id="stringProperties" class="tab-pane fade in active">
-                        @Html.EditorFor(m => m.StringProperties, "StringPropertyList")
+                        @Html.EditorFor(m => m.StringStats, "StringPropertyList")
 
                         <hr id="newStringRowMarker" />
                         <div class="row row-spacer">
@@ -82,26 +117,25 @@
                     </div>
 
                     <div id="int32Properties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.IntProperties, "IntPropertyList")
-
+                        @Html.EditorFor(m => m.IntStats, "IntPropertyList")
                         <hr id="newIntRowMarker" />
                         <div class="row row-spacer">
                             <div class="col-md-3">
                                 Add New Int Property
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 @Html.EnumDropDownListFor(m => m.NewIntPropertyId, new { @class = "form-control force-inline" })
                             </div>
                             <div class="col-md-1">
                                 <input type="button" class="btn btn-primary" id="addIntProperty" value="Add" formaction="New" formnovalidate="formnovalidate" />
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                             </div>
                         </div>
                     </div>
 
                     <div id="int64Properties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.Int64Properties, "Int64PropertyList")
+                        @Html.EditorFor(m => m.Int64Stats, "Int64PropertyList")
 
                         <hr id="newInt64RowMarker" />
                         <div class="row row-spacer">
@@ -119,7 +153,7 @@
                         </div>
                     </div>
                     <div id="dblProperties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.DoubleProperties, "DoublePropertyList")
+                        @Html.EditorFor(m => m.FloatStats, "DoublePropertyList")
 
                         <hr id="newDoubleRowMarker" />
                         <div class="row row-spacer">
@@ -137,7 +171,7 @@
                         </div>
                     </div>
                     <div id="didProperties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.DidProperties, "DataIdPropertyList")
+                        @Html.EditorFor(m => m.DidStats, "DataIdPropertyList")
 
                         <hr id="newDidRowMarker" />
                         <div class="row row-spacer">
@@ -155,7 +189,7 @@
                         </div>
                     </div>
                     <div id="iidProperties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.IidProperties, "InstanceIdPropertyList")
+                        @Html.EditorFor(m => m.IidStats, "InstanceIdPropertyList")
 
                         <hr id="newIidRowMarker" />
                         <div class="row row-spacer">
@@ -173,7 +207,7 @@
                         </div>
                     </div>
                     <div id="boolProperties" class="tab-pane fade">
-                        @Html.EditorFor(m => m.BoolProperties, "BoolPropertyList")
+                        @Html.EditorFor(m => m.BoolStats, "BoolPropertyList")
 
                         <hr id="newBoolRowMarker" />
                         <div class="row row-spacer">
@@ -215,8 +249,7 @@
             @if (Model.HasAbilities)
             {
                 <div class="well">
-                    @Html.EditorFor(m => m.Abilities, "AbilityList")
-                    @Html.EditorFor(m => m.Vitals, "VitalList")
+                    @Html.EditorFor(m => m.Attributes, "AbilityList")
                 </div>
 
                 <div class="well">
@@ -252,7 +285,7 @@
             @if (Model.HasBodyPartList)
             {
                 <div class="well">
-                    @Html.EditorFor(m => m.BodyParts, "BodyPartList")
+                    @Html.EditorFor(m => m.Body, "BodyPartList")
 
                     <div class="row row-spacer">
                         <div class="col-md-3">
@@ -301,7 +334,7 @@
             </div>
 
             <div class="well">
-                @Html.EditorFor(m => m.BookProperties, "BookPages")
+                @Html.EditorFor(m => m.Book, "BookPages")
 
                 <hr id="newBookPageRowMarker" />
                 <div class="row row-spacer">
@@ -317,39 +350,51 @@
                 </div>
             </div>
 
-            <div class="well" id="generatorTable">
-                @Html.EditorFor(m => m.GeneratorTable, "GeneratorTable")
+            @if (Model.HasGeneratorTable)
+            {
+                <div class="well" id="generatorTable">
+                    @Html.EditorFor(m => m.GeneratorTable, "GeneratorTable")
 
-                <hr id="newGeneratorTableRowMarker" />
-                <div class="row row-spacer">
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-1">
-                        <input type="button" class="btn btn-primary" id="addGeneratorTable" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
-                    </div>
-                    <div class="col-md-5">
+                    <hr id="newGeneratorTableRowMarker" />
+                    <div class="row row-spacer">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-1">
+                            <input type="button" class="btn btn-primary" id="addGeneratorTable" value="Add" formaction="New" formnovalidate="formnovalidate" />
+                        </div>
+                        <div class="col-md-3"></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="well" id="emoteTable">
-                @Html.EditorFor(m => m.EmoteTable, "EmoteSetList")
-
-                <hr id="newEmoteSetMarker" />
-                <div class="row row-spacer">
-                    <div class="col-md-3">
-                        @Html.Label("Add new Emote Set")
-                    </div>
-                    <div class="col-md-5">
-                        @Html.EnumDropDownListFor(m => m.NewEmoteCategory, new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-4">
-                        <input type="button" class="btn btn-primary" id="addEmoteSet" value="Add" formaction="New" formnovalidate="formnovalidate" />
+            }
+            else
+            {
+                <div class="well">
+                    <div class="row row-spacer">
+                        <div class="col-md-6">
+                            This Weenie has no Generator Table.  Click here to add one.<br />
+                            <input type="button" class="btn btn-primary" id="addGeneratorTable" value="Add" formaction="New" formnovalidate="formnovalidate" />
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+
+                <div class="well" id="emoteTable">
+                    @Html.HiddenFor(m => m.EmoteSetGuid)
+                    @Html.EditorFor(m => m.EmoteTable, "EmoteTable")
+
+                    <hr id="newEmoteSetMarker" />
+                    <div class="row row-spacer">
+                        <div class="col-md-3">
+                            @Html.Label("Add new Emote Set")
+                        </div>
+                        <div class="col-md-5">
+                            @Html.EnumDropDownListFor(m => m.NewEmoteCategory, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            <input type="button" class="btn btn-primary" id="addEmoteSet" value="Add" formaction="New" formnovalidate="formnovalidate" />
+                        </div>
+                    </div>
+                </div>
 
             <div class="well" id="createList">
                 @Html.EditorFor(m => m.CreateList, "CreateList")
@@ -364,309 +409,97 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row row-spacer">
-                <div class="col-md-2">
-                    @Html.LabelFor(m => m.ModifiedBy)
-                </div>
-                <div class="col-md-4">
-                    @Html.HiddenFor(m => m.ModifiedBy)
-                    @Html.DisplayFor(m => m.ModifiedBy)
-                </div>
-            </div>
+    </div>
 
-            <div class="row row-spacer">
-                <div class="col-md-2">
-                    @Html.LabelFor(m => m.LastModified)
+    <!-- Search Weenie Modal -->
+    <div class="modal fade" id="searchWeenieModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Weenie Search</h4>
                 </div>
-                <div class="col-md-4">
-                    @Html.HiddenFor(m => m.LastModified)
-                    @Html.DisplayFor(m => m.LastModified)
-                </div>
-            </div>
+                <div class="modal-body">
 
-            <div class="row row-spacer">
-                <div class="col-md-2">
-                    @Html.Label("Changelog Entry")
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-2" for="searchWeenie_Criteria_PartialName">Name</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="searchWeenie_Criteria_PartialName" name="Criteria.PartialName" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Criteria.PartialName" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-2" for="searchWeenie_Criteria_WeenieClassId">Weenie Id</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="searchWeenie_Criteria_WeenieClassId" name="Criteria.WeenieClassId" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Criteria.WeenieClassId" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-2" for="searchWeenie_Criteria_ItemType">Item Type</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="searchWeenie_Criteria_ItemType" name="Criteria.ItemType" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Criteria.ItemType" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-2" for="searchWeenie_Criteria_WeenieType">Weenie Type</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="searchWeenie_Criteria_WeenieType" name="Criteria.WeenieType" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Criteria.WeenieType" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="button" id="searchWeenieBtn" aria-label="Search" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="searchWeenieModalResults" style="display:none;">
+                        <!-- AJAX RESULTS GO HERE -->
+                        <table class="table table-striped table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Weenie Id</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Item Type</th>
+                                    <th>Weenie Type</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    @Html.TextAreaFor(m => m.UserChangeSummary, new { @class = "form-control" })
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 }
 
-<!-- Search Weenie Modal -->
-<div class="modal fade" id="searchWeenieModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Weenie Search</h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="form-group">
-                    <div class="row">
-                        <label class="control-label col-md-2" for="searchWeenie_Criteria_PartialName">Name</label>
-                        <div class="col-md-10">
-                            <input class="form-control" id="searchWeenie_Criteria_PartialName" name="Criteria.PartialName" type="text" value="" />
-                            <span class="field-validation-valid text-danger" data-valmsg-for="Criteria.PartialName" data-valmsg-replace="true"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <label class="control-label col-md-2" for="searchWeenie_Criteria_WeenieClassId">Weenie Id</label>
-                        <div class="col-md-10">
-                            <input class="form-control" id="searchWeenie_Criteria_WeenieClassId" name="Criteria.WeenieClassId" type="text" value="" />
-                            <span class="field-validation-valid text-danger" data-valmsg-for="Criteria.WeenieClassId" data-valmsg-replace="true"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="row">
-                        <label class="control-label col-md-2" for="searchWeenie_Criteria_ItemType">Item Type</label>
-                        <div class="col-md-10">
-                            <input class="form-control" id="searchWeenie_Criteria_ItemType" name="Criteria.ItemType" type="text" value="" />
-                            <span class="field-validation-valid text-danger" data-valmsg-for="Criteria.ItemType" data-valmsg-replace="true"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="row">
-                        <label class="control-label col-md-2" for="searchWeenie_Criteria_WeenieType">Weenie Type</label>
-                        <div class="col-md-10">
-                            <input class="form-control" id="searchWeenie_Criteria_WeenieType" name="Criteria.WeenieType" type="text" value="" />
-                            <span class="field-validation-valid text-danger" data-valmsg-for="Criteria.WeenieType" data-valmsg-replace="true"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="button" id="searchWeenieBtn" aria-label="Search" class="btn btn-primary">Search</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="searchWeenieModalResults" style="display:none;">
-                    <!-- AJAX RESULTS GO HERE -->
-                    <table class="table table-striped table-bordered table-hover table-condensed">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Weenie Id</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Item Type</th>
-                                <th>Weenie Type</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 @section scripts {
-    <script language="javascript">
-        $("#addStringProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddStringProperty));
-            $("#PropertyTab").val("stringProperties");
-            $("form").submit();
-        });
-
-        $("#addIntProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddIntProperty));
-            $("#PropertyTab").val("int32Properties");
-            $("form").submit();
-        });
-
-        $("#addInt64Property").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddInt64Property));
-            $("#PropertyTab").val("int64Properties");
-            $("form").submit();
-        });
-
-        $("#addDoubleProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddDoubleProperty));
-            $("#PropertyTab").val("dblProperties");
-            $("form").submit();
-        });
-
-        $("#addBoolProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddBoolProperty));
-            $("#PropertyTab").val("boolProperties");
-            $("form").submit();
-        });
-
-        $("#addDidProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddDidProperty));
-            $("#PropertyTab").val("didProperties");
-            $("form").submit();
-        });
-
-        $("#addIidProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddIidProperty));
-            $("#PropertyTab").val("iidProperties");
-            $("form").submit();
-        });
-
-        $("#addSpell").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddSpell));
-            $("form").submit();
-        });
-
-        $("#addSkill").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddSkill));
-            $("form").submit();
-        });
-
-        $("#addPosition").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddPosition));
-            $("form").submit();
-        });
-
-        $("#addBookPage").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddBookPage));
-            $("form").submit();
-        });
-
-        $("#addBodyParts").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddBodyParts));
-            $("form").submit();
-        });
-
-        $("#addBodyPart").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddBodyPart));
-            $("form").submit();
-        });
-
-        $("#addEmoteSet").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddEmoteSet));
-            $("form").submit();
-        });
-
-        $("input[name='addEmote']").on("click", function () {
-            var emoteSetGuid = $(this).attr("data-content");
-            $("#EmoteSetGuid").val(emoteSetGuid);
-            $("#MvcAction").val(@((int)WeenieCommands.AddEmote));
-            $("form").submit();
-        });
-
-        $("#addCreateItem").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddCreateItem));
-            $("form").submit();
-        });
-
-        $(".well").on("click", "[name^='remove']", function () {
-            // deleting the whole row (with inputs) makes the server side drop
-            // anything that comes after this one.  instead, we need to just set a flag
-            // and let the server handle removal of it.
-            parentDiv = $(this).parent().parent();
-            var deleteInput = parentDiv.find("[id$=Deleted]");
-            deleteInput.val("True");
-            parentDiv.addClass("hidden");
-        });
-
-        $("#removePage").on("click", function () {
-            // the generic handler will take care of the current row, but book pages
-            // are 2 rows, so we need to catch the second as well
-            secondRow = $(this).parent().parent().next();
-            secondRow.addClass("hidden");
-        });
-
-        $("#removeBodyPart").on("click", function () {
-            // the generic handler will take care of the current row, but body parts
-            // are are a whole panel
-            panel = $(this).parent().parent().parent().parent();
-            panel.addClass("hidden");
-        });
-
-        $(".well").on("click", "[name^='removeEmote']", function () {
-            // the generic handler will take care of the current row, but emote sets and emotes
-            // are bigger and have another container div to hide
-            var containerRow = $(event.target).parent().parent().parent();
-            containerRow.addClass("hidden");
-        });
-
-        // Add a search button after all class items of type weenieClassEntry to show the search modal popup
-        $(".weenieClassEntry").each(function (e) {
-            var searchBtn = $(this).after('<div class="btn btn-info modelSearchBtn pull-right" data-rel="' + $(this).attr("id") + '" style="margin-top:-2.4em;position:relative;"><span class="glyphicon glyphicon-search"></span></div>');
-        });
-
-        // Set the event listerner for the weenie modal search button
-        $(".modelSearchBtn").on("click", function () {
-            $("#searchWeenieModalResults").hide(); // re-hide any previous search results
-            $("#searchWeenieModalResults table tbody > tr").remove(); // clear any previous search results
-
-            $("#searchWeenieModal").modal();
-            weenieSearchTarget = $(this).attr("data-rel"); // store this so we can set the value of it later...
-        });
-
-        var weenieSearchTarget;
-        $("#searchWeenieBtn").on("click", function () {
-            $("#searchWeenieModalResults").hide(); // re-hide any previous search results
-            $("#searchWeenieModalResults table tbody > tr").remove(); // clear any previous search results
-
-            // Ordinarily would just serialize a form, but .NET seems to want to put the whole page into a form and can't do a form within a form, so...ugh, this is hacky!
-            var formData = "partialName=" + $("#searchWeenie_Criteria_PartialName").val()
-                + "&WeenieClassId=" + $("#searchWeenie_Criteria_WeenieClassId").val()
-                + "&ItemType=" + $("#searchWeenie_Criteria_ItemType").val()
-                + "&WeenieType=" + $("#searchWeenie_Criteria_WeenieType").val();
-
-            $.ajax(
-                {
-                    type: "POST",
-                    data: formData,
-                    dataType: "json",
-                    url: "/Weenie/WeenieFinder",
-                }).done(function (data) {
-                    console.log(data);
-
-                    if (data.length > 0) {
-                        var table = $("#searchWeenieModalResults table tbody");
-                        // Loop over the results and slap them into the table
-                        $.each(data, function (key, data) {
-                            $(table).append('<tr><td><a href="javascript:selectSearchWCID(' + data.WeenieClassId + ');" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-ok"></span></a></td><td> ' + data.WeenieClassId + '</td><td>' + data.Name + '</td><td>' + data.Description + '</td><td>' + data.ItemType + '</td><td>' + data.WeenieType + '</td></tr>')
-                        });
-
-                        $("#searchWeenieModalResults").show();
-                    } else {
-                        alert('No results found.');
-                    }
-                });
-
-        });
-
-        function selectSearchWCID(wcid) {
-            $("#" + weenieSearchTarget).val(wcid);
-            $("#searchWeenieModal").modal('hide');
-        }
-
-        $(document).ready(function () {
-            var tab = $("#PropertyTab").val();
-
-            if (tab != "") {
-                $('a[href="#' + tab + '"]').tab('show');
-            }
-
-            $("#MvcAction").val("");
-            $("#PropertyTab").val("");
-        });
-    </script>
+@Html.Partial("EditorScript")
 }

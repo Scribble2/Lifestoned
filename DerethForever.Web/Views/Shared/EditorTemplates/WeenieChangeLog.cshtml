@@ -1,0 +1,27 @@
+﻿@using DerethForever.Web.Controllers
+@model Lifestoned.DataModel.Gdle.Weenie
+
+<a href="#changes@(Model.WeenieClassId)" data-toggle="collapse" aria-expanded="false">Change Log</a><br />
+<div id="changes@(Model.WeenieClassId)" class="collapse">
+    <div class="row">
+        <div class="panel-group col-sm-10">
+            @for (int i = 0; i < (Model.Changelog?.Count ?? 0); i++)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @Html.Raw(Html.Encode(Model.Changelog[i].Author + " on " + Model.Changelog[i].Created.ToString("g")))
+                    </div>
+                    <div class="panel-body text-prewrap">@Html.Raw(Html.Encode(Model.Changelog[i].Comment))</div>
+                </div>
+            }
+
+            @if ((Model.Changelog?.Count ?? 0) == 0)
+            {
+                <p>No entries.</p>
+            }
+        </div>
+
+    </div>
+
+</div>
+

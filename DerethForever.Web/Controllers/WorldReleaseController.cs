@@ -24,7 +24,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DerethForever.Web.Models.WorldRelease;
+using Lifestoned.DataModel.WorldRelease;
 using Newtonsoft.Json;
 
 namespace DerethForever.Web.Controllers
@@ -39,13 +39,13 @@ namespace DerethForever.Web.Controllers
 
             try
             {
-                model.Results = new List<WorldRelease>();
+                model.Results = new List<Release>();
                 string releaseDir = Path.GetFullPath(ConfigurationManager.AppSettings["WorldReleaseDir"]);
                 var allReleases = Directory.GetFiles(releaseDir, "*.json", SearchOption.AllDirectories).OrderByDescending(f => new FileInfo(f).CreationTime).ToList();
 
                 foreach(var file in allReleases)
                 {
-                    model.Results.Add(JsonConvert.DeserializeObject<WorldRelease>(System.IO.File.ReadAllText(file)));
+                    model.Results.Add(JsonConvert.DeserializeObject<Release>(System.IO.File.ReadAllText(file)));
                 }
             }
             catch (Exception ex)

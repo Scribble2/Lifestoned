@@ -1,5 +1,5 @@
-@using DerethForever.Web.Models.Enums
-@model List<DerethForever.Web.Models.Shared.InstanceIdProperty>
+@using Lifestoned.DataModel.Gdle;
+@model List<IidStat>
 
 <input type="hidden" id="IidPropertyCount" value="@Model.Count()" />
 @for (int i = 0; i < Model.Count(); i++)
@@ -7,7 +7,7 @@
     <div class="row row-spacer">
         <div class="vcenter col-md-3">
             @Html.DisplayFor(m => m[i].PropertyIdBinder)
-            @Html.HiddenFor(m => m[i].IidPropertyId)
+            @Html.HiddenFor(m => m[i].Key)
             @Html.HiddenFor(m => m[i].Deleted)
         </div>
         <div class="vcenter col-md-3">

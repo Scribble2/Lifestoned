@@ -19,7 +19,8 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.Web.Mvc;
-using DerethForever.Web.Models.Recipe;
+using Lifestoned.DataModel.Recipe;
+using Lifestoned.Providers;
 
 namespace DerethForever.Web.Controllers
 {

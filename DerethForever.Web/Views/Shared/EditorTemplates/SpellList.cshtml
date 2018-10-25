@@ -1,20 +1,18 @@
-@using DerethForever.Web.Models.Enums
-@using DerethForever.Web.Models.Shared
-@model List<DerethForever.Web.Models.Shared.Spell>
+@model List<Lifestoned.DataModel.Gdle.SpellbookEntry>
 
 <h3>Spells</h3>
 
-<input type="hidden" id="SpellCount" value="@Model.Count()" />
-@for (int i = 0; i < Model.Count(); i++)
+<input type="hidden" id="SpellCount" value="@Model?.Count ?? 0" />
+@for (int i = 0; i < (Model?.Count ?? 0); i++)
 {
     <div class="row row-spacer">
         <div class="col-md-4">
-            @Html.Label("Probability for " + Spell.GetSpellDescription(Model[i].SpellId))
+            @Html.Label("Probability for " + Model[i].GetSpellDescription())
             @Html.HiddenFor(m => m[i].SpellId)
             @Html.HiddenFor(m => m[i].Deleted)
         </div>
         <div class="col-md-3">
-            @Html.TextBoxFor(m => m[i].Probability, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m[i].Stats.CastingChance, new { @class = "form-control" })
         </div>
         <div class="col-md-1">
             <input type="button" class="btn btn-xs btn-danger" name="removeSpell" value="Remove" />

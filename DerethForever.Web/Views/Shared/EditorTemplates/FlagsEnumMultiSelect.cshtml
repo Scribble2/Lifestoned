@@ -1,4 +1,4 @@
-@using DerethForever.Web.Models.Enums
+@using Lifestoned.DataModel.Shared;
 @model string[]
 
 @{
@@ -25,5 +25,4 @@
 
         <option value="@(Convert.ToUInt32(r))" label="@(r.GetName())" @(selected)>@(r.GetName())</option>
     }
-
 </select>

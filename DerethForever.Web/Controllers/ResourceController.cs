@@ -17,11 +17,13 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
-using DerethForever.Web.Models.WorldRelease;
 using System;
 using System.Configuration;
 using System.IO;
 using System.Web.Mvc;
+using Lifestoned.DataModel.WorldRelease;
+using Lifestoned.Lib.ClientLib.Enum;
+using Lifestoned.Providers;
 
 namespace DerethForever.Web.Controllers
 {
@@ -35,9 +37,38 @@ namespace DerethForever.Web.Controllers
             {
                 try
                 {
-                    src = ContentProviderHost.CurrentProvider.GetFullyLayeredPngIcon(weenieClassId);
+                    var weenie = ContentProviderHost.CurrentProvider.GetWeenie(null, weenieClassId);
+                    src = Lifestoned.Lib.ResourceManager.GetFullyLayeredPngIcon(weenie.ItemType, weenie.UnderlayId, weenie.OverlayId, weenie.IconId, weenie.UIEffects);
                 }
-                catch (Exception)
+                catch (Exception ex)
+                {
+                    return null;
+                }
+            }
+
+            return File(src, "image/png");
+        }
+
+        [HttpGet]
+        public ActionResult GetDynamicIcon(int? itemType, uint? underlayId, uint? overlayId, uint? iconId, int? uiEffects)
+        {
+            byte[] src = new byte[] { };
+            src = Lifestoned.Lib.ResourceManager.GetFullyLayeredPngIcon(itemType, underlayId, overlayId, iconId, uiEffects);
+            return File(src, "image/png");
+        }
+
+        [HttpGet]
+        public ActionResult GetImage(uint imageId)
+        {
+            byte[] src = new byte[] { };
+
+            if (imageId > 0)
+            {
+                try
+                {
+                    src = Lifestoned.Lib.ResourceManager.GetPngImage(imageId);
+                }
+                catch (Exception ex)
                 {
                     return null;
                 }
@@ -50,7 +81,7 @@ namespace DerethForever.Web.Controllers
         public ActionResult GetCurrentWorldRelease()
         {
             byte[] src = new byte[] { };
-            WorldRelease info = new WorldRelease();
+            Release info = new Release();
 
             try
             {
@@ -88,7 +119,7 @@ namespace DerethForever.Web.Controllers
         [HttpGet]
         public ActionResult GetCurrentWorldReleaseInfo()
         {
-            WorldRelease releaseInfo = new WorldRelease() { Type = ReleaseType.Unknown };
+            Release releaseInfo = new Release() { Type = ReleaseType.Unknown };
 
             try
             {
@@ -105,7 +136,7 @@ namespace DerethForever.Web.Controllers
         [HttpGet]
         public ActionResult GetWorldReleaseInfo(string fileName)
         {
-            WorldRelease src = new WorldRelease() { Type = ReleaseType.Unknown };
+            Release src = new Release() { Type = ReleaseType.Unknown };
 
             if (fileName?.Length > 0)
             {

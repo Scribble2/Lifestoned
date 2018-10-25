@@ -19,9 +19,10 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System.Security.Claims;
 using System.Web.Mvc;
-using DerethForever.Web.Models;
-using DerethForever.Web.Models.Account;
-using DerethForever.Web.Models.Weenie;
+using Lifestoned.DataModel.Account;
+using Lifestoned.DataModel.Gdle;
+using Lifestoned.DataModel.Shared;
+using Lifestoned.Providers;
 
 namespace DerethForever.Web.Controllers
 {
@@ -45,6 +46,9 @@ namespace DerethForever.Web.Controllers
             set { Session[_Session_BaseModel] = value; }
         }
 
+        /// <summary>
+        /// holy hackery, batman!  this is the cross-library glue that holds authentication together.  See JwtCookieManager.cs
+        /// </summary>
         public static ApiAccountModel CurrentUser
         {
             get { return (ApiAccountModel)System.Web.HttpContext.Current.Session[_Session_Account]; }

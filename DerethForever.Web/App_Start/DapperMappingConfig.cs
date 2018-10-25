@@ -5,8 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using Dapper;
-
-using DerethForever.Web.Models.Account;
+using Lifestoned.DataModel.Account;
 
 namespace DerethForever.Web
 {

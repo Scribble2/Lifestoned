@@ -17,13 +17,14 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
-using DerethForever.Web.Models.WorldRelease;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DerethForever.Web.Models.Discord;
+using Lifestoned.DataModel.WorldRelease;
+using Lifestoned.Providers;
 
 namespace DerethForever.Web.Controllers
 {

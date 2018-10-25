@@ -43,15 +43,14 @@ namespace DerethForever.Web.Models.Discord
             Embed embed = Embed.GetDefault(AcceptingUser, AcceptanceTime, WeenieId);
             
             embed.Title = $"{WeenieName} - {WeenieId} UPDATED!";
-            embed.Description = $"Changes were accepted by {AcceptingUser}.  Thanks you, {SubmittingUser}, for your contribution to restoring AC!\n";
+            embed.Description = $"Changes were accepted by {AcceptingUser}.  Thank you, {SubmittingUser}, for your contribution to restoring AC!\n";
             embed.Description += string.IsNullOrWhiteSpace(ChangelogComment) ? "(no change log comment)" : ChangelogComment;
 
             embed.Fields = new List<Field>();
 
             string links = "";
             links += $"[Lifestoned](http://www.lifestoned.org)";
-            links += $" | [Download DF Json](http://www.lifestoned.org/Weenie/DownloadOriginalToDfJson?id={WeenieId})";
-            links += $" | [Download GDLE Json](http://www.lifestoned.org/Weenie/DownloadOriginalToPhatJson?id={WeenieId})";
+            links += $" | [Download Json](http://www.lifestoned.org/Weenie/DownloadOriginal?id={WeenieId})";
 
             embed.Fields.Add(new Field { Name = "Links", Value = links });
 

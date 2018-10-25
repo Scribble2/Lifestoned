@@ -1,5 +1,4 @@
-@using DerethForever.Web.Models.Enums
-@model List<DerethForever.Web.Models.Shared.Position>
+@model List<Lifestoned.DataModel.Gdle.PositionListing>
 
 <h3>Positions</h3>
 
@@ -23,16 +22,16 @@
         <div class="col-md-2">
             @Html.HiddenFor(m => m[i].Deleted)
             @Html.HiddenFor(m => m[i].PositionType)
-            @Html.DisplayFor(m => m[i].PositionTypeBinder)
+            @Html.DisplayFor(m => m[i].PositionTypeName)
         </div>    
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Landblock, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].X, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Y, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Z, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].QW, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].QX, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].QY, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].QZ, new { style = "width: 90px;" })</div>
+        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.LandCellId, new { style = "width: 90px;" })</div>
+        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Position.X, new { style = "width: 90px;" })</div>
+        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Position.Y, new { style = "width: 90px;" })</div>
+        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Position.Z, new { style = "width: 90px;" })</div>
+        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.W, new { style = "width: 90px;" })</div>
+        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.X, new { style = "width: 90px;" })</div>
+        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.Y, new { style = "width: 90px;" })</div>
+        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.Z, new { style = "width: 90px;" })</div>
         <div class="col-md-2">
             <input type="button" class="btn btn-xs btn-danger" name="removePosition" value="Remove" />
         </div>
