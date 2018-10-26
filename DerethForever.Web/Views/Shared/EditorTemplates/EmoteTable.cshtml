@@ -22,25 +22,20 @@
                 @for (int i = 0; i < categoryListing?.Emotes?.Count; i++)
                 {
                     <div class="panel-default panel-body">
-                        <div class="row-spacer col-md-12">
+                        <div class="row-spacer clearfix">
+                            @Html.HiddenFor(m => m[k].Emotes[i].Category)
+                            @Html.HiddenFor(m => m[k].Emotes[i].Deleted)
                             <div class="col-md-3">
-                                @Html.HiddenFor(m => m[k].Emotes[i].Category)
-                                @Html.HiddenFor(m => m[k].Emotes[i].Deleted)
+                                @Html.LabelFor(m => m[k].Emotes[i].Probability)
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m[k].Emotes[i].Probability, new { @class = "form-control" })
                             </div>
                             <div class="col-md-3">
 
                             </div>
                             <div class="col-md-3">
                                 <input type="button" class="btn btn-xs btn-danger" name="removeEmoteSet" value="Remove Emote" />
-                            </div>
-                        </div>
-
-                        <div class="row row-spacer">
-                            <div class="col-md-3">
-                                @Html.LabelFor(m => m[k].Emotes[i].Probability)
-                            </div>
-                            <div class="col-md-3">
-                                @Html.TextBoxFor(m => m[k].Emotes[i].Probability, new { @class = "form-control" })
                             </div>
                         </div>
 
@@ -133,7 +128,7 @@
                                 <a data-toggle="collapse" href="#@(Html.Raw("emoteCategory_" + k + "_" + i))">@Html.Label("Emotes")</a>
                             </div>
                             <div id="@(Html.Raw("emoteCategory_" + k + "_" + i))" class="panel-collapse collapse">
-                                <div class="panel-body">
+                                <div class="panel-body panel-group">
                                     @Html.EditorFor(m => m[k].Emotes[i].Actions, "EmoteActionList")
 
                                     <div class="row row-spacer">

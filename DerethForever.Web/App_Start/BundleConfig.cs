@@ -39,11 +39,16 @@ namespace DerethForever.Web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap3-typeahead.js",
                       "~/Scripts/respond.js",
                       "~/Content/Selectize/js/standalone/selectize.min.js",
 					  "~/Scripts/dropzone.js"));
 
-            bundles.Add(new StyleBundle("~/Styles/css").Include(
+			bundles.Add(new ScriptBundle("~/bundles/site").Include(
+					  "~/Scripts/dropzone.js",
+					  "~/Scripts/Site.js"));
+
+			bundles.Add(new StyleBundle("~/Styles/css").Include(
                       "~/Styles/bootstrap.css",
                       "~/Content/Selectize/css/selectize.bootstrap3.css",
 					  "~/Styles/dropzone.css",

@@ -108,31 +108,31 @@
             //parentDiv.parent().addClass("hidden");
         });
 
-        $("#removePage").on("click", function () {
-            // the generic handler will take care of the current row, but book pages
-            // are 2 rows, so we need to catch the second as well
-            secondRow = $(this).parent().parent().next();
-            secondRow.addClass("hidden");
-        });
+        //$("#removePage").on("click", function () {
+        //    // the generic handler will take care of the current row, but book pages
+        //    // are 2 rows, so we need to catch the second as well
+        //    secondRow = $(this).parent().parent().next();
+        //    secondRow.addClass("hidden");
+        //});
 
-        $("#removeBodyPart").on("click", function () {
-            // the generic handler will take care of the current row, but body parts
-            // are are a whole panel
-            panel = $(this).parent().parent().parent().parent();
-            panel.addClass("hidden");
-        });
+        //$("#removeBodyPart").on("click", function () {
+        //    // the generic handler will take care of the current row, but body parts
+        //    // are are a whole panel
+        //    panel = $(this).parent().parent().parent().parent();
+        //    panel.addClass("hidden");
+        //});
 
-        $(".well").on("click", "[name^='removeEmote']", function () {
-            // the generic handler will take care of the current row, but emote sets and emotes
-            // are bigger and have another container div to hide
-            var containerRow = $(event.target).parent().parent().parent();
-            containerRow.addClass("hidden");
-        });
+        //$(".well").on("click", "[name^='removeEmote']", function () {
+        //    // the generic handler will take care of the current row, but emote sets and emotes
+        //    // are bigger and have another container div to hide
+        //    var containerRow = $(event.target).parent().parent().parent();
+        //    containerRow.addClass("hidden");
+        //});
 
         // Add a search button after all class items of type weenieClassEntry to show the search modal popup
-        $(".weenieClassEntry").each(function (e) {
-            var searchBtn = $(this).after('<div class="btn btn-info modelSearchBtn pull-right" data-rel="' + $(this).attr("id") + '" style="margin-top:-2.4em;position:relative;"><span class="glyphicon glyphicon-search"></span></div>');
-        });
+        //$(".weenieClassEntry").each(function (e) {
+        //    var searchBtn = $(this).after('<div class="btn btn-info modelSearchBtn pull-right" data-rel="' + $(this).attr("id") + '" style="margin-top:-2.4em;position:relative;"><span class="glyphicon glyphicon-search"></span></div>');
+        //});
 
         // Set the event listerner for the weenie modal search button
         $(".modelSearchBtn").on("click", function () {
