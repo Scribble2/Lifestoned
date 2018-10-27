@@ -250,6 +250,7 @@
     <Content Include="Content\Selectize\less\plugins\optgroup_columns.less" />
     <Content Include="Content\Selectize\less\plugins\dropdown_header.less" />
     <Content Include="Content\Selectize\less\plugins\drag_drop.less" />
+    <Content Include="App_Code\EditorHelpers.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />

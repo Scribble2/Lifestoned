@@ -43,30 +43,30 @@
             $("form").submit();
         });
 
-        $("#addSpell").on("click", function () {
+        @*$("#addSpell").on("click", function () {
             $("#MvcAction").val(@((int)WeenieCommands.AddSpell));
             $("form").submit();
-        });
+        });*@
 
-        $("#addSkill").on("click", function () {
+        @*$("#addSkill").on("click", function () {
             $("#MvcAction").val(@((int)WeenieCommands.AddSkill));
             $("form").submit();
-        });
+        });*@
 
-        $("#addPosition").on("click", function () {
+        @*$("#addPosition").on("click", function () {
             $("#MvcAction").val(@((int)WeenieCommands.AddPosition));
             $("form").submit();
-        });
+        });*@
 
-        $("#addBookPage").on("click", function () {
+        @*$("#addBookPage").on("click", function () {
             $("#MvcAction").val(@((int)WeenieCommands.AddBookPage));
             $("form").submit();
-        });
+        });*@
 
-        $("#addBodyParts").on("click", function () {
+        @*$("#addBodyParts").on("click", function () {
             $("#MvcAction").val(@((int)WeenieCommands.AddBodyParts));
             $("form").submit();
-        });
+        });*@
 
         $("#addBodyPart").on("click", function () {
             $("#MvcAction").val(@((int)WeenieCommands.AddBodyPart));
@@ -78,10 +78,10 @@
             $("form").submit();
         });
 
-        $("#addGeneratorTable").on("click", function () {
+        @*$("#addGeneratorTable").on("click", function () {
             $("#MvcAction").val(@((int)WeenieCommands.AddGeneratorTable));
             $("form").submit();
-        });
+        });*@
 
         $("input[name='addEmote']").on("click", function () {
             var emoteSetGuid = $(this).attr("data-content");
@@ -92,10 +92,10 @@
             $("form").submit();
         });
 
-        $("#addCreateItem").on("click", function () {
+        @*$("#addCreateItem").on("click", function () {
             $("#MvcAction").val(@((int)WeenieCommands.AddCreateItem));
             $("form").submit();
-        });
+        });*@
 
         $(".well").on("click", "[name^='remove']", function () {
             // deleting the whole row (with inputs) makes the server side drop
@@ -201,6 +201,14 @@
 
             $("#MvcAction").val("");
             $("#PropertyTab").val("");
+
+            $("input[name^='add'][data-action]").click(function (evt) {
+                $this = $(this);
+
+                $("#MvcAction").val($this.data('action'));
+                $("#PropertyTab").val($this.data('tab'));
+                $("form").submit();
+            });
 
             $('#btnSave').click(function (e) {
                 if (!validate())

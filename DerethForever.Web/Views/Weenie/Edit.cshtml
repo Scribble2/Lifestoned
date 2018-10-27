@@ -91,7 +91,7 @@
                                 @Html.EnumDropDownListFor(m => m.NewStringPropertyId, new { @class = "form-control force-inline" })
                             </div>
                             <div class="col-md-1">
-                                <input type="button" class="btn btn-primary" id="addStringProperty" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+                                <input type="button" class="btn btn-primary" data-action="" data-tab="stringProperties" id="addStringProperty" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                             </div>
                             <div class="col-md-5">
                             </div>
@@ -221,7 +221,7 @@
                         @Html.EnumDropDownListFor(m => m.NewPositionType, new { @class = "form-control force-inline" })
                     </div>
                     <div class="col-md-1">
-                        <input type="button" class="btn btn-primary" id="addPosition" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+                        <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddPosition)" id="addPosition" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                     </div>
                     <div class="col-md-5">
                     </div>
@@ -246,7 +246,7 @@
                             @Html.EnumDropDownListFor(m => m.NewSkillId, new { @class = "form-control" })
                         </div>
                         <div class="col-md-1">
-                            <input type="button" class="btn btn-primary" id="addSkill" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+                            <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddSkill)" id="addSkill" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                         </div>
                         <div class="col-md-6">
                         </div>
@@ -277,7 +277,7 @@
                             @Html.EnumDropDownListFor(m => m.NewBodyPartType, new { @class = "form-control force-inline" })
                         </div>
                         <div class="col-md-1">
-                            <input type="button" class="btn btn-primary" id="addBodyPart" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+                            <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddBodyParts)" id="addBodyPart" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                         </div>
                         <div class="col-md-5">
                         </div>
@@ -290,17 +290,16 @@
                     <div class="row row-spacer">
                         <div class="col-md-6">
                             This Weenie has no Body Parts List.  Click here to add one.<br />
-                            <input type="button" class="btn btn-primary" id="addBodyParts" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+                            <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddBodyParts)" id="addBodyParts" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                         </div>
                     </div>
                 </div>
             }
 
-            <div class="well" id="spells">
+            <div class="panel panel-default" id="spells">
                 @Html.EditorFor(m => m.Spells, "SpellList")
 
-                <hr id="newSpellRowMarker" />
-                <div class="row row-spacer">
+                <div class="panel-footer clearfix">
                     <div class="col-md-3">
                         Add New Spell
                     </div>
@@ -308,57 +307,27 @@
                         @Html.EnumDropDownListFor(m => m.NewSpellId, new { @class = "form-control force-inline" })
                     </div>
                     <div class="col-md-1">
-                        <input type="button" class="btn btn-primary" id="addSpell" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+                        <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddSpell)" id="addSpell" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                     </div>
-                    <div class="col-md-5">
-                    </div>
+
                 </div>
             </div>
 
-            <div class="well">
+            <div class="panel panel-default">
                 @Html.EditorFor(m => m.Book, "BookPages")
 
-                <hr id="newBookPageRowMarker" />
-                <div class="row row-spacer">
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-1">
-                        <input type="button" class="btn btn-primary" id="addBookPage" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
-                    </div>
-                    <div class="col-md-5">
-                    </div>
+                <div class="panel-footer clearfix">
+                    <input type="button" class="btn btn-primary col-sm-offset-6" data-action="@((int)WeenieCommands.AddBookPage)" id="addBookPage" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                 </div>
             </div>
 
-            @if (Model.HasGeneratorTable)
-            {
-                <div class="well" id="generatorTable">
-                    @Html.EditorFor(m => m.GeneratorTable, "GeneratorTable")
+            <div class="panel panel-default" id="generatorTable">
+                @Html.EditorFor(m => m.GeneratorTable, "GeneratorTable")
 
-                    <hr id="newGeneratorTableRowMarker" />
-                    <div class="row row-spacer">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4"></div>
-                        <div class="col-md-1">
-                            <input type="button" class="btn btn-primary" id="addGeneratorTable" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
-                        </div>
-                        <div class="col-md-3"></div>
-                    </div>
+                <div class="panel-footer clearfix">
+                    <input type="button" class="btn btn-primary col-sm-offset-6" data-action="@((int)WeenieCommands.AddGeneratorTable)" id="addGeneratorTable" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                 </div>
-            }
-            else
-            {
-                <div class="well">
-                    <div class="row row-spacer">
-                        <div class="col-md-6">
-                            This Weenie has no Generator Table.  Click here to add one.<br />
-                            <input type="button" class="btn btn-primary" id="addGeneratorTable" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
-                        </div>
-                    </div>
-                </div>
-            }
+            </div>
 
             <div class="well" id="emoteTable">
                 @Html.HiddenFor(m => m.EmoteSetGuid)
@@ -387,7 +356,7 @@
                         @Html.Label("Add new Item")
                     </div>
                     <div class="col-md-9">
-                        <input type="button" class="btn btn-primary" id="addCreateItem" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+                        <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddCreateItem)" id="addCreateItem" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                     </div>
                 </div>
             </div>
@@ -529,8 +498,6 @@
         </div>
     </div>
 }
-
-
 
 @section scripts {
     @Html.Partial("EditorScript")

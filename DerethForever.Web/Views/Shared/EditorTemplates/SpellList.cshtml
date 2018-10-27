@@ -1,23 +1,31 @@
 @model List<Lifestoned.DataModel.Gdle.SpellbookEntry>
 
-<h3>Spells</h3>
+<div class="panel-heading"><h3 class="panel-title">Spells</h3></div>
+<div class="panel-body panel-group">
+    <input type="hidden" id="SpellCount" value="@Model?.Count ?? 0" />
 
-<input type="hidden" id="SpellCount" value="@Model?.Count ?? 0" />
-@for (int i = 0; i < (Model?.Count ?? 0); i++)
-{
-    <div class="row row-spacer">
-        <div class="col-md-4">
-            @Html.Label("Probability for " + Model[i].GetSpellDescription())
-            @Html.HiddenFor(m => m[i].SpellId)
-            @Html.HiddenFor(m => m[i].Deleted)
+    @if (Model == null)
+    {
+        @Html.Raw("This Weenie has no Spells. Click below to add one.")
+    }
+
+    @for (int i = 0; i < (Model?.Count ?? 0); i++)
+    {
+        <div class="row row-spacer">
+            <div class="col-md-4">
+                @Html.Label("Probability for " + Model[i].GetSpellDescription())
+                @Html.HiddenFor(m => m[i].SpellId)
+                @Html.HiddenFor(m => m[i].Deleted)
+            </div>
+            <div class="col-md-3">
+                @Html.TextBoxFor(m => m[i].Stats.CastingChance, new { @class = "form-control" })
+            </div>
+            <div class="col-md-1">
+                <input type="button" class="btn btn-xs btn-danger" name="removeSpell" value="Remove" />
+            </div>
+            <div class="col-md-4">
+            </div>
         </div>
-        <div class="col-md-3">
-            @Html.TextBoxFor(m => m[i].Stats.CastingChance, new { @class = "form-control" })
-        </div>
-        <div class="col-md-1">
-            <input type="button" class="btn btn-xs btn-danger" name="removeSpell" value="Remove" />
-        </div>
-        <div class="col-md-4">
-        </div>
-    </div>
-}
+    }
+
+</div>

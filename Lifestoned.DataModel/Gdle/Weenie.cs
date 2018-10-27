@@ -265,7 +265,7 @@ namespace Lifestoned.DataModel.Gdle
             Spells?.RemoveAll(x => x == null || x.Deleted);
             Book?.Pages?.RemoveAll(x => x == null || x.Deleted);
             Positions?.RemoveAll(x => x == null || x.Deleted);
-            EmoteTable?.ForEach(es => es?.Emotes?.ForEach(esa => esa?.Actions.RemoveAll(x => x == null || x.Deleted)));
+            EmoteTable?.ForEach(es => es?.Emotes?.ForEach(esa => esa?.Actions?.RemoveAll(x => x == null || x.Deleted)));
             EmoteTable?.ForEach(es => es?.Emotes?.RemoveAll(x => x == null || x.Deleted));
             EmoteTable?.RemoveAll(x => x == null || x.Deleted);
             Body?.BodyParts?.RemoveAll(x => x == null || x.Deleted);

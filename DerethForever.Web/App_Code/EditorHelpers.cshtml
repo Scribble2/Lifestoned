@@ -1,0 +1,15 @@
+﻿@*@helper HelperName(string name) {
+        // your helper can contain code and/or markup, e.g.
+        // var msg = "Hello " + name;
+        // <p>@msg</p>
+        // For more information, visit https://go.microsoft.com/fwlink/?LinkID=204658
+    }*@
+
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+
+@helper FooterCommand(string label = null, MvcHtmlString dropdown = null)
+{
+    <div class="col-md-3">@label</div>
+
+}

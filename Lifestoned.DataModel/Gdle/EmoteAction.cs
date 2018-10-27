@@ -273,14 +273,14 @@ namespace Lifestoned.DataModel.Gdle
         [EmoteType(EmoteType.SetSanctuaryPosition)]
         [EmoteType(EmoteType.TeleportTarget)]
         [EmoteType(EmoteType.TeleportSelf)]
-        public Position MPosition { get; set; } = new Position();
+        public Position MPosition { get; set; }
 
         [JsonProperty("frame", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.MoveHome)]
         [EmoteType(EmoteType.Move)]
         [EmoteType(EmoteType.Turn)]
         [EmoteType(EmoteType.MoveToPos)]
-        public Frame Frame { get; set; } = new Frame();
+        public Frame Frame { get; set; }
 
         [JsonProperty("spellid", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.CastSpell)]

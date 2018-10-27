@@ -167,7 +167,7 @@ namespace DerethForever.Web.Controllers
             {
                 model.EmoteTable = model.EmoteTable.OrderBy(e => e.EmoteCategoryId).ToList();
                 model.EmoteTable.ForEach(
-					t => t.Emotes = t.Emotes.OrderBy(e => e.SortOrder).Select(ts =>
+					t => t.Emotes = t.Emotes?.OrderBy(e => e.SortOrder).Select(ts =>
 						{
                             if (ts.SortOrder != null && ts.SortOrder.Value > emoteOrder)
                                 emoteOrder = ts.SortOrder.Value;
@@ -175,7 +175,7 @@ namespace DerethForever.Web.Controllers
                                 ts.SortOrder = ++emoteOrder;
 
                             int actionOrder = 0;
-                            ts.Actions = ts.Actions.OrderBy(ea => ea.SortOrder).Select(tsa =>
+                            ts.Actions = ts.Actions?.OrderBy(ea => ea.SortOrder).Select(tsa =>
                             {
                                 if (tsa.SortOrder != null && tsa.SortOrder.Value > actionOrder)
                                     actionOrder = tsa.SortOrder.Value;
@@ -578,9 +578,7 @@ namespace DerethForever.Web.Controllers
                     break;
 
                 case WeenieCommands.AddEmote:
-                    EmoteCategoryListing emoteTable = null;
-                    if (model.EmoteTable.Count > (int)model.NewEmoteCategory)
-                        emoteTable = model.EmoteTable[(int)model.NewEmoteCategory];
+                    EmoteCategoryListing emoteTable = model.EmoteTable[(int)model.NewEmoteCategory];
 
                     if (emoteTable == null || model.EmoteSetGuid == null)
                     {

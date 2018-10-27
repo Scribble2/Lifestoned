@@ -1,10 +1,16 @@
 @model List<Lifestoned.DataModel.Gdle.GeneratorTable>
 
-<h3>Generator Table</h3>
 
-@for (int i = 0; i < (Model?.Count ?? 0); i++)
-{
-    <div class="panel-group">
+<div class="panel-heading"><h3 class="panel-title">Generator Table</h3></div>
+<div class="panel-body panel-group">
+
+    @if (Model == null)
+    {
+        @Html.Raw("This Weenie has no Generator Table. Click below to add one.")
+    }
+
+    @for (int i = 0; i < (Model?.Count ?? 0); i++)
+    {
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -77,5 +83,6 @@
                 </div>
             </div>
         </div>
-    </div>
-}
+
+    }
+</div>

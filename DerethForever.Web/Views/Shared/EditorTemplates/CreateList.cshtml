@@ -1,10 +1,10 @@
 @using Lifestoned.DataModel.Gdle;
 @model List<CreateItem>
 
+<h3>Create List</h3>
+
 @if (Model != null && Model.Count > 0)
 {
-    <h3>Create List</h3>
-
     <div class="row row-spacer">
         <div class="col-md-3">@(Html.Label("Weenie"))</div>
         <div class="col-md-3">@(Html.Label("Destination"))</div>
