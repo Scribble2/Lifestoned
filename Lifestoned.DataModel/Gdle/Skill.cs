@@ -32,19 +32,19 @@ namespace Lifestoned.DataModel.Gdle
         public uint? LevelFromPp { get; set; } = 0;
 
         [JsonProperty("last_used_time")]
-        public float? LastUsed { get; set; }
+        public float? LastUsed { get; set; } = 0;
 
         [JsonProperty("init_level")]
         public uint? Ranks { get; set; } = 0;
 
         [JsonProperty("pp")]
-        public uint? XpInvested { get; set; }
+        public uint? XpInvested { get; set; } = 0;
 
         [JsonProperty("resistance_of_last_check")]
         public uint? ResistanceOfLastCheck { get; set; } = 0;
 
         [JsonProperty("sac")]
-        public int? TrainedLevel { get; set; }
+        public int? TrainedLevel { get; set; } = 0;
 
         [JsonIgnore]
         public SkillStatus? Status_Binder
