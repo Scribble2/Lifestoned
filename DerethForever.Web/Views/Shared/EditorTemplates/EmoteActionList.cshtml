@@ -334,7 +334,7 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-2">
                         @Html.HiddenFor(m => m[i].Item.Deleted)
-                        @Html.TextBoxFor(m => m[i].Item.WeenieClassId, new { @class = "form-control weenieClassEntry" })
+                        @Html.TextBoxFor(m => m[i].Item.WeenieClassId, new { @class = "form-control weenieClassEntry weenie-select" })
                     </div>
                     <div class="col-md-2">
                         @Html.EnumDropDownListFor(m => m[i].Item.Destination_Binder, new { @class = "form-control" })

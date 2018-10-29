@@ -97,7 +97,8 @@
             $("form").submit();
         });*@
 
-        $(".well").on("click", "[name^='remove']", function () {
+        //$(".well").on("click", "[name^='remove']", function () {
+        $(".panel-body input[name^='remove']").on("click", function () {
             // deleting the whole row (with inputs) makes the server side drop
             // anything that comes after this one.  instead, we need to just set a flag
             // and let the server handle removal of it.
@@ -202,7 +203,9 @@
             $("#MvcAction").val("");
             $("#PropertyTab").val("");
 
-            $("input[name^='add'][data-action]").click(function (evt) {
+            console.log($("input[name^='add'][data-action]"));
+
+            $("input[id^='add'][data-action]").click(function (evt) {
                 $this = $(this);
 
                 $("#MvcAction").val($this.data('action'));
@@ -215,7 +218,7 @@
                     e.preventDefault();
             });
 
-            $('#NewSpellId').selectize({});
+            $('.type-filter').selectize({});
             $('.customMultiselect').selectize({ maxItems: null, allowEmptyOption: true });
 
             $('#preview').click(function (evt) {

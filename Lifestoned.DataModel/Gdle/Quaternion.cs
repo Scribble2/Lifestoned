@@ -24,7 +24,7 @@ namespace Lifestoned.DataModel.Gdle
     public class Quaternion
     {
         [JsonProperty("w")]
-        public float W { get; set; }
+        public float W { get; set; } = 1.0f;
 
         [JsonProperty("x")]
         public float X { get; set; }
@@ -34,5 +34,48 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("z")]
         public float Z { get; set; }
+
+        [JsonIgnore]
+        public string Display
+        {
+            get { return $"{W:0.000000} {X:0.000000} {Y:0.000000} {Z:0.000000}"; }
+            set
+            {
+                int start = 0;
+                int pos = value != null ? value.IndexOf(' ') : -1;
+				if (pos < 0)
+                {
+                    W = 1.0f;
+                    X = 0.0f;
+                    Y = 0.0f;
+                    Z = 0.0f;
+                    return;
+                }
+
+                float tw = 0.0f;
+                float tx = 0.0f;
+                float ty = 0.0f;
+                float tz = 0.0f;
+
+                float.TryParse(value.Substring(start, pos), out tw);
+
+                start = pos + 1;
+                pos = value.IndexOf(' ', start);
+                float.TryParse(value.Substring(start, pos - start), out tx);
+
+                start = pos + 1;
+                pos = value.IndexOf(' ', start);
+                float.TryParse(value.Substring(start, pos - start), out ty);
+
+                start = pos + 1;
+                float.TryParse(value.Substring(start), out tz);
+
+                W = tw;
+                X = tx;
+                Y = ty;
+                Z = tz;
+            }
+        }
+
     }
 }

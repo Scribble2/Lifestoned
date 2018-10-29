@@ -6,7 +6,7 @@
 
     @if (Model == null)
     {
-        @Html.Raw("This Weenie has no Spells. Click below to add one.")
+    <strong>This Weenie has no Spells. Click below to add one.</strong>
     }
 
     @for (int i = 0; i < (Model?.Count ?? 0); i++)

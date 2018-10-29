@@ -6,7 +6,7 @@
 
     @if (Model == null)
     {
-        @Html.Raw("This Weenie has no Generator Table. Click below to add one.")
+        <strong>This Weenie has no Generator Table. Click below to add one.</strong>
     }
 
     @for (int i = 0; i < (Model?.Count ?? 0); i++)
@@ -23,7 +23,7 @@
                 <div class="panel-body">
                     <div class="row row-spacer">
                         <div class="col-md-2 vcenter">@Html.Label("Weenie Class ID")</div>
-                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].WeenieClassId, new { @class = "form-control weenieClassEntry" })</div>
+                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].WeenieClassId, new { @class = "form-control weenieClassEntry weenie-select" })</div>
                         <div class="col-md-2 vcenter">@Html.Label("Probability")</div>
                         <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].Probability, new { @class = "form-control" })</div>
                         <div class="col-md-1 vcenter">@Html.Label("Delay")</div>

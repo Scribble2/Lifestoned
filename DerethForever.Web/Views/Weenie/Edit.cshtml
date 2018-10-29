@@ -65,20 +65,21 @@
                 </div>
             </div>
 
-            <div class="well" id="properties">
-                <h3>Properties</h3>
+            <div class="panel panel-default" id="properties">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title pull-left">Properties</h3>
+                    <ul class="nav nav-pills pull-right">
+                        <li class="active"><a data-toggle="tab" href="#stringProperties">Strings <span class="badge">@Model.StringStats.Count()</span></a></li>
+                        <li><a data-toggle="tab" href="#int32Properties">Int32 <span class="badge">@Model.IntStats.Count()</span></a></li>
+                        <li><a data-toggle="tab" href="#int64Properties">Int64 <span class="badge">@Model.Int64Stats.Count()</span></a></li>
+                        <li><a data-toggle="tab" href="#dblProperties">Double <span class="badge">@Model.FloatStats.Count()</span></a></li>
+                        <li><a data-toggle="tab" href="#didProperties">Data IDs <span class="badge">@Model.DidStats.Count()</span></a></li>
+                        <li><a data-toggle="tab" href="#iidProperties">Instance IDs <span class="badge">@Model.IidStats.Count()</span></a></li>
+                        <li><a data-toggle="tab" href="#boolProperties">Bool <span class="badge">@Model.BoolStats.Count()</span></a></li>
+                    </ul>
+                </div>
 
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#stringProperties">Strings <span class="badge">@Model.StringStats.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#int32Properties">Int32 <span class="badge">@Model.IntStats.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#int64Properties">Int64 <span class="badge">@Model.Int64Stats.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#dblProperties">Double <span class="badge">@Model.FloatStats.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#didProperties">Data IDs <span class="badge">@Model.DidStats.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#iidProperties">Instance IDs <span class="badge">@Model.IidStats.Count()</span></a></li>
-                    <li><a data-toggle="tab" href="#boolProperties">Bool <span class="badge">@Model.BoolStats.Count()</span></a></li>
-                </ul>
-
-                <div class="tab-content">
+                <div class="panel-body tab-content">
                     <div id="stringProperties" class="tab-pane fade in active">
                         @Html.EditorFor(m => m.StringStats, "StringPropertyList")
 
@@ -209,10 +210,14 @@
                 </div>
             </div>
 
-            <div class="well" id="locations">
+            <div class="panel panel-default" id="locations">
                 @Html.EditorFor(m => m.Positions, "PositionList")
 
-                <hr id="newPositionRowMarker" />
+                @EditorHelpers.FooterCommand("addPosition", WeenieCommands.AddPosition, "Add New Position",
+                    Html.EnumDropDownListFor(m => m.NewPositionType, new { @class = "form-control force-inline type-filter" })
+                )
+
+                @*<hr id="newPositionRowMarker" />
                 <div class="row row-spacer">
                     <div class="col-md-3">
                         Add New Position
@@ -225,19 +230,23 @@
                     </div>
                     <div class="col-md-5">
                     </div>
-                </div>
+                </div>*@
             </div>
 
             @if (Model.HasAbilities)
             {
-                <div class="well">
+                <div class="panel panel-default">
                     @Html.EditorFor(m => m.Attributes, "AbilityList")
                 </div>
 
-                <div class="well">
+                <div class="panel panel-default">
                     @Html.EditorFor(m => m.Skills, "SkillList")
 
-                    <hr id="newSkillRowMarker" />
+                    @EditorHelpers.FooterCommand("addSkill", WeenieCommands.AddSkill, "Add New Skill",
+                        Html.EnumDropDownListFor(m => m.NewSkillId, new { @class = "form-control type-filter" })
+                    )
+
+                    @*<hr id="newSkillRowMarker" />
                     <div class="row row-spacer">
                         <div class="col-md-3">
                             Add New Skill
@@ -250,56 +259,40 @@
                         </div>
                         <div class="col-md-6">
                         </div>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="well">
-                    <div class="row row-spacer">
-                        <div class="col-md-6">
-                            This Weenie has no Attributes or Skills.  Set the Item Type to Creature to add them.
-                        </div>
-                    </div>
+                    </div>*@
                 </div>
             }
 
-            @if (Model.HasBodyPartList)
-            {
-                <div class="well">
-                    @Html.EditorFor(m => m.Body, "BodyPartList")
+            <div class="panel panel-default">
+                @Html.EditorFor(m => m.Body, "BodyPartList")
 
-                    <div class="row row-spacer">
-                        <div class="col-md-3">
-                            Add New Body Part
-                        </div>
-                        <div class="col-md-3">
-                            @Html.EnumDropDownListFor(m => m.NewBodyPartType, new { @class = "form-control force-inline" })
-                        </div>
-                        <div class="col-md-1">
-                            <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddBodyParts)" id="addBodyPart" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
-                        </div>
-                        <div class="col-md-5">
-                        </div>
+                @EditorHelpers.FooterCommand("addBodyPart", WeenieCommands.AddBodyParts, "Add New Body Part",
+                    Html.EnumDropDownListFor(m => m.NewBodyPartType, new { @class = "form-control force-inline type-filter" })
+                )
+
+                @*<div class="row row-spacer">
+                    <div class="col-md-3">
+                        Add New Body Part
                     </div>
-                </div>
-            }
-            else
-            {
-                <div class="well">
-                    <div class="row row-spacer">
-                        <div class="col-md-6">
-                            This Weenie has no Body Parts List.  Click here to add one.<br />
-                            <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddBodyParts)" id="addBodyParts" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
-                        </div>
+                    <div class="col-md-3">
+                        @Html.EnumDropDownListFor(m => m.NewBodyPartType, new { @class = "form-control force-inline" })
                     </div>
-                </div>
-            }
+                    <div class="col-md-1">
+                        <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddBodyParts)" id="addBodyPart" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+                    </div>
+                    <div class="col-md-5">
+                    </div>
+                </div>*@
+            </div>
 
             <div class="panel panel-default" id="spells">
                 @Html.EditorFor(m => m.Spells, "SpellList")
 
-                <div class="panel-footer clearfix">
+                @EditorHelpers.FooterCommand("addSpell", WeenieCommands.AddSpell, "Add New Spell",
+                    Html.EnumDropDownListFor(m => m.NewSpellId, new { @class = "form-control force-inline type-filter" })
+                )
+
+                @*<div class="panel-footer clearfix">
                     <div class="col-md-3">
                         Add New Spell
                     </div>
@@ -307,33 +300,35 @@
                         @Html.EnumDropDownListFor(m => m.NewSpellId, new { @class = "form-control force-inline" })
                     </div>
                     <div class="col-md-1">
-                        <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddSpell)" id="addSpell" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+                        <input action="@((int)WeenieCommands.AddSpell)" id="addSpell" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                     </div>
 
-                </div>
+                </div>*@
             </div>
 
             <div class="panel panel-default">
                 @Html.EditorFor(m => m.Book, "BookPages")
 
-                <div class="panel-footer clearfix">
-                    <input type="button" class="btn btn-primary col-sm-offset-6" data-action="@((int)WeenieCommands.AddBookPage)" id="addBookPage" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
-                </div>
+                @EditorHelpers.FooterCommand("addBookPage", WeenieCommands.AddBookPage)
+
             </div>
 
             <div class="panel panel-default" id="generatorTable">
                 @Html.EditorFor(m => m.GeneratorTable, "GeneratorTable")
 
-                <div class="panel-footer clearfix">
-                    <input type="button" class="btn btn-primary col-sm-offset-6" data-action="@((int)WeenieCommands.AddGeneratorTable)" id="addGeneratorTable" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
-                </div>
+                @EditorHelpers.FooterCommand("addGeneratorTable", WeenieCommands.AddGeneratorTable)
+
             </div>
 
-            <div class="well" id="emoteTable">
+            <div class="panel panel-default" id="emoteTable">
                 @Html.HiddenFor(m => m.EmoteSetGuid)
                 @Html.EditorFor(m => m.EmoteTable, "EmoteTable")
 
-                <hr id="newEmoteSetMarker" />
+                @EditorHelpers.FooterCommand("addEmoteSet", WeenieCommands.AddEmoteSet, "Add new Emote Set",
+                    Html.EnumDropDownListFor(m => m.NewEmoteCategory, new { @class = "form-control type-filter" })
+                )
+
+                @*<hr id="newEmoteSetMarker" />
                 <div class="row row-spacer">
                     <div class="col-md-3">
                         @Html.Label("Add new Emote Set")
@@ -344,40 +339,22 @@
                     <div class="col-md-4">
                         <input type="button" class="btn btn-primary" id="addEmoteSet" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
                     </div>
-                </div>
+                </div>*@
             </div>
 
-            <div class="well" id="createList">
+            <div class="panel panel-default" id="createList">
                 @Html.EditorFor(m => m.CreateList, "CreateList")
 
-                <hr id="newCreateitemMarker" />
-                <div class="row row-spacer">
-                    <div class="col-md-3">
-                        @Html.Label("Add new Item")
-                    </div>
-                    <div class="col-md-9">
-                        <input type="button" class="btn btn-primary" data-action="@((int)WeenieCommands.AddCreateItem)" id="addCreateItem" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
-                    </div>
-                </div>
+                @EditorHelpers.FooterCommand("addCreateItem", WeenieCommands.AddCreateItem, "Add new Item")
+
             </div>
 
-            <div class="well">
-                <div class="row row-spacer">
-                    <div class="col-md-2">
-                        @Html.Label("Changelog")
-                    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Changelog</h3></div>
+                <div class="panel-body">
+                    @Html.DisplayFor(m => m.Changelog, "Changelog")
+
                 </div>
-                @Html.DisplayFor(m => m.Changelog, "Changelog")
-                @*<div class="row row-spacer">
-                        <div class="col-md-2">
-                            @Html.Label("Comments")
-                        </div>
-                    </div>
-                    <div class="row row-spacer">
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(m => m.Comments, new { @class = "form-control" })
-                        </div>
-                    </div>*@
             </div>
 
             <div class="well">

@@ -1,15 +1,33 @@
-﻿@*@helper HelperName(string name) {
-        // your helper can contain code and/or markup, e.g.
-        // var msg = "Hello " + name;
-        // <p>@msg</p>
-        // For more information, visit https://go.microsoft.com/fwlink/?LinkID=204658
-    }*@
+﻿
+@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
 
-@using System.Web.Mvc
-@using System.Web.Mvc.Html
+@using Lifestoned.DataModel.Gdle;
+@using Lifestoned.DataModel.Shared;
 
-@helper FooterCommand(string label = null, MvcHtmlString dropdown = null)
+@helper DeleteButton(string id)
 {
-    <div class="col-md-3">@label</div>
+    <button class="btn btn-xs btn-danger" name="@id"><i class="glyphicon glyphicon-trash"></i></button>
+}
 
+@helper FooterCommand(string id, WeenieCommands command, string label = null, MvcHtmlString dropdown = null)
+{
+    int offset = 6;
+
+    <div class="panel-footer clearfix">
+
+        @if (!string.IsNullOrEmpty(label))
+        {
+            offset -= 3;
+            <div class="col-md-3">@label</div>
+        }
+
+        @if (dropdown != null)
+        {
+            offset -= 3;
+            <div class="col-md-3">@dropdown</div>
+        }
+
+        <input type="button" class="btn btn-primary col-md-offset-@offset" data-action="@((int)command)" id="@id" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+    </div>
 }

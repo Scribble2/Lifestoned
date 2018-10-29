@@ -17,6 +17,7 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
+using System.Globalization;
 using Newtonsoft.Json;
 
 namespace Lifestoned.DataModel.Gdle
@@ -28,5 +29,28 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("objcell_id")]
         public uint LandCellId { get; set; }
+
+        [JsonIgnore]
+        public string Display
+        {
+			get { return $"{LandCellId:X8} {Frame.Display}"; }
+			set
+            {
+                int start = 0;
+                int pos = value != null ? value.IndexOf(' ', start) : -1;
+				if (pos < 0)
+                {
+                    LandCellId = 0;
+                    Frame.Display = string.Empty;
+                    return;
+                }
+
+                uint t = 0;
+                uint.TryParse(value.Substring(start, pos), NumberStyles.HexNumber, CultureInfo.CurrentCulture.NumberFormat, out t);
+                LandCellId = t;
+
+                Frame.Display = value.Substring(pos + 1);
+            }
+        }
     }
 }
