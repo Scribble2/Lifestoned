@@ -226,7 +226,7 @@ namespace DerethForever.Web.Controllers
                 indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully created.");
                 CurrentIndexModel = indexModel;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Sandbox");
             }
             catch (Exception ex)
             {
@@ -304,7 +304,7 @@ namespace DerethForever.Web.Controllers
                 indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully created.");
                 CurrentIndexModel = indexModel;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Sandbox");
             }
             catch (Exception ex)
             {
@@ -347,7 +347,7 @@ namespace DerethForever.Web.Controllers
                 indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully saved.");
                 CurrentIndexModel = indexModel;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Sandbox");
             }
             catch (Exception ex)
             {

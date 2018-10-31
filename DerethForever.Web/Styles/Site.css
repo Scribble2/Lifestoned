@@ -67,6 +67,7 @@ select {
 
 .panel-default > .panel-heading,
 .panel-default > .panel-footer,
+.panel-default .tab-pane > .panel-footer,
 .modal-content > .modal-header,
 .modal-content > .modal-footer {
     color: #fff;
@@ -79,7 +80,8 @@ select {
     background-color: #0b4843;
 }
 
-.panel.panel-default > .panel-group {
+.panel.panel-default > .panel-group,
+.panel.panel-default .tab-pane > .panel-body {
     max-height: 68vh;
     overflow: auto;
 }

@@ -43,31 +43,6 @@
             $("form").submit();
         });
 
-        @*$("#addSpell").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddSpell));
-            $("form").submit();
-        });*@
-
-        @*$("#addSkill").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddSkill));
-            $("form").submit();
-        });*@
-
-        @*$("#addPosition").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddPosition));
-            $("form").submit();
-        });*@
-
-        @*$("#addBookPage").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddBookPage));
-            $("form").submit();
-        });*@
-
-        @*$("#addBodyParts").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddBodyParts));
-            $("form").submit();
-        });*@
-
         $("#addBodyPart").on("click", function () {
             $("#MvcAction").val(@((int)WeenieCommands.AddBodyPart));
             $("form").submit();
@@ -78,11 +53,6 @@
             $("form").submit();
         });
 
-        @*$("#addGeneratorTable").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddGeneratorTable));
-            $("form").submit();
-        });*@
-
         $("input[name='addEmote']").on("click", function () {
             var emoteSetGuid = $(this).attr("data-content");
             var emoteCategory = $(this).attr("data-container");
@@ -92,12 +62,6 @@
             $("form").submit();
         });
 
-        @*$("#addCreateItem").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddCreateItem));
-            $("form").submit();
-        });*@
-
-        //$(".well").on("click", "[name^='remove']", function () {
         $(".panel-body input[name^='remove']").on("click", function () {
             // deleting the whole row (with inputs) makes the server side drop
             // anything that comes after this one.  instead, we need to just set a flag
@@ -106,82 +70,7 @@
             var deleteInput = parentDiv.find("[id$=Deleted]");
             deleteInput.val("True");
             $(this).parents(".row.row-spacer, .panel-default").first().addClass("hidden");
-            //parentDiv.parent().addClass("hidden");
         });
-
-        //$("#removePage").on("click", function () {
-        //    // the generic handler will take care of the current row, but book pages
-        //    // are 2 rows, so we need to catch the second as well
-        //    secondRow = $(this).parent().parent().next();
-        //    secondRow.addClass("hidden");
-        //});
-
-        //$("#removeBodyPart").on("click", function () {
-        //    // the generic handler will take care of the current row, but body parts
-        //    // are are a whole panel
-        //    panel = $(this).parent().parent().parent().parent();
-        //    panel.addClass("hidden");
-        //});
-
-        //$(".well").on("click", "[name^='removeEmote']", function () {
-        //    // the generic handler will take care of the current row, but emote sets and emotes
-        //    // are bigger and have another container div to hide
-        //    var containerRow = $(event.target).parent().parent().parent();
-        //    containerRow.addClass("hidden");
-        //});
-
-        // Add a search button after all class items of type weenieClassEntry to show the search modal popup
-        //$(".weenieClassEntry").each(function (e) {
-        //    var searchBtn = $(this).after('<div class="btn btn-info modelSearchBtn pull-right" data-rel="' + $(this).attr("id") + '" style="margin-top:-2.4em;position:relative;"><span class="glyphicon glyphicon-search"></span></div>');
-        //});
-
-        // Set the event listerner for the weenie modal search button
-        $(".modelSearchBtn").on("click", function () {
-            $("#searchWeenieModalResults").hide(); // re-hide any previous search results
-            $("#searchWeenieModalResults table tbody > tr").remove(); // clear any previous search results
-
-            $("#searchWeenieModal").modal();
-            weenieSearchTarget = $(this).attr("data-rel"); // store this so we can set the value of it later...
-        });
-        var weenieSearchTarget;
-        $("#searchWeenieBtn").on("click", function () {
-            $("#searchWeenieModalResults").hide(); // re-hide any previous search results
-            $("#searchWeenieModalResults table tbody > tr").remove(); // clear any previous search results
-
-            // Ordinarily would just serialize a form, but .NET seems to want to put the whole page into a form and can't do a form within a form, so...ugh, this is hacky!
-            var formData = "partialName=" + $("#searchWeenie_Criteria_PartialName").val()
-                + "&WeenieClassId=" + $("#searchWeenie_Criteria_WeenieClassId").val()
-                + "&ItemType=" + $("#searchWeenie_Criteria_ItemType").val()
-                + "&WeenieType=" + $("#searchWeenie_Criteria_WeenieType").val();
-
-            $.ajax(
-                {
-                    type: "POST",
-                    data: formData,
-                    dataType: "json",
-                    url: "/Weenie/WeenieFinder",
-                }).done(function (data) {
-                    console.log(data);
-
-                    if (data.length > 0) {
-                        var table = $("#searchWeenieModalResults table tbody");
-                        // Loop over the results and slap them into the table
-                        $.each(data, function (key, data) {
-                            $(table).append('<tr><td><a href="javascript:selectSearchWCID(' + data.WeenieClassId + ');" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-ok"></span></a></td><td> ' + data.WeenieClassId + '</td><td>' + data.Name + '</td><td>' + data.Description + '</td><td>' + data.ItemType + '</td><td>' + data.WeenieType + '</td></tr>')
-                        });
-
-                        $("#searchWeenieModalResults").show();
-                    } else {
-                        alert('No results found.');
-                    }
-                });
-
-        });
-
-        function selectSearchWCID(wcid) {
-            $("#" + weenieSearchTarget).val(wcid);
-            $("#searchWeenieModal").modal('hide');
-        }
 
         function validate() {
             var cl = $('#UserChangeSummary');
@@ -202,8 +91,6 @@
 
             $("#MvcAction").val("");
             $("#PropertyTab").val("");
-
-            console.log($("input[name^='add'][data-action]"));
 
             $("input[id^='add'][data-action]").click(function (evt) {
                 $this = $(this);
@@ -237,7 +124,7 @@
 
                 if (cid && sid) {
                     href = 'http://ac.yotesfan.com/10-Clothing/preview.php?id={{cid}}&setup={{sid}}&pal={{pid}}&shade={{shade}}';
-                    href = href.replace("{{cid}}", ('00000000' + parseInt(cid).toString(16)).substr(-8));
+                    href = href.replace("{{cid}}", parseInt(cid).toHexStr());
                     if (pid) {
                         href = href.replace("{{pid}}", pid);
                     } else {
@@ -256,7 +143,7 @@
                     return;
                 }
 
-                href = href.replace("{{sid}}", ('00000000' + parseInt(sid).toString(16)).substr(-8));
+                href = href.replace("{{sid}}", parseInt(sid).toHexStr());
 
                 link.attr('href', href);
             });
