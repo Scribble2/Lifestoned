@@ -43,7 +43,7 @@ namespace DerethForever.Web.Controllers
                 string releaseDir = Path.GetFullPath(ConfigurationManager.AppSettings["WorldReleaseDir"]);
                 var allReleases = Directory.GetFiles(releaseDir, "*.json", SearchOption.AllDirectories).OrderByDescending(f => new FileInfo(f).CreationTime).ToList();
 
-                foreach(var file in allReleases)
+                foreach (var file in allReleases)
                 {
                     model.Results.Add(JsonConvert.DeserializeObject<Release>(System.IO.File.ReadAllText(file)));
                 }

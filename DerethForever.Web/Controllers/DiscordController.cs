@@ -71,14 +71,14 @@ namespace DerethForever.Web.Controllers
                 else
                     log.Error($"Non-OK code posting message to discord. {Environment.NewLine}Content: {response.Content} {Environment.NewLine}Error Message: {response.ErrorMessage}");
 
-                return;// response.StatusCode;
+                return; // response.StatusCode;
             }
             catch (Exception ex)
             {
                 log.Error("Exception posting message to discord.", ex);
             }
 
-            return;// HttpStatusCode.InternalServerError;
+            return; // HttpStatusCode.InternalServerError;
         }
     }
 }
