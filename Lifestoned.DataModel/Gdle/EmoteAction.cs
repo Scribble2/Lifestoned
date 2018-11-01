@@ -179,6 +179,7 @@ namespace Lifestoned.DataModel.Gdle
         public float? Percent { get; set; }
 
         [JsonProperty("display", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.AwardLevelProportionalXP)]
         [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
         public byte? Display_Binder { get; set; }
 
