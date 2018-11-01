@@ -1031,7 +1031,7 @@ namespace DerethForever.Web.Controllers
                 SandboxContentProviderHost.CurrentProvider.UpdateWeenieChange(GetUserGuid(), theOne);
             }
 
-            return RedirectToAction("Sandbox");
+            return new EmptyResult(); // RedirectToAction("Sandbox");
         }
 
         [HttpGet]
@@ -1065,7 +1065,7 @@ namespace DerethForever.Web.Controllers
                 DiscordController.PostToDiscordAsync(wse);
             }
 
-            return RedirectToAction("Sandbox");
+            return new EmptyResult(); // RedirectToAction("Sandbox");
         }
 
         [HttpGet]

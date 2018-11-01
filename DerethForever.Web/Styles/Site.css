@@ -80,11 +80,15 @@ select {
     background-color: #0b4843;
 }
 
-.panel.panel-default > .panel-group,
+.panel-title + .nav-pills {
+    margin-left: 10rem;
+}
+
+/*.panel.panel-default > .panel-group,
 .panel.panel-default .tab-pane > .panel-body {
     max-height: 68vh;
     overflow: auto;
-}
+}*/
 
 .modal-content {
     border: 1px solid #fff;

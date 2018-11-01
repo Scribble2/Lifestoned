@@ -1,57 +1,6 @@
 ﻿@using Lifestoned.DataModel.Shared
 
 <script language="javascript">
-        $("#addStringProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddStringProperty));
-            $("#PropertyTab").val("stringProperties");
-            $("form").submit();
-        });
-
-        $("#addIntProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddIntProperty));
-            $("#PropertyTab").val("int32Properties");
-            $("form").submit();
-        });
-
-        $("#addInt64Property").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddInt64Property));
-            $("#PropertyTab").val("int64Properties");
-            $("form").submit();
-        });
-
-        $("#addDoubleProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddDoubleProperty));
-            $("#PropertyTab").val("dblProperties");
-            $("form").submit();
-        });
-
-        $("#addBoolProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddBoolProperty));
-            $("#PropertyTab").val("boolProperties");
-            $("form").submit();
-        });
-
-        $("#addDidProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddDidProperty));
-            $("#PropertyTab").val("didProperties");
-            $("form").submit();
-        });
-
-        $("#addIidProperty").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddIidProperty));
-            $("#PropertyTab").val("iidProperties");
-            $("form").submit();
-        });
-
-        $("#addBodyPart").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddBodyPart));
-            $("form").submit();
-        });
-
-        $("#addEmoteSet").on("click", function () {
-            $("#MvcAction").val(@((int)WeenieCommands.AddEmoteSet));
-            $("form").submit();
-        });
 
         $("input[name='addEmote']").on("click", function () {
             var emoteSetGuid = $(this).attr("data-content");
@@ -90,13 +39,13 @@
             }
 
             $("#MvcAction").val("");
-            $("#PropertyTab").val("");
+            //$("#PropertyTab").val("");
 
             $("input[id^='add'][data-action]").click(function (evt) {
                 $this = $(this);
 
                 $("#MvcAction").val($this.data('action'));
-                $("#PropertyTab").val($this.data('tab'));
+                $("#PropertyTab").val($this.parents('.tab-pane').attr('id'));
                 $("form").submit();
             });
 
