@@ -25,11 +25,11 @@ else
                 var prop = $(evt.target).val();
                 var sortfn = (prop == "id" || prop == "type" || prop == "date") ?
                     function (a, b) {
-                        return parseInt(a.dataset[prop]) > parseInt(b.dataset[prop]);
+                        return (parseInt(a.dataset[prop]) > parseInt(b.dataset[prop])) ? 1 : -1;
                     }
                     :
                     function (a, b) {
-                        return a.dataset[prop] > b.dataset[prop];
+                        return (a.dataset[prop] > b.dataset[prop]) ? 1 : -1;
                     };
 
                 $(".well[data-id]").sort(sortfn).appendTo($(".weenies"));
