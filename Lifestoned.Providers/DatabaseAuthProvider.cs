@@ -29,7 +29,7 @@ namespace Lifestoned.Providers
                     "SELECT * FROM account WHERE accountName = @name;",
                     new { name = username }).FirstOrDefault();
 
-                if (string.Compare(result.Name, username, true) == 0)
+                if (string.Compare(result?.Name, username, true) == 0)
                 {
                     // compare the password
                     string hashedPassword = HashPassword(password, result.PasswordSalt);

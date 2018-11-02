@@ -5,7 +5,10 @@
         $("input[name='addEmote']").on("click", function () {
             var emoteSetGuid = $(this).attr("data-content");
             var emoteCategory = $(this).attr("data-container");
-            $("#NewEmoteCategory").val(emoteCategory);
+
+            console.log(emoteCategory, emoteSetGuid);
+
+            $("#NewEmoteCategory").get(0).selectize.setValue(emoteCategory);
             $("#EmoteSetGuid").val(emoteSetGuid);
             $("#MvcAction").val(@((int)WeenieCommands.AddEmote));
             $("form").submit();
