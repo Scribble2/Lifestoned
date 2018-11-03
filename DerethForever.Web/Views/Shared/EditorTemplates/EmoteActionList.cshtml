@@ -21,13 +21,11 @@
     <div id="@Html.IdFor(m => m[i].EmoteActionType)" class="panel-body">
         <div class="">
             <div class="row row-spacer">
-                <div class="col-md-2"></div>
                 <div class=" col-md-2">@Html.LabelFor(m => m[i].Delay)</div>
                 <div class=" col-md-2">@Html.LabelFor(m => m[i].Extent)</div>
                 <div class=" col-md-2">@Html.LabelFor(m => m[i].SortOrder)</div>
             </div>
             <div class="row row-spacer">
-                <div class="col-md-2"></div>
                 <div class=" col-md-2">
                     @Html.TextBoxFor(m => m[i].Delay, new { @class = "form-control" })
                 </div>
@@ -272,7 +270,7 @@
                     <div class=" col-md-2">
                         @Html.LabelFor(m => m[i].Display)
                     </div>
-                    <div class=" col-md-3">
+                    <div class=" col-md-1">
                         @Html.EditorFor(m => m[i].Display_Binder, new { @class = "form-control" })
                     </div>
                 </div>
@@ -280,7 +278,6 @@
             @if (EmoteAction.IsPropertyVisible("Item", Model[i]))
             {
                 <div class="row row-spacer">
-                    <div class="col-md-1"></div>
                     <div class="col-md-2">@(Html.Label("Weenie"))</div>
                     <div class="col-md-2">@(Html.Label("Destination"))</div>
                     <div class="col-md-1">@(Html.Label("Palette"))</div>
@@ -289,7 +286,6 @@
                     <div class="col-md-1">@(Html.Label("Bonded"))</div>
                 </div>
                 <div class="row row-spacer">
-                    <div class="col-md-1"></div>
                     <div class="col-md-2">
                         @Html.HiddenFor(m => m[i].Item.Deleted)
                         @Html.TextBoxFor(m => m[i].Item.WeenieClassId, new { @class = "form-control weenieClassEntry weenie-select" })

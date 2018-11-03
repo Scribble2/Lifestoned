@@ -67,6 +67,7 @@ select {
 
 .panel-default > .panel-heading,
 .panel-default > .panel-footer,
+.panel-default > .panel-collapse > .panel-footer,
 .panel-default .tab-pane > .panel-footer,
 .modal-content > .modal-header,
 .modal-content > .modal-footer {

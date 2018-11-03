@@ -566,7 +566,8 @@ namespace DerethForever.Web.Controllers
                     if (model.EmoteTable.All(ecl => ecl.EmoteCategoryId != (int)model.NewEmoteCategory))
                         model.EmoteTable.Add(new EmoteCategoryListing() { EmoteCategoryId = (int)model.NewEmoteCategory });
 
-                    model.EmoteTable.First(ecl => ecl.EmoteCategoryId == (int)model.NewEmoteCategory).Emotes.Add(new Emote());
+                    model.EmoteTable.First(ecl => ecl.EmoteCategoryId == (int)model.NewEmoteCategory)
+						.Emotes.Add(new Emote() { Category = (uint)model.NewEmoteCategory });
                     model.NewEmoteCategory = EmoteCategory.Invalid;
                     break;
 
@@ -577,7 +578,8 @@ namespace DerethForever.Web.Controllers
                     break;
 
                 case WeenieCommands.AddEmote:
-                    EmoteCategoryListing emoteTable = model.EmoteTable[(int)model.NewEmoteCategory];
+                    EmoteCategoryListing emoteTable = model.EmoteTable
+						.Where(et => et.EmoteCategoryId == (int)model.NewEmoteCategory).FirstOrDefault();
 
                     if (emoteTable == null || model.EmoteSetGuid == null)
                     {

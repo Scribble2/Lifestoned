@@ -83,7 +83,7 @@
                                     @Html.LabelFor(m => m[k].Emotes[i].ClassId)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(m => m[k].Emotes[i].ClassId, new { @class = "form-control weenieClassEntry" })
+                                    @Html.TextBoxFor(m => m[k].Emotes[i].ClassId, new { @class = "form-control weenieClassEntry weenie-select" })
                                 </div>
                             </div>
                         }
@@ -132,7 +132,7 @@
                                 <div class="panel-body panel-group">
                                     @Html.EditorFor(m => m[k].Emotes[i].Actions, "EmoteActionList")
 
-                                    <div class="row row-spacer">
+                                    @*<div class="row row-spacer">
                                         <div class="col-md-3">
                                             @Html.Label("Add new Emote")
                                         </div>
@@ -140,10 +140,17 @@
                                             @Html.EnumDropDownListFor(m => m[k].NewEmoteType, new { @class = "form-control" })
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="button" class="btn btn-primary" id="addEmote" name="addEmote" value="Add" formaction="Edit" data-content="@(i)" data-container="@(k)" formnovalidate="formnovalidate" />
+                                            <input type="button" class="btn btn-primary" id="addEmote" name="addEmote" value="Add" formaction="Edit" data-content="@(i)" data-container="@(category)" formnovalidate="formnovalidate" />
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
+
+                                @EditorHelpers.FooterCommand(
+                                    $"addEmote_{k}_{i}",
+                                    new { data_content = i, data_container = categoryListing.EmoteCategoryId },
+                                    "Add New Emote",
+                                    Html.EnumDropDownListFor(m => m[k].NewEmoteType, new { @class = "form-control" })
+                                )
                             </div>
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 
 <script language="javascript">
 
-        $("input[name='addEmote']").on("click", function () {
+        $("input[name^='addEmote']").on("click", function () {
             var emoteSetGuid = $(this).attr("data-content");
             var emoteCategory = $(this).attr("data-container");
 
