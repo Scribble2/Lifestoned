@@ -10,78 +10,113 @@
 }
 else
 {
-    for (int i = 0; i < Model.Count; i++)
-    {
-        <div class="well">
-            <div class="row">
-                <div class="col-md-1">
-                    <div class="icon">
-                        <img src="@Url.Action("GetDynamicIcon", "Resource",
+    <div class="text-right">
+        <i class="glyphicon glyphicon-sort"></i>
+        <select onchange="sortChanged(event)">
+            <option value=""></option>
+            <option value="id">Weenie Id</option>
+            <option value="type">Item Type</option>
+            <option value="name">Item Name</option>
+            <option value="user">User Name</option>
+            <option value="date">Submission Date</option>
+        </select>
+        <script>
+            function sortChanged(evt) {
+                var prop = $(evt.target).val();
+                var sortfn = (prop == "id" || prop == "type" || prop == "date") ?
+                    function (a, b) {
+                        return (parseInt(a.dataset[prop]) > parseInt(b.dataset[prop])) ? 1 : -1;
+                    }
+                    :
+                    function (a, b) {
+                        return (a.dataset[prop] > b.dataset[prop]) ? 1 : -1;
+                    };
+
+                $(".well[data-id]").sort(sortfn).appendTo($(".weenies"));
+            }
+        </script>
+    </div>
+    <div class="weenies">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <div class="well"
+                 data-id="@(Model[i].Weenie.WeenieClassId)"
+                 data-type="@(Model[i].Weenie.ItemType)"
+                 data-name="@(Model[i].Weenie.Name)"
+                 data-user="@(Model[i].UserName)"
+                 data-date="@(new DateTimeOffset(Model[i].SubmissionTime.ToUniversalTime()).ToUnixTimeSeconds())">
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="icon">
+                            <img src="@Url.Action("GetDynamicIcon", "Resource",
                                   new {
                                       itemType = Model[i].Weenie.ItemType,
                                       underlayId = Model[i].Weenie.UnderlayId,
                                       overlayId = Model[i].Weenie.OverlayId,
                                       iconId = Model[i].Weenie.IconId,
                                       uiEffects = Model[i].Weenie.UIEffects }) " />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    @Html.DisplayFor(m => m[i].Weenie.Name)
-                    (@Html.DisplayFor(m => m[i].Weenie.WeenieClassId))<br />
-                    Submitted by @Html.DisplayFor(m => m[i].UserName) on @Html.DisplayFor(m => m[i].SubmissionTimeDisplay)<br />
-                    <br />
-                </div>
-                <div class="col-md-5">
-                    <div class="btn-group">
-                        <div class="btn btn-default btn-sm">
-                            <i class="glyphicon glyphicon-download"></i>
-                            @Html.ActionLink("Sandbox", "DownloadSandbox", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null)
                         </div>
-                        <div class="btn btn-default btn-sm">
-                            <i class="glyphicon glyphicon-download"></i>
-                            @Html.ActionLink("Original", "DownloadOriginal", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.DisplayFor(m => m[i].Weenie.Name)
+                        (@Html.DisplayFor(m => m[i].Weenie.WeenieClassId))<br />
+                        Submitted by @Html.DisplayFor(m => m[i].UserName) on @Html.DisplayFor(m => m[i].SubmissionTimeDisplay)<br />
+                        <br />
+                    </div>
+                    <div class="col-md-5">
+                        <div class="btn-group">
+                            <div class="btn btn-default btn-sm">
+                                <i class="glyphicon glyphicon-download"></i>
+                                @Html.ActionLink("Sandbox", "DownloadSandbox", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, null)
+                            </div>
+                            <div class="btn btn-default btn-sm">
+                                <i class="glyphicon glyphicon-download"></i>
+                                @Html.ActionLink("Original", "DownloadOriginal", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, null)
+                            </div>
+
                         </div>
+                        @if (User.IsInRole("Developer"))
+                        {
+                            <div>
+                                @Html.ActionLink("Accept", "AcceptChange", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, new { @class = "btn btn-sm btn-primary" })
 
+                                <button type="button" class="btn btn-sm btn-warning"
+                                        data-toggle="modal" data-target="#modal-reject"
+                                        data-user="@(Model[i].UserGuid)" data-weenie="@(Model[i].Weenie.WeenieClassId)">
+                                    Reject
+                                </button>
+
+                            </div>
+                        }
                     </div>
-                    @if (User.IsInRole("Developer"))
-                    {
-                    <div>
-                        @Html.ActionLink("Accept", "AcceptChange", "Weenie", new { id = Model[i].Weenie.WeenieClassId, userGuid = Model[i].UserGuid }, new { @class = "btn btn-sm btn-primary" })
 
-                        <button type="button" class="btn btn-sm btn-warning"
-                                data-toggle="modal" data-target="#modal-reject"
-                                data-user="@(Model[i].UserGuid)" data-weenie="@(Model[i].Weenie.WeenieClassId)">
-                            Reject
-                        </button>
-
-                    </div>
-                    }
                 </div>
+
+                <br />
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a href="#comment@(Model[i].Weenie.WeenieClassId)" data-toggle="collapse" aria-expanded="false">Changelog Comment</a>
+                    </div>
+                    <div id="comment@(Model[i].Weenie.WeenieClassId)" class="panel-collapse collapse panel-body">
+                        @if (!string.IsNullOrWhiteSpace(Model[i].Weenie.UserChangeSummary))
+                        {
+                            <span class="text-prewrap">@(Model[i].Weenie.UserChangeSummary)</span>
+                        }
+                        else
+                        {
+                            <span class="text-prewrap">@Html.Raw("No comment provided.")</span>
+                        }
+                    </div>
+                </div>
+
+                @Html.EditorFor(m => m[i], "WeenieChangeDiscussion")
 
             </div>
 
-            <br />
+        }
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a href="#comment@(Model[i].Weenie.WeenieClassId)" data-toggle="collapse" aria-expanded="false">Changelog Comment</a>
-                </div>
-                <div id="comment@(Model[i].Weenie.WeenieClassId)" class="panel-collapse collapse panel-body">
-                    @if (!string.IsNullOrWhiteSpace(Model[i].Weenie.UserChangeSummary))
-                    {
-                    <span class="text-prewrap">@(Model[i].Weenie.UserChangeSummary)</span>
-                    }
-                    else
-                    {
-                    <span class="text-prewrap">@Html.Raw("No comment provided.")</span>
-                    }
-                </div>
-            </div>
-
-            @Html.EditorFor(m => m[i], "WeenieChangeDiscussion")
-
-        </div>
-    }
+    </div>
 
     @Html.Partial("WeenieCommentModal", new { source = "Submissions" })
     @Html.Partial("SubmissionRejectModal")

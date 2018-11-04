@@ -9,9 +9,54 @@
 }
 else
 {
+    <div class="text-right">
+        <i class="glyphicon glyphicon-filter"></i>
+        <select id="sort" name="sort" onchange="filterChanged(event)">
+            <option value="">All</option>
+            <option value=".submitted">Submitted</option>
+            <option value=".need-submit">Not Submitted</option>
+        </select>
+        <script>
+            function filterChanged(evt) {
+                $(".well").hide()
+                $(".well" + $(evt.target).val()).show();
+            }
+
+            $(function () {
+                $(".well").hide()
+                $(".well" + $('#sort').val()).show();
+
+                $('.submit-weenie').click(function (evt) {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+
+                    var el = $(this);
+                    $.get(el.attr('href'), function () {
+                        if (el.hasClass('btn-warning')) {
+                            el.removeClass('btn-warning').addClass('btn-primary').text('Withdraw Submission');
+                        } else {
+                            el.removeClass('btn-primary').addClass('btn-warning').text('Submit for Review');
+                        }
+                        el.toggleClass('need-submit', 'submitted');
+                        if ($('#sort').val() != '') {
+                            el.parents('.well').first().hide();
+                        }
+                    });
+                });
+
+                $('.delete-weenie').click(function (evt) {
+                    if (!confirm('This will remove the item, proceed?')) {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                    }
+                });
+
+            })
+        </script>
+    </div>
     for (int i = 0; i < Model.Count; i++)
     {
-    <div class="well @(!Model[i].Submitted ? "need-submit" : "")">
+    <div class="well @(!Model[i].Submitted ? "need-submit" : "submitted")">
         <div class="row">
             <div class="col-md-1">
                 <div class="icon">
@@ -50,14 +95,14 @@ else
                     {
                         if (Model[i].Submitted)
                         {
-                            @Html.ActionLink("Withdraw Submission", "WithdrawSubmission", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "btn btn-sm btn-primary" })
+                            @Html.ActionLink("Withdraw Submission", "WithdrawSubmission", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "submit-weenie btn btn-sm btn-primary" })
                         }
                         else
                         {
-                            @Html.ActionLink("Submit for Review", "CreateSubmission", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "btn btn-sm btn-warning" })
+                            @Html.ActionLink("Submit for Review", "CreateSubmission", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "submit-weenie btn btn-sm btn-warning" })
                         }
                     }
-                    @Html.ActionLink("Delete Changes", "DeleteSandboxWeenie", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "btn btn-sm btn-primary" })
+                    @Html.ActionLink("Delete Changes", "DeleteSandboxWeenie", "Weenie", new { id = Model[i].Weenie.WeenieClassId }, new { @class = "delete-weenie btn btn-sm btn-primary" })
                 </div>
             </div>
         </div>

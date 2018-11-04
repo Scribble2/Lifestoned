@@ -1,39 +1,47 @@
 @model List<Lifestoned.DataModel.Gdle.PositionListing>
 
-<h3>Positions</h3>
+<div class="panel-heading"><h3 class="panel-title">Positions</h3></div>
+<div class="panel-body panel-group">
 
-<div class="row row-spacer">
-    <div class="col-md-2"><strong>Position Type</strong></div>    
-    <div class="col-md-1"><strong>Landblock</strong></div>
-    <div class="col-md-1"><strong>X</strong></div>
-    <div class="col-md-1"><strong>Y</strong></div>
-    <div class="col-md-1"><strong>Z</strong></div>
-    <div class="col-md-1"><strong>Q-W</strong></div>
-    <div class="col-md-1"><strong>Q-X</strong></div>
-    <div class="col-md-1"><strong>Q-Y</strong></div>
-    <div class="col-md-1"><strong>Q-Z</strong></div>
-    <div class="col-md-2"></div>
-</div>
-
-
-@for (int i = 0; i < (Model?.Count ?? 0); i++)
-{
     <div class="row row-spacer">
-        <div class="col-md-2">
-            @Html.HiddenFor(m => m[i].Deleted)
-            @Html.HiddenFor(m => m[i].PositionType)
-            @Html.DisplayFor(m => m[i].PositionTypeName)
-        </div>    
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.LandCellId, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Position.X, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Position.Y, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Position.Z, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.W, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.X, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.Y, new { style = "width: 90px;" })</div>
-        <div class="col-md-1">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.Z, new { style = "width: 90px;" })</div>
-        <div class="col-md-2">
-            <input type="button" class="btn btn-xs btn-danger" name="removePosition" value="Remove" />
-        </div>
+        <div class="col-md-2"><strong>Position Type</strong></div>
+        <div class="col-md-9"><strong>Position</strong></div>
+        @*<div class="col-md-1"><strong>X</strong></div>
+        <div class="col-md-1"><strong>Y</strong></div>
+        <div class="col-md-1"><strong>Z</strong></div>
+        <div class="col-md-1"><strong>Q-W</strong></div>
+        <div class="col-md-1"><strong>Q-X</strong></div>
+        <div class="col-md-1"><strong>Q-Y</strong></div>
+        <div class="col-md-1"><strong>Q-Z</strong></div>
+        <div class="col-md-2"></div>*@
     </div>
-}
+    @* 1E140039 [179.046539 4.137586 -0.895000] 0.668362 0.000000 0.000000 -0.743836 *@
+
+    @for (int i = 0; i < (Model?.Count ?? 0); i++)
+    {
+        <div class="row row-spacer">
+            <div class="col-md-2">
+                @Html.HiddenFor(m => m[i].Deleted)
+                @Html.HiddenFor(m => m[i].PositionType)
+                @Html.DisplayFor(m => m[i].PositionTypeName)
+            </div>
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m[i].Position.Display, new { @class = "form-control" })
+                @* style = "width: 90px;" *@
+                @*<div class="col-md-3">@Html.TextBoxFor(m => m[i].Position.LandCellId, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.TextBoxFor(m => m[i].Position.Frame.Position.X, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.TextBoxFor(m => m[i].Position.Frame.Position.Y, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.TextBoxFor(m => m[i].Position.Frame.Position.Z, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.W, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.X, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.Y, new { @class = "form-control" })</div>
+                <div class="col-md-3">@Html.TextBoxFor(m => m[i].Position.Frame.Rotations.Z, new { @class = "form-control" })</div>*@
+            </div>
+            <div class="col-md-1">
+                @EditorHelpers.DeleteButton("removePosition")
+                @*<input type="button" class="btn btn-xs btn-danger" name="removePosition" value="Remove" />*@
+            </div>
+        </div>
+    }
+
+</div>

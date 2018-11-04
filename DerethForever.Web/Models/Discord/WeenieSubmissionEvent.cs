@@ -36,7 +36,7 @@ namespace DerethForever.Web.Models.Discord
 
         public uint WeenieId { get; set; }
 
-        public int? ItemType { get; set;}
+        public int? ItemType { get; set; }
         
         public uint? UnderlayId { get; set; }
 

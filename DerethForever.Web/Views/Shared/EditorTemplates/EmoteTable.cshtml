@@ -3,14 +3,15 @@
 @model List<EmoteCategoryListing>
 
 
-<h3>Emote Table</h3>
+<div class="panel-heading"><h3 class="panel-title">Emote Table</h3></div>
+<div class="panel-body panel-group">
 
-@for (int k = 0; k < (Model?.Count ?? 0); k++)
-{
-    var categoryListing = Model[k];
-    var category = (EmoteCategory)categoryListing.EmoteCategoryId;
+    @for (int k = 0; k < (Model?.Count ?? 0); k++)
+    {
+        var categoryListing = Model[k];
+        var category = (EmoteCategory)categoryListing.EmoteCategoryId;
 
-    <div class="panel-group">
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a data-toggle="collapse" href="#@(Html.Raw("emoteCategory_" + k))">@Html.Label("Emotes for Category: " + category.GetName())</a>
@@ -22,25 +23,20 @@
                 @for (int i = 0; i < categoryListing?.Emotes?.Count; i++)
                 {
                     <div class="panel-default panel-body">
-                        <div class="row-spacer col-md-12">
+                        <div class="row-spacer clearfix">
+                            @Html.HiddenFor(m => m[k].Emotes[i].Category)
+                            @Html.HiddenFor(m => m[k].Emotes[i].Deleted)
                             <div class="col-md-3">
-                                @Html.HiddenFor(m => m[k].Emotes[i].Category)
-                                @Html.HiddenFor(m => m[k].Emotes[i].Deleted)
+                                @Html.LabelFor(m => m[k].Emotes[i].Probability)
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m[k].Emotes[i].Probability, new { @class = "form-control" })
                             </div>
                             <div class="col-md-3">
 
                             </div>
                             <div class="col-md-3">
                                 <input type="button" class="btn btn-xs btn-danger" name="removeEmoteSet" value="Remove Emote" />
-                            </div>
-                        </div>
-
-                        <div class="row row-spacer">
-                            <div class="col-md-3">
-                                @Html.LabelFor(m => m[k].Emotes[i].Probability)
-                            </div>
-                            <div class="col-md-3">
-                                @Html.TextBoxFor(m => m[k].Emotes[i].Probability, new { @class = "form-control" })
                             </div>
                         </div>
 
@@ -87,7 +83,7 @@
                                     @Html.LabelFor(m => m[k].Emotes[i].ClassId)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(m => m[k].Emotes[i].ClassId, new { @class = "form-control weenieClassEntry" })
+                                    @Html.TextBoxFor(m => m[k].Emotes[i].ClassId, new { @class = "form-control weenieClassEntry weenie-select" })
                                 </div>
                             </div>
                         }
@@ -133,10 +129,10 @@
                                 <a data-toggle="collapse" href="#@(Html.Raw("emoteCategory_" + k + "_" + i))">@Html.Label("Emotes")</a>
                             </div>
                             <div id="@(Html.Raw("emoteCategory_" + k + "_" + i))" class="panel-collapse collapse">
-                                <div class="panel-body">
+                                <div class="panel-body panel-group">
                                     @Html.EditorFor(m => m[k].Emotes[i].Actions, "EmoteActionList")
 
-                                    <div class="row row-spacer">
+                                    @*<div class="row row-spacer">
                                         <div class="col-md-3">
                                             @Html.Label("Add new Emote")
                                         </div>
@@ -144,16 +140,22 @@
                                             @Html.EnumDropDownListFor(m => m[k].NewEmoteType, new { @class = "form-control" })
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="button" class="btn btn-primary" id="addEmote" name="addEmote" value="Add" formaction="Edit" data-content="@(i)" data-container="@(k)" formnovalidate="formnovalidate" />
+                                            <input type="button" class="btn btn-primary" id="addEmote" name="addEmote" value="Add" formaction="Edit" data-content="@(i)" data-container="@(category)" formnovalidate="formnovalidate" />
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
+
+                                @EditorHelpers.FooterCommand(
+                                    $"addEmote_{k}_{i}",
+                                    new { data_content = i, data_container = categoryListing.EmoteCategoryId },
+                                    "Add New Emote",
+                                    Html.EnumDropDownListFor(m => m[k].NewEmoteType, new { @class = "form-control" })
+                                )
                             </div>
                         </div>
                     </div>
                 }
             </div>
         </div>
-    </div>
-
-}
+    }
+</div>

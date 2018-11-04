@@ -1,0 +1,70 @@
+﻿
+@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
+
+@using Lifestoned.DataModel.Gdle;
+@using Lifestoned.DataModel.Shared;
+
+@helper DeleteButton(string id)
+{
+    <button class="btn btn-xs btn-danger" name="@id"><i class="glyphicon glyphicon-trash"></i></button>
+}
+
+@helper FooterCommand(string id, WeenieCommands command, string label = null, MvcHtmlString dropdown = null)
+{
+    int offset = 6;
+
+    <div class="panel-footer clearfix">
+
+        @if (!string.IsNullOrEmpty(label))
+        {
+            offset -= 3;
+            <div class="col-md-3">@label</div>
+        }
+
+        @if (dropdown != null)
+        {
+            offset -= 3;
+            <div class="col-md-3">@dropdown</div>
+        }
+
+        <input type="button" class="btn btn-primary col-md-offset-@offset" data-action="@((int)command)" id="@id" value="Add" formaction="Edit" formnovalidate="formnovalidate" />
+    </div>
+}
+
+@helper FooterCommand(string id, object data = null, string label = null, MvcHtmlString dropdown = null)
+{
+    int offset = 6;
+
+    <div class="panel-footer clearfix">
+
+        @if (!string.IsNullOrEmpty(label))
+        {
+            offset -= 3;
+            <div class="col-md-3">@label</div>
+        }
+
+        @if (dropdown != null)
+        {
+            offset -= 3;
+            <div class="col-md-3">@dropdown</div>
+        }
+
+        @{ 
+            TagBuilder tb = new TagBuilder("input");
+            tb.AddCssClass($"btn btn-primary col-md-offset-{offset}");
+            tb.Attributes.Add("type", "button");
+            tb.Attributes.Add("name", id);
+            tb.Attributes.Add("value", "Add");
+            tb.Attributes.Add("formaction", "Edit");
+            tb.Attributes.Add("formnovalidate", "formnovalidate");
+            if (data != null)
+            {
+                tb.MergeAttributes(System.Web.Mvc.HtmlHelper.AnonymousObjectToHtmlAttributes(data));
+            }
+
+            @MvcHtmlString.Create(tb.ToString(TagRenderMode.SelfClosing));
+        }
+
+    </div>
+}

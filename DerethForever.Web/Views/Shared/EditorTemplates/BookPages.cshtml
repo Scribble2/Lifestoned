@@ -1,46 +1,59 @@
 @model Lifestoned.DataModel.Gdle.Book
 
-<h3>Book Pages</h3>
-<input type="hidden" id="PageCount" value="@Model?.Pages?.Count() ?? 0" />
+<div class="panel-heading"><h3 class="panel-title">Book Pages</h3></div>
+<div class="panel-body panel-group">
 
-<div class="row row-spacer">
-    <div class="col-md-2"><strong>Page #</strong></div>
-    <div class="col-md-2"><strong>Author Name</strong></div>
-    <div class="col-md-2"><strong>Author Account</strong></div>
-    <div class="col-md-2"><strong>Author Id</strong></div>
-    <div class="col-md-2"><strong>Ignore Author</strong></div>
+    <input type="hidden" id="PageCount" value="@Model?.Pages?.Count() ?? 0" />
+
+    @if (Model == null)
+    {
+        <strong>This Weenie has no Book Pages. Click below to add one.</strong>
+    }
+    else
+    {
+
+        <div class="row row-spacer">
+            <div class="col-md-2"><strong>Page #</strong></div>
+            <div class="col-md-2"><strong>Author Name</strong></div>
+            <div class="col-md-2"><strong>Author Account</strong></div>
+            <div class="col-md-2"><strong>Author Id</strong></div>
+            <div class="col-md-2"><strong>Ignore Author</strong></div>
+        </div>
+
+    }
+
+    @for (int i = 0; i < (Model?.Pages?.Count ?? 0); i++)
+    {
+        <div class="row row-spacer">
+            <div class="row-spacer col-md-12">
+                <div class="col-md-2">
+                    @Html.HiddenFor(m => m.Pages[i].Deleted)
+                    @Html.DisplayFor(m => i)
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.Pages[i].AuthorName, new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.Pages[i].AuthorAccount, new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(m => m.Pages[i].AuthorId, new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    @Html.EditorFor(m => m.Pages[i].IgnoreAuthor)
+                </div>
+                <div class="col-md-2">
+                    <input type="button" class="btn btn-xs btn-danger" name="removePage" id="removePage" value="Remove" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.Pages[i].PageText, new { cols = 110, rows = 3, @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </div>
+    }
+
 </div>
-
-@for (int i = 0; i < (Model?.Pages?.Count ?? 0); i++)
-{
-    <div class="row row-spacer">
-        <div class="row-spacer col-md-12">
-            <div class="col-md-2">
-                @Html.HiddenFor(m => m.Pages[i].Deleted)
-                @Html.DisplayFor(m => i)
-            </div>
-            <div class="col-md-2">
-                @Html.TextBoxFor(m => m.Pages[i].AuthorName, new { @class = "form-control" })
-            </div>
-            <div class="col-md-2">
-                @Html.TextBoxFor(m => m.Pages[i].AuthorAccount, new { @class = "form-control" })
-            </div>
-            <div class="col-md-2">
-                @Html.TextBoxFor(m => m.Pages[i].AuthorId, new { @class = "form-control" })
-            </div>
-            <div class="col-md-2">
-                @Html.EditorFor(m => m.Pages[i].IgnoreAuthor)
-            </div>
-            <div class="col-md-2">
-                <input type="button" class="btn btn-xs btn-danger" name="removePage" id="removePage" value="Remove" />
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="col-md-10">
-                @Html.TextAreaFor(m => m.Pages[i].PageText, new { cols = 110, rows = 3, @class = "form-control" })
-            </div>
-            <div class="col-md-2">
-            </div>
-        </div>
-    </div>
-}

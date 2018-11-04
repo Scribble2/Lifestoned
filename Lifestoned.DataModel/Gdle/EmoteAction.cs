@@ -179,6 +179,7 @@ namespace Lifestoned.DataModel.Gdle
         public float? Percent { get; set; }
 
         [JsonProperty("display", NullValueHandling = NullValueHandling.Ignore)]
+        [EmoteType(EmoteType.AwardLevelProportionalXP)]
         [EmoteType(EmoteType.AwardLevelProportionalSkillXP)]
         public byte? Display_Binder { get; set; }
 
@@ -186,7 +187,7 @@ namespace Lifestoned.DataModel.Gdle
         public bool? Display
         {
             get { return (Display_Binder == null) ? (bool?)null : (Display_Binder.Value == 0 ? true : false); }
-            set { Display_Binder = (value == null) ? (byte?)null : (value.Value ? (byte)0 : (byte)1); }
+            set { Display_Binder = (value == null) ? (byte?)null : (value.Value ? (byte)1 : (byte)0); }
         }
 
         [JsonProperty("max", NullValueHandling = NullValueHandling.Ignore)]
@@ -273,14 +274,14 @@ namespace Lifestoned.DataModel.Gdle
         [EmoteType(EmoteType.SetSanctuaryPosition)]
         [EmoteType(EmoteType.TeleportTarget)]
         [EmoteType(EmoteType.TeleportSelf)]
-        public Position MPosition { get; set; } = new Position();
+        public Position MPosition { get; set; }
 
         [JsonProperty("frame", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.MoveHome)]
         [EmoteType(EmoteType.Move)]
         [EmoteType(EmoteType.Turn)]
         [EmoteType(EmoteType.MoveToPos)]
-        public Frame Frame { get; set; } = new Frame();
+        public Frame Frame { get; set; }
 
         [JsonProperty("spellid", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.CastSpell)]

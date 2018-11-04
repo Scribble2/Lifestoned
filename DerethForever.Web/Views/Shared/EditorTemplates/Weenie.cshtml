@@ -1,3 +1,186 @@
-﻿@model DerethForever.Web.Models.Weenie.Weenie
+﻿@using Lifestoned.DataModel.Gdle;
+@using Lifestoned.DataModel.Shared
+@model Weenie
 
+<div class="well">
+    <div class="row row-spacer">
+        <div class="col-md-2 vcenter">
+            @Html.Label("Weenie Type")
+        </div>
+        <div class="col-md-8 vcenter">
+            @Html.EnumDropDownListFor(m => m.WeenieType_Binder, new { @class = "form-control force-inline" })
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default" id="properties">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title pull-left">Properties</h3>
+        <ul class="nav nav-pills">
+            <li class="active"><a data-toggle="tab" href="#stringProperties">Strings <span class="badge">@Model.StringStats.Count()</span></a></li>
+            <li><a data-toggle="tab" href="#int32Properties">Int32 <span class="badge">@Model.IntStats.Count()</span></a></li>
+            <li><a data-toggle="tab" href="#int64Properties">Int64 <span class="badge">@Model.Int64Stats.Count()</span></a></li>
+            <li><a data-toggle="tab" href="#dblProperties">Double <span class="badge">@Model.FloatStats.Count()</span></a></li>
+            <li><a data-toggle="tab" href="#didProperties">Data IDs <span class="badge">@Model.DidStats.Count()</span></a></li>
+            <li><a data-toggle="tab" href="#iidProperties">Instance IDs <span class="badge">@Model.IidStats.Count()</span></a></li>
+            <li><a data-toggle="tab" href="#boolProperties">Bool <span class="badge">@Model.BoolStats.Count()</span></a></li>
+        </ul>
+    </div>
+
+    <div class="tab-content">
+        <div id="stringProperties" class="tab-pane fade in active">
+            <div class="panel-body">
+                @Html.EditorFor(m => m.StringStats, "StringPropertyList")
+
+            </div>
+
+            @EditorHelpers.FooterCommand("addStringProperty", WeenieCommands.AddStringProperty, "Add New String Property",
+                Html.EnumDropDownListFor(m => m.NewStringPropertyId, new { @class = "form-control force-inline" })
+            )
+
+        </div>
+
+        <div id="int32Properties" class="tab-pane fade">
+            <div class="panel-body">
+                @Html.EditorFor(m => m.IntStats, "IntPropertyList")
+
+            </div>
+
+            @EditorHelpers.FooterCommand("addIntProperty", WeenieCommands.AddIntProperty, "Add New Int Property",
+                Html.EnumDropDownListFor(m => m.NewIntPropertyId, new { @class = "form-control force-inline" })
+            )
+
+        </div>
+
+        <div id="int64Properties" class="tab-pane fade">
+            <div class="panel-body">
+                @Html.EditorFor(m => m.Int64Stats, "Int64PropertyList")
+
+            </div>
+
+            @EditorHelpers.FooterCommand("addInt64Property", WeenieCommands.AddInt64Property, "Add New Int64 Property",
+                Html.EnumDropDownListFor(m => m.NewInt64PropertyId, new { @class = "form-control force-inline" })
+            )
+
+        </div>
+        <div id="dblProperties" class="tab-pane fade">
+            <div class="panel-body">
+                @Html.EditorFor(m => m.FloatStats, "DoublePropertyList")
+
+            </div>
+
+            @EditorHelpers.FooterCommand("addDoubleProperty", WeenieCommands.AddStringProperty, "Add New Double Property",
+                Html.EnumDropDownListFor(m => m.NewDoublePropertyId, new { @class = "form-control force-inline" })
+            )
+
+        </div>
+        <div id="didProperties" class="tab-pane fade">
+            <div class="panel-body">
+                @Html.EditorFor(m => m.DidStats, "DataIdPropertyList")
+
+            </div>
+
+            @EditorHelpers.FooterCommand("addDidProperty", WeenieCommands.AddDidProperty, "Add New DID Property",
+                Html.EnumDropDownListFor(m => m.NewDidPropertyId, new { @class = "form-control force-inline" })
+            )
+
+        </div>
+        <div id="iidProperties" class="tab-pane fade">
+            <div class="panel-body">
+                @Html.EditorFor(m => m.IidStats, "InstanceIdPropertyList")
+
+            </div>
+
+            @EditorHelpers.FooterCommand("addIidProperty", WeenieCommands.AddIidProperty, "Add New IID Property",
+                Html.EnumDropDownListFor(m => m.NewIidPropertyId, new { @class = "form-control force-inline" })
+            )
+
+        </div>
+        <div id="boolProperties" class="tab-pane fade">
+            <div class="panel-body">
+                @Html.EditorFor(m => m.BoolStats, "BoolPropertyList")
+
+            </div>
+
+            @EditorHelpers.FooterCommand("addBoolProperty", WeenieCommands.AddBoolProperty, "Add New Bool Property",
+                Html.EnumDropDownListFor(m => m.NewBoolPropertyId, new { @class = "form-control force-inline" })
+            )
+
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default" id="locations">
+    @Html.EditorFor(m => m.Positions, "PositionList")
+
+    @EditorHelpers.FooterCommand("addPosition", WeenieCommands.AddPosition, "Add New Position",
+        Html.EnumDropDownListFor(m => m.NewPositionType, new { @class = "form-control force-inline type-filter" })
+    )
+
+</div>
+
+@if (Model.HasAbilities)
+{
+    <div class="panel panel-default">
+        @Html.EditorFor(m => m.Attributes, "AbilityList")
+    </div>
+
+    <div class="panel panel-default">
+        @Html.EditorFor(m => m.Skills, "SkillList")
+
+        @EditorHelpers.FooterCommand("addSkill", WeenieCommands.AddSkill, "Add New Skill",
+            Html.EnumDropDownListFor(m => m.NewSkillId, new { @class = "form-control type-filter" })
+        )
+
+    </div>
+}
+
+<div class="panel panel-default">
+    @Html.EditorFor(m => m.Body, "BodyPartList")
+
+    @EditorHelpers.FooterCommand("addBodyPart", WeenieCommands.AddBodyParts, "Add New Body Part",
+        Html.EnumDropDownListFor(m => m.NewBodyPartType, new { @class = "form-control force-inline type-filter" })
+    )
+
+</div>
+
+<div class="panel panel-default" id="spells">
+    @Html.EditorFor(m => m.Spells, "SpellList")
+
+    @EditorHelpers.FooterCommand("addSpell", WeenieCommands.AddSpell, "Add New Spell",
+        Html.EnumDropDownListFor(m => m.NewSpellId, new { @class = "form-control force-inline type-filter" })
+    )
+
+</div>
+
+<div class="panel panel-default">
+    @Html.EditorFor(m => m.Book, "BookPages")
+
+    @EditorHelpers.FooterCommand("addBookPage", WeenieCommands.AddBookPage)
+
+</div>
+
+<div class="panel panel-default" id="generatorTable">
+    @Html.EditorFor(m => m.GeneratorTable, "GeneratorTable")
+
+    @EditorHelpers.FooterCommand("addGeneratorTable", WeenieCommands.AddGeneratorTable)
+
+</div>
+
+<div class="panel panel-default" id="emoteTable">
+    @Html.HiddenFor(m => m.EmoteSetGuid)
+    @Html.EditorFor(m => m.EmoteTable, "EmoteTable")
+
+    @EditorHelpers.FooterCommand("addEmoteSet", WeenieCommands.AddEmoteSet, "Add new Emote Set",
+        Html.EnumDropDownListFor(m => m.NewEmoteCategory, new { @class = "form-control type-filter" })
+    )
+
+</div>
+
+<div class="panel panel-default" id="createList">
+    @Html.EditorFor(m => m.CreateList, "CreateList")
+
+    @EditorHelpers.FooterCommand("addCreateItem", WeenieCommands.AddCreateItem, "Add new Item")
+
+</div>
 

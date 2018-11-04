@@ -87,11 +87,11 @@ namespace DerethForever.Web.Controllers
                 // add json to zip file
                 zipFile.AddFile(filename, contents);
             }
+
             var bytes = zipFile.BuildZip();
             string date = string.Format("{0:yyyy-MM-dd_hh-mm}", DateTime.Now);
             return File(bytes, "application/zip", "GDLE-Latest-Updates-" + date + ".zip");
         }
-
 
         [HttpGet]
         public ActionResult Index()
@@ -167,15 +167,15 @@ namespace DerethForever.Web.Controllers
             {
                 model.EmoteTable = model.EmoteTable.OrderBy(e => e.EmoteCategoryId).ToList();
                 model.EmoteTable.ForEach(
-					t => t.Emotes = t.Emotes.OrderBy(e => e.SortOrder).Select(ts =>
-						{
+                    t => t.Emotes = t.Emotes?.OrderBy(e => e.SortOrder).Select(ts =>
+                        {
                             if (ts.SortOrder != null && ts.SortOrder.Value > emoteOrder)
                                 emoteOrder = ts.SortOrder.Value;
                             else
                                 ts.SortOrder = ++emoteOrder;
 
                             int actionOrder = 0;
-                            ts.Actions = ts.Actions.OrderBy(ea => ea.SortOrder).Select(tsa =>
+                            ts.Actions = ts.Actions?.OrderBy(ea => ea.SortOrder).Select(tsa =>
                             {
                                 if (tsa.SortOrder != null && tsa.SortOrder.Value > actionOrder)
                                     actionOrder = tsa.SortOrder.Value;
@@ -226,7 +226,7 @@ namespace DerethForever.Web.Controllers
                 indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully created.");
                 CurrentIndexModel = indexModel;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Sandbox");
             }
             catch (Exception ex)
             {
@@ -304,7 +304,7 @@ namespace DerethForever.Web.Controllers
                 indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully created.");
                 CurrentIndexModel = indexModel;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Sandbox");
             }
             catch (Exception ex)
             {
@@ -347,7 +347,7 @@ namespace DerethForever.Web.Controllers
                 indexModel.SuccessMessages.Add("Weenie " + model.WeenieId.ToString() + " successfully saved.");
                 CurrentIndexModel = indexModel;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Sandbox");
             }
             catch (Exception ex)
             {
@@ -360,8 +360,8 @@ namespace DerethForever.Web.Controllers
 
         private ActionResult ValidateWeenie(Weenie model)
         {
-            //ModelState.Clear();
-            //TryValidateModel(model);
+            // ModelState.Clear();
+            // TryValidateModel(model);
 
             bool isValid = true;
 
@@ -394,12 +394,12 @@ namespace DerethForever.Web.Controllers
                 dupeStrings.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate String property {dupe.Key} - you may only have one."));
             }
 
-            //var dupeIids = model.IidProperties.GroupBy(p => p.IidPropertyId).SelectMany(p => p.Skip(1));
-            //if (dupeIids.Count() > 0)
-            //{
-            //    isValid = false;
-            //    dupeIids.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Instance ID property {dupe.IidPropertyId} - you may only have one."));
-            //}
+            var dupeIids = model.IidStats.GroupBy(p => p.Key).SelectMany(p => p.Skip(1));
+            if (dupeIids.Count() > 0)
+            {
+                isValid = false;
+                dupeIids.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Instance ID property {dupe.Key} - you may only have one."));
+            }
 
             var dupeDids = model.FloatStats.GroupBy(p => p.Key).SelectMany(p => p.Skip(1));
             if (dupeDids.Count() > 0)
@@ -415,15 +415,15 @@ namespace DerethForever.Web.Controllers
                 dupeBools.ToList().ForEach(dupe => model.ErrorMessages.Add($"Duplicate Bool property {dupe.Key} - you may only have one."));
             }
 
-            //         var emotes = model.EmoteTable
-            //	.SelectMany(et => et.Emotes)
-            //	.Where(e => Models.Shared.Emote.IsPropertyVisible("Message", e.e))
-            //	.Where(e => string.IsNullOrEmpty(e.Message));
-            //if (emotes.Count() > 0)
-            //         {
-            //             isValid = false;
-            //             model.ErrorMessages.Add("Tell emotes without required message");
-            //         }
+            // var emotes = model.EmoteTable
+            //     .SelectMany(et => et.Emotes)
+            //     .Where(e => Models.Shared.Emote.IsPropertyVisible("Message", e.e))
+            //     .Where(e => string.IsNullOrEmpty(e.Message));
+            // if (emotes.Count() > 0)
+            // {
+            //     isValid = false;
+            //     model.ErrorMessages.Add("Tell emotes without required message");
+            // }
 
             if (model.ItemType == null)
             {
@@ -439,8 +439,7 @@ namespace DerethForever.Web.Controllers
 
             if (!ModelState.IsValid || !isValid)
             {
-                //foreach (ModelState state in ModelState.Values)
-				foreach (KeyValuePair<string, ModelState> pair in ModelState)
+                foreach (KeyValuePair<string, ModelState> pair in ModelState)
                 {
                     ModelState state = pair.Value;
 
@@ -567,7 +566,8 @@ namespace DerethForever.Web.Controllers
                     if (model.EmoteTable.All(ecl => ecl.EmoteCategoryId != (int)model.NewEmoteCategory))
                         model.EmoteTable.Add(new EmoteCategoryListing() { EmoteCategoryId = (int)model.NewEmoteCategory });
 
-                    model.EmoteTable.First(ecl => ecl.EmoteCategoryId == (int)model.NewEmoteCategory).Emotes.Add(new Emote());
+                    model.EmoteTable.First(ecl => ecl.EmoteCategoryId == (int)model.NewEmoteCategory)
+						.Emotes.Add(new Emote() { Category = (uint)model.NewEmoteCategory });
                     model.NewEmoteCategory = EmoteCategory.Invalid;
                     break;
 
@@ -578,9 +578,8 @@ namespace DerethForever.Web.Controllers
                     break;
 
                 case WeenieCommands.AddEmote:
-                    EmoteCategoryListing emoteTable = null;
-                    if (model.EmoteTable.Count > (int)model.NewEmoteCategory)
-                        emoteTable = model.EmoteTable[(int)model.NewEmoteCategory];
+                    EmoteCategoryListing emoteTable = model.EmoteTable
+						.Where(et => et.EmoteCategoryId == (int)model.NewEmoteCategory).FirstOrDefault();
 
                     if (emoteTable == null || model.EmoteSetGuid == null)
                     {
@@ -595,19 +594,13 @@ namespace DerethForever.Web.Controllers
                         int order = emote.Actions.Max(e => e.SortOrder) + 1 ?? 1;
                         emote.Actions.Add(new EmoteAction()
                         {
-							SortOrder = order,
-							EmoteActionType = (uint)emoteTable.NewEmoteType.Value,
+                            SortOrder = order,
+                            EmoteActionType = (uint)emoteTable.NewEmoteType.Value,
                         });
                         emoteTable.NewEmoteType = EmoteType.Invalid;
                     }
-                    model.NewEmoteCategory = EmoteCategory.Invalid;
 
-                    //else
-                    //{
-                    //    var order = emoteSet.Emotes.Max(e => e.SortOrder) + 1;
-                    //    emoteSet.Emotes.Add(new Models.Shared.Emote() { EmoteSetGuid = emoteSet.EmoteSetGuid, EmoteType = emoteSet.NewEmoteType, EmoteGuid = Guid.NewGuid(), SortOrder = order });
-                    //    emoteSet.NewEmoteType = EmoteType.Invalid;
-                    //}
+                    model.NewEmoteCategory = EmoteCategory.Invalid;
 
                     break;
 
@@ -620,7 +613,6 @@ namespace DerethForever.Web.Controllers
                             model.Skills = new List<SkillListing>();
                         model.Skills.Add(new SkillListing() { SkillId = (int)model.NewSkillId.Value });
                     }
-
 
                     break;
 
@@ -738,8 +730,6 @@ namespace DerethForever.Web.Controllers
 
                         SandboxContentProviderHost.CurrentProvider.CreateWeenie(GetUserToken(), weenie);
                     }
-
-                    //return Json(new { id = weenieId });
                 }
             }
             catch (Exception ex)
@@ -1043,7 +1033,7 @@ namespace DerethForever.Web.Controllers
                 SandboxContentProviderHost.CurrentProvider.UpdateWeenieChange(GetUserGuid(), theOne);
             }
 
-            return RedirectToAction("Sandbox");
+            return new EmptyResult(); // RedirectToAction("Sandbox");
         }
 
         [HttpGet]
@@ -1077,7 +1067,7 @@ namespace DerethForever.Web.Controllers
                 DiscordController.PostToDiscordAsync(wse);
             }
 
-            return RedirectToAction("Sandbox");
+            return new EmptyResult(); // RedirectToAction("Sandbox");
         }
 
         [HttpGet]

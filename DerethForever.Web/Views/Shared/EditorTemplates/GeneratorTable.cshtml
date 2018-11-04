@@ -1,10 +1,16 @@
 @model List<Lifestoned.DataModel.Gdle.GeneratorTable>
 
-<h3>Generator Table</h3>
 
-@for (int i = 0; i < (Model?.Count ?? 0); i++)
-{
-    <div class="panel-group">
+<div class="panel-heading"><h3 class="panel-title">Generator Table</h3></div>
+<div class="panel-body panel-group">
+
+    @if (Model == null)
+    {
+        <strong>This Weenie has no Generator Table. Click below to add one.</strong>
+    }
+
+    @for (int i = 0; i < (Model?.Count ?? 0); i++)
+    {
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -17,7 +23,7 @@
                 <div class="panel-body">
                     <div class="row row-spacer">
                         <div class="col-md-2 vcenter">@Html.Label("Weenie Class ID")</div>
-                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].WeenieClassId, new { @class = "form-control weenieClassEntry" })</div>
+                        <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].WeenieClassId, new { @class = "form-control weenieClassEntry weenie-select" })</div>
                         <div class="col-md-2 vcenter">@Html.Label("Probability")</div>
                         <div class="col-md-2 vcenter">@Html.TextBoxFor(m => m[i].Probability, new { @class = "form-control" })</div>
                         <div class="col-md-1 vcenter">@Html.Label("Delay")</div>
@@ -77,5 +83,6 @@
                 </div>
             </div>
         </div>
-    </div>
-}
+
+    }
+</div>

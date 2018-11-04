@@ -28,5 +28,24 @@ namespace Lifestoned.DataModel.Gdle
 
         [JsonProperty("angles")]
         public Quaternion Rotations { get; set; } = new Quaternion();
+
+		[JsonIgnore]
+        public string Display
+        {
+            get { return $"[{Position.Display}] {Rotations.Display}"; }
+            set
+            {
+                int pos = value != null ? value.IndexOf(']') : -1;
+				if (pos < 0)
+                {
+                    Position.Display = string.Empty;
+                    Rotations.Display = string.Empty;
+                    return;
+                }
+
+                Position.Display = value.Substring(1, pos - 1);
+                Rotations.Display = value.Substring(pos + 2);
+            }
+        }
     }
 }
