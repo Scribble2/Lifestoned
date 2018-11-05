@@ -149,7 +149,7 @@
                                     $"addEmote_{k}_{i}",
                                     new { data_content = i, data_container = categoryListing.EmoteCategoryId },
                                     "Add New Emote",
-                                    Html.EnumDropDownListFor(m => m[k].NewEmoteType, new { @class = "form-control" })
+                                    Html.EnumDropDownListFor(m => m[k].Emotes[i].NewEmoteType, new { @class = "form-control" })
                                 )
                             </div>
                         </div>

@@ -40,6 +40,9 @@ namespace Lifestoned.DataModel.Gdle
             set { Category = (uint)value; }
         }
 
+        [JsonIgnore]
+        public EmoteType? NewEmoteType { get; set; }
+
         [JsonProperty("emotes")]
         public List<EmoteAction> Actions { get; set; }
 

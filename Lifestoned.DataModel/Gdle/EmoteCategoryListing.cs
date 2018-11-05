@@ -32,9 +32,6 @@ namespace Lifestoned.DataModel.Gdle
         public List<Emote> Emotes { get; set; } = new List<Emote>();
 
         [JsonIgnore]
-        public EmoteType? NewEmoteType { get; set; }
-
-        [JsonIgnore]
         public bool Deleted { get; set; }
     }
 }
