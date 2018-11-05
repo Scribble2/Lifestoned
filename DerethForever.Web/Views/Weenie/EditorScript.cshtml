@@ -6,8 +6,6 @@
             var emoteSetGuid = $(this).attr("data-content");
             var emoteCategory = $(this).attr("data-container");
 
-            console.log(emoteCategory, emoteSetGuid);
-
             $("#NewEmoteCategory").get(0).selectize.setValue(emoteCategory);
             $("#EmoteSetGuid").val(emoteSetGuid);
             $("#MvcAction").val(@((int)WeenieCommands.AddEmote));

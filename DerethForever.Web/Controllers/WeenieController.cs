@@ -595,9 +595,9 @@ namespace DerethForever.Web.Controllers
                         emote.Actions.Add(new EmoteAction()
                         {
                             SortOrder = order,
-                            EmoteActionType = (uint)emoteTable.NewEmoteType.Value,
+                            EmoteActionType = (uint)emote.NewEmoteType.Value,
                         });
-                        emoteTable.NewEmoteType = EmoteType.Invalid;
+                        emote.NewEmoteType = EmoteType.Invalid;
                     }
 
                     model.NewEmoteCategory = EmoteCategory.Invalid;

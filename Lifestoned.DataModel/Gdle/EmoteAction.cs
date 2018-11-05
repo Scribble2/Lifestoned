@@ -186,7 +186,7 @@ namespace Lifestoned.DataModel.Gdle
         [JsonIgnore]
         public bool? Display
         {
-            get { return (Display_Binder == null) ? (bool?)null : (Display_Binder.Value == 0 ? true : false); }
+            get { return (Display_Binder == null) ? (bool?)null : (Display_Binder.Value == 0 ? false : true); }
             set { Display_Binder = (value == null) ? (byte?)null : (value.Value ? (byte)1 : (byte)0); }
         }
 

@@ -353,7 +353,6 @@
     <Content Include="Views\Shared\WeenieCommentModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\WeenieChangeLog.cshtml" />
     <Content Include="Views\Shared\SubmissionRejectModal.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Byte.cshtml" />
     <None Include="Web.example.config">
       <SubType>Designer</SubType>
     </None>
