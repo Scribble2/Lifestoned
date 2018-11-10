@@ -52,9 +52,28 @@ select {
     margin: 4px;
 }
 
+.full-width {
+    width: 100%;
+}
+
 .well, .panel {
     background-color: #0B4843;
     color: #fff;
+}
+
+.well.disabled {
+    position: relative;
+}
+.well.disabled::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0.5;
+    background-color: #333;
+    z-index: 999;
 }
 
 .need-submit {

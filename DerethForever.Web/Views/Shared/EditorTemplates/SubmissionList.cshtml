@@ -20,6 +20,10 @@ else
             <option value="user">User Name</option>
             <option value="date">Submission Date</option>
         </select>
+    @if (User.IsInRole("Admin"))
+    {
+        <button class="btn btn-sm btn-warning" type="button" onclick="approveAll(event)">Approve All</button>
+    }
         <script>
             function sortChanged(evt) {
                 var prop = $(evt.target).val();
@@ -35,8 +39,30 @@ else
                 $(".well[data-id]").sort(sortfn).appendTo($(".weenies"));
             }
         </script>
+    @if (User.IsInRole("Admin"))
+    {
+        <script>
+            function approveAll(evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+
+                $('input[approver]:checked').each(function (idx, item) {
+                    var i = item;
+                    $(`.well[data-id='${i.dataset.id}']`).addClass('disabled');
+                    $.get('@Url.Action("AcceptChange")', {
+                            id: item.dataset.id,
+                            userGuid: item.dataset.user
+                        },
+                        function () {
+                            $(`.well[data-id='${i.dataset.id}']`).remove();
+                        });
+                }).prop('checked', false);
+            }
+            $(function () { $('input[approver]').prop('checked', false); });
+        </script>
+    }
     </div>
-    <div class="weenies">
+    <div class="weenies full-width">
         @for (int i = 0; i < Model.Count; i++)
         {
             <div class="well"
@@ -45,6 +71,15 @@ else
                  data-name="@(Model[i].Weenie.Name)"
                  data-user="@(Model[i].UserName)"
                  data-date="@(new DateTimeOffset(Model[i].SubmissionTime.ToUniversalTime()).ToUnixTimeSeconds())">
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="row row-spacer">
+                        <input type="checkbox" approver
+                               data-id="@(Model[i].Weenie.WeenieClassId)"
+                               data-user="@(Model[i].UserGuid)"/>
+                        <label>Approve</label>
+                    </div>
+                }
                 <div class="row">
                     <div class="col-md-1">
                         <div class="icon">

@@ -2,26 +2,6 @@
 
 <script language="javascript">
 
-        $("input[name^='addEmote']").on("click", function () {
-            var emoteSetGuid = $(this).attr("data-content");
-            var emoteCategory = $(this).attr("data-container");
-
-            $("#NewEmoteCategory").get(0).selectize.setValue(emoteCategory);
-            $("#EmoteSetGuid").val(emoteSetGuid);
-            $("#MvcAction").val(@((int)WeenieCommands.AddEmote));
-            $("form").submit();
-        });
-
-        $(".panel-body input[name^='remove']").on("click", function () {
-            // deleting the whole row (with inputs) makes the server side drop
-            // anything that comes after this one.  instead, we need to just set a flag
-            // and let the server handle removal of it.
-            parentDiv = $(this).parent().parent();
-            var deleteInput = parentDiv.find("[id$=Deleted]");
-            deleteInput.val("True");
-            $(this).parents(".row.row-spacer, .panel-default").first().addClass("hidden");
-        });
-
         function validate() {
             var cl = $('#UserChangeSummary');
             if (cl.val().length == 0) {
@@ -41,6 +21,26 @@
 
             $("#MvcAction").val("");
             //$("#PropertyTab").val("");
+
+            $("input[name^='addEmote']").on("click", function () {
+                var emoteSetGuid = $(this).attr("data-content");
+                var emoteCategory = $(this).attr("data-container");
+
+                $("#NewEmoteCategory").get(0).selectize.setValue(emoteCategory);
+                $("#EmoteSetGuid").val(emoteSetGuid);
+                $("#MvcAction").val(@((int)WeenieCommands.AddEmote));
+                $("form").submit();
+            });
+
+            $(".panel-body input[name^='remove']").on("click", function () {
+                // deleting the whole row (with inputs) makes the server side drop
+                // anything that comes after this one.  instead, we need to just set a flag
+                // and let the server handle removal of it.
+                parentDiv = $(this).parent().parent();
+                var deleteInput = parentDiv.find("[id$=Deleted]");
+                deleteInput.val("True");
+                $(this).parents(".row.row-spacer, .panel-default").first().addClass("hidden");
+            });
 
             $("input[id^='add'][data-action]").click(function (evt) {
                 $this = $(this);
