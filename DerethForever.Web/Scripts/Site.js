@@ -164,6 +164,8 @@ $(function () {
         }
 
         display.typeahead({
+            items: 'all',
+            minLenght: 3,
             displayText: function (item) {
                 return displayWeenie(item);
             },

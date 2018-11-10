@@ -341,3 +341,9 @@ a[data-toggle=collapse][aria-expanded=true]:before {
     .dropzone .dz-preview.dz-error .dz-error-message {
         display: none;
     }
+
+ul.typeahead {
+    line-height: 1rem;
+    max-height: 25rem;
+    overflow: auto;
+}
