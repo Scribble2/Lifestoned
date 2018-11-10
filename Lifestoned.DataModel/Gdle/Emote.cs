@@ -56,6 +56,7 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("quest", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteCategory(EmoteCategory.QuestFailure)]
         [EmoteCategory(EmoteCategory.QuestSuccess)]
+        [EmoteCategory(EmoteCategory.ReceiveTalkDirect)]
         [EmoteCategory(EmoteCategory.TestSuccess)]
         [EmoteCategory(EmoteCategory.TestFailure)]
         [EmoteCategory(EmoteCategory.GotoSet)]
