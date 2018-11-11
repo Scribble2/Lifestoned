@@ -110,7 +110,7 @@ namespace Lifestoned.DataModel.DerethForever
 
         [JsonProperty("heroXp64")]
         [Display(Name = "Hero XP 64")]
-        [EmoteType(new uint[] { 0x02, 0x3E })]
+        [EmoteType(new uint[] { 0x02, 0x3E, 112 })]
         public ulong? HeroXp64 { get; set; }
 
         /// <summary>

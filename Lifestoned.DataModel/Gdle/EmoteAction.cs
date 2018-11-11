@@ -154,6 +154,7 @@ namespace Lifestoned.DataModel.Gdle
         [JsonProperty("heroxp64", NullValueHandling = NullValueHandling.Ignore)]
         [EmoteType(EmoteType.AwardXP)]
         [EmoteType(EmoteType.AwardNoShareXP)]
+        [EmoteType(EmoteType.SpendLuminance)]
         public ulong? HeroXp64 { get; set; }
 
         [JsonProperty("cprof", NullValueHandling = NullValueHandling.Ignore)]
