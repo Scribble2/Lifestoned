@@ -88,7 +88,7 @@ namespace Lifestoned.DataModel.DerethForever
         /// </summary>
         [JsonProperty("quest")]
         [Display(Name = "Quest")]
-        [EmoteCategory(new EmoteCategory[] { EmoteCategory.QuestFailure, EmoteCategory.QuestSuccess, EmoteCategory.TestSuccess, EmoteCategory.TestFailure, EmoteCategory.GotoSet })]
+        [EmoteCategory(new EmoteCategory[] { EmoteCategory.QuestFailure, EmoteCategory.QuestSuccess, EmoteCategory.TestSuccess, EmoteCategory.TestFailure, EmoteCategory.GotoSet, EmoteCategory.ReceiveTalkDirect })]
         public string Quest { get; set; }
 
         /// <summary>
