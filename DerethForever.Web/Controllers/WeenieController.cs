@@ -567,7 +567,7 @@ namespace DerethForever.Web.Controllers
                         model.EmoteTable.Add(new EmoteCategoryListing() { EmoteCategoryId = (int)model.NewEmoteCategory });
 
                     model.EmoteTable.First(ecl => ecl.EmoteCategoryId == (int)model.NewEmoteCategory)
-						.Emotes.Add(new Emote() { Category = (uint)model.NewEmoteCategory });
+                        .Emotes.Add(new Emote() { Category = (uint)model.NewEmoteCategory });
                     model.NewEmoteCategory = EmoteCategory.Invalid;
                     break;
 
@@ -579,7 +579,7 @@ namespace DerethForever.Web.Controllers
 
                 case WeenieCommands.AddEmote:
                     EmoteCategoryListing emoteTable = model.EmoteTable
-						.Where(et => et.EmoteCategoryId == (int)model.NewEmoteCategory).FirstOrDefault();
+                        .Where(et => et.EmoteCategoryId == (int)model.NewEmoteCategory).FirstOrDefault();
 
                     if (emoteTable == null || model.EmoteSetGuid == null)
                     {
@@ -707,7 +707,7 @@ namespace DerethForever.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult UploadEx2()
+        public ActionResult UploadEx2(bool done)
         {
             string fileNameCopy = "n/a";
 
@@ -728,7 +728,15 @@ namespace DerethForever.Web.Controllers
                         Weenie weenie = JsonConvert.DeserializeObject<Weenie>(serialized);
                         weenieId = weenie.WeenieId;
 
-                        SandboxContentProviderHost.CurrentProvider.CreateWeenie(GetUserToken(), weenie);
+                        string token = GetUserToken();
+
+                        weenie.LastModified = DateTime.Now;
+                        weenie.ModifiedBy = GetUserName();
+                        if (done)
+                            weenie.IsDone = done;
+
+                        // save it to the sandbox
+                        SandboxContentProviderHost.CurrentProvider.CreateWeenie(token, weenie);
                     }
                 }
             }

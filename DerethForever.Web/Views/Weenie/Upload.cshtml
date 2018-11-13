@@ -27,57 +27,23 @@
         @*<input type="file" name="UploadFile" id="txtUploadFile" />
         <br/>
         <input type="button" value="Upload" id="btnUpload" class="btn btn-primary" />*@
+        <label><input id="chkDone" type="checkbox" />&nbsp;Mark as Done</label>
         <form id="dz" action="@Url.Action("UploadEx2", "Weenie")" class="dropzone"></form>
     </div>
 </div>
 
 @section scripts {
     <script language="javascript">
-        @*$('#btnUpload').on('click', function (e) {
-            var uploader = $('#txtUploadFile');
-            var files = uploader[0].files;
-            // console.log("files.length: " + files.length);
-
-            if (uploader.length > 0) {
-                // console.log("window.FormData: " + window.FormData);
-                if (window.FormData !== undefined) {
-                    var data = new FormData();
-                    for (var x = 0; x < files.length; x++) {
-                        // console.log("adding file " + x);
-                        // console.log("file" + x + ".length: " + files[x].size);
-                        data.append("file" + x, files[x]);
-                    }
-
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("UploadEx", "Weenie")',
-                        contentType: false,
-                        processData: false,
-                        data: data,
-                        success: function(result) {
-                            console.log('result: ' + result);
-                            console.log('result.id: ' + result.id);
-
-                            if (result.id > 0)
-                                window.location.href = '@(Url.Action("NewImported", "Weenie"))';
-                        },
-                        error: function (xhr, status, p3, p4){
-                            var err = "Error " + " " + status + " " + p3 + " " + p4;
-                            if (xhr.responseText && xhr.responseText[0] == "{")
-                                err = JSON.parse(xhr.responseText).Message;
-                            console.log(err);
-                        }
-                    });
-                } else {
-                    alert("This browser doesn't support HTML5 file uploads!");
-                }
-            }
-        });*@
         Dropzone.options.dz = {
 
             acceptedFiles: 'application/json',
             addRemoveLinks: true,
             parallelUploads: 5,
+            params: function () {
+                return {
+                    done: $('#chkDone').prop('checked')
+                };
+            },
             init: function () {
                 var $this = this;
 
