@@ -194,9 +194,10 @@ namespace DerethForever.Web.Controllers
         public ActionResult Clone(uint id)
         {
             Weenie model = SandboxContentProviderHost.CurrentProvider.GetWeenie(GetUserToken(), id);
+            model = JsonConvert.DeserializeObject<Weenie>(JsonConvert.SerializeObject(model));
             model.WeenieId = 0;
             model.IsCloneMode = true;
-            ImportedWeenie = model;
+            //ImportedWeenie = model;
             return View("New", model);
         }
 
