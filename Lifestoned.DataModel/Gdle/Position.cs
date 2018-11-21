@@ -33,7 +33,7 @@ namespace Lifestoned.DataModel.Gdle
         [JsonIgnore]
         public string Display
         {
-			get { return $"{LandCellId:X8} {Frame.Display}"; }
+			get { return $"0x{LandCellId:X8} {Frame.Display}"; }
 			set
             {
                 int start = 0;
@@ -44,6 +44,9 @@ namespace Lifestoned.DataModel.Gdle
                     Frame.Display = string.Empty;
                     return;
                 }
+
+                if (value.StartsWith("0x"))
+                    start += 2;
 
                 uint t = 0;
                 uint.TryParse(value.Substring(start, pos), NumberStyles.HexNumber, CultureInfo.CurrentCulture.NumberFormat, out t);
