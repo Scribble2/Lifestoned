@@ -58,6 +58,15 @@
             $('.type-filter').selectize({});
             $('.customMultiselect').selectize({ maxItems: null, allowEmptyOption: true });
 
+            $('.flags-multi-checked').click(function (evt) {
+                var $et = $(this);
+                var $ev = $(this.dataset.target);
+                var flag = $et.val();
+                $ev.val(
+                    $et.prop('checked') ? $ev.val() | flag : $ev.val() & ~flag
+                );
+            });
+
             $('#preview').click(function (evt) {
                 var link = $(this);
                 var href = link.attr('href');

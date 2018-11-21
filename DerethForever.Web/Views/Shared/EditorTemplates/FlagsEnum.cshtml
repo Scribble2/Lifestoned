@@ -1,7 +1,11 @@
 @using Lifestoned.DataModel.Shared;
 @model Enum
 
-@{var name = ViewData.TemplateInfo.HtmlFieldPrefix; int i = 1;}
+@{
+    var name = ViewData.TemplateInfo.HtmlFieldPrefix;
+    int i = 1;
+    var id = ViewData.TemplateInfo.GetFullHtmlFieldId("");
+}
 @Html.Hidden("", Convert.ToInt32(Model))
 
 @foreach (var r in Enum.GetValues(Model.GetType()))
@@ -10,20 +14,20 @@
     {
         continue;
     }
+    <label>
+        @Html.CheckBox(((int)r).ToString(), (Convert.ToInt32(Model) & (int)r) > 0,
+                new
+                {
+                    @class = "flags-multi-checked",
+                    data_target = $"#{id}",
+                    value = Convert.ToInt32(r)
+                })
+        @Html.Raw((r as Enum).GetName())
+    </label>
 
-    @Html.CheckBox(((int)r).ToString(), (Convert.ToInt32(Model) & (int)r) > 0,
-            new
-            {
-                onchange = "if ($('#" + name + "_" + ((int)r).ToString() + "').prop('checked')) " +
-                    "{ $('#" + name + "').val($('#" + name + "').val() | 0x" + ((int)r).ToString("X") + "); } " +
-                    "else " +
-                    "{ $('#" + name + "').val($('#" + name + "').val() & ~0x" + ((int)r).ToString("X") + "); }"
-            })
-    @Html.Raw((r as Enum).GetName() + "&nbsp;&nbsp;&nbsp;")
-
-    if (i % 3 == 0)
+    if (i % 7 == 0)
     {
-        <br/>
+        <br />
     }
     i++;
 }
