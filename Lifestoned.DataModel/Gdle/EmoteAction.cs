@@ -38,6 +38,7 @@ namespace Lifestoned.DataModel.Gdle
         [EmoteType(EmoteType.DecrementQuest)]
         [EmoteType(EmoteType.IncrementQuest)]
         [EmoteType(EmoteType.SetQuestCompletions)]
+		[EmoteType(EmoteType.Generate)]
         [EmoteType(EmoteType.DecrementMyQuest)]
         [EmoteType(EmoteType.IncrementMyQuest)]
         [EmoteType(EmoteType.SetMyQuestCompletions)]

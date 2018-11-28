@@ -32,7 +32,7 @@
                 $("form").submit();
             });
 
-            $(".panel-body input[name^='remove']").on("click", function () {
+            $(".panel-body input[name^='remove'], .panel-body button[name^='remove']").on("click", function () {
                 // deleting the whole row (with inputs) makes the server side drop
                 // anything that comes after this one.  instead, we need to just set a flag
                 // and let the server handle removal of it.

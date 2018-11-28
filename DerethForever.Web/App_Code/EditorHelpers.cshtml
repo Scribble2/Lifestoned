@@ -7,7 +7,7 @@
 
 @helper DeleteButton(string id)
 {
-    <button class="btn btn-xs btn-danger" name="@id"><i class="glyphicon glyphicon-trash"></i></button>
+    <button type="button" class="btn btn-xs btn-danger" name="@id"><i class="glyphicon glyphicon-trash"></i></button>
 }
 
 @helper FooterCommand(string id, WeenieCommands command, string label = null, MvcHtmlString dropdown = null)
