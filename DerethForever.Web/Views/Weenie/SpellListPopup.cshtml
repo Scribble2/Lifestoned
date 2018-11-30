@@ -1,0 +1,170 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Spells</title>
+
+    @Styles.Render("~/Styles/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/site")
+
+    <style>
+        body { padding: 1rem 0.5rem; overflow: hidden; }
+        table { }
+        table thead, tbody tr { display: table; table-layout:fixed; width: 100%; }
+        table tbody { display:block; overflow: auto; overflow-x: hidden; max-height: calc(80vh - 0.5rem); width: 100%; }
+
+        table th:first-child, table td:first-child { width: 2.5rem; }
+        table th:first-child + th, table td:first-child + td { width: 5rem; }
+
+        .row > div { padding-right: 0; }
+        #search { width: 100%; }
+
+        .modal-content { margin-top: 15rem; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid body-content">
+        <div class="text-right"><button type="button" class="btn btn-sm btn-default">Add Spells</button></div>
+
+        <div class="row">
+            <div class="col-xs-8"><input type="text" id="search" placeholder="Search..." /></div>
+            <div class="col-xs-4">
+                <i class="glyphicon glyphicon-filter"></i>
+                <select id="schools">
+                    <option value="0">All</option>
+                    <option value="1">War</option>
+                    <option value="2">Life</option>
+                    <option value="3">Item</option>
+                    <option value="4">Creature</option>
+                </select>
+            </div>
+        </div>
+        <table class="table table-bordered table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th></th><th data-prop="id">Id</th><th data-prop="name">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Adding Spells, Please Wait...</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var weenieWindow = window.opener;
+
+        $(function () {
+            $('#schools').change(function (evt) {
+                var val = $(this).val();
+                if (val == 0) {
+                    $('table tbody tr').show();
+                } else {
+                    $(`table tbody tr[data-school!="${val}"]`).hide();
+                    $(`table tbody tr[data-school="${val}"]`).show();
+                }
+            });
+
+            $('#search').on('input', function (evt) {
+                var val = $(this).val();
+                var school = $('#schools').val();
+
+                var sa = "";
+                if (school != 0) {
+                    sa = `[data-school='${school}']`
+                }
+
+                if (val.length == 0) {
+                    $(`table tbody tr${sa}`).show();
+                } else if (val.length > 2) {
+                    $(`table tbody tr${sa}`).hide();
+                    $(`table tbody tr[data-name*='${val}' i]${sa}`).show();
+                }
+            });
+
+            $('th[data-prop]').click(function (evt) {
+                var prop = this.dataset.prop;
+                var sortfn = (prop == "id") ?
+                    function (a, b) {
+                        return (parseInt(a.dataset[prop]) > parseInt(b.dataset[prop])) ? 1 : -1;
+                    }
+                    :
+                    function (a, b) {
+                        return (a.dataset[prop] > b.dataset[prop]) ? 1 : -1;
+                    };
+
+                $("tbody tr").sort(sortfn).appendTo($("table tbody"));
+            });
+
+            var table = $('table tbody');
+
+            $.getJSON('/content/spells.json', function (data) {
+                $.each(data, function (idx, item) {
+                    var row = $('<tr></tr>')
+                        .attr('data-id', item.id)
+                        .attr('data-name', item.name)
+                        .attr('data-school', item.school);
+
+                    row.append($('<td></td>').append($('<input type="checkbox" />').val(item.id)));
+                    row.append($('<td></td>').text(item.id));
+                    row.append($('<td></td>').text(item.name));
+
+                    table.append(row);
+                });
+            });
+
+            $('button').click(function (evt) {
+                $('.modal').modal('show');
+
+                var items = [];
+                $('table tbody :checked').each(function () {
+                    items.push($(this).val());
+                });
+
+                var count = items.length;
+                var idx = 0;
+
+                var addit = function () {
+                    if (idx == count) {
+                        window.close();
+                        return;
+                    }
+
+                    $('.modal-body').text(`Adding spell ${idx + 1} of ${count}`);
+
+                    opener.addSpell(items[idx]);
+                    idx++;
+
+                    $(opener.document).ready(function () {
+                        setTimeout(function () { addit(); }, 2000);
+                    });
+                };
+
+                addit();
+
+            });
+        });
+    </script>
+</body>
+</html>

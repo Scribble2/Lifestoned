@@ -250,6 +250,7 @@
     <Content Include="Content\Selectize\less\plugins\dropdown_header.less" />
     <Content Include="Content\Selectize\less\plugins\drag_drop.less" />
     <Content Include="App_Code\EditorHelpers.cshtml" />
+    <Content Include="Content\spells.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
@@ -353,6 +354,7 @@
     <Content Include="Views\Shared\WeenieCommentModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\WeenieChangeLog.cshtml" />
     <Content Include="Views\Shared\SubmissionRejectModal.cshtml" />
+    <Content Include="Views\Weenie\SpellListPopup.cshtml" />
     <None Include="Web.example.config">
       <SubType>Designer</SubType>
     </None>
