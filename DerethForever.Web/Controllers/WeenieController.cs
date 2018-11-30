@@ -54,6 +54,12 @@ namespace DerethForever.Web.Controllers
             set { Session[_Session_DownloadModel] = value; }
         }
 
+		[HttpGet]
+		public ActionResult SpellList()
+        {
+            return View("SpellListPopup");
+        }
+
         [HttpGet]
         public ActionResult Recent()
         {
