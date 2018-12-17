@@ -2,110 +2,121 @@
 
 <script language="javascript">
 
-        function validate() {
-            var cl = $('#UserChangeSummary');
-            if (cl.val().length == 0) {
-                cl.focus();
-                return false;
-            } else {
-                return true;
-            }
+    function validate() {
+        var cl = $('#UserChangeSummary');
+        if (cl.val().length == 0) {
+            cl.focus();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function addSpell(id) {
+        $("#NewSpellId").get(0).selectize.setValue(id);
+        $('#addSpell').click();
+    }
+
+    $(document).ready(function () {
+        var tab = $("#PropertyTab").val();
+
+        if (tab != "") {
+            $('a[href="#' + tab + '"]').tab('show');
         }
 
-        $(document).ready(function () {
-            var tab = $("#PropertyTab").val();
+        $("#MvcAction").val("");
+        //$("#PropertyTab").val("");
 
-            if (tab != "") {
-                $('a[href="#' + tab + '"]').tab('show');
-            }
+        $("input[name^='addEmote']").on("click", function () {
+            var emoteSetGuid = $(this).attr("data-content");
+            var emoteCategory = $(this).attr("data-container");
 
-            $("#MvcAction").val("");
-            //$("#PropertyTab").val("");
+            $("#NewEmoteCategory").get(0).selectize.setValue(emoteCategory);
+            $("#EmoteSetGuid").val(emoteSetGuid);
+            $("#MvcAction").val(@((int)WeenieCommands.AddEmote));
+            $("form").submit();
+        });
 
-            $("input[name^='addEmote']").on("click", function () {
-                var emoteSetGuid = $(this).attr("data-content");
-                var emoteCategory = $(this).attr("data-container");
+        $(".panel-body input[name^='remove'], .panel-body button[name^='remove']").on("click", function () {
+            // deleting the whole row (with inputs) makes the server side drop
+            // anything that comes after this one.  instead, we need to just set a flag
+            // and let the server handle removal of it.
+            parentDiv = $(this).parent().parent();
+            var deleteInput = parentDiv.find("[id$=Deleted]");
+            deleteInput.val("True");
+            $(this).parents(".row.row-spacer, .panel-default").first().addClass("hidden");
+        });
 
-                $("#NewEmoteCategory").get(0).selectize.setValue(emoteCategory);
-                $("#EmoteSetGuid").val(emoteSetGuid);
-                $("#MvcAction").val(@((int)WeenieCommands.AddEmote));
-                $("form").submit();
-            });
+        $("input[id^='add'][data-action]").click(function (evt) {
+            $this = $(this);
 
-            $(".panel-body input[name^='remove'], .panel-body button[name^='remove']").on("click", function () {
-                // deleting the whole row (with inputs) makes the server side drop
-                // anything that comes after this one.  instead, we need to just set a flag
-                // and let the server handle removal of it.
-                parentDiv = $(this).parent().parent();
-                var deleteInput = parentDiv.find("[id$=Deleted]");
-                deleteInput.val("True");
-                $(this).parents(".row.row-spacer, .panel-default").first().addClass("hidden");
-            });
+            $("#MvcAction").val($this.data('action'));
+            $("#PropertyTab").val($this.parents('.tab-pane').attr('id'));
+            $("form").submit();
+        });
 
-            $("input[id^='add'][data-action]").click(function (evt) {
-                $this = $(this);
+        $('#btnSave').click(function (e) {
+            if (!validate())
+                e.preventDefault();
+        });
 
-                $("#MvcAction").val($this.data('action'));
-                $("#PropertyTab").val($this.parents('.tab-pane').attr('id'));
-                $("form").submit();
-            });
+        $('.type-filter').selectize({});
+        $('.customMultiselect').selectize({ maxItems: null, allowEmptyOption: true });
 
-            $('#btnSave').click(function (e) {
-                if (!validate())
-                    e.preventDefault();
-            });
+        $('.flags-multi-checked').click(function (evt) {
+            var $et = $(this);
+            var $ev = $(this.dataset.target);
+            var flag = $et.val();
+            $ev.val(
+                $et.prop('checked') ? $ev.val() | flag : $ev.val() & ~flag
+            );
+        });
 
-            $('.type-filter').selectize({});
-            $('.customMultiselect').selectize({ maxItems: null, allowEmptyOption: true });
+        $('<button type="button" class="btn btn-primary">Add Spells</button>')
+            .click(function (evt) {
+                window.open('@Url.Action("SpellList")', 'spellList', 'height=500,width=400,location=0,menubar=0,status=0,toolbar=0', false);
+            })
+            .insertAfter($('#addSpell'));
 
-            $('.flags-multi-checked').click(function (evt) {
-                var $et = $(this);
-                var $ev = $(this.dataset.target);
-                var flag = $et.val();
-                $ev.val(
-                    $et.prop('checked') ? $ev.val() | flag : $ev.val() & ~flag
-                );
-            });
+        $('#preview').click(function (evt) {
+            var link = $(this);
+            var href = link.attr('href');
 
-            $('#preview').click(function (evt) {
-                var link = $(this);
-                var href = link.attr('href');
+            var sid = $('#didProperties input[name$="Key"][value="1"]').parent().parent().find('input[name$="Value"]').val();
+            var cid = $('#didProperties input[name$="Key"][value="7"]').parent().parent().find('input[name$="Value"]').val();
+            var pid = $('#int32Properties input[name$="Key"][value="3"]')
+                .parent().parent()
+                .find('input[name$="Value"], option:selected').val();
 
-                var sid = $('#didProperties input[name$="Key"][value="1"]').parent().parent().find('input[name$="Value"]').val();
-                var cid = $('#didProperties input[name$="Key"][value="7"]').parent().parent().find('input[name$="Value"]').val();
-                var pid = $('#int32Properties input[name$="Key"][value="3"]')
-                    .parent().parent()
-                    .find('input[name$="Value"], option:selected').val();
+            var shade = $('#dblProperties input[name$="Key"][value="12"]')
+                .parent().parent()
+                .find('input[name$="Value"]').val();
 
-                var shade = $('#dblProperties input[name$="Key"][value="12"]')
-                    .parent().parent()
-                    .find('input[name$="Value"]').val();
-
-                if (cid && sid) {
-                    href = 'http://ac.yotesfan.com/10-Clothing/preview.php?id={{cid}}&setup={{sid}}&pal={{pid}}&shade={{shade}}';
-                    href = href.replace("{{cid}}", parseInt(cid).toHexStr());
-                    if (pid) {
-                        href = href.replace("{{pid}}", pid);
-                    } else {
-                        alert('INT 3 Not Found');
-                        evt.preventDefault();
-                        evt.stopPropagation();
-                        return;
-                    }
-                    href = href.replace("{{shade}}", shade);
-                } else if (sid) {
-                    href = 'http://ac.yotesfan.com/02-Setup/?id={{sid}}'
+            if (cid && sid) {
+                href = 'http://ac.yotesfan.com/10-Clothing/preview.php?id={{cid}}&setup={{sid}}&pal={{pid}}&shade={{shade}}';
+                href = href.replace("{{cid}}", parseInt(cid).toHexStr());
+                if (pid) {
+                    href = href.replace("{{pid}}", pid);
                 } else {
-                    alert('Requires DID 1 or DID 1, 7, and INT 3');
+                    alert('INT 3 Not Found');
                     evt.preventDefault();
                     evt.stopPropagation();
                     return;
                 }
+                href = href.replace("{{shade}}", shade);
+            } else if (sid) {
+                href = 'http://ac.yotesfan.com/02-Setup/?id={{sid}}'
+            } else {
+                alert('Requires DID 1 or DID 1, 7, and INT 3');
+                evt.preventDefault();
+                evt.stopPropagation();
+                return;
+            }
 
-                href = href.replace("{{sid}}", parseInt(sid).toHexStr());
+            href = href.replace("{{sid}}", parseInt(sid).toHexStr());
 
-                link.attr('href', href);
-            });
+            link.attr('href', href);
         });
+    });
 </script>
 
