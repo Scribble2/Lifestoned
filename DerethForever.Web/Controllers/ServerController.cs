@@ -19,6 +19,7 @@ DEALINGS IN THE SOFTWARE.
 *****************************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -87,7 +88,7 @@ namespace DerethForever.Web.Controllers
                 wre.User = CurrentUser.DisplayName;
                 wre.ReleaseTime = DateTimeOffset.Now;
                 wre.Name = results.FileName;
-                wre.Size = results.FileSize;
+                wre.Size = results.GetFileSize(ConfigurationManager.AppSettings["WorldReleaseDir"]);
                 DiscordController.PostToDiscordAsync(wre);
             }
 
