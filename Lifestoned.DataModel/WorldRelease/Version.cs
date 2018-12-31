@@ -35,9 +35,11 @@ namespace Lifestoned.DataModel.WorldRelease
 
         /// <summary>
         /// Versions are Named by Tag + DateTimeStamp
+        /// versionTag might come from a ConfigurationManager, ie: ConfigurationManager.AppSettings["VersionTag"]
+        /// versionDateTimeFormat might come from a ConfigurationManager, ie: ConfigurationManager.AppSettings["VersionDateTimeFormat"]
         /// </summary>
-        public Version() {
-            _version = ConfigurationManager.AppSettings["VersionTag"] + DateTime.Now.ToString(ConfigurationManager.AppSettings["VersionDateTimeFormat"]);
+        public Version(string versionTag, string versionDateTimeFormat) {
+            _version = versionTag + DateTime.Now.ToString(versionDateTimeFormat);
         }
 
         /// <summary>

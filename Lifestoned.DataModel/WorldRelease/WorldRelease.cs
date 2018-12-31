@@ -103,56 +103,55 @@ namespace Lifestoned.DataModel.WorldRelease
             }
         }
 
-        public bool FileExists
+        /// <summary>
+        /// Size of the Release in Megabytes
+        /// worldReleaseDir might come from a ConfigurationManager, ie: ConfigurationManager.AppSettings["WorldReleaseDir"]
+        /// </summary>
+        public bool FileExists(string worldReleaseDir)
         {
-            get
+            if (FileName?.Length > 0)
             {
-                if (FileName?.Length > 0)
-                {
-                    var filePath = Path.GetFullPath(Path.Combine(ConfigurationManager.AppSettings["WorldReleaseDir"], FileName));
-                    return File.Exists(filePath);
-                }
-                return false;
+                var filePath = Path.GetFullPath(Path.Combine(worldReleaseDir, FileName));
+                return File.Exists(filePath);
             }
+            return false;
         }
 
         /// <summary>
-        /// Silze of the Release in Megabytes
+        /// Size of the Release in Megabytes
+        /// worldReleaseDir might come from a ConfigurationManager, ie: ConfigurationManager.AppSettings["WorldReleaseDir"]
         /// </summary>
-        public string FileSize
+        public string GetFileSize(string worldReleaseDir)
         {
-            get
+            if (FileName?.Length > 0)
             {
-                if (FileName?.Length > 0)
+                var filePath = Path.GetFullPath(Path.Combine(worldReleaseDir, FileName));
+                if (File.Exists(filePath))
                 {
-                    var filePath = Path.GetFullPath(Path.Combine(ConfigurationManager.AppSettings["WorldReleaseDir"], FileName));
-                    if (File.Exists(filePath))
+                    long length = new System.IO.FileInfo(filePath).Length;
+
+                    string label = "bytes";
+
+                    if (length > 1000)
                     {
-                        long length = new System.IO.FileInfo(filePath).Length;
-
-                        string label = "bytes";
-
-                        if (length > 1000)
-                        {
-                            length /= 1024;
-                            label = "KB";
-                        }
-                        if (length > 1000)
-                        {
-                            length /= 1024;
-                            label = "MB";
-                        }
-                        if (length > 1000)
-                        {
-                            length /= 1024;
-                            label = "GB";
-                        }
-
-                        return length + label;
+                        length /= 1024;
+                        label = "KB";
                     }
+                    if (length > 1000)
+                    {
+                        length /= 1024;
+                        label = "MB";
+                    }
+                    if (length > 1000)
+                    {
+                        length /= 1024;
+                        label = "GB";
+                    }
+
+                    return length + label;
                 }
-                return string.Empty;
             }
+            return string.Empty;
         }
     }
 }
